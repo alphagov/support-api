@@ -7,7 +7,7 @@ This API:
 
 This is a Rails (4) application.
 
-### Specs
+## Specs
 
 To run the specs, execute:
 
