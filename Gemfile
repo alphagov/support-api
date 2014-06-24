@@ -6,6 +6,8 @@ gem 'sqlite3'
 gem 'logstasher', '0.5.3'
 gem 'airbrake', '3.1.15'
 
+gem 'unicorn', '4.8.3'
+
 group :development do
   gem 'spring', '1.1.3'
 end
