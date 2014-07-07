@@ -32,8 +32,11 @@ GEM
       multi_json
     arel (5.0.1.20140414130214)
     builder (3.2.2)
-    ci_reporter (1.9.2)
+    ci_reporter (2.0.0.alpha2)
       builder (>= 2.1.2)
+    ci_reporter_rspec (0.0.2)
+      ci_reporter (= 2.0.0.alpha2)
+      rspec (>= 2.14, < 4)
     diff-lcs (1.2.5)
     docile (1.1.5)
     erubis (2.7.0)
@@ -76,6 +79,10 @@ GEM
     raindrops (0.13.0)
     rake (10.3.2)
     request_store (1.0.6)
+    rspec (3.0.0)
+      rspec-core (~> 3.0.0)
+      rspec-expectations (~> 3.0.0)
+      rspec-mocks (~> 3.0.0)
     rspec-core (3.0.1)
       rspec-support (~> 3.0.0)
     rspec-expectations (3.0.1)
@@ -128,7 +135,8 @@ PLATFORMS
 
 DEPENDENCIES
   airbrake (= 3.1.15)
-  ci_reporter (= 1.9.2)
+  ci_reporter (= 2.0.0.alpha2)
+  ci_reporter_rspec (= 0.0.2)
   logstasher (= 0.5.3)
   rails (= 4.1.1)
   rails-api (= 0.2.1)
