@@ -20,4 +20,5 @@ group :development, :test do
   gem 'ci_reporter', '2.0.0.alpha2'
   gem 'ci_reporter_rspec', '0.0.2'
   gem 'shoulda-matchers', '2.6.1'
+  gem 'timecop', '0.7.1'
 end
