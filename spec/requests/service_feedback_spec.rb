@@ -1,3 +1,4 @@
+require 'json'
 require 'rails_helper'
 require 'support/requests/anonymous/service_feedback'
 
@@ -33,6 +34,25 @@ describe "Service feedback" do
     )
 
     expect(Support::Requests::Anonymous::ServiceFeedback.where(slug: 'apply-carers-allowance').count).to eq(1)
+  end
+
+  it "validates the service feedback" do
+    options = {
+      slug: nil,
+      path: "/done/apply-carers-allowance",
+      service_satisfaction_rating: 7,
+      javascript_enabled: true,
+    }
+
+    post '/anonymous-feedback/service-feedback',
+         { "service_feedback" => options }.to_json,
+         {"CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json'}
+
+    expect(response.status).to eq(422)
+    expect(JSON.parse(response.body)["errors"]).to include(
+      "Slug can't be blank",
+      "Service satisfaction rating is not included in the list"
+    )
   end
 
   private

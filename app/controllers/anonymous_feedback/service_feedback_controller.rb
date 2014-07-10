@@ -9,7 +9,7 @@ module AnonymousFeedback
         request.save!
         render nothing: true, status: 201
       else
-        render json: { "errors" => request.errors.to_a }, status: 400
+        render json: { "errors" => request.errors.to_a }, status: 422
       end
     end
 
