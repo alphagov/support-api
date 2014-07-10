@@ -1,4 +1,9 @@
 # encoding: UTF-8
+
+# Note: this file originally comes from the 'support' app, and the master version
+# of the schema is in that app for the moment. The intention is that all persistence
+# will move into this app soon, at which point this app becomes the owner of the schema
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
