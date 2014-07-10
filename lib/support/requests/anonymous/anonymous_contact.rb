@@ -27,7 +27,7 @@ module Support
         end
 
         def set_path_from_url
-          self.path = URI.parse(url).path unless url.nil?
+          self.path = URI.parse(url).path unless url.blank?
         end
       end
     end
