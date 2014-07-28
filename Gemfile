@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.1'
+gem 'rails', '4.1.4'
 gem 'rails-api', '0.2.1'
 gem 'mysql2', '0.3.16'
 gem 'logstasher', '0.5.3'
