@@ -22,3 +22,7 @@ group :development, :test do
   gem 'shoulda-matchers', '2.6.1'
   gem 'timecop', '0.7.1'
 end
+
+group :test do
+  gem 'webmock', '1.18.0'
+end
