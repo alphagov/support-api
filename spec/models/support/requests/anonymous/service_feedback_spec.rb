@@ -30,6 +30,10 @@ module Support
         it "aggregates by comment" do
           expect(ServiceFeedback.with_comments_count).to eq(1)
         end
+
+        it "provides a list of available slugs" do
+          expect(ServiceFeedback.transaction_slugs).to eq(["a", "b"])
+        end
       end
     end
   end

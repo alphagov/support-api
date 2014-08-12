@@ -8,6 +8,10 @@ module Support
         validates :details, length: { maximum: 2 ** 16 }
         validates_inclusion_of :service_satisfaction_rating, in: (1..5).to_a
 
+        def self.transaction_slugs
+          uniq.pluck(:slug).sort
+        end
+
         def self.aggregates_by_rating
           zero_defaults = Hash[*(1..5).map {|n| [n, 0] }.flatten]
           select("service_satisfaction_rating, count(*) as cnt").
