@@ -18,6 +18,7 @@ module Support
         validates_presence_of :reason_why_not_actionable, unless: "is_actionable"
 
         scope :only_actionable, -> { where(is_actionable: true) }
+        default_scope { only_actionable }
 
         private
         def detect_personal_information
