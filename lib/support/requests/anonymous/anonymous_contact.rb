@@ -17,6 +17,8 @@ module Support
         validates_inclusion_of :is_actionable, in: [ true, false ]
         validates_presence_of :reason_why_not_actionable, unless: "is_actionable"
 
+        scope :only_actionable, -> { where(is_actionable: true) }
+
         private
         def detect_personal_information
           self.personal_information_status ||= personal_info_present? ? "suspected" : "absent"
