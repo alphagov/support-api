@@ -7,6 +7,7 @@ gem 'logstasher', '0.5.3'
 gem 'airbrake', '3.1.15'
 gem 'sidekiq', '2.17.1'
 gem 'unicorn', '4.8.3'
+gem 'gds-api-adapters', '14.0.0'
 
 group :development do
   gem 'spring', '1.1.3'
