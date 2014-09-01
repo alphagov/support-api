@@ -9,6 +9,7 @@ gem 'sidekiq', '2.17.1'
 gem 'unicorn', '4.8.3'
 gem 'gds-api-adapters', '14.0.0'
 gem 'whenever', '0.9.0', require: false
+gem 'mlanett-redis-lock', '0.2.6'
 
 group :development do
   gem 'spring', '1.1.3'
