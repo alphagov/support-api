@@ -1,10 +1,23 @@
-desc "Trigger deduplication for yesterday's anonymous feedback"
-task :anonymous_feedback_nightly_deduplication => :environment do
-  require 'support/requests/anonymous/deduplication_worker'
-  require 'distributed_lock'
+namespace :anonymous_feedback_deduplication do
+  desc "Trigger deduplication for yesterday's anonymous feedback"
+  task :nightly => :environment do
+    require 'support/requests/anonymous/deduplication_worker'
+    require 'distributed_lock'
 
-  DistributedLock.new('anonymous_feedback_nightly_deduplication').lock do
-    Support::Requests::Anonymous::DeduplicationWorker.start_deduplication_for_yesterday
-    Rails.logger.info "Nightly deduplication has finished"
+    DistributedLock.new('anonymous_feedback_nightly_deduplication').lock do
+      Support::Requests::Anonymous::DeduplicationWorker.start_deduplication_for_yesterday
+      Rails.logger.info "Nightly deduplication has finished"
+    end
+  end
+
+  desc "Trigger deduplication for recently created anonymous feedback (run regularly)"
+  task :recent => :environment do
+    require 'support/requests/anonymous/deduplication_worker'
+    require 'distributed_lock'
+
+    DistributedLock.new('recent_feedback_deduplication').lock do
+      Support::Requests::Anonymous::DeduplicationWorker.start_deduplication_for_recent_feedback
+      puts "Deduplication for recent feedback has finished"
+    end
   end
 end

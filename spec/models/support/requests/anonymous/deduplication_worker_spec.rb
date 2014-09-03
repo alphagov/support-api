@@ -14,6 +14,16 @@ module Support
 
           DeduplicationWorker.start_deduplication_for_yesterday
         end
+
+        it "removes anonymous feedback created in the last 10 minutes" do
+          Timecop.travel Time.new(2013,2,11,12,0,0)
+
+          expect(AnonymousContact).
+            to receive(:deduplicate_contacts_created_between).
+            with(Time.new(2013,2,11,11,50,0).to_i..Time.new(2013,2,11,12,0,0).to_i)
+
+          DeduplicationWorker.start_deduplication_for_recent_feedback
+        end
       end
     end
   end
