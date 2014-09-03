@@ -9,3 +9,7 @@ job_type :rake, "cd :path && govuk_setenv support-api bundle exec rake :task :ou
 every 1.day, :at => '12:30 am' do
   rake "performance_platform_uploads:push_service_feedback"
 end
+
+every 1.day, :at => '12:10 am' do
+  rake "anonymous_feedback_nightly_deduplication"
+end
