@@ -65,6 +65,6 @@ describe "Service feedback" do
          { "service_feedback" => options }.to_json,
          {"CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json'}
 
-    expect(response.status).to eq(201)
+    expect(response.status).to eq(202)
   end
 end

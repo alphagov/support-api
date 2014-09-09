@@ -6,8 +6,8 @@ module AnonymousFeedback
       request = Support::Requests::Anonymous::ServiceFeedback.new(service_feedback_params)
 
       if request.valid?
-        request.save!
-        render nothing: true, status: 201
+        ServiceFeedbackWorker.perform_async(service_feedback_params)
+        render nothing: true, status: 202
       else
         render json: { "errors" => request.errors.to_a }, status: 422
       end
