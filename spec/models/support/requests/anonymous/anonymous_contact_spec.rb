@@ -76,6 +76,25 @@ module Support
           it { should_not allow_value("http://" + ("a" * 2050)).for(:referrer) }
           it { should_not allow_value("http://bla.example.org:9292/méh/fào?bar").for(:referrer) }
         end
+
+        context "when duplicates are present" do
+          let(:current_time) { Time.now }
+          let(:dedupe_interval) { (current_time - 1.second)..(current_time + 5.seconds) }
+
+          let!(:first) { create(:service_feedback, created_at: current_time) }
+          let!(:second) { create(:service_feedback, created_at: current_time + 3.seconds) }
+
+          it "marks the dupes as non-actionable when deduplication is run" do
+            AnonymousContact.deduplicate_contacts_created_between(dedupe_interval)
+
+            first.reload
+            second.reload
+
+            expect(first.is_actionable).to be_truthy
+            expect(second.is_actionable).to be_falsey
+            expect(second.reason_why_not_actionable).to eq("duplicate")
+          end
+        end
       end
     end
   end
