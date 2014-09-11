@@ -14,6 +14,6 @@ every 1.day, :at => '12:10 am' do
   rake "anonymous_feedback_deduplication:nightly"
 end
 
-every 5.minutes, :at => '12:18 am' do
+every 5.minutes, at: 3 do
   rake "anonymous_feedback_deduplication:recent"
 end
