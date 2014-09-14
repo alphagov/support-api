@@ -1,4 +1,4 @@
-require 'support/requests/anonymous/anonymous_contact'
+require 'support/requests/anonymous'
 
 module Support
   module Requests
