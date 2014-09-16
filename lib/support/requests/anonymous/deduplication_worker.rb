@@ -1,4 +1,4 @@
-require 'support/requests/anonymous/anonymous_contact'
+require 'support/requests/anonymous'
 
 module Support
   module Requests
@@ -16,7 +16,7 @@ module Support
           current_time = Time.zone.now
           Rails.logger.info("Deduping anonymous feedback that arrived in the last 10 minutes")
           AnonymousContact.deduplicate_contacts_created_between(
-            (current_time - 10.minutes).to_i..current_time.to_i
+            (current_time - 10.minutes)..current_time
           )
         end
       end
