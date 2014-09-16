@@ -1,5 +1,5 @@
 require 'date'
-require_relative "service_feedback"
+require "support/requests/anonymous/service_feedback"
 
 module Support
   module Requests
