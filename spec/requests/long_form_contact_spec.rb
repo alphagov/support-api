@@ -7,10 +7,31 @@ describe "Long-form contacts" do
   # As a publisher
   # I want to record and view bugs, gripes and improvement suggestions submitted by GOV.UK users
 
-  it "accepts long-form anonymous contacts from the GOV.UK support form" do
+  it "accepts and saves long-form anonymous contacts from the GOV.UK support form" do
+    zendesk_request = expect_zendesk_to_receive_ticket(
+      "subject" => "Feedback about https://www.gov.uk/vat-rates",
+      "requester" => hash_including("email" => ZENDESK_ANONYMOUS_TICKETS_REQUESTER_EMAIL),
+      "tags" => %w{anonymous_feedback public_form long_form_contact},
+      "comment" => { "body" =>
+"[Details]
+Make page less 'meh'
+
+[URL]
+https://www.gov.uk/vat-rates
+
+[Referrer]
+Unknown
+
+[User agent]
+Safari
+
+[JavaScript Enabled]
+true
+"})
+
     user_submits_a_long_form_anonymous_contact(
       user_specified_url: "https://www.gov.uk/vat-rates",
-      details: "Make service less 'meh'",
+      details: "Make page less 'meh'",
       path: "/contact/govuk",
       user_agent: "Safari",
       javascript_enabled: true,
@@ -20,9 +41,10 @@ describe "Long-form contacts" do
     results = Support::Requests::Anonymous::LongFormContact.where(
       user_specified_url: 'https://www.gov.uk/vat-rates',
       path: "/contact/govuk",
-      details: "Make service less 'meh'",
+      details: "Make page less 'meh'",
     )
     expect(results.count).to eq(1)
+    expect(zendesk_request).to have_been_made
   end
 
   it "validates the long-form contact" do
