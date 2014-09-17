@@ -1,0 +1,23 @@
+require 'support/requests/anonymous/long_form_contact'
+
+module AnonymousFeedback
+  class LongFormContactController < ApplicationController
+    def create
+      request = Support::Requests::Anonymous::LongFormContact.new(long_form_contact_params)
+
+      if request.valid?
+        LongFormContactWorker.perform_async(long_form_contact_params)
+        render nothing: true, status: 202
+      else
+        render json: { "errors" => request.errors.to_a }, status: 422
+      end
+    end
+
+    private
+    def long_form_contact_params
+      params.require(:long_form_contact).permit(
+        :path, :referrer, :javascript_enabled, :user_agent, :details, :user_specified_url
+      )
+    end
+  end
+end

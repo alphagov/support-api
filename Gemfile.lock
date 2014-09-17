@@ -53,6 +53,10 @@ GEM
     factory_girl_rails (4.4.1)
       factory_girl (~> 4.4.0)
       railties (>= 3.0.0)
+    faraday (0.8.9)
+      multipart-post (~> 1.2.0)
+    faraday_middleware (0.9.0)
+      faraday (>= 0.7.4, < 0.9)
     gds-api-adapters (14.0.0)
       link_header
       lrucache (~> 0.1.1)
@@ -60,8 +64,13 @@ GEM
       plek
       rack-cache
       rest-client (~> 1.6.3)
+    gds_zendesk (1.0.2)
+      null_logger (= 0.0.1)
+      zendesk_api (= 1.0.2)
+    hashie (3.2.0)
     hike (1.2.3)
     i18n (0.6.11)
+    inflection (1.0.0)
     json (1.8.1)
     kgio (2.9.2)
     link_header (0.0.8)
@@ -79,6 +88,7 @@ GEM
     mlanett-redis-lock (0.2.6)
       redis
     multi_json (1.10.1)
+    multipart-post (1.2.0)
     mysql2 (0.3.16)
     null_logger (0.0.1)
     plek (1.8.1)
@@ -185,6 +195,14 @@ GEM
     whenever (0.9.0)
       activesupport (>= 2.3.4)
       chronic (>= 0.6.3)
+    zendesk_api (1.0.2)
+      faraday (>= 0.8.0)
+      faraday_middleware (>= 0.8.7)
+      hashie (>= 1.2)
+      inflection
+      mime-types
+      multi_json
+      multipart-post
 
 PLATFORMS
   ruby
@@ -195,6 +213,7 @@ DEPENDENCIES
   ci_reporter_rspec (= 0.0.2)
   factory_girl_rails (= 4.4.1)
   gds-api-adapters (= 14.0.0)
+  gds_zendesk (= 1.0.2)
   logstasher (= 0.5.3)
   mlanett-redis-lock (= 0.2.6)
   mysql2 (= 0.3.16)
