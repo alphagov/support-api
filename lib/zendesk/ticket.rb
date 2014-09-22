@@ -1,3 +1,5 @@
+require 'gds_zendesk/field_mappings'
+
 module Zendesk
   class Ticket
     def initialize(contact)
