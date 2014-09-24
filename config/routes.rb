@@ -11,6 +11,10 @@ Rails.application.routes.draw do
               format: false,
               controller: "long_form_contact",
               as: "long_form_contact"
+
+    get '/problem-reports/:date/totals',
+        constraints: { date: /\d{4}-\d{2}-\d{2}/ },
+        to: 'problem_reports#totals'
   end
 
   get "/healthcheck", :to => proc { [200, {}, ["OK"]] }
