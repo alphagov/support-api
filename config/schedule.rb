@@ -10,6 +10,10 @@ every 1.day, :at => '12:30 am' do
   rake "performance_platform_uploads:push_service_feedback"
 end
 
+every 1.day, :at => '12:40 am' do
+  rake "performance_platform_uploads:push_problem_report_daily_totals"
+end
+
 every 1.day, :at => '12:10 am' do
   rake "anonymous_feedback_deduplication:nightly"
 end
