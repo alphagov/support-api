@@ -12,6 +12,12 @@ Rails.application.routes.draw do
               controller: "long_form_contact",
               as: "long_form_contact"
 
+    resources "problem-reports",
+              only: :create,
+              format: false,
+              controller: "problem_reports",
+              as: "problem_report"
+
     get '/problem-reports/:date/totals',
         constraints: { date: /\d{4}-\d{2}-\d{2}/ },
         to: 'problem_reports#totals'

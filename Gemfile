@@ -11,6 +11,7 @@ gem 'gds-api-adapters', '14.8.0'
 gem 'whenever', '0.9.0', require: false
 gem 'mlanett-redis-lock', '0.2.6'
 gem "gds_zendesk", '1.0.2'
+gem "plek", "1.9.0"
 
 group :development do
   gem 'spring', '1.1.3'
