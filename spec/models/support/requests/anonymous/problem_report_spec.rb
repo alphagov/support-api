@@ -12,6 +12,20 @@ module Support
 
         it { should ensure_length_of(:what_doing).is_at_most(2**16) }
         it { should ensure_length_of(:what_wrong).is_at_most(2**16) }
+
+        context "#totals" do
+          it "returns totals for a given day" do
+            create(:problem_report, path: "/vat-rates")
+            create_list(:problem_report, 2, path: "/student-finance-login")
+
+            result = ProblemReport.totals_for(Date.today).map { |r| { path: r.path, total: r.total } }
+
+            expect(result).to eq([
+              { path: "/student-finance-login", total: 2 },
+              { path: "/vat-rates", total: 1 }
+            ])
+          end
+        end
       end
     end
   end
