@@ -19,7 +19,10 @@ module Support
         validates_presence_of :reason_why_not_actionable, unless: "is_actionable"
 
         scope :only_actionable, -> { where(is_actionable: true) }
-        default_scope { only_actionable }
+        default_scope {
+          only_actionable.
+          where("path is not null") # this can be removed when path can't be nil
+        }
 
         def self.deduplicate_contacts_created_between(interval)
           contacts = where(created_at: interval).order("created_at asc")

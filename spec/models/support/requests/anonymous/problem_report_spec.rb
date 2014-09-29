@@ -14,16 +14,25 @@ module Support
         it { should ensure_length_of(:what_wrong).is_at_most(2**16) }
 
         context "#totals" do
+          let(:result) {
+            ProblemReport.totals_for(Date.today).map { |r| { path: r.path, total: r.total } }
+          }
+
           it "returns totals for a given day" do
             create(:problem_report, path: "/vat-rates")
             create_list(:problem_report, 2, path: "/student-finance-login")
-
-            result = ProblemReport.totals_for(Date.today).map { |r| { path: r.path, total: r.total } }
 
             expect(result).to eq([
               { path: "/student-finance-login", total: 2 },
               { path: "/vat-rates", total: 1 }
             ])
+          end
+
+          it "ignores problem reports with null paths" do # there shouldn't really be any
+            create(:problem_report, path: "/vat-rates")
+            create(:problem_report, path: nil)
+
+            expect(result).to eq([ { path: "/vat-rates", total: 1 } ])
           end
         end
       end
