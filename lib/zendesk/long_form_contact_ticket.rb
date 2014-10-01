@@ -1,6 +1,4 @@
-require 'gds_zendesk'
 require 'zendesk/ticket'
-require 'erb'
 
 module Zendesk
   class LongFormContactTicket < Ticket
