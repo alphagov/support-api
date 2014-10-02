@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141002153042) do
+ActiveRecord::Schema.define(version: 20141002165103) do
 
   create_table "anonymous_contacts", force: true do |t|
     t.string   "type"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20141002153042) do
     t.string   "page_owner"
     t.text     "url"
     t.text     "user_agent"
-    t.string   "referrer"
+    t.string   "referrer",                    limit: 2048
     t.boolean  "javascript_enabled"
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
