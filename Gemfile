@@ -18,17 +18,17 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '3.0.1'
+  gem 'rspec-rails', '3.1.0'
   gem 'rspec-collection_matchers', '1.0.0'
-  gem 'simplecov', '0.8.2', require: false
+  gem 'simplecov', '0.9.1', require: false
   gem 'simplecov-rcov', '0.2.3', require: false
-  gem 'ci_reporter', '2.0.0.alpha2'
-  gem 'ci_reporter_rspec', '0.0.2'
+  gem 'ci_reporter', '2.0.0'
+  gem 'ci_reporter_rspec', '1.0.0'
   gem 'shoulda-matchers', '2.6.1'
   gem 'timecop', '0.7.1'
 end
 
 group :test do
-  gem 'factory_girl_rails', '4.4.1'
+  gem 'factory_girl_rails', '4.5.0'
   gem 'webmock', '1.18.0'
 end
