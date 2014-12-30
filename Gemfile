@@ -24,7 +24,7 @@ group :development, :test do
   gem 'simplecov-rcov', '0.2.3', require: false
   gem 'ci_reporter', '2.0.0'
   gem 'ci_reporter_rspec', '1.0.0'
-  gem 'shoulda-matchers', '2.6.1'
+  gem 'shoulda-matchers', '2.7.0'
   gem 'timecop', '0.7.1'
 end
 
