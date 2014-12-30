@@ -64,8 +64,6 @@ GEM
       railties (>= 3.0.0)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
-    faraday_middleware (0.9.1)
-      faraday (>= 0.7.4, < 0.10)
     gds-api-adapters (14.8.0)
       link_header
       lrucache (~> 0.1.1)
@@ -73,9 +71,9 @@ GEM
       plek
       rack-cache
       rest-client (~> 1.6.3)
-    gds_zendesk (1.0.2)
+    gds_zendesk (1.0.3)
       null_logger (= 0.0.1)
-      zendesk_api (= 1.0.2)
+      zendesk_api (= 1.5.1)
     globalid (0.3.0)
       activesupport (>= 4.1.0)
     hashie (3.3.2)
@@ -217,14 +215,13 @@ GEM
     whenever (0.9.0)
       activesupport (>= 2.3.4)
       chronic (>= 0.6.3)
-    zendesk_api (1.0.2)
-      faraday (>= 0.8.0)
-      faraday_middleware (>= 0.8.7)
-      hashie (>= 1.2)
+    zendesk_api (1.5.1)
+      faraday (~> 0.9)
+      hashie (>= 1.2, < 4.0)
       inflection
       mime-types
       multi_json
-      multipart-post
+      multipart-post (~> 2.0)
 
 PLATFORMS
   ruby
@@ -235,7 +232,7 @@ DEPENDENCIES
   ci_reporter_rspec (= 1.0.0)
   factory_girl_rails (= 4.5.0)
   gds-api-adapters (= 14.8.0)
-  gds_zendesk (= 1.0.2)
+  gds_zendesk (= 1.0.3)
   logstasher (= 0.5.3)
   mlanett-redis-lock (= 0.2.6)
   mysql2 (= 0.3.16)
