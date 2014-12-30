@@ -14,7 +14,7 @@ gem "gds_zendesk", '1.0.2'
 gem "plek", "1.9.0"
 
 group :development do
-  gem 'spring', '1.1.3'
+  gem 'spring', '1.2.0'
 end
 
 group :development, :test do
