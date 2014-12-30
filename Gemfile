@@ -8,7 +8,7 @@ gem 'airbrake', '4.1.0'
 gem 'sidekiq', '3.3.0'
 gem 'unicorn', '4.8.3'
 gem 'gds-api-adapters', '17.2.0'
-gem 'whenever', '0.9.0', require: false
+gem 'whenever', '0.9.4', require: false
 gem 'mlanett-redis-lock', '0.2.6'
 gem "gds_zendesk", '1.0.3'
 gem "plek", "1.9.0"
