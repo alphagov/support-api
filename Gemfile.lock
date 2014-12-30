@@ -64,7 +64,7 @@ GEM
       railties (>= 3.0.0)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
-    gds-api-adapters (14.8.0)
+    gds-api-adapters (17.2.0)
       link_header
       lrucache (~> 0.1.1)
       null_logger
@@ -231,7 +231,7 @@ DEPENDENCIES
   ci_reporter (= 2.0.0)
   ci_reporter_rspec (= 1.0.0)
   factory_girl_rails (= 4.5.0)
-  gds-api-adapters (= 14.8.0)
+  gds-api-adapters (= 17.2.0)
   gds_zendesk (= 1.0.3)
   logstasher (= 0.5.3)
   mlanett-redis-lock (= 0.2.6)
