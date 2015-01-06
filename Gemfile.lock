@@ -85,7 +85,7 @@ GEM
     kgio (2.9.2)
     link_header (0.0.8)
     logstash-event (1.1.5)
-    logstasher (0.6.1)
+    logstasher (0.6.2)
       logstash-event (~> 1.1.0)
       request_store
     loofah (2.0.1)
@@ -95,7 +95,7 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     mime-types (1.25.1)
-    mini_portile (0.6.1)
+    mini_portile (0.6.2)
     minitest (5.5.0)
     mlanett-redis-lock (0.2.6)
       redis
@@ -232,7 +232,7 @@ DEPENDENCIES
   factory_girl_rails (= 4.5.0)
   gds-api-adapters (= 17.2.0)
   gds_zendesk (= 1.0.3)
-  logstasher (= 0.6.1)
+  logstasher (= 0.6.2)
   mlanett-redis-lock (= 0.2.6)
   mysql2 (= 0.3.16)
   plek (= 1.9.0)
