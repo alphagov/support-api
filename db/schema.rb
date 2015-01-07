@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141002165103) do
+ActiveRecord::Schema.define(version: 20141230121133) do
 
   create_table "anonymous_contacts", force: true do |t|
     t.string   "type"
@@ -33,6 +33,29 @@ ActiveRecord::Schema.define(version: 20141002165103) do
     t.boolean  "is_actionable",                            default: true, null: false
     t.string   "reason_why_not_actionable"
     t.string   "path",                        limit: 2048
+    t.integer  "content_item_id"
+  end
+
+  create_table "content_items", force: true do |t|
+    t.string   "path",       limit: 2048, null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "content_items_organisations", id: false, force: true do |t|
+    t.integer "content_item_id"
+    t.integer "organisation_id"
+  end
+
+  add_index "content_items_organisations", ["content_item_id"], name: "index_content_items_organisations_on_content_item_id", using: :btree
+  add_index "content_items_organisations", ["organisation_id"], name: "index_content_items_organisations_on_organisation_id", using: :btree
+
+  create_table "organisations", force: true do |t|
+    t.string   "slug",       null: false
+    t.string   "web_url",    null: false
+    t.string   "title",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
