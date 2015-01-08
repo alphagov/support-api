@@ -1,4 +1,5 @@
 require 'support/requests/anonymous/anonymous_contact'
+require 'content_api/enhanced_content_api'
 
 module Support
   module Requests
@@ -15,6 +16,10 @@ module Support
             group(:path).
             order("total desc")
         }
+
+        def content_item_path
+          SupportApi::enhanced_content_api.content_item_path(path)
+        end
       end
     end
   end

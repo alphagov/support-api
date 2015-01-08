@@ -1,10 +1,30 @@
 require 'json'
+require 'plek'
+require 'gds_api/test_helpers/content_api'
 require 'rails_helper'
 
 describe "Problem reports" do
+  include GdsApi::TestHelpers::ContentApi
+
   # In order to improve information and services on GOV.UK
   # As a publisher
   # I want to record and view bugs, gripes submitted by GOV.UK users
+
+  let(:hmrc) { Organisation.where(slug: 'hm-revenue-customs').first }
+  let(:vat_rates_content_api_response) {
+    api_response = artefact_for_slug("/vat-rates").tap do |hash|
+      hash["tags"] = [
+        {
+          slug: "hm-revenue-customs",
+          web_url: "https://www.gov.uk/government/organisations/hm-revenue-customs",
+          title: "HM Revenue & Customs",
+          details: {
+            type: "organisation",
+          }
+        }
+      ]
+    end
+  }
 
   it "calculates the problem report totals by day" do
     Timecop.travel Date.new(2013,2,11)
@@ -23,6 +43,8 @@ describe "Problem reports" do
   end
 
   it "accepts and saves problem reports from the 'Is there anything wrong with this page?' form" do
+    content_api_has_an_artefact("/vat-rates", vat_rates_content_api_response)
+
     zendesk_request = expect_zendesk_to_receive_ticket(
       "subject" => "/vat-rates",
       "requester" => hash_including("email" => ZENDESK_ANONYMOUS_TICKETS_REQUESTER_EMAIL),
@@ -60,6 +82,9 @@ javascript_enabled: true
     )
     expect(results.count).to eq(1)
     expect(zendesk_request).to have_been_made
+
+    expect(results.first.content_item.path).to eq("/vat-rates")
+    expect(results.first.content_item.organisations).to eq([hmrc])
   end
 
   it "validates the problem report" do
