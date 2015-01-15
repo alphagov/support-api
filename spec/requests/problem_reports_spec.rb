@@ -12,7 +12,7 @@ describe "Problem reports" do
 
   let(:hmrc) { Organisation.where(slug: 'hm-revenue-customs').first }
   let(:vat_rates_content_api_response) {
-    api_response = artefact_for_slug("/vat-rates").tap do |hash|
+    api_response = artefact_for_slug("vat-rates").tap do |hash|
       hash["tags"] = [
         {
           slug: "hm-revenue-customs",
@@ -43,7 +43,7 @@ describe "Problem reports" do
   end
 
   it "accepts and saves problem reports from the 'Is there anything wrong with this page?' form" do
-    content_api_has_an_artefact("/vat-rates", vat_rates_content_api_response)
+    content_api_has_an_artefact("vat-rates", vat_rates_content_api_response)
 
     zendesk_request = expect_zendesk_to_receive_ticket(
       "subject" => "/vat-rates",
