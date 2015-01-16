@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141230121133) do
+ActiveRecord::Schema.define(version: 20150115215320) do
 
   create_table "anonymous_contacts", force: true do |t|
     t.string   "type"
@@ -35,6 +35,8 @@ ActiveRecord::Schema.define(version: 20141230121133) do
     t.string   "path",                        limit: 2048
     t.integer  "content_item_id"
   end
+
+  add_index "anonymous_contacts", ["path"], name: "index_anonymous_contacts_on_path", length: {"path"=>255}, using: :btree
 
   create_table "content_items", force: true do |t|
     t.string   "path",       limit: 2048, null: false
