@@ -8,7 +8,7 @@ class Organisation < ActiveRecord::Base
   validates :title, presence: true
 
   def self.for_path(path)
-    orgs_data = SupportApi::enhanced_content_api.organisations_for(path)
+    orgs_data = SupportApi::enhanced_content_api.organisations_for(path) || []
     orgs_data.map {|org_info| Organisation.where(org_info).first_or_create! }
   end
 end

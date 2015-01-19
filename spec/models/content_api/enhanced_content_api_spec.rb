@@ -66,7 +66,7 @@ module ContentAPI
 
       context "(mainstream content)" do
         it "fetches the organisations" do
-          content_api_has_an_artefact("/contact-ukvi", default_content_api_response)
+          content_api_has_an_artefact("contact-ukvi", default_content_api_response)
 
           expect(api.organisations_for("/contact-ukvi/overview")).to eq([
             slug: "uk-visas-and-immigration",
@@ -79,7 +79,7 @@ module ContentAPI
       context "(Depts & Policy content)" do
         it "fetches the organisations" do
           content_api_has_an_artefact(
-            "/government/publications/customer-service-commitments-uk-visas-and-immigration",
+            "government/publications/customer-service-commitments-uk-visas-and-immigration",
             default_content_api_response
           )
 
@@ -120,7 +120,7 @@ module ContentAPI
         }
 
         it "should be attributed to that org" do
-          content_api_has_an_artefact("/organisations/hm-revenue-customs", hmrc_org_content_api_response)
+          content_api_has_an_artefact("organisations/hm-revenue-customs", hmrc_org_content_api_response)
 
           [
             "/government/organisations/hm-revenue-customs",

@@ -30,7 +30,8 @@ module ContentAPI
     end
 
     def api_response(api_path)
-      @content_api.artefact(api_path)
+      slug = api_path[1..-1] # the content API expects "vat-rates" instead of "/vat-rates"
+      @content_api.artefact(slug)
     end
   end
 end
