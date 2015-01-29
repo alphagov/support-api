@@ -1,19 +1,23 @@
 require 'content_api/base_info_lookup'
 
 module ContentAPI
-  class OrgsContentLookup < BaseInfoLookup
+  class OrgsContentLookup
+    def initialize(content_store)
+      @content_store = content_store
+    end
+
     def applies?(path)
-      path =~ %r{^/government/organisations}
+      path =~ %r{^/government/organisations/.+}
     end
 
     def organisations_for(path)
-      api_path = content_item_api_path(path)
-      response = api_response(api_path)
+      path_to_lookup = content_item_path(path)
+      response = @content_store.content_item(path_to_lookup)
 
-      if response && response["details"]
+      if response
         [{
-          slug: response["details"]["slug"],
-          web_url: response["web_url"],
+          slug: organisation_slug(path),
+          web_url: Plek.new.website_root + response["base_path"],
           title: response["title"],
         }]
       else
@@ -22,11 +26,12 @@ module ContentAPI
     end
 
     def content_item_path(path)
-      "/" + URI(path).path.split("/")[1..3].join("/")
+      URI(path).path.split("/")[0..3].join("/")
     end
 
-    def content_item_api_path(path)
-      "/" + URI(path).path.split("/")[2..3].join("/")
+    private
+    def organisation_slug(path)
+      URI(path).path.split("/")[3]
     end
   end
 end
