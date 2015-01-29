@@ -1,15 +1,18 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'content_api/enhanced_content_api'
 require 'plek'
 require 'gds_api/test_helpers/content_api'
+require 'gds_api/test_helpers/content_store'
 require 'gds_api/content_api'
 
 module ContentAPI
   describe EnhancedContentAPI do
     include GdsApi::TestHelpers::ContentApi
+    include GdsApi::TestHelpers::ContentStore
 
     let(:content_api) { GdsApi::ContentApi.new(Plek.find('contentapi')) }
-    subject(:api) { EnhancedContentAPI.new(content_api) }
+    let(:content_store) { GdsApi::ContentStore.new(Plek.find('content-store')) }
+    subject(:api) { EnhancedContentAPI.new(content_api, content_store) }
 
     context "mapping multi-page content to slugs" do
       it "maps mainstream guide sections to the guide root" do
@@ -103,24 +106,20 @@ module ContentAPI
         let(:hmrc_info) {
           {
             slug: "hm-revenue-customs",
-            web_url: "https://www.gov.uk/government/organisations/hm-revenue-customs",
+            web_url: "http://www.dev.gov.uk/government/organisations/hm-revenue-customs",
             title: "HM Revenue & Customs",
           }
         }
 
-        let(:hmrc_org_content_api_response) {
+        let(:hmrc_org_content_store_response) {
           {
-            id: "https://www.gov.uk/api/organisations/hm-revenue-customs",
+            base_path: "/government/organisations/hm-revenue-customs",
             title: "HM Revenue & Customs",
-            web_url: "https://www.gov.uk/government/organisations/hm-revenue-customs",
-            details: {
-              slug: "hm-revenue-customs",
-            },
           }
         }
 
         it "should be attributed to that org" do
-          content_api_has_an_artefact("organisations/hm-revenue-customs", hmrc_org_content_api_response)
+          content_store_has_item("/government/organisations/hm-revenue-customs", hmrc_org_content_store_response)
 
           [
             "/government/organisations/hm-revenue-customs",
