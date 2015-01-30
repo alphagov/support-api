@@ -96,7 +96,7 @@ module ContentAPI
 
       context "(GDS-owned pages)" do
         it "should have GDS as the owning org" do
-          [ "/help", "/help/beta", "/contact", "/contact/govuk", "/search", "/browse", "/browse/driving" ].each do |gds_owned_path|
+          [ "/", "/help", "/help/beta", "/contact", "/contact/govuk", "/search", "/browse", "/browse/driving" ].each do |gds_owned_path|
             expect(api.organisations_for(gds_owned_path)).to eq([gds_org_info])
           end
         end
