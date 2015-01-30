@@ -3,7 +3,7 @@ require 'content_api/base_info_lookup'
 module ContentAPI
   class GDSOwnedContentLookup
     def applies?(path)
-      path =~ %r{(^/browse|^/contact($|/)|^/search|^/help($|/))}
+      path =~ %r{(^/$|^/browse|^/contact($|/)|^/search|^/help($|/))}
     end
 
     def organisations_for(path)
