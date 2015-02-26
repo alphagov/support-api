@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+# CSV exports of problem reports per organisation
+
+require 'csv'
+require 'json'
+require 'open-uri'
+require 'plek'
+require 'active_support/core_ext/date'
+
+def read(path, content_type)
+  url = Plek.find("support-api") + path
+  data = nil
+  open(url, "Accept" => content_type) {|f| data = f.read }
+  data
+end
+
+last_month_string = Date.today.last_month.strftime('%Y-%m')
+org_data = read("/anonymous-feedback/organisations", "application/json")
+org_slugs = JSON.parse(org_data).map {|org_hash| org_hash["slug"]}
+
+org_slugs.each do |slug|
+  path = "/anonymous-feedback/problem-reports/#{last_month_string}?organisation_slug=#{slug}"
+  data = read(path, "text/csv")
+  next if data.empty?
+
+  File.open("tmp/#{slug}.problem-reports.#{last_month_string}.csv", "w") do |f|
+    f << data
+  end
+end
