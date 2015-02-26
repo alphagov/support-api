@@ -25,10 +25,13 @@ module AnonymousFeedback
         head 404
       else
         @results = selected_organisation.problem_reports.where(created_at: interval)
-
-        respond_to do |format|
-          format.json { render }
-          format.csv { send_data Support::Requests::Anonymous::ProblemReport.to_csv(@results) }
+        if @results.empty?
+          head 204
+        else
+          respond_to do |format|
+            format.json { render }
+            format.csv { send_data Support::Requests::Anonymous::ProblemReport.to_csv(@results) }
+          end
         end
       end
     end

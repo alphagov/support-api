@@ -126,7 +126,7 @@ javascript_enabled: true
       }
     }
 
-    it "returns nothing if there is no feedback for that org" do
+    it "returns not found if the org doesn't exist" do
       get_json "/anonymous-feedback/problem-reports/2015-02?organisation_slug=hm-revenue-customs"
 
       expect(response.status).to eq(404)
@@ -143,10 +143,10 @@ javascript_enabled: true
       expect(json_response.first).to include(expected_output)
 
       get_json "/anonymous-feedback/problem-reports/2015-01?organisation_slug=government-digital-service"
-      expect(json_response.size).to eq(0)
+      expect(response.status).to eq(204)
 
       get_json "/anonymous-feedback/problem-reports/2015-02-03?organisation_slug=government-digital-service"
-      expect(json_response.size).to eq(0)
+      expect(response.status).to eq(204)
     end
 
     it "returns CSV output" do
