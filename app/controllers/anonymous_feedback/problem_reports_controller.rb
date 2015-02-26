@@ -16,6 +16,17 @@ module AnonymousFeedback
       end
     end
 
+    def index
+      if interval.nil?
+        head 422
+      elsif selected_organisation.nil?
+        head 404
+      else
+        @results = selected_organisation.problem_reports.where(created_at: interval)
+        render
+      end
+    end
+
     def create
       request = Support::Requests::Anonymous::ProblemReport.new(problem_report_params)
 
@@ -33,6 +44,22 @@ module AnonymousFeedback
         :path, :referrer, :javascript_enabled, :user_agent, :what_doing,
         :what_wrong, :source, :page_owner
       )
+    end
+
+    def filters
+      params.permit(:period, :organisation_slug)
+    end
+
+    def interval
+      case filters[:period]
+      when /^\d{4}-\d{2}-\d{2}$/ then Time.strptime(filters[:period], '%Y-%m-%d').all_day
+      when /^\d{4}-\d{2}$/ then DateTime.strptime(filters[:period], '%Y-%m').all_month
+      else nil
+      end
+    end
+
+    def selected_organisation
+      Organisation.where(slug: filters[:organisation_slug]).first
     end
   end
 end

@@ -14,4 +14,14 @@ FactoryGirl.define do
       service_satisfaction_rating 5
     end
   end
+
+  factory :organisation do
+    slug "ministry-of-magic"
+    web_url { "https://www.gov.uk/government/organisations/#{slug}" }
+    title "Ministry of Magic"
+  end
+
+  factory :content_item do
+    path "/search"
+  end
 end

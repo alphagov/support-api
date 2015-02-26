@@ -100,6 +100,55 @@ javascript_enabled: true
     )
   end
 
+  context "fetching for a particular organisation" do
+    let!(:problem_report) {
+      create(:problem_report,
+        what_wrong: "A",
+        what_doing: "B",
+        path: "/help", # this will automatically be assigned to GDS
+        referrer: "https://www.gov.uk/browse",
+        user_agent: "Safari",
+        created_at: Date.new(2015,02,02),
+        content_item: create(:content_item, path: "/help"),
+      )
+    }
+
+    let(:expected_output) {
+      {
+        "id" => problem_report.id,
+        "type" => "problem-report",
+        "what_wrong" => "A",
+        "what_doing" => "B",
+        "url" => "http://www.dev.gov.uk/help",
+        "referrer" => "https://www.gov.uk/browse",
+        "user_agent" => "Safari",
+      }
+    }
+
+    it "returns nothing if there is no feedback for that org" do
+      get_json "/anonymous-feedback/problem-reports/2015-02?organisation_slug=hm-revenue-customs"
+
+      expect(response.status).to eq(404)
+    end
+
+    it "filters the results by a time period" do
+      get_json "/anonymous-feedback/problem-reports/2015-02?organisation_slug=government-digital-service"
+      expect(response.status).to eq(200)
+      expect(json_response.size).to eq(1)
+      expect(json_response.first).to include(expected_output)
+
+      get_json "/anonymous-feedback/problem-reports/2015-02-02?organisation_slug=government-digital-service"
+      expect(json_response.size).to eq(1)
+      expect(json_response.first).to include(expected_output)
+
+      get_json "/anonymous-feedback/problem-reports/2015-01?organisation_slug=government-digital-service"
+      expect(json_response.size).to eq(0)
+
+      get_json "/anonymous-feedback/problem-reports/2015-02-03?organisation_slug=government-digital-service"
+      expect(json_response.size).to eq(0)
+    end
+  end
+
 private
   def user_submits_a_problem_report(options)
     post '/anonymous-feedback/problem-reports',

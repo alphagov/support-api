@@ -21,7 +21,7 @@ module Support
         scope :only_actionable, -> { where(is_actionable: true) }
         default_scope {
           only_actionable.
-          where("path is not null") # this can be removed when path can't be nil
+          where.not(path: nil) # this can be removed when path can't be nil
         }
 
         def self.deduplicate_contacts_created_between(interval)

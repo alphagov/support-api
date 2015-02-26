@@ -21,6 +21,11 @@ Rails.application.routes.draw do
     get '/problem-reports/:date/totals',
         constraints: { date: /\d{4}-\d{2}-\d{2}/ },
         to: 'problem_reports#totals'
+
+    get '/problem-reports/:period',
+        constraints: { period: /\d{4}-\d{2}(-\d{2})?/ },
+        to: 'problem_reports#index'
+
   end
 
   get "/healthcheck", :to => proc { [200, {}, ["OK"]] }
