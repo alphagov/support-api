@@ -1,4 +1,5 @@
 require 'json'
+require 'csv'
 require 'plek'
 require 'gds_api/test_helpers/content_api'
 require 'rails_helper'
@@ -146,6 +147,18 @@ javascript_enabled: true
 
       get_json "/anonymous-feedback/problem-reports/2015-02-03?organisation_slug=government-digital-service"
       expect(json_response.size).to eq(0)
+    end
+
+    it "returns CSV output" do
+      get "/anonymous-feedback/problem-reports/2015-02.csv?organisation_slug=government-digital-service"
+
+      expect(response.status).to eq(200)
+      csv_response = CSV.parse(response.body)
+
+      expect(csv_response).to eq([
+        ["where feedback was left", "creation date", "feedback", "user came from"],
+        ["http://www.dev.gov.uk/help", "2015-02-02", "action: B\nproblem: A", "https://www.gov.uk/browse"],
+      ])
     end
   end
 

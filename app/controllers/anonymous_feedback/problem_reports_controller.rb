@@ -1,5 +1,7 @@
 module AnonymousFeedback
   class ProblemReportsController < ApplicationController
+    include ActionController::MimeResponds
+
     def totals
       date = DateTime.parse(params[:date]) rescue nil
 
@@ -23,7 +25,11 @@ module AnonymousFeedback
         head 404
       else
         @results = selected_organisation.problem_reports.where(created_at: interval)
-        render
+
+        respond_to do |format|
+          format.json { render }
+          format.csv { send_data Support::Requests::Anonymous::ProblemReport.to_csv(@results) }
+        end
       end
     end
 
