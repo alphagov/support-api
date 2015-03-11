@@ -6,7 +6,7 @@ module AnonymousFeedback
       it "returns a 404 for invalid dates" do
         get :totals, { date: "9999-99-99" }
 
-        expect(response.status).to eq(404)
+        expect(response.status).to eq(422)
       end
     end
   end

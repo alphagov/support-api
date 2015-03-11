@@ -9,7 +9,7 @@ module AnonymousFeedback
       date = DateTime.parse(params[:date]) rescue nil
 
       if date.nil?
-        head 404
+        head 422
       else
         totals = Support::Requests::Anonymous::ProblemReport.totals_for(date)
         result = {
