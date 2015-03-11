@@ -101,7 +101,7 @@ javascript_enabled: true
     )
   end
 
-  context "fetching for a particular organisation" do
+  context "fetching" do
     let!(:problem_report) {
       create(:problem_report,
         what_wrong: "A",
@@ -126,39 +126,58 @@ javascript_enabled: true
       }
     }
 
-    it "returns not found if the org doesn't exist" do
-      get_json "/anonymous-feedback/problem-reports/2015-02?organisation_slug=hm-revenue-customs"
-
-      expect(response.status).to eq(404)
-    end
-
     it "filters the results by a time period" do
-      get_json "/anonymous-feedback/problem-reports/2015-02?organisation_slug=government-digital-service"
+      get_json "/anonymous-feedback/problem-reports/2015-02"
       expect(response.status).to eq(200)
       expect(json_response.size).to eq(1)
       expect(json_response.first).to include(expected_output)
 
-      get_json "/anonymous-feedback/problem-reports/2015-02-02?organisation_slug=government-digital-service"
+      get_json "/anonymous-feedback/problem-reports/2015-02-02"
       expect(json_response.size).to eq(1)
       expect(json_response.first).to include(expected_output)
 
-      get_json "/anonymous-feedback/problem-reports/2015-01?organisation_slug=government-digital-service"
+      get_json "/anonymous-feedback/problem-reports/2015-01"
       expect(response.status).to eq(204)
 
-      get_json "/anonymous-feedback/problem-reports/2015-02-03?organisation_slug=government-digital-service"
+      get_json "/anonymous-feedback/problem-reports/2015-02-03"
       expect(response.status).to eq(204)
     end
 
-    it "returns CSV output" do
-      get "/anonymous-feedback/problem-reports/2015-02.csv?organisation_slug=government-digital-service"
+    context "for a particular organisation" do
+      it "returns not found if the org doesn't exist" do
+        get_json "/anonymous-feedback/problem-reports/2015-02?organisation_slug=hm-revenue-customs"
 
-      expect(response.status).to eq(200)
-      csv_response = CSV.parse(response.body)
+        expect(response.status).to eq(404)
+      end
 
-      expect(csv_response).to eq([
-        ["where feedback was left", "creation date", "feedback", "user came from"],
-        ["http://www.dev.gov.uk/help", "2015-02-02", "action: B\nproblem: A", "https://www.gov.uk/browse"],
-      ])
+      it "filters the results by a time period" do
+        get_json "/anonymous-feedback/problem-reports/2015-02?organisation_slug=government-digital-service"
+        expect(response.status).to eq(200)
+        expect(json_response.size).to eq(1)
+        expect(json_response.first).to include(expected_output)
+
+        get_json "/anonymous-feedback/problem-reports/2015-02-02?organisation_slug=government-digital-service"
+        expect(json_response.size).to eq(1)
+        expect(json_response.first).to include(expected_output)
+
+        get_json "/anonymous-feedback/problem-reports/2015-01?organisation_slug=government-digital-service"
+        expect(response.status).to eq(204)
+
+        get_json "/anonymous-feedback/problem-reports/2015-02-03?organisation_slug=government-digital-service"
+        expect(response.status).to eq(204)
+      end
+
+      it "returns CSV output" do
+        get "/anonymous-feedback/problem-reports/2015-02.csv?organisation_slug=government-digital-service"
+
+        expect(response.status).to eq(200)
+        csv_response = CSV.parse(response.body)
+
+        expect(csv_response).to eq([
+          ["where feedback was left", "creation date", "feedback", "user came from"],
+          ["http://www.dev.gov.uk/help", "2015-02-02", "action: B\nproblem: A", "https://www.gov.uk/browse"],
+        ])
+      end
     end
   end
 

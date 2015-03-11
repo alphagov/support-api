@@ -2,6 +2,9 @@ module AnonymousFeedback
   class ProblemReportsController < ApplicationController
     include ActionController::MimeResponds
 
+    before_action :load_selected_organisation, only: [:index]
+    before_action :parse_interval, only: [:index]
+
     def totals
       date = DateTime.parse(params[:date]) rescue nil
 
@@ -19,19 +22,19 @@ module AnonymousFeedback
     end
 
     def index
-      if interval.nil?
-        head 422
-      elsif selected_organisation.nil?
-        head 404
+      query = if @selected_organisation
+                @selected_organisation.problem_reports
+              else
+                Support::Requests::Anonymous::ProblemReport
+              end
+      @results = query.where(created_at: @interval)
+
+      if @results.empty?
+        head 204
       else
-        @results = selected_organisation.problem_reports.where(created_at: interval)
-        if @results.empty?
-          head 204
-        else
-          respond_to do |format|
-            format.json { render }
-            format.csv { send_data Support::Requests::Anonymous::ProblemReport.to_csv(@results) }
-          end
+        respond_to do |format|
+          format.json { render }
+          format.csv { send_data Support::Requests::Anonymous::ProblemReport.to_csv(@results) }
         end
       end
     end
@@ -59,16 +62,20 @@ module AnonymousFeedback
       params.permit(:period, :organisation_slug)
     end
 
-    def interval
-      case filters[:period]
-      when /^\d{4}-\d{2}-\d{2}$/ then Time.strptime(filters[:period], '%Y-%m-%d').all_day
-      when /^\d{4}-\d{2}$/ then DateTime.strptime(filters[:period], '%Y-%m').all_month
-      else nil
-      end
+    def parse_interval
+      @interval = case filters[:period]
+                  when /^\d{4}-\d{2}-\d{2}$/ then Time.strptime(filters[:period], '%Y-%m-%d').all_day
+                  when /^\d{4}-\d{2}$/ then DateTime.strptime(filters[:period], '%Y-%m').all_month
+                  else nil
+                  end
+      head 422 unless @interval
     end
 
-    def selected_organisation
-      Organisation.where(slug: filters[:organisation_slug]).first
+    def load_selected_organisation
+      if filters[:organisation_slug]
+        @selected_organisation = Organisation.find_by(slug: filters[:organisation_slug])
+        head 404 unless @selected_organisation
+      end
     end
   end
 end
