@@ -1,5 +1,6 @@
 class ContentItem < ActiveRecord::Base
   has_and_belongs_to_many :organisations
+  has_many :problem_reports, class_name: "Support::Requests::Anonymous::ProblemReport"
   validates :path, presence: true
 
   before_create :fetch_organisations

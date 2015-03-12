@@ -1,4 +1,5 @@
 require 'json'
+require 'csv'
 require 'plek'
 require 'gds_api/test_helpers/content_api'
 require 'rails_helper'
@@ -98,6 +99,86 @@ javascript_enabled: true
     expect(JSON.parse(response.body)["errors"]).to include(
       "What wrong is too long (maximum is 65536 characters)",
     )
+  end
+
+  context "fetching" do
+    let!(:problem_report) {
+      create(:problem_report,
+        what_wrong: "A",
+        what_doing: "B",
+        path: "/help", # this will automatically be assigned to GDS
+        referrer: "https://www.gov.uk/browse",
+        user_agent: "Safari",
+        created_at: Date.new(2015,02,02),
+        content_item: create(:content_item, path: "/help"),
+      )
+    }
+
+    let(:expected_output) {
+      {
+        "id" => problem_report.id,
+        "type" => "problem-report",
+        "what_wrong" => "A",
+        "what_doing" => "B",
+        "url" => "http://www.dev.gov.uk/help",
+        "referrer" => "https://www.gov.uk/browse",
+        "user_agent" => "Safari",
+      }
+    }
+
+    it "filters the results by a time period" do
+      get_json "/anonymous-feedback/problem-reports/2015-02"
+      expect(response.status).to eq(200)
+      expect(json_response.size).to eq(1)
+      expect(json_response.first).to include(expected_output)
+
+      get_json "/anonymous-feedback/problem-reports/2015-02-02"
+      expect(json_response.size).to eq(1)
+      expect(json_response.first).to include(expected_output)
+
+      get_json "/anonymous-feedback/problem-reports/2015-01"
+      expect(response.status).to eq(204)
+
+      get_json "/anonymous-feedback/problem-reports/2015-02-03"
+      expect(response.status).to eq(204)
+    end
+
+    context "for a particular organisation" do
+      it "returns not found if the org doesn't exist" do
+        get_json "/anonymous-feedback/problem-reports/2015-02?organisation_slug=hm-revenue-customs"
+
+        expect(response.status).to eq(404)
+      end
+
+      it "filters the results by a time period" do
+        get_json "/anonymous-feedback/problem-reports/2015-02?organisation_slug=government-digital-service"
+        expect(response.status).to eq(200)
+        expect(json_response.size).to eq(1)
+        expect(json_response.first).to include(expected_output)
+
+        get_json "/anonymous-feedback/problem-reports/2015-02-02?organisation_slug=government-digital-service"
+        expect(json_response.size).to eq(1)
+        expect(json_response.first).to include(expected_output)
+
+        get_json "/anonymous-feedback/problem-reports/2015-01?organisation_slug=government-digital-service"
+        expect(response.status).to eq(204)
+
+        get_json "/anonymous-feedback/problem-reports/2015-02-03?organisation_slug=government-digital-service"
+        expect(response.status).to eq(204)
+      end
+
+      it "returns CSV output" do
+        get "/anonymous-feedback/problem-reports/2015-02.csv?organisation_slug=government-digital-service"
+
+        expect(response.status).to eq(200)
+        csv_response = CSV.parse(response.body)
+
+        expect(csv_response).to eq([
+          ["where feedback was left", "creation date", "feedback", "user came from"],
+          ["http://www.dev.gov.uk/help", "2015-02-02", "action: B\nproblem: A", "https://www.gov.uk/browse"],
+        ])
+      end
+    end
   end
 
 private

@@ -1,3 +1,4 @@
+require 'csv'
 require 'support/requests/anonymous/anonymous_contact'
 require 'content_api/enhanced_content_api'
 
@@ -19,6 +20,15 @@ module Support
 
         def content_item_path
           SupportApi::enhanced_content_api.content_item_path(path)
+        end
+
+        def self.to_csv(reports)
+          CSV.generate do |csv|
+            csv << ProblemReportPresenter.header_row
+            reports.each do |report|
+              csv << ProblemReportPresenter.new(report).to_a
+            end
+          end
         end
       end
     end
