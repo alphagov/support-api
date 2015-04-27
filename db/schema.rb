@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20150313183713) do
 
-  create_table "anonymous_contacts", force: true do |t|
+  create_table "anonymous_contacts", force: :cascade do |t|
     t.string   "type"
     t.text     "what_doing"
     t.text     "what_wrong"
@@ -38,13 +38,13 @@ ActiveRecord::Schema.define(version: 20150313183713) do
 
   add_index "anonymous_contacts", ["path"], name: "index_anonymous_contacts_on_path", length: {"path"=>255}, using: :btree
 
-  create_table "content_items", force: true do |t|
+  create_table "content_items", force: :cascade do |t|
     t.string   "path",       limit: 2048, null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
 
-  create_table "content_items_organisations", id: false, force: true do |t|
+  create_table "content_items_organisations", id: false, force: :cascade do |t|
     t.integer "content_item_id"
     t.integer "organisation_id"
   end
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20150313183713) do
   add_index "content_items_organisations", ["content_item_id"], name: "index_content_items_organisations_on_content_item_id", using: :btree
   add_index "content_items_organisations", ["organisation_id"], name: "index_content_items_organisations_on_organisation_id", using: :btree
 
-  create_table "organisations", force: true do |t|
+  create_table "organisations", force: :cascade do |t|
     t.string   "slug",       null: false
     t.string   "web_url",    null: false
     t.string   "title",      null: false
