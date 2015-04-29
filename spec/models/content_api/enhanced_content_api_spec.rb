@@ -130,6 +130,19 @@ module ContentAPI
           end
         end
       end
+
+      context "(APIs do not return anything)" do
+        before do
+          content_api_does_not_have_an_artefact("non-existent-page")
+          content_api_does_not_have_an_artefact("page-not-found")
+        end
+
+        it "should be attributed to GDS" do
+          ["/non-existent-page", "/page-not-found"].each do |gds_owned_path|
+            expect(api.organisations_for(gds_owned_path)).to eq([gds_org_info])
+          end
+        end
+      end
     end
   end
 end

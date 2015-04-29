@@ -17,7 +17,7 @@ describe ContentItemEnrichmentWorker do
 
     it "creates a content item for the problem report, but no orgs" do
       expect(problem_report.content_item.path).to eq("/non-existent-page")
-      expect(problem_report.content_item.organisations).to be_empty
+      expect(problem_report.content_item.organisations.first["title"]).to eq("Government Digital Service")
     end
   end
 
