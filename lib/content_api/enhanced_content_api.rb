@@ -5,6 +5,7 @@ require 'content_api/gds_owned_content_lookup'
 require 'content_api/mainstream_info_lookup'
 require 'content_api/orgs_content_lookup'
 require 'content_api/worldwide_orgs_content_lookup'
+require 'content_api/default_org_content_lookup'
 
 module ContentAPI
   class EnhancedContentAPI
@@ -15,6 +16,7 @@ module ContentAPI
         OrgsContentLookup.new(organisations_api),
         WorldwideOrgsContentLookup.new,
         DeptsAndPolicyContentLookup.new(content_api),
+        DefaultOrgContentLookup.new
       ]
     end
 
