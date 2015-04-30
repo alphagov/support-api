@@ -10,8 +10,8 @@ module Support
         it { should allow_value("inside_government").for(:source) }
         it { should allow_value("hmrc").for(:page_owner) }
 
-        it { should ensure_length_of(:what_doing).is_at_most(2**16) }
-        it { should ensure_length_of(:what_wrong).is_at_most(2**16) }
+        it { should validate_length_of(:what_doing).is_at_most(2**16) }
+        it { should validate_length_of(:what_wrong).is_at_most(2**16) }
 
         context "#totals" do
           let(:result) {
