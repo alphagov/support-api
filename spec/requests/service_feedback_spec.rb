@@ -8,7 +8,7 @@ describe "Service feedback" do
   # I want to record and view bugs, gripes and improvement suggestions submitted by the service users
 
   before do
-    the_date_is("2013-02-28")
+    Timecop.travel Time.utc(2013,2,28)
   end
 
   it "accepts submissions with comments" do
@@ -56,10 +56,6 @@ describe "Service feedback" do
   end
 
   private
-  def the_date_is(date_string)
-    Timecop.travel Date.parse(date_string)
-  end
-
   def user_submits_satisfaction_survey_on_done_page(options)
     post '/anonymous-feedback/service-feedback',
          { "service_feedback" => options }.to_json,
