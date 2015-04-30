@@ -10,7 +10,7 @@ module Support
 
         validates :referrer, url: true, length: { maximum: 2048 }, allow_nil: true
         validates :url,      url: true, length: { maximum: 2048 }, allow_nil: true
-        validates :path,     url: true, length: { maximum: 2048 }, allow_nil: true
+        validates :path,     url: true, length: { maximum: 2048 }, presence: true
         validates :user_agent, length: { maximum: 2048 }
         validates :details, length: { maximum: 2 ** 16 }
         validates_inclusion_of :javascript_enabled, in: [ true, false ]

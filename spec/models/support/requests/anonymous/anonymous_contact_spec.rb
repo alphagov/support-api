@@ -63,8 +63,8 @@ module Support
 
         context "path" do
           it { should allow_value("/something").for(:path) }
-          it { should allow_value(nil).for(:path) }
           it { should allow_value("/" + ("a" * 2040)).for(:path) }
+          it { should_not allow_value("").for(:path) }
           it { should_not allow_value("/" + ("a" * 2050)).for(:path) }
           it { should_not allow_value("/méh/fào?bar").for(:path) }
         end
