@@ -27,13 +27,6 @@ module Support
               { path: "/vat-rates", total: 1 }
             ])
           end
-
-          it "ignores problem reports with null paths" do # there shouldn't really be any
-            create(:problem_report, path: "/vat-rates")
-            create(:problem_report, path: nil)
-
-            expect(result).to eq([ { path: "/vat-rates", total: 1 } ])
-          end
         end
       end
     end
