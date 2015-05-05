@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430133750) do
+ActiveRecord::Schema.define(version: 20150505162618) do
 
   create_table "anonymous_contacts", force: :cascade do |t|
     t.string   "type",                        limit: 255
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20150430133750) do
     t.text     "user_specified_url",          limit: 65535
     t.boolean  "is_actionable",               limit: 1,     default: true, null: false
     t.string   "reason_why_not_actionable",   limit: 255
-    t.string   "path",                        limit: 2048
+    t.string   "path",                        limit: 2048,                 null: false
     t.integer  "content_item_id",             limit: 4
   end
 
