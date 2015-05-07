@@ -6,6 +6,10 @@ set :output, {:error => 'log/cron.error.log', :standard => 'log/cron.log'}
 # We need Rake to use our own environment
 job_type :rake, "cd :path && govuk_setenv support-api bundle exec rake :task :output"
 
+every 1.month, :at => '12:40 am' do
+  rake "performance_platform_uploads:push_problem_report_stats"
+end
+
 every 1.day, :at => '12:30 am' do
   rake "performance_platform_uploads:push_service_feedback"
 end

@@ -18,6 +18,8 @@ module Support
             order("total desc")
         }
 
+        scope :with_known_page_owner, -> { where.not(page_owner: nil) }
+
         def content_item_path
           SupportApi::enhanced_content_api.content_item_path(path)
         end
