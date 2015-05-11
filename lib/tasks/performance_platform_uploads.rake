@@ -19,4 +19,14 @@ namespace :performance_platform_uploads do
       puts "ProblemReportDailyTotalsPPUploaderWorker invoked"
     end
   end
+
+  desc "Trigger an upload of problem report stats (grouped by dept) to the performance platform"
+  task :push_problem_report_stats => :environment do
+    require 'distributed_lock'
+
+    DistributedLock.new('support:problem_report_stats_to_pp').lock do
+      ProblemReportStatsPPUploaderWorker.run
+      puts "ProblemReportStatsPPUploaderWorker invoked"
+    end
+  end
 end
