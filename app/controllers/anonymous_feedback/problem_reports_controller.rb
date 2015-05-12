@@ -33,7 +33,7 @@ module AnonymousFeedback
         head 204
       else
         respond_to do |format|
-          format.json { render }
+          format.json { render json: @results }
           format.csv { send_data Support::Requests::Anonymous::ProblemReport.to_csv(@results) }
         end
       end
