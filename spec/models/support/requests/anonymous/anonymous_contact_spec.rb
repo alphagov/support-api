@@ -83,6 +83,47 @@ module Support
             expect(second.reason_why_not_actionable).to eq("duplicate")
           end
         end
+
+        context "scopes" do
+          it "can find urls beginning with the given path" do
+            a = contact(path: "/some-calculator/y/abc")
+            b = contact(path: "/some-calculator/y/abc/x")
+            c = contact(path: "/tax-disc")
+
+            result = AnonymousContact.matching_path_prefix("/some-calculator")
+
+            expect(result).to contain_exactly(a, b)
+          end
+
+          it "can return the results in reverse chronological order" do
+            a = contact(created_at: Time.now - 1.hour)
+            b = contact(created_at: Time.now - 2.hour)
+            c = contact(created_at: Time.now)
+
+            expect(AnonymousContact.most_recent_first).to eq([c, a, b])
+          end
+
+          it "can filter reports with personal information" do
+            a = contact(personal_information_status: "absent")
+            contact(personal_information_status: "suspected")
+
+            expect(AnonymousContact.free_of_personal_info).to eq([a])
+          end
+
+          it "can return only actionable feedback" do
+            a = contact(is_actionable: true)
+            contact(is_actionable: false, reason_why_not_actionable: "spam")
+
+            expect(AnonymousContact.only_actionable).to eq([a])
+          end
+        end
+
+        describe "pagination" do
+          it "returns maximum of 50 results" do
+            create_list(:anonymous_contact, 70)
+            expect(AnonymousContact.page(1).count).to eq(50)
+          end
+        end
       end
     end
   end

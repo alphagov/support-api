@@ -16,11 +16,20 @@ module Support
         validates_inclusion_of :is_actionable, in: [ true, false ]
         validates_presence_of :reason_why_not_actionable, unless: "is_actionable"
 
+        scope :free_of_personal_info, -> {
+          where(personal_information_status: "absent")
+        }
         scope :only_actionable, -> { where(is_actionable: true) }
+        scope :most_recent_first, -> { order("created_at DESC") }
+        scope :matching_path_prefix, ->(path) { where("path LIKE ?", path + "%") }
+
         default_scope {
           only_actionable.
           where.not(path: nil) # this can be removed when path can't be nil
         }
+
+        PAGE_SIZE = 50
+        paginates_per PAGE_SIZE
 
         def self.deduplicate_contacts_created_between(interval)
           contacts = where(created_at: interval).order("created_at asc")

@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources "anonymous-feedback",
+            only: :index,
+            format: false,
+            controller: "anonymous_feedback",
+            as: "anonymous_feedback"
+
   scope "anonymous-feedback", module: "anonymous_feedback" do
     resources "service-feedback",
               only: :create,
