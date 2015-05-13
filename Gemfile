@@ -12,6 +12,7 @@ gem 'whenever', '0.9.4', require: false
 gem 'mlanett-redis-lock', '0.2.6'
 gem "gds_zendesk", '1.0.4'
 gem "plek", "1.10.0"
+gem 'kaminari', "~> 0.16.3"
 
 group :development do
   gem 'spring', '1.3.5'
