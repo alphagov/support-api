@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505162618) do
+ActiveRecord::Schema.define(version: 20150513094727) do
 
   create_table "anonymous_contacts", force: :cascade do |t|
     t.string   "type",                        limit: 255
@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 20150505162618) do
     t.text     "details",                     limit: 65535
     t.string   "source",                      limit: 255
     t.string   "page_owner",                  limit: 255
-    t.text     "url",                         limit: 65535
     t.text     "user_agent",                  limit: 65535
     t.string   "referrer",                    limit: 2048
     t.boolean  "javascript_enabled",          limit: 1

@@ -28,12 +28,9 @@ module Support
           "problem-report"
         end
 
-        def url
-          path ? Plek.new.website_root + path : nil
-        end
-
         def as_json(options)
-          super(only: [ :type, :url, :id, :created_at, :what_wrong, :what_doing, :referrer, :user_agent ])
+          super(only: [ :type, :id, :created_at, :what_wrong, :what_doing, :referrer, :user_agent ]).
+            merge(url: url)
         end
 
         def self.to_csv(reports)

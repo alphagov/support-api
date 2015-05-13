@@ -7,7 +7,7 @@ module Support
   module Requests
     module Anonymous
       describe AnonymousContact, :type => :model do
-        DEFAULTS = { javascript_enabled: true, url: "https://www.gov.uk/tax-disc", path: "/tax-disc" }
+        DEFAULTS = { javascript_enabled: true, path: "/tax-disc" }
 
         def new_contact(options = {})
           TestContact.new(DEFAULTS.merge(options))
@@ -47,18 +47,10 @@ module Support
           expect(new_contact(personal_information_status: "abcde")).to_not be_valid
         end
 
-        it "stores the relative path of the page from which the feedback was lodged" do
-          contact = new_contact(url: "https://www.gov.uk/vat-rates")
-          contact.save!
-          expect(contact.path).to eq("/vat-rates")
-        end
-
         context "URLs" do
-          it { should allow_value("https://www.gov.uk/something").for(:url) }
-          it { should allow_value(nil).for(:url) }
-          it { should allow_value("http://" + ("a" * 2040)).for(:url) }
-          it { should_not allow_value("http://" + ("a" * 2050)).for(:url) }
-          it { should_not allow_value("http://bla.example.org:9292/méh/fào?bar").for(:url) }
+          it "should be derived from the path" do
+            expect(new_contact(path: "/vat-rates").url).to eq("http://www.dev.gov.uk/vat-rates")
+          end
         end
 
         context "path" do
