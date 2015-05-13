@@ -12,4 +12,8 @@ class Organisation < ActiveRecord::Base
     orgs_data = SupportApi::enhanced_content_api.organisations_for(path) || []
     orgs_data.map {|org_info| Organisation.where(org_info).first_or_create! }
   end
+
+  def as_json(options)
+    super(only: [:slug, :web_url, :title])
+  end
 end

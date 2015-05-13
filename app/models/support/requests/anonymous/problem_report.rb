@@ -24,6 +24,18 @@ module Support
           SupportApi::enhanced_content_api.content_item_path(path)
         end
 
+        def type
+          "problem-report"
+        end
+
+        def url
+          path ? Plek.new.website_root + path : nil
+        end
+
+        def as_json(options)
+          super(only: [ :type, :url, :id, :created_at, :what_wrong, :what_doing, :referrer, :user_agent ])
+        end
+
         def self.to_csv(reports)
           CSV.generate do |csv|
             csv << ProblemReportPresenter.header_row
