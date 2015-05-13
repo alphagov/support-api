@@ -39,7 +39,7 @@ module Support
         end
 
         def start_timestamp
-          @day.to_time.iso8601
+          @day.to_datetime.iso8601
         end
 
         def filter_by_day_and_slug

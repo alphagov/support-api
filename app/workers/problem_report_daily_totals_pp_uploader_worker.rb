@@ -15,7 +15,7 @@ class ProblemReportDailyTotalsPPUploaderWorker
     )
     support_api = GdsApi::SupportApi.new(Plek.find('support-api'))
 
-    date = Date.new(year, month, day)
+    date = Time.utc(year, month, day)
     totals = support_api.problem_report_daily_totals_for(date).to_hash
 
     request_details = transform_daily_problem_report_totals(date, totals)
@@ -34,7 +34,7 @@ private
     totals["data"].map do |entry|
       {
         "_id" => "#{date.to_time.strftime("%Y-%m-%d")}_#{entry["path"].gsub("/", "")}",
-        "_timestamp" => date.to_time.iso8601,
+        "_timestamp" => date.to_datetime.iso8601,
         "period" => "day",
         "pagePath" => entry["path"],
         "total" => entry["total"],

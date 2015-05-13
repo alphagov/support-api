@@ -32,7 +32,7 @@ describe "problem report totals PP upload" do
       }
     ])
 
-    Timecop.travel Date.new(2014,9,30)
+    Timecop.travel Time.utc(2014,9,30)
 
     ProblemReportDailyTotalsPPUploaderWorker.run
 

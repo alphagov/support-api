@@ -12,7 +12,7 @@ class ServiceFeedbackPPUploaderWorker
       PP_DATA_IN_API[:url],
       bearer_token: PP_DATA_IN_API[:bearer_token]
     )
-    request_details = ServiceFeedbackAggregatedMetrics.new(Date.new(year, month, day), transaction_slug).to_h
+    request_details = ServiceFeedbackAggregatedMetrics.new(Time.utc(year, month, day), transaction_slug).to_h
     api.submit_service_feedback_day_aggregate(transaction_slug, request_details)
   end
 
