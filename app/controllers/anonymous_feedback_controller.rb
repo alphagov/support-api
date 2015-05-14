@@ -6,6 +6,7 @@ class AnonymousFeedbackController < ApplicationController
     end
 
     query = Support::Requests::Anonymous::AnonymousContact.
+      only_actionable.
       free_of_personal_info.
       matching_path_prefix(params[:path_prefix]).
       most_recent_first

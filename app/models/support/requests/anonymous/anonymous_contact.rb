@@ -23,11 +23,6 @@ module Support
         scope :most_recent_first, -> { order("created_at DESC") }
         scope :matching_path_prefix, ->(path) { where("path LIKE ?", path + "%") }
 
-        default_scope {
-          only_actionable.
-          where.not(path: nil) # this can be removed when path can't be nil
-        }
-
         PAGE_SIZE = 50
         paginates_per PAGE_SIZE
 

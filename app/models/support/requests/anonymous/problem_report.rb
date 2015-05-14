@@ -13,6 +13,7 @@ module Support
 
         scope :totals_for, ->(date) {
           where(created_at: date.beginning_of_day..date.end_of_day).
+            only_actionable.
             select("path, count(path) as total").
             group(:path).
             order("total desc")
