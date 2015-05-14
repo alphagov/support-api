@@ -1,20 +1,16 @@
 require 'rails_helper'
 require 'support/requests/anonymous/anonymous_contact'
 
-class TestContact < Support::Requests::Anonymous::AnonymousContact; end
-
 module Support
   module Requests
     module Anonymous
       describe AnonymousContact, :type => :model do
-        DEFAULTS = { javascript_enabled: true, path: "/tax-disc" }
-
         def new_contact(options = {})
-          TestContact.new(DEFAULTS.merge(options))
+          build(:anonymous_contact, options)
         end
 
         def contact(options = {})
-          new_contact(options).tap { |c| c.save! }
+          create(:anonymous_contact, options)
         end
 
         it "enforces the presence of a reason why feedback isn't actionable" do
