@@ -13,6 +13,7 @@ module Support
 
         scope :totals_for, ->(date) {
           where(created_at: date.beginning_of_day..date.end_of_day).
+            only_actionable.
             select("path, count(path) as total").
             group(:path).
             order("total desc")
@@ -28,9 +29,15 @@ module Support
           "problem-report"
         end
 
-        def as_json(options)
-          super(only: [ :type, :id, :created_at, :what_wrong, :what_doing, :referrer, :user_agent ]).
-            merge(url: url)
+        def as_json(options = {})
+          attributes_to_serialise = [
+            :type, :path, :id, :created_at, :what_wrong, :what_doing,
+            :referrer, :user_agent,
+          ]
+          super({
+            only: attributes_to_serialise,
+            methods: :url,
+          }.merge(options))
         end
 
         def self.to_csv(reports)

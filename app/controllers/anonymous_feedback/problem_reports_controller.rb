@@ -23,9 +23,9 @@ module AnonymousFeedback
 
     def index
       query = if @selected_organisation
-                @selected_organisation.problem_reports
+                @selected_organisation.problem_reports.only_actionable
               else
-                Support::Requests::Anonymous::ProblemReport
+                Support::Requests::Anonymous::ProblemReport.only_actionable
               end
       @results = query.where(created_at: @interval)
 

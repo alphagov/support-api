@@ -5,6 +5,7 @@ require 'support/requests/anonymous/service_feedback'
 FactoryGirl.define do
   factory :anonymous_contact, class: Support::Requests::Anonymous::AnonymousContact do
     javascript_enabled true
+    path "/vat-rates"
 
     factory :problem_report, class: Support::Requests::Anonymous::ProblemReport
 
@@ -13,6 +14,8 @@ FactoryGirl.define do
       slug "apply-carers-allowance"
       service_satisfaction_rating 5
     end
+
+    factory :long_form_contact, class: Support::Requests::Anonymous::LongFormContact
   end
 
   factory :organisation do
