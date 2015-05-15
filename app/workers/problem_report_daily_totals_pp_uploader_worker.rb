@@ -1,11 +1,9 @@
 require 'date'
 require 'gds_api/performance_platform/data_in'
 require 'gds_api/support_api'
-require 'support/requests/anonymous/service_feedback_aggregated_metrics'
 
 class ProblemReportDailyTotalsPPUploaderWorker
   include Sidekiq::Worker
-  include Support::Requests::Anonymous
 
   def perform(year, month, day)
     logger.info("Uploading problem report daily totals for #{year}-#{month}-#{day}")

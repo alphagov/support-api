@@ -1,6 +1,5 @@
 require 'json'
 require 'rails_helper'
-require 'support/requests/anonymous/service_feedback'
 
 describe "Service feedback" do
   # In order to fix and improve my service (that's linked on GOV.UK)
@@ -21,7 +20,7 @@ describe "Service feedback" do
       javascript_enabled: true,
     )
 
-    expect(Support::Requests::Anonymous::ServiceFeedback.where(slug: 'find-court-tribunal').count).to eq(1)
+    expect(ServiceFeedback.where(slug: 'find-court-tribunal').count).to eq(1)
   end
 
   it "accepts submissions without comments" do
@@ -33,7 +32,7 @@ describe "Service feedback" do
       javascript_enabled: true,
     )
 
-    expect(Support::Requests::Anonymous::ServiceFeedback.where(slug: 'apply-carers-allowance').count).to eq(1)
+    expect(ServiceFeedback.where(slug: 'apply-carers-allowance').count).to eq(1)
   end
 
   it "validates the service feedback" do

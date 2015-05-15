@@ -1,9 +1,7 @@
-require 'support/requests/anonymous/long_form_contact'
-
 module AnonymousFeedback
   class LongFormContactController < ApplicationController
     def create
-      request = Support::Requests::Anonymous::LongFormContact.new(long_form_contact_params)
+      request = LongFormContact.new(long_form_contact_params)
 
       if request.valid?
         LongFormContactWorker.perform_async(long_form_contact_params)

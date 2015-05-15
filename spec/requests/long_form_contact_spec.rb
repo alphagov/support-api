@@ -1,6 +1,5 @@
 require 'json'
 require 'rails_helper'
-require 'support/requests/anonymous/service_feedback'
 
 describe "Long-form contacts" do
   # In order to improve information and services on GOV.UK
@@ -38,7 +37,7 @@ true
     )
     expect(response.status).to eq(202)
 
-    results = Support::Requests::Anonymous::LongFormContact.where(
+    results = LongFormContact.where(
       user_specified_url: 'https://www.gov.uk/vat-rates',
       path: "/contact/govuk",
       details: "Make page less 'meh'",

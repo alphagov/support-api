@@ -1,6 +1,6 @@
 require 'rails_helper'
 require 'time'
-require 'support/requests/anonymous/deduplication_worker'
+require 'deduplication_worker'
 
 describe "de-duplication" do
   let(:record1) {
@@ -36,13 +36,13 @@ describe "de-duplication" do
       record2.save!
       record3.save!
 
-      expect(Support::Requests::Anonymous::AnonymousContact.only_actionable.count).to eq(3)
+      expect(AnonymousContact.only_actionable.count).to eq(3)
 
       # deduplicate
       Timecop.travel Time.parse("2013-01-16 00:30:00")
-      Support::Requests::Anonymous::DeduplicationWorker.start_deduplication_for_yesterday
+      DeduplicationWorker.start_deduplication_for_yesterday
 
-      expect(Support::Requests::Anonymous::AnonymousContact.
+      expect(AnonymousContact.
         only_actionable.order(:created_at).to_a).to eq([record1, record2])
     end
   end
@@ -53,12 +53,12 @@ describe "de-duplication" do
       record2.save!
       record3.save!
 
-      expect(Support::Requests::Anonymous::AnonymousContact.only_actionable.count).to eq(3)
+      expect(AnonymousContact.only_actionable.count).to eq(3)
 
       Timecop.travel Time.parse("2013-01-15 12:08:00")
-      Support::Requests::Anonymous::DeduplicationWorker.start_deduplication_for_recent_feedback
+      DeduplicationWorker.start_deduplication_for_recent_feedback
 
-      expect(Support::Requests::Anonymous::AnonymousContact.
+      expect(AnonymousContact.
         only_actionable.order(:created_at).to_a).to eq([record1, record2])
     end
   end

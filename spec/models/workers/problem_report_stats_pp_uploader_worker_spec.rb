@@ -8,7 +8,7 @@ describe ProblemReportStatsPPUploaderWorker do
   it "pushes last month's problem report stats for Whitehall content (aggregated by org) to the performance platform" do
     Timecop.travel Date.new(2013,2,1)
 
-    allow(Support::Requests::Anonymous::CorporateContentProblemReportAggregatedMetrics).to receive(:new).with(2013,1).and_return(
+    allow(CorporateContentProblemReportAggregatedMetrics).to receive(:new).with(2013,1).and_return(
       double(to_h: { "feedback_counts" => [ :some, :counts ], "top_urls" => [ :some, :top, :urls ] })
     )
 

@@ -1,10 +1,8 @@
 require 'zendesk/long_form_contact_ticket'
 require 'zendesk/problem_report_ticket'
-require 'support/requests/anonymous'
 
 class ZendeskTicketWorker
   include Sidekiq::Worker
-  include Support::Requests::Anonymous
 
   def perform(anonymous_contact_id)
     anonymous_contact = AnonymousContact.find(anonymous_contact_id)

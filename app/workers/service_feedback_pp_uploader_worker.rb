@@ -1,10 +1,8 @@
 require 'date'
 require 'gds_api/performance_platform/data_in'
-require 'support/requests/anonymous/service_feedback_aggregated_metrics'
 
 class ServiceFeedbackPPUploaderWorker
   include Sidekiq::Worker
-  include Support::Requests::Anonymous
 
   def perform(year, month, day, transaction_slug)
     logger.info("Uploading statistics for #{year}-#{month}-#{day}, slug #{transaction_slug}")

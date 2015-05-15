@@ -1,9 +1,7 @@
-require 'support/requests/anonymous/service_feedback'
-
 module AnonymousFeedback
   class ServiceFeedbackController < ApplicationController
     def create
-      request = Support::Requests::Anonymous::ServiceFeedback.new(service_feedback_params)
+      request = ServiceFeedback.new(service_feedback_params)
 
       if request.valid?
         ServiceFeedbackWorker.perform_async(service_feedback_params)
