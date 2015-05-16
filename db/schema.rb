@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150513094727) do
+ActiveRecord::Schema.define(version: 20150515222831) do
 
   create_table "anonymous_contacts", force: :cascade do |t|
     t.string   "type",                        limit: 255
