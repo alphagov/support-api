@@ -113,7 +113,7 @@ describe AnonymousContact, :type => :model do
       expect(AnonymousContact.only_actionable).to eq([a])
     end
 
-    describe "created_between" do
+    describe "created_between_days" do
       let(:first_date) { Time.new(2014, 01, 01) }
       let(:second_date) { Time.new(2014, 10, 31) }
       let(:third_date){ Time.new(2014, 11, 25) }
@@ -123,7 +123,7 @@ describe AnonymousContact, :type => :model do
         @first_contact = new_contact(created_at: first_date)
         @second_contact = new_contact(created_at: second_date)
         @third_contact = new_contact(created_at: third_date)
-        @newest_contact = new_contact(created_at: last_date)
+        @newest_contact = new_contact(created_at: last_date + 12.hours)
         @first_contact.save!
         @second_contact.save!
         @third_contact.save!
@@ -131,21 +131,20 @@ describe AnonymousContact, :type => :model do
       end
 
       it "returns the items that are included in the date interval" do
-        expect(AnonymousContact.created_between(second_date, last_date).sort).to eq([@second_contact, @third_contact, @newest_contact])
+        expect(AnonymousContact.created_between_days(second_date + 12.hours, last_date).sort).to eq([@second_contact, @third_contact, @newest_contact])
       end
 
       it "accepts an open date range for the first date" do
-        expect(AnonymousContact.created_between(nil, second_date).sort).to eq([@first_contact, @second_contact])
+        expect(AnonymousContact.created_between_days(nil, second_date).sort).to eq([@first_contact, @second_contact])
       end
 
       it "accepts an open date range for the last date" do
-        expect(AnonymousContact.created_between(second_date, nil).sort).to eq([@second_contact, @third_contact, @newest_contact])
+        expect(AnonymousContact.created_between_days(second_date, nil).sort).to eq([@second_contact, @third_contact, @newest_contact])
       end
 
       it "returns all the items when no date range has been selected" do
-        expect(AnonymousContact.created_between(nil, nil).sort).to eq([@first_contact, @second_contact, @third_contact, @newest_contact])
+        expect(AnonymousContact.created_between_days(nil, nil).sort).to eq([@first_contact, @second_contact, @third_contact, @newest_contact])
       end
-
     end
   end
 
