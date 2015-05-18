@@ -1,9 +1,7 @@
 require 'gds_api/performance_platform/data_in'
-require 'support/requests/anonymous/corporate_content_problem_report_aggregated_metrics'
 
 class ProblemReportStatsPPUploaderWorker
   include Sidekiq::Worker
-  include Support::Requests::Anonymous
 
   def perform(year, month)
     logger.info("Uploading corporate content problem report statistics for #{year}-#{month}")

@@ -71,7 +71,7 @@ javascript_enabled: true
     )
     expect(response.status).to eq(202)
 
-    results = Support::Requests::Anonymous::ProblemReport.where(
+    results = ProblemReport.where(
       what_doing: "Eating sandwich",
       what_wrong: "Fell on floor",
       path: "/vat-rates",

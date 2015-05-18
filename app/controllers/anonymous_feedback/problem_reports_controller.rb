@@ -11,7 +11,7 @@ module AnonymousFeedback
       if date.nil?
         head 422
       else
-        totals = Support::Requests::Anonymous::ProblemReport.totals_for(date)
+        totals = ProblemReport.totals_for(date)
         result = {
           date: date.to_time.iso8601,
           data: totals.map { |entry| { path: entry.path, total: entry.total } }
@@ -25,7 +25,7 @@ module AnonymousFeedback
       query = if @selected_organisation
                 @selected_organisation.problem_reports.only_actionable
               else
-                Support::Requests::Anonymous::ProblemReport.only_actionable
+                ProblemReport.only_actionable
               end
       @results = query.where(created_at: @interval)
 
@@ -34,13 +34,13 @@ module AnonymousFeedback
       else
         respond_to do |format|
           format.json { render json: @results }
-          format.csv { send_data Support::Requests::Anonymous::ProblemReport.to_csv(@results) }
+          format.csv { send_data ProblemReport.to_csv(@results) }
         end
       end
     end
 
     def create
-      request = Support::Requests::Anonymous::ProblemReport.new(problem_report_params)
+      request = ProblemReport.new(problem_report_params)
 
       if request.valid?
         ProblemReportWorker.perform_async(problem_report_params)
