@@ -145,6 +145,11 @@ describe AnonymousContact, :type => :model do
       it "returns all the items when no date range has been selected" do
         expect(AnonymousContact.created_between_days(nil, nil).sort).to eq([@first_contact, @second_contact, @third_contact, @newest_contact])
       end
+
+      it "returns the relevant items when the dates are given in the wrong order" do
+        expect(AnonymousContact.created_between_days(last_date, second_date).sort).to eq([@second_contact, @third_contact, @newest_contact])
+      end
+
     end
   end
 

@@ -22,6 +22,7 @@ class AnonymousContact < ActiveRecord::Base
   scope :created_between_days, -> (first_date, last_date) do
     first_date ||= Time.at(0)
     last_date ||= Time.now
+    first_date, last_date = [first_date, last_date].sort
     where(created_at: first_date.at_beginning_of_day..last_date.at_end_of_day)
   end
 
