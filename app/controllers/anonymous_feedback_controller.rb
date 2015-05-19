@@ -5,12 +5,11 @@ class AnonymousFeedbackController < ApplicationController
       return
     end
 
-    query = AnonymousContact.
+    results = AnonymousContact.
       only_actionable.
       free_of_personal_info.
       matching_path_prefix(params[:path_prefix]).
-      most_recent_first
-    results = Kaminari.paginate_array(query).
+      most_recent_first.
       page(params[:page]).
       per(AnonymousContact::PAGE_SIZE)
 
