@@ -32,10 +32,9 @@ Rails.application.routes.draw do
         constraints: { period: /\d{4}-\d{2}(-\d{2})?/ },
         to: 'problem_reports#index'
 
-    get 'organisations',
+    resources 'organisations',
         only: :index,
-        format: false,
-        to: "organisations#index"
+        format: false
   end
 
   get "/healthcheck", :to => proc { [200, {}, ["OK"]] }
