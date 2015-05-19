@@ -20,11 +20,37 @@ describe "Organisations that have feedback left on 'their' content" do
   let!(:ukvi) { create(:organisation, ukvi_info) }
   let!(:hmrc) { create(:organisation, hmrc_info) }
 
+  before do
+    create(:content_item, organisations: [ ukvi ], path: "/abc",
+      anonymous_contacts: [
+        create(:anonymous_contact, created_at: 5.days.ago),
+        create(:anonymous_contact, created_at: 15.days.ago),
+      ]
+    )
+
+    create(:content_item, organisations: [ ukvi ], path: "/def",
+      anonymous_contacts: [
+        create(:anonymous_contact, created_at: 70.days.ago),
+      ]
+    )
+  end
+
   it "can be retrieved (so that it's possible to not deal with orgs that have no feedback)" do
     get_json "/anonymous-feedback/organisations"
 
-    expect(json_response.size).to eq(2)
-    expect(json_response[0]).to eq(hmrc_info)
-    expect(json_response[1]).to eq(ukvi_info)
+    expect(json_response).to contain_exactly(hmrc_info, ukvi_info)
+  end
+
+  it "provides feedback counts per org, sorted by the 7 day column" do
+    get_json "/anonymous-feedback/organisations/uk-visas-and-immigration"
+
+    expect(json_response).to eq(
+      "title" => "UK Visas & Immigration",
+      "slug" => "uk-visas-and-immigration",
+      "anonymous_feedback_counts" => [
+        { "path" => "/abc", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 2 },
+        { "path" => "/def", "last_7_days" => 0, "last_30_days" => 0, "last_90_days" => 1 },
+      ]
+    )
   end
 end

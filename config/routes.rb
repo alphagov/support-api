@@ -33,8 +33,9 @@ Rails.application.routes.draw do
         to: 'problem_reports#index'
 
     resources 'organisations',
-        only: :index,
-        format: false
+        only: [:index, :show],
+        format: false,
+        param: :slug
   end
 
   get "/healthcheck", :to => proc { [200, {}, ["OK"]] }
