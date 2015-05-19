@@ -78,6 +78,8 @@ describe AnonymousFeedbackController do
 
           expect(json_response).to eq(
             "results" =>JSON.parse([@third_contact, @second_contact].to_json),
+            "from_date" => "2014-10-13",
+            "to_date" => "2014-12-01",
             "page_size" => 50,
             "total_count" => 2,
             "current_page" => 1,
@@ -98,6 +100,7 @@ describe AnonymousFeedbackController do
             "total_count" => 3,
             "current_page" => 1,
             "pages" => 1,
+            "from_date" => "2014-10-13",
           )
         end
       end
@@ -114,6 +117,7 @@ describe AnonymousFeedbackController do
             "total_count" => 3,
             "current_page" => 1,
             "pages" => 1,
+            "to_date" => "2014-12-01",
           )
         end
       end
