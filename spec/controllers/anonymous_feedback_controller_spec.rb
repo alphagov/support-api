@@ -121,6 +121,25 @@ describe AnonymousFeedbackController do
           )
         end
       end
+
+      context "dates entered in non-chronological order" do
+        let(:to)  {"13th December 2014"}
+        let(:from) {"24/11/2014"}
+
+        it "returns relevant contacts" do
+          request
+
+          expect(json_response).to eq(
+            "results" =>JSON.parse([@newest_contact, @third_contact].to_json),
+            "page_size" => 50,
+            "total_count" => 2,
+            "current_page" => 1,
+            "pages" => 1,
+            "to_date" => "2014-12-13",
+            "from_date" => "2014-11-24",
+          )
+        end
+      end
     end
   end
 

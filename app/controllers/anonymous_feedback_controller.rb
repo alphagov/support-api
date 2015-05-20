@@ -8,11 +8,13 @@ class AnonymousFeedbackController < ApplicationController
     from_date = parse_date(params[:from])
     to_date = parse_date(params[:to])
 
+    from_date, to_date = [from_date, to_date].sort if from_date && to_date
+
     results = AnonymousContact.
       only_actionable.
       free_of_personal_info.
       matching_path_prefix(params[:path_prefix]).
-      created_between_days(from_date, to_date).
+      created_between_days(from_date || Time.at(0), to_date || Time.now).
       most_recent_first.
       page(params[:page]).
       per(AnonymousContact::PAGE_SIZE)
