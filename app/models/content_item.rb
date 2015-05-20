@@ -3,7 +3,7 @@ class ContentItem < ActiveRecord::Base
   has_many :problem_reports, class_name: "ProblemReport"
   validates :path, presence: true
 
-  before_create :fetch_organisations
+  before_create :fetch_organisations, unless: ->(content_item) { content_item.organisations.present? }
 
   private
   def fetch_organisations
