@@ -9,8 +9,7 @@ module AnonymousFeedback
       organisation = Organisation.find_by(slug: params[:slug])
       anonymous_feedback_counts = ContentItem.
         for_organisation(organisation).
-        summary.
-        sort_by { |r| -1 * r[:last_7_days] }
+        summary("last_7_days")
 
       render json: {
         slug: organisation.slug,
