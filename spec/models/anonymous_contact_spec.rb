@@ -127,7 +127,7 @@ describe AnonymousContact, :type => :model do
       end
 
       it "returns the items that are included in the date interval" do
-        expect(AnonymousContact.created_between_days(second_date + 12.hours, last_date).sort).to eq([@second_contact, @third_contact, @newest_contact])
+        expect(AnonymousContact.created_between_days(second_date.to_date, last_date.to_date).sort).to eq([@second_contact, @third_contact, @newest_contact])
       end
 
     end

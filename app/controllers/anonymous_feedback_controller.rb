@@ -14,7 +14,7 @@ class AnonymousFeedbackController < ApplicationController
       only_actionable.
       free_of_personal_info.
       matching_path_prefix(params[:path_prefix]).
-      created_between_days(from_date || Time.at(0), to_date || Time.now).
+      created_between_days(from_date || Date.new(1970), to_date || Date.today).
       most_recent_first.
       page(params[:page]).
       per(AnonymousContact::PAGE_SIZE)

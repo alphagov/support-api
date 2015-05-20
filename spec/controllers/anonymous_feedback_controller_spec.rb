@@ -40,10 +40,10 @@ describe AnonymousFeedbackController do
     end
 
     describe "from and to parameters" do
-      let(:first_date)  { Time.new(2014, 01, 01) }
-      let(:second_date) { Time.new(2014, 10, 31) }
-      let(:third_date)  { Time.new(2014, 11, 25) }
-      let(:last_date)   { Time.new(2014, 12, 12) }
+      let(:first_date)  { Time.new(2014, 01, 01).utc }
+      let(:second_date) { Time.new(2014, 10, 31).utc }
+      let(:third_date)  { Time.new(2014, 11, 25).utc }
+      let(:last_date)   { Time.new(2014, 12, 12).utc }
       let(:request)     { get :index, path_prefix: "/", from: from, to: to }
       let(:from)        { nil }
       let(:to)          { nil }
@@ -148,12 +148,12 @@ describe AnonymousFeedbackController do
 
     context "with a valid short form date" do
       let(:input) {"13/10/2014"}
-      it {is_expected.to eq(Time.new(2014, 10, 13))}
+      it {is_expected.to eq(Date.new(2014, 10, 13))}
     end
 
     context "with a valid long form date" do
       let(:input) {"1st December 2014"}
-      it {is_expected.to eq(Time.new(2014, 12, 1))}
+      it {is_expected.to eq(Date.new(2014, 12, 1))}
     end
     context "with a nil date" do
       let(:input) { nil }
