@@ -62,8 +62,4 @@ describe "de-duplication" do
         only_actionable.order(:created_at).to_a).to eq([record1, record2])
     end
   end
-
-  after do
-    Timecop.return
-  end
 end

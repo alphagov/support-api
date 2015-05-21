@@ -112,6 +112,25 @@ describe AnonymousContact, :type => :model do
 
       expect(AnonymousContact.only_actionable).to eq([a])
     end
+
+    describe "created_between_days" do
+      let(:first_date) { Time.new(2014, 01, 01) }
+      let(:second_date) { Time.new(2014, 10, 31) }
+      let(:third_date){ Time.new(2014, 11, 25) }
+      let(:last_date) { Time.new(2014, 12, 12) }
+
+      before do
+        @first_contact = contact(created_at: first_date)
+        @second_contact = contact(created_at: second_date)
+        @third_contact = contact(created_at: third_date)
+        @newest_contact = contact(created_at: last_date + 12.hours)
+      end
+
+      it "returns the items that are included in the date interval" do
+        expect(AnonymousContact.created_between_days(second_date.to_date, last_date.to_date).sort).to eq([@second_contact, @third_contact, @newest_contact])
+      end
+
+    end
   end
 
   describe "pagination" do

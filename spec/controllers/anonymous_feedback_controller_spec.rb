@@ -38,5 +38,132 @@ describe AnonymousFeedbackController do
         "pages" => 1,
       )
     end
+
+    describe "from and to parameters" do
+      let(:first_date)  { Time.new(2014, 01, 01).utc }
+      let(:second_date) { Time.new(2014, 10, 31).utc }
+      let(:third_date)  { Time.new(2014, 11, 25).utc }
+      let(:last_date)   { Time.new(2014, 12, 12).utc }
+      let(:request)     { get :index, path_prefix: "/", from: from, to: to }
+      let(:from)        { nil }
+      let(:to)          { nil }
+
+      before do
+        @first_contact = create(:anonymous_contact, created_at: first_date).reload
+        @second_contact = create(:anonymous_contact, created_at: second_date).reload
+        @third_contact = create(:anonymous_contact, created_at: third_date).reload
+        @newest_contact = create(:anonymous_contact, created_at: last_date).reload
+      end
+
+      context "when no to and from dates specified" do
+        it "should return all the contacts" do
+          request
+
+          expect(json_response).to eq(
+            "results" =>JSON.parse([@newest_contact, @third_contact, @second_contact, @first_contact].to_json),
+            "page_size" => 50,
+            "total_count" => 4,
+            "current_page" => 1,
+            "pages" => 1,
+          )
+        end
+      end
+
+      context "human readable dates for 'from' and 'to'" do
+        let(:from)  {"13/10/2014"}
+        let(:to)    {"1st December 2014"}
+
+        it "returns relevant contacts" do
+          request
+
+          expect(json_response).to eq(
+            "results" =>JSON.parse([@third_contact, @second_contact].to_json),
+            "from_date" => "2014-10-13",
+            "to_date" => "2014-12-01",
+            "page_size" => 50,
+            "total_count" => 2,
+            "current_page" => 1,
+            "pages" => 1,
+          )
+        end
+      end
+
+      context "only 'from' date specified" do
+        let(:from)  {"13/10/2014"}
+
+        it "returns relevant contacts" do
+          request
+
+          expect(json_response).to eq(
+            "results" =>JSON.parse([@newest_contact, @third_contact, @second_contact].to_json),
+            "page_size" => 50,
+            "total_count" => 3,
+            "current_page" => 1,
+            "pages" => 1,
+            "from_date" => "2014-10-13",
+          )
+        end
+      end
+
+      context "only 'to' date specified" do
+        let(:to)  {"1st December 2014"}
+
+        it "returns relevant contacts" do
+          request
+
+          expect(json_response).to eq(
+            "results" =>JSON.parse([@third_contact, @second_contact, @first_contact].to_json),
+            "page_size" => 50,
+            "total_count" => 3,
+            "current_page" => 1,
+            "pages" => 1,
+            "to_date" => "2014-12-01",
+          )
+        end
+      end
+
+      context "dates entered in non-chronological order" do
+        let(:to)  {"13th December 2014"}
+        let(:from) {"24/11/2014"}
+
+        it "returns relevant contacts" do
+          request
+
+          expect(json_response).to eq(
+            "results" =>JSON.parse([@newest_contact, @third_contact].to_json),
+            "page_size" => 50,
+            "total_count" => 2,
+            "current_page" => 1,
+            "pages" => 1,
+            "to_date" => "2014-12-13",
+            "from_date" => "2014-11-24",
+          )
+        end
+      end
+    end
+  end
+
+  describe "parse_date" do
+    subject() { described_class.new.parse_date(input) }
+
+    context "with a valid short form date" do
+      let(:input) {"13/10/2014"}
+      it {is_expected.to eq(Date.new(2014, 10, 13))}
+    end
+
+    context "with a valid long form date" do
+      let(:input) {"1st December 2014"}
+      it {is_expected.to eq(Date.new(2014, 12, 1))}
+    end
+    context "with a nil date" do
+      let(:input) { nil }
+      it {is_expected.to be_nil}
+    end
+
+    context "with an invalid date" do
+      let(:input) {"foo"}
+      it {is_expected.to be_nil}
+    end
+
   end
 end

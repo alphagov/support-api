@@ -19,6 +19,7 @@ class AnonymousContact < ActiveRecord::Base
   scope :only_actionable, -> { where(is_actionable: true) }
   scope :most_recent_first, -> { order("created_at DESC") }
   scope :matching_path_prefix, ->(path) { where("path LIKE ?", path + "%") }
+  scope :created_between_days, -> (first_date, last_date) { where(created_at: first_date..last_date.at_end_of_day) }
 
   PAGE_SIZE = 50
   paginates_per PAGE_SIZE
