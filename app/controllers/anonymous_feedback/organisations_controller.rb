@@ -6,10 +6,15 @@ module AnonymousFeedback
     end
 
     def show
+      if %w(path last_7_days last_30_days last_90_days).include? params[:ordering]
+        ordering = params[:ordering]
+      else
+        ordering = "last_7_days"
+      end
       organisation = Organisation.find_by(slug: params[:slug])
       anonymous_feedback_counts = ContentItem.
         for_organisation(organisation).
-        summary("last_7_days")
+        summary(ordering)
 
       render json: {
         slug: organisation.slug,

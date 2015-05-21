@@ -31,6 +31,8 @@ describe "Organisations that have feedback left on 'their' content" do
     create(:content_item, organisations: [ ukvi ], path: "/def",
       anonymous_contacts: [
         create(:anonymous_contact, created_at: 70.days.ago),
+        create(:anonymous_contact, created_at: 75.days.ago),
+        create(:anonymous_contact, created_at: 80.days.ago),
       ]
     )
   end
@@ -41,7 +43,7 @@ describe "Organisations that have feedback left on 'their' content" do
     expect(json_response).to contain_exactly(hmrc_info, ukvi_info)
   end
 
-  it "provides feedback counts per org, sorted by the 7 day column" do
+  it "provides feedback counts per org, sorted by the 7 day column by default" do
     get_json "/anonymous-feedback/organisations/uk-visas-and-immigration"
 
     expect(json_response).to eq(
@@ -49,7 +51,20 @@ describe "Organisations that have feedback left on 'their' content" do
       "slug" => "uk-visas-and-immigration",
       "anonymous_feedback_counts" => [
         { "path" => "/abc", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 2 },
-        { "path" => "/def", "last_7_days" => 0, "last_30_days" => 0, "last_90_days" => 1 },
+        { "path" => "/def", "last_7_days" => 0, "last_30_days" => 0, "last_90_days" => 3 },
+      ]
+    )
+  end
+
+  it "provides feedback counts per org, sorted by the 90 day column if requested" do
+    get_json "/anonymous-feedback/organisations/uk-visas-and-immigration?ordering=last_90_days"
+
+    expect(json_response).to eq(
+      "title" => "UK Visas & Immigration",
+      "slug" => "uk-visas-and-immigration",
+      "anonymous_feedback_counts" => [
+        { "path" => "/def", "last_7_days" => 0, "last_30_days" => 0, "last_90_days" => 3 },
+        { "path" => "/abc", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 2 },
       ]
     )
   end
