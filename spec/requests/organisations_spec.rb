@@ -6,6 +6,8 @@ describe "Organisations that have feedback left on 'their' content" do
       "slug" => "hm-revenue-customs",
       "title" => "HM Revenue & Customs",
       "web_url" => "https://www.gov.uk/hmrc",
+      "acronym" => "HMRC",
+      "govuk_status" => "live"
     }
   }
 
@@ -14,6 +16,8 @@ describe "Organisations that have feedback left on 'their' content" do
       "slug" => "uk-visas-and-immigration",
       "title" => "UK Visas & Immigration",
       "web_url" => "https://www.gov.uk/ukvi",
+      "acronym" => "UKVI",
+      "govuk_status" => "live"
     }
   }
 

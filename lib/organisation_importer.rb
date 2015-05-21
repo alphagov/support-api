@@ -22,10 +22,11 @@ class OrganisationImporter
       :acronym => organisation_from_api.details.abbreviation,
       :govuk_status => organisation_from_api.details.govuk_status,
       :web_url => organisation_from_api.web_url,
+      :content_id => organisation_from_api.details.content_id,
     }
 
-    slug = organisation_from_api.details.slug
-    existing_organisation = Organisation.find_by(slug: slug)
+    content_id = organisation_from_api.details.content_id
+    existing_organisation = Organisation.find_by(content_id: content_id)
 
     if existing_organisation.present?
       existing_organisation.update_attributes(organisation_attrs)

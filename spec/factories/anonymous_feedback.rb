@@ -20,6 +20,7 @@ FactoryGirl.define do
     title "Ministry of Magic"
     acronym "MOM"
     govuk_status "live"
+    sequence(:content_id) { |n| "content_id_#{n}" }
   end
 
   factory :content_item do

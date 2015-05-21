@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150521102732) do
+ActiveRecord::Schema.define(version: 20150521144116) do
 
   create_table "anonymous_contacts", force: :cascade do |t|
     t.string   "type",                        limit: 255
@@ -60,6 +60,9 @@ ActiveRecord::Schema.define(version: 20150521102732) do
     t.datetime "updated_at",               null: false
     t.string   "acronym",      limit: 255
     t.string   "govuk_status", limit: 255
+    t.string   "content_id",   limit: 255
   end
+
+  add_index "organisations", ["content_id"], name: "index_organisations_on_content_id", using: :btree
 
 end
