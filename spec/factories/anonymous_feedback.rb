@@ -18,6 +18,9 @@ FactoryGirl.define do
     slug "ministry-of-magic"
     web_url { "https://www.gov.uk/government/organisations/#{slug}" }
     title "Ministry of Magic"
+    acronym "MOM"
+    govuk_status "live"
+    sequence(:content_id) { |n| "content_id_#{n}" }
   end
 
   factory :content_item do

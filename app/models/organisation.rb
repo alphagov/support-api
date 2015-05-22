@@ -14,6 +14,6 @@ class Organisation < ActiveRecord::Base
   end
 
   def as_json(options)
-    super(only: [:slug, :web_url, :title])
+    super(only: [:slug, :web_url, :title, :acronym, :govuk_status])
   end
 end
