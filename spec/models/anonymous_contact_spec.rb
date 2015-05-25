@@ -129,7 +129,47 @@ describe AnonymousContact, :type => :model do
       it "returns the items that are included in the date interval" do
         expect(AnonymousContact.created_between_days(second_date.to_date, last_date.to_date).sort).to eq([@second_contact, @third_contact, @newest_contact])
       end
+    end
 
+    describe "for_query_parameters" do
+      let!(:contact_1) { contact(path: "/gov", created_at: Time.new(2015, 4, 10)) }
+      let!(:contact_2) { contact(path: "/courts", created_at: Time.new(2015, 5, 10)) }
+      let!(:personal_info) { contact(path: "/gov", details: "foo@example.com") }
+      let!(:not_actionable) { contact(path: "/gov", is_actionable: false, reason_why_not_actionable: "spam") }
+
+      subject { described_class.for_query_parameters(path_prefix: path_prefix,
+                                                     from: filter_from,
+                                                     to: filter_to).sort }
+
+      let(:path_prefix) { nil }
+      let(:filter_from) { nil }
+      let(:filter_to)   { nil }
+
+      context "with no restrictions" do
+        it { is_expected.to eq [contact_1, contact_2].sort }
+      end
+
+      context "with a restrictive from date" do
+        let(:filter_from) { Date.new 2015, 5 }
+        it { is_expected.to eq [contact_2] }
+      end
+
+      context "with a restrictive to date" do
+        let(:filter_to) { Date.new 2015, 5 }
+        it { is_expected.to eq [contact_1] }
+      end
+
+      context "with a restrictive date range" do
+        let(:filter_from) { Date.new 2015, 4 }
+        let(:filter_to) { Date.new 2015, 5 }
+
+        it { is_expected.to eq [contact_1] }
+      end
+
+      context "with a restrictive path prefix" do
+        let(:path_prefix) { "/gov" }
+        it { is_expected.to eq [contact_1] }
+      end
     end
   end
 
