@@ -121,4 +121,20 @@ RSpec.describe FeedbackExportRequest, type: :model do
       end
     end
   end
+
+  describe "#results" do
+    subject { described_class.new(filter_from: Date.new(2015, 4),
+                                  filter_to: Date.new(2015, 5),
+                                  path_prefix: "/").results }
+
+    it "uses the scope from the model with the correct parameters" do
+      contact = double("AnonymousContact")
+      expect(AnonymousContact).to receive(:for_query_parameters).with(from: Date.new(2015, 4),
+                                                                      to: Date.new(2015, 5),
+                                                                      path_prefix: "/").
+        and_return(double("scope", most_recent_last: [contact]))
+
+      expect(subject).to eq [contact]
+    end
+  end
 end

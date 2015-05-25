@@ -16,4 +16,10 @@ class FeedbackExportRequest < ActiveRecord::Base
     parts += self.path_prefix.split("/").reject(&:blank?)
     self.filename = "#{parts.join("_")}.csv"
   end
+
+  def results
+    AnonymousContact.
+      for_query_parameters(path_prefix: path_prefix, from: filter_from, to: filter_to).
+      most_recent_last
+  end
 end
