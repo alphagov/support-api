@@ -26,4 +26,11 @@ FactoryGirl.define do
   factory :content_item do
     path "/search"
   end
+
+  factory :feedback_export_request do
+    path_prefix "/"
+    filter_from Date.new(2015,5)
+    filter_to Date.new(2015,6)
+    notification_email "foo@example.com"
+  end
 end

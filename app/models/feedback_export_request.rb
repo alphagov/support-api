@@ -1,3 +1,6 @@
+require 'csv'
+require 'plek'
+
 class FeedbackExportRequest < ActiveRecord::Base
   validates :notification_email, :filter_to, :path_prefix, presence: true
 
@@ -33,5 +36,9 @@ class FeedbackExportRequest < ActiveRecord::Base
       ]
     end
     io
+  end
+
+  def url
+    Plek.find('support') + "/anonymous-feedback/export-requests/#{id}"
   end
 end
