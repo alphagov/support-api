@@ -20,6 +20,7 @@ class ContentItem < ActiveRecord::Base
       select(sum_column(from: midnight_last_night - 7.days, to: midnight_last_night, column_name: "last_7_days")).
       select(sum_column(from: midnight_last_night - 30.days, to: midnight_last_night, column_name: "last_30_days")).
       select(sum_column(from: midnight_last_night - 90.days, to: midnight_last_night, column_name: "last_90_days")).
+      where("`anonymous_contacts`.`created_at` > ?", midnight_last_night - 90.days).
       group("content_items.id").
       having("last_7_days + last_30_days + last_90_days > 0").
       order("#{ordering} #{ordering_mode}")
