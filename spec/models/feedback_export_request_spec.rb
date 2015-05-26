@@ -137,4 +137,45 @@ RSpec.describe FeedbackExportRequest, type: :model do
       expect(subject).to eq [contact]
     end
   end
+
+  describe "#generate_csv" do
+    before do
+      create(:anonymous_contact, path: "/",
+                                 created_at: Time.utc(2015, 6, 1, 10),
+                                 referrer: "http://www.example.com/")
+      create(:anonymous_contact, path: "/gov", created_at: Time.utc(2015, 6, 1, 20))
+    end
+
+    let(:io) { StringIO.new }
+
+    subject(:generate_csv) { described_class.new.generate_csv(io) }
+
+    it "has 2 records" do
+      expect(subject.string.each_line.count).to eq 2
+    end
+
+    it "is parseable as a CSV" do
+      expect(CSV.parse(subject.string).count).to eq 2
+    end
+
+    it "doesn't close the IO object" do
+      expect(subject).to_not be_closed
+    end
+
+    describe "row format" do
+      subject(:first_row) { CSV.parse(generate_csv.string)[0] }
+
+      it "has the time in ISO8601 format in UTC as the first column" do
+        expect(first_row[0]).to eq "2015-06-01 10:00:00"
+      end
+
+      it "has the path as the second column" do
+        expect(first_row[1]).to eq "/"
+      end
+
+      it "has the referrer as the third column" do
+        expect(first_row[2]).to eq "http://www.example.com/"
+      end
+    end
+  end
 end

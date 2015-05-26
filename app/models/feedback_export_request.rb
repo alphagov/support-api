@@ -22,4 +22,16 @@ class FeedbackExportRequest < ActiveRecord::Base
       for_query_parameters(path_prefix: path_prefix, from: filter_from, to: filter_to).
       most_recent_last
   end
+
+  def generate_csv(io)
+    csv = CSV.new(io)
+    results.find_each do |row|
+      csv << [
+        row.created_at.strftime("%F %T"),
+        row.path,
+        row.referrer
+      ]
+    end
+    io
+  end
 end
