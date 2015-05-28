@@ -13,6 +13,7 @@ gem 'mlanett-redis-lock', '0.2.6'
 gem "gds_zendesk", '1.0.4'
 gem "plek", "1.10.0"
 gem 'kaminari', "~> 0.16.3"
+gem 'user_agent_parser'
 
 group :development do
   gem 'spring', '1.3.5'

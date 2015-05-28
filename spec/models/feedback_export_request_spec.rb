@@ -162,20 +162,9 @@ RSpec.describe FeedbackExportRequest, type: :model do
       expect(subject).to_not be_closed
     end
 
-    describe "row format" do
-      subject(:first_row) { CSV.parse(generate_csv.string)[0] }
-
-      it "has the time in ISO8601 format in UTC as the first column" do
-        expect(first_row[0]).to eq "2015-06-01 10:00:00"
-      end
-
-      it "has the path as the second column" do
-        expect(first_row[1]).to eq "/"
-      end
-
-      it "has the referrer as the third column" do
-        expect(first_row[2]).to eq "http://www.example.com/"
-      end
+    it "uses the FeedbackCsvRowPresenter to format the row" do
+      allow_any_instance_of(FeedbackCsvRowPresenter).to receive(:to_a).and_return(["a", "b", "c"])
+      expect(subject.string).to eq "a,b,c\na,b,c\n"
     end
   end
 end

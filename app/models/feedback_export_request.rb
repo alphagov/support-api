@@ -29,11 +29,7 @@ class FeedbackExportRequest < ActiveRecord::Base
   def generate_csv(io)
     csv = CSV.new(io)
     results.find_each do |row|
-      csv << [
-        row.created_at.strftime("%F %T"),
-        row.path,
-        row.referrer
-      ]
+      csv << FeedbackCsvRowPresenter.new(row).to_a
     end
     io
   end
