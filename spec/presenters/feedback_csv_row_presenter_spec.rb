@@ -22,7 +22,8 @@ describe FeedbackCsvRowPresenter do
           "9.0",
           "Windows Vista",
           row.user_agent,
-          "http://www.example.com/foo"
+          "http://www.example.com/foo",
+          "problem-report"
         ]
       end
     end
@@ -40,7 +41,8 @@ describe FeedbackCsvRowPresenter do
           "9.0",
           "Windows Vista",
           row.user_agent,
-          "http://www.example.com/foo"
+          "http://www.example.com/foo",
+          "service-feedback"
         ]
       end
     end
@@ -58,7 +60,8 @@ describe FeedbackCsvRowPresenter do
           "9.0",
           "Windows Vista",
           row.user_agent,
-          "http://www.example.com/foo"
+          "http://www.example.com/foo",
+          "long-form-contact"
         ]
       end
     end

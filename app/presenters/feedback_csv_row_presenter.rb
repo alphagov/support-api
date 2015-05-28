@@ -3,6 +3,9 @@ require 'user_agent_parser'
 class FeedbackCsvRowPresenter
   attr_reader :row
 
+  HEADER_ROW = ["creation date", "path or service name", "feedback", "service satisfaction rating",
+                "browser name", "browser version", "browser platform", "user agent", "referrer", "type"]
+
   def initialize(row)
     @row = row
   end
@@ -17,7 +20,8 @@ class FeedbackCsvRowPresenter
       parsed_user_agent.version.to_s,
       parsed_user_agent.os.family,
       row.user_agent,
-      row.referrer
+      row.referrer,
+      row.type
     ]
   end
 

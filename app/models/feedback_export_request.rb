@@ -28,6 +28,7 @@ class FeedbackExportRequest < ActiveRecord::Base
 
   def generate_csv(io)
     csv = CSV.new(io)
+    csv << FeedbackCsvRowPresenter::HEADER_ROW
     results.find_each do |row|
       csv << FeedbackCsvRowPresenter.new(row).to_a
     end

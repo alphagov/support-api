@@ -30,7 +30,7 @@ describe GenerateFeedbackCsvWorker, :type => :worker do
 
     it "populates the file with the CSV for the request" do
       described_class.new.perform(feedback_export_request)
-      expect(io.string.split("\n").count).to eq 1
+      expect(io.string.split("\n").count).to eq 2
     end
 
     it "closes the file" do
