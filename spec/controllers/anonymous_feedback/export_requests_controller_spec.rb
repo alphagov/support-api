@@ -49,7 +49,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
       it { is_expected.to be_success }
 
       it "returns the URL" do
-        expect(JSON.parse(response.body)["url"]).to eq export_request.url
+        expect(JSON.parse(response.body)["filename"]).to eq export_request.filename
       end
 
       it "returns a status of not ready" do
@@ -65,7 +65,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
       it { is_expected.to be_success }
 
       it "returns the URL" do
-        expect(JSON.parse(response.body)["url"]).to eq export_request.url
+        expect(JSON.parse(response.body)["filename"]).to eq export_request.filename
       end
 
       it "returns a status of ready" do

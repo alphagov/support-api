@@ -16,7 +16,7 @@ class AnonymousFeedback::ExportRequestsController < ApplicationController
 
     if export_request
       render json: {
-        "url" => export_request.url,
+        "filename" => export_request.filename,
         "ready" => !export_request.generated_at.nil?
       }
     else
