@@ -36,6 +36,6 @@ class FeedbackExportRequest < ActiveRecord::Base
   end
 
   def url
-    Plek.find('support') + "/anonymous-feedback/export-requests/#{id}"
+    Plek.find('support') + "/anonymous_feedback/export_requests/#{id}"
   end
 end
