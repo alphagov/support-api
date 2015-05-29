@@ -81,14 +81,22 @@ describe AnonymousContact, :type => :model do
   end
 
   context "scopes" do
-    it "can find urls beginning with the given path" do
-      a = contact(path: "/some-calculator/y/abc")
-      b = contact(path: "/some-calculator/y/abc/x")
-      c = contact(path: "/tax-disc")
+    describe "matching_path_prefix" do
+      let!(:a) { contact(path: "/some-calculator/y/abc") }
+      let!(:b) { contact(path: "/some-calculator/y/abc/x") }
+      let!(:c) { contact(path: "/tax-disc") }
 
-      result = AnonymousContact.matching_path_prefix("/some-calculator")
+      it "can find urls beginning with the given path" do
+        result = AnonymousContact.matching_path_prefix("/some-calculator")
 
-      expect(result).to contain_exactly(a, b)
+        expect(result).to contain_exactly(a, b)
+      end
+
+      it "is a no-op when given a nil path" do
+        result = AnonymousContact.matching_path_prefix(nil)
+
+        expect(result).to contain_exactly(a, b, c)
+      end
     end
 
     it "can return the results in reverse chronological order" do
