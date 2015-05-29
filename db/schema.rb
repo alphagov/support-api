@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20150526095541) do
   add_index "content_items_organisations", ["organisation_id"], name: "index_content_items_organisations_on_organisation_id", using: :btree
 
   create_table "feedback_export_requests", force: :cascade do |t|
-    t.string   "notification_email", limit: 255
+    t.string   "notification_email", limit: 255, null: false
     t.date     "filter_from"
     t.date     "filter_to"
     t.string   "path_prefix",        limit: 255
