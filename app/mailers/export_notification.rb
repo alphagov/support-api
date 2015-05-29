@@ -5,6 +5,6 @@ class ExportNotification < ActionMailer::Base
 
   def notification_email(email, url)
     @url = url
-    mail(to: email, subject: "[Feedback Explorer] Your feedback export is ready")
+    mail(to: email, subject: "[GOV.UK Feedback Explorer] Your feedback export is ready")
   end
 end
