@@ -6,6 +6,10 @@ class FeedbackCsvRowPresenter
   HEADER_ROW = ["creation date", "path or service name", "feedback", "service satisfaction rating",
                 "browser name", "browser version", "browser platform", "user agent", "referrer", "type"]
 
+  def self.parser
+    Thread.current[:user_agent_parser] ||= UserAgentParser::Parser.new
+  end
+
   def initialize(row)
     @row = row
   end
@@ -26,7 +30,7 @@ class FeedbackCsvRowPresenter
   end
 
   def parsed_user_agent
-    @parsed_user_agent ||= UserAgentParser.parse row.user_agent
+    @parsed_user_agent ||= self.class.parser.parse row.user_agent
   end
 
   def details_text
