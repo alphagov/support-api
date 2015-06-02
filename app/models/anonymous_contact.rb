@@ -19,7 +19,7 @@ class AnonymousContact < ActiveRecord::Base
   scope :only_actionable, -> { where(is_actionable: true) }
   scope :most_recent_first, -> { order("created_at DESC") }
   scope :most_recent_last, -> { order("created_at ASC") }
-  scope :matching_path_prefix, ->(path) { where("path LIKE ?", path + "%") if path }
+  scope :matching_path_prefix, ->(path) { where("anonymous_contacts.path LIKE ?", path + "%") if path }
   scope :created_between_days, -> (first_date, last_date) { where(created_at: first_date..last_date.at_end_of_day) }
 
   scope :for_query_parameters, ->(options={}) do

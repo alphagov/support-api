@@ -8,7 +8,7 @@ class ContentItem < ActiveRecord::Base
 
   scope :for_organisation, ->(organisation) {
     joins(:organisations).
-    where("organisations.id = ?", organisation.id)
+    where(organisations: { id: organisation.id})
   }
 
   def self.summary(ordering="last_7_days")
