@@ -18,8 +18,20 @@ class AnonymousContact < ActiveRecord::Base
   }
   scope :only_actionable, -> { where(is_actionable: true) }
   scope :most_recent_first, -> { order("created_at DESC") }
-  scope :matching_path_prefix, ->(path) { where("path LIKE ?", path + "%") }
+  scope :most_recent_last, -> { order("created_at ASC") }
+  scope :matching_path_prefix, ->(path) { where("path LIKE ?", path + "%") if path }
   scope :created_between_days, -> (first_date, last_date) { where(created_at: first_date..last_date.at_end_of_day) }
+
+  scope :for_query_parameters, ->(options={}) do
+    path_prefix = options[:path_prefix]
+    from = options[:from] || Date.new(1970)
+    to = options[:to] || Date.today
+
+    only_actionable.
+      free_of_personal_info.
+      matching_path_prefix(path_prefix).
+      created_between_days(from, to)
+  end
 
   PAGE_SIZE = 50
   paginates_per PAGE_SIZE

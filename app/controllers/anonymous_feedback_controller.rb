@@ -11,10 +11,7 @@ class AnonymousFeedbackController < ApplicationController
     from_date, to_date = [from_date, to_date].sort if from_date && to_date
 
     results = AnonymousContact.
-      only_actionable.
-      free_of_personal_info.
-      matching_path_prefix(params[:path_prefix]).
-      created_between_days(from_date || Date.new(1970), to_date || Date.today).
+      for_query_parameters(path_prefix: params[:path_prefix], from: from_date, to: to_date).
       most_recent_first.
       page(params[:page]).
       per(AnonymousContact::PAGE_SIZE)
@@ -32,12 +29,4 @@ class AnonymousFeedbackController < ApplicationController
 
     render json: json
   end
-
-  def parse_date(date)
-    return nil if date.nil?
-    parsed_date = Date.parse(date)
-  rescue ArgumentError
-    return nil
-  end
-
 end

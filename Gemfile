@@ -13,6 +13,7 @@ gem 'mlanett-redis-lock', '0.2.6'
 gem "gds_zendesk", '1.0.4'
 gem "plek", "1.10.0"
 gem 'kaminari', "~> 0.16.3"
+gem 'user_agent_parser'
 
 group :development do
   gem 'spring', '1.3.5'
@@ -32,4 +33,5 @@ end
 group :test do
   gem 'factory_girl_rails', '4.5.0'
   gem 'webmock', '1.21.0'
+  gem 'fakefs', require: 'fakefs/safe'
 end

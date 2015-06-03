@@ -2,6 +2,8 @@ FactoryGirl.define do
   factory :anonymous_contact, class: AnonymousContact do
     javascript_enabled true
     path "/vat-rates"
+    user_agent "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0;)"
+    referrer "http://www.example.com/foo"
 
     factory :problem_report, class: ProblemReport
 
@@ -25,5 +27,12 @@ FactoryGirl.define do
 
   factory :content_item do
     path "/search"
+  end
+
+  factory :feedback_export_request do
+    path_prefix "/"
+    filter_from Date.new(2015,5)
+    filter_to Date.new(2015,6)
+    notification_email "foo@example.com"
   end
 end

@@ -24,6 +24,12 @@ Rails.application.routes.draw do
               controller: "problem_reports",
               as: "problem_report"
 
+    resources "export-requests",
+              only: [:create, :show],
+              format: false,
+              controller: "export_requests",
+              as: "export_request"
+
     get '/problem-reports/:date/totals',
         constraints: { date: /\d{4}-\d{2}-\d{2}/ },
         to: 'problem_reports#totals'
