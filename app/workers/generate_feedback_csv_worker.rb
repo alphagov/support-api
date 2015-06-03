@@ -1,7 +1,7 @@
 class GenerateFeedbackCsvWorker
   include Sidekiq::Worker
 
-  CSV_ROOT = "/data/uploads/feedback_explorer"
+  CSV_ROOT = "/data/uploads/support-api/csvs"
 
   def perform(*args)
     feedback_export_request = case args.first

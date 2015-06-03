@@ -12,7 +12,7 @@ describe GenerateFeedbackCsvWorker, :type => :worker do
 
     it "creates the file in the configured root" do
       subject
-      expect(File.exist?("/data/uploads/feedback_explorer/foo.csv")).to be true
+      expect(File.exist?("/data/uploads/support-api/csvs/foo.csv")).to be true
     end
 
     it { is_expected.to_not be_closed }
