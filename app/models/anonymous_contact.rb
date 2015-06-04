@@ -4,6 +4,9 @@ require 'duplicate_detector'
 class AnonymousContact < ActiveRecord::Base
   before_save :detect_personal_information
 
+  belongs_to :content_item
+  has_many :organisations, through: :content_item
+
   validates :referrer, url: true, length: { maximum: 2048 }, allow_nil: true
   validates :path,     url: true, length: { maximum: 2048 }, presence: true
   validates :user_agent, length: { maximum: 2048 }
@@ -21,6 +24,7 @@ class AnonymousContact < ActiveRecord::Base
   scope :most_recent_last, -> { order("created_at ASC") }
   scope :matching_path_prefix, ->(path) { where("anonymous_contacts.path LIKE ?", path + "%") if path }
   scope :created_between_days, -> (first_date, last_date) { where(created_at: first_date..last_date.at_end_of_day) }
+  scope :for_organisation_slug, -> (slug) { joins(:organisations).where(organisations: {slug: slug}) }
 
   scope :for_query_parameters, ->(options={}) do
     path_prefix = options[:path_prefix]
