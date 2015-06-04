@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe AnonymousFeedbackController do
   describe "#index" do
-    it "is a bad request with no `path_prefix`" do
+    it "is a bad request with no `path_prefix` or `organisation_slug`" do
       get :index
       expect(response).to have_http_status(400)
     end
@@ -55,9 +55,16 @@ describe AnonymousFeedbackController do
         expect(ids_of_returned_problem_reports).to eq(hmrc_problem_reports.map(&:id).sort)
       end
 
-      it "returns an error when the org doesn't exist" do
-        get :index, organisation_slug: "made-up-org"
-        expect(response).to have_http_status(400)
+      context "if an org doesn't exist" do
+        before { get :index, organisation_slug: "made-up-org" }
+        it "doesn't return an error" do
+          expect(response).to have_http_status(200)
+        end
+
+        it "returns no results" do
+          expect(json_response["total_count"]).to eq(0)
+          expect(json_response["results"]).to be_empty
+        end
       end
 
       it "combines with path filters" do

@@ -30,11 +30,16 @@ class AnonymousContact < ActiveRecord::Base
     path_prefix = options[:path_prefix]
     from = options[:from] || Date.new(1970)
     to = options[:to] || Date.today
+    organisation_slug = options[:organisation_slug]
 
-    only_actionable.
+    query = only_actionable.
       free_of_personal_info.
-      matching_path_prefix(path_prefix).
       created_between_days(from, to)
+
+    query = query.matching_path_prefix(path_prefix) if path_prefix
+    query = query.for_organisation_slug(organisation_slug) if organisation_slug
+
+    query
   end
 
   PAGE_SIZE = 50
