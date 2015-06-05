@@ -25,11 +25,13 @@ RSpec.describe FeedbackExportRequest, type: :model do
     let(:instance) do
       described_class.new(filters: {path_prefix: path_prefix,
                                     from: from,
-                                    to: to })
+                                    to: to,
+                                    organisation_slug: organisation_slug })
     end
-    let(:path_prefix) { "/" }
+    let(:path_prefix) { nil }
     let(:from) { nil }
     let(:to)   { nil }
+    let(:organisation_slug) { nil }
 
     describe "the resulting filename" do
       before { instance.generate_filename! }
@@ -53,6 +55,12 @@ RSpec.describe FeedbackExportRequest, type: :model do
 
           it { is_expected.to eq "feedex_0000-00-00_2015-06-01_gov_and_stuff_news-and-features.csv" }
         end
+
+        context "with an organisation slug" do
+          let(:organisation_slug) { "hm-revenue-customs" }
+
+          it { is_expected.to eq "feedex_0000-00-00_2015-06-01_hm-revenue-customs.csv" }
+        end
       end
 
       context "with a from date set" do
@@ -75,6 +83,12 @@ RSpec.describe FeedbackExportRequest, type: :model do
 
           it { is_expected.to eq "feedex_2015-04-01_2015-06-01_gov_and_stuff_news-and-features.csv" }
         end
+
+        context "with an organisation slug" do
+          let(:organisation_slug) { "hm-revenue-customs" }
+
+          it { is_expected.to eq "feedex_2015-04-01_2015-06-01_hm-revenue-customs.csv" }
+        end
       end
 
       context "with a to date set" do
@@ -96,6 +110,13 @@ RSpec.describe FeedbackExportRequest, type: :model do
           let(:path_prefix) { "/gov_and_stuff/news-and-features" }
 
           it { is_expected.to eq "feedex_0000-00-00_2015-05-01_gov_and_stuff_news-and-features.csv" }
+        end
+
+
+        context "with an organisation slug" do
+          let(:organisation_slug) { "hm-revenue-customs" }
+
+          it { is_expected.to eq "feedex_0000-00-00_2015-05-01_hm-revenue-customs.csv" }
         end
       end
 
@@ -120,6 +141,12 @@ RSpec.describe FeedbackExportRequest, type: :model do
 
           it { is_expected.to eq "feedex_2015-04-01_2015-05-01_gov_and_stuff_news-and-features.csv" }
         end
+
+        context "with an organisation slug" do
+          let(:organisation_slug) { "hm-revenue-customs" }
+
+          it { is_expected.to eq "feedex_2015-04-01_2015-05-01_hm-revenue-customs.csv" }
+        end
       end
     end
   end
@@ -128,14 +155,16 @@ RSpec.describe FeedbackExportRequest, type: :model do
     subject do
       described_class.new(filters: {from: Date.new(2015, 4),
                                     to: Date.new(2015, 5),
-                                    path_prefix: "/"}).results
+                                    path_prefix: "/",
+                                    organisation_slug: "hm-revenue-customs"}).results
     end
 
     it "uses the scope from the model with the correct parameters" do
       contact = double("AnonymousContact")
       expect(AnonymousContact).to receive(:for_query_parameters).with(from: Date.new(2015, 4),
                                                                       to: Date.new(2015, 5),
-                                                                      path_prefix: "/").
+                                                                      path_prefix: "/",
+                                                                      organisation_slug: "hm-revenue-customs").
         and_return(double("scope", most_recent_last: [contact]))
 
       expect(subject).to eq [contact]

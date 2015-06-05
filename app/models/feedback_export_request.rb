@@ -8,7 +8,6 @@ class FeedbackExportRequest < ActiveRecord::Base
 
   before_validation on: :create do
     filters[:to] ||= Date.today
-    filters[:path_prefix] ||= "/"
     generate_filename! if filename.nil?
   end
 
@@ -18,7 +17,8 @@ class FeedbackExportRequest < ActiveRecord::Base
       filters[:from].nil? ? "0000-00-00" : filters[:from].to_date.iso8601,
       filters[:to].nil? ? Date.today.iso8601 : filters[:to].to_date.iso8601,
     ]
-    parts += filters[:path_prefix].split("/").reject(&:blank?)
+    parts += filters[:path_prefix].split("/").reject(&:blank?) if filters[:path_prefix].present?
+    parts << filters[:organisation_slug] if filters[:organisation_slug].present?
     self.filename = "#{parts.join("_")}.csv"
   end
 
