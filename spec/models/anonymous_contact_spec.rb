@@ -146,30 +146,30 @@ describe AnonymousContact, :type => :model do
       let!(:not_actionable) { contact(path: "/gov", is_actionable: false, reason_why_not_actionable: "spam") }
 
       subject { described_class.for_query_parameters(path_prefix: path_prefix,
-                                                     from: filter_from,
-                                                     to: filter_to).sort }
+                                                     from: from,
+                                                     to: to).sort }
 
       let(:path_prefix) { nil }
-      let(:filter_from) { nil }
-      let(:filter_to)   { nil }
+      let(:from) { nil }
+      let(:to)   { nil }
 
       context "with no restrictions" do
         it { is_expected.to eq [contact_1, contact_2].sort }
       end
 
       context "with a restrictive from date" do
-        let(:filter_from) { Date.new 2015, 5 }
+        let(:from) { Date.new 2015, 5 }
         it { is_expected.to eq [contact_2] }
       end
 
       context "with a restrictive to date" do
-        let(:filter_to) { Date.new 2015, 5 }
+        let(:to) { Date.new 2015, 5 }
         it { is_expected.to eq [contact_1] }
       end
 
       context "with a restrictive date range" do
-        let(:filter_from) { Date.new 2015, 4 }
-        let(:filter_to) { Date.new 2015, 5 }
+        let(:from) { Date.new 2015, 4 }
+        let(:to) { Date.new 2015, 5 }
 
         it { is_expected.to eq [contact_1] }
       end

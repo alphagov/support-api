@@ -13,21 +13,23 @@ RSpec.describe FeedbackExportRequest, type: :model do
     end
 
     it "doesn't default the from date" do
-      expect(instance.filter_from).to be_nil
+      expect(instance.filters[:from]).to be_nil
     end
 
     it "defaults the to date to today" do
-      expect(instance.filter_to).to eq Date.today
+      expect(instance.filters[:to]).to eq Date.today
     end
   end
 
   describe "#generate_filename!" do
-    let(:instance) { described_class.new(path_prefix: path_prefix,
-                                         filter_from: filter_from,
-                                         filter_to: filter_to) }
+    let(:instance) do
+      described_class.new(filters: {path_prefix: path_prefix,
+                                    from: from,
+                                    to: to })
+    end
     let(:path_prefix) { "/" }
-    let(:filter_from) { nil }
-    let(:filter_to)   { nil }
+    let(:from) { nil }
+    let(:to)   { nil }
 
     describe "the resulting filename" do
       before { instance.generate_filename! }
@@ -54,7 +56,7 @@ RSpec.describe FeedbackExportRequest, type: :model do
       end
 
       context "with a from date set" do
-        let(:filter_from) { Date.new(2015, 4, 1) }
+        let(:from) { Date.new(2015, 4, 1) }
 
         context "with a root path" do
           let(:path_prefix) { "/" }
@@ -76,7 +78,7 @@ RSpec.describe FeedbackExportRequest, type: :model do
       end
 
       context "with a to date set" do
-        let(:filter_to) { Date.new(2015, 5, 1) }
+        let(:to) { Date.new(2015, 5, 1) }
 
         context "with a root path" do
           let(:path_prefix) { "/" }
@@ -98,8 +100,8 @@ RSpec.describe FeedbackExportRequest, type: :model do
       end
 
       context "with both dates set" do
-        let(:filter_from) { Date.new(2015, 4, 1) }
-        let(:filter_to) { Date.new(2015, 5, 1) }
+        let(:from) { Date.new(2015, 4, 1) }
+        let(:to) { Date.new(2015, 5, 1) }
 
         context "with a root path" do
           let(:path_prefix) { "/" }
@@ -123,9 +125,11 @@ RSpec.describe FeedbackExportRequest, type: :model do
   end
 
   describe "#results" do
-    subject { described_class.new(filter_from: Date.new(2015, 4),
-                                  filter_to: Date.new(2015, 5),
-                                  path_prefix: "/").results }
+    subject do
+      described_class.new(filters: {from: Date.new(2015, 4),
+                                    to: Date.new(2015, 5),
+                                    path_prefix: "/"}).results
+    end
 
     it "uses the scope from the model with the correct parameters" do
       contact = double("AnonymousContact")
