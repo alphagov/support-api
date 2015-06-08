@@ -38,11 +38,15 @@ Rails.application.routes.draw do
         constraints: { period: /\d{4}-\d{2}(-\d{2})?/ },
         to: 'problem_reports#index'
 
-    resources 'organisations',
-        only: [:index, :show],
-        format: false,
-        param: :slug
+    get '/organisations/:slug', to: "organisations#show"
   end
+
+  # TODO: Remove this endpoint once the support app has been repointed to /organisations
+  get '/anonymous-feedback/organisations', to: "organisations#index"
+  resources :organisations,
+            only: [:index, :show],
+            format: false,
+            param: :slug
 
   get "/healthcheck", :to => proc { [200, {}, ["OK"]] }
 end

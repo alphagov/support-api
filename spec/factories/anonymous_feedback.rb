@@ -17,10 +17,10 @@ FactoryGirl.define do
   end
 
   factory :organisation do
-    slug "ministry-of-magic"
+    slug { title.parameterize }
     web_url { "https://www.gov.uk/government/organisations/#{slug}" }
     title "Ministry of Magic"
-    acronym "MOM"
+    acronym { title.split.map { |s| s[0] }.join.upcase }
     govuk_status "live"
     sequence(:content_id) { |n| "content_id_#{n}" }
   end

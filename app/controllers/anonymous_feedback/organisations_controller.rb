@@ -1,10 +1,5 @@
 module AnonymousFeedback
   class OrganisationsController < ApplicationController
-    def index
-      organisations = Organisation.order(:slug)
-      render json: organisations
-    end
-
     def show
       if %w(path last_7_days last_30_days last_90_days).include? params[:ordering]
         ordering = params[:ordering]
@@ -12,6 +7,12 @@ module AnonymousFeedback
         ordering = "last_7_days"
       end
       organisation = Organisation.find_by(slug: params[:slug])
+
+      if organisation.nil?
+        render nothing: true, status: :not_found
+        return
+      end
+
       anonymous_feedback_counts = ContentItem.
         for_organisation(organisation).
         summary(ordering)
