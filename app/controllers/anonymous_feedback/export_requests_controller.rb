@@ -26,11 +26,15 @@ class AnonymousFeedback::ExportRequestsController < ApplicationController
 
   private
     def export_request_params
-      clean_params = params.require(:export_request).permit(:filter_from, :filter_to, :path_prefix, :notification_email)
+      permitted_params = %i(from to path_prefix organisation notification_email)
+      clean_params = params.require(:export_request).permit(*permitted_params)
       {
-        filter_from: parse_date(clean_params[:filter_from]),
-        filter_to: parse_date(clean_params[:filter_to]),
-        path_prefix: clean_params[:path_prefix],
+        filters: {
+          from: parse_date(clean_params[:from]),
+          to: parse_date(clean_params[:to]),
+          path_prefix: clean_params[:path_prefix],
+          organisation_slug: clean_params[:organisation]
+        },
         notification_email: clean_params[:notification_email]
       }
     end

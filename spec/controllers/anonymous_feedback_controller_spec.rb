@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe AnonymousFeedbackController do
   describe "#index" do
-    it "is a bad request with no `path_prefix`" do
+    it "is a bad request with no `path_prefix` or `organisation_slug`" do
       get :index
       expect(response).to have_http_status(400)
     end
@@ -37,6 +37,44 @@ describe AnonymousFeedbackController do
         "current_page" => 2,
         "pages" => 1,
       )
+    end
+
+    describe "filter by organisation" do
+      let(:hmrc) { create(:organisation, slug: 'hm-revenue-customs') }
+      let(:ukvi) { create(:organisation, slug: 'uk-visas-and-immigration') }
+      let(:ukvi_content) { create(:content_item, organisations: [ukvi]) }
+      let(:hmrc_content) { create(:content_item, organisations: [hmrc]) }
+      let!(:hmrc_problem_reports) { create_list(:problem_report, 3, path: "/abc", content_item: hmrc_content) }
+      let!(:ukvi_problem_reports) { create_list(:problem_report, 2, content_item: ukvi_content) }
+
+      it "returns only feedback belonging to that organisation" do
+        get :index, organisation_slug: "hm-revenue-customs"
+
+        expect(json_response["total_count"]).to eq(3)
+        ids_of_returned_problem_reports = json_response["results"].map {|r| r["id"]}.sort
+        expect(ids_of_returned_problem_reports).to eq(hmrc_problem_reports.map(&:id).sort)
+      end
+
+      context "if an org doesn't exist" do
+        before { get :index, organisation_slug: "made-up-org" }
+        it "doesn't return an error" do
+          expect(response).to have_http_status(200)
+        end
+
+        it "returns no results" do
+          expect(json_response["total_count"]).to eq(0)
+          expect(json_response["results"]).to be_empty
+        end
+      end
+
+      it "combines with path filters" do
+        create(:problem_report, path: "/xyz", content_item: hmrc_content)
+
+        get :index, organisation_slug: "hm-revenue-customs", path_prefix: "/xyz"
+
+        expect(json_response["total_count"]).to eq(1)
+        expect(json_response["results"].first["path"]).to eq("/xyz")
+      end
     end
 
     describe "from and to parameters" do

@@ -6,7 +6,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
       before do
         expect(GenerateFeedbackCsvWorker).to receive(:perform_async).once.with(instance_of(Fixnum))
         post :create, export_request: {
-          filter_from: "2015-05-01", filter_to: "2015-06-01",
+          from: "2015-05-01", to: "2015-06-01",
           path_prefix: "/", notification_email: "foo@example.com"
         }
       end
@@ -20,7 +20,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
       before do
         expect(GenerateFeedbackCsvWorker).to receive(:perform_async).never
         post :create, export_request: {
-          filter_from: "2015-05-01", filter_to: "2015-06-01",
+          from: "2015-05-01", to: "2015-06-01",
           path_prefix: "/"
         }
       end

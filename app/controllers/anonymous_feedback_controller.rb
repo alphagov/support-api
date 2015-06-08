@@ -1,6 +1,6 @@
 class AnonymousFeedbackController < ApplicationController
   def index
-    unless params[:path_prefix].present?
+    unless params[:organisation_slug].present? || params[:path_prefix].present?
       head :bad_request
       return
     end
@@ -11,7 +11,10 @@ class AnonymousFeedbackController < ApplicationController
     from_date, to_date = [from_date, to_date].sort if from_date && to_date
 
     results = AnonymousContact.
-      for_query_parameters(path_prefix: params[:path_prefix], from: from_date, to: to_date).
+      for_query_parameters(path_prefix: params[:path_prefix],
+                           organisation_slug: params[:organisation_slug],
+                           from: from_date,
+                           to: to_date).
       most_recent_first.
       page(params[:page]).
       per(AnonymousContact::PAGE_SIZE)

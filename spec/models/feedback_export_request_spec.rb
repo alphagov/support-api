@@ -13,21 +13,25 @@ RSpec.describe FeedbackExportRequest, type: :model do
     end
 
     it "doesn't default the from date" do
-      expect(instance.filter_from).to be_nil
+      expect(instance.filters[:from]).to be_nil
     end
 
     it "defaults the to date to today" do
-      expect(instance.filter_to).to eq Date.today
+      expect(instance.filters[:to]).to eq Date.today
     end
   end
 
   describe "#generate_filename!" do
-    let(:instance) { described_class.new(path_prefix: path_prefix,
-                                         filter_from: filter_from,
-                                         filter_to: filter_to) }
-    let(:path_prefix) { "/" }
-    let(:filter_from) { nil }
-    let(:filter_to)   { nil }
+    let(:instance) do
+      described_class.new(filters: {path_prefix: path_prefix,
+                                    from: from,
+                                    to: to,
+                                    organisation_slug: organisation_slug })
+    end
+    let(:path_prefix) { nil }
+    let(:from) { nil }
+    let(:to)   { nil }
+    let(:organisation_slug) { nil }
 
     describe "the resulting filename" do
       before { instance.generate_filename! }
@@ -51,10 +55,16 @@ RSpec.describe FeedbackExportRequest, type: :model do
 
           it { is_expected.to eq "feedex_0000-00-00_2015-06-01_gov_and_stuff_news-and-features.csv" }
         end
+
+        context "with an organisation slug" do
+          let(:organisation_slug) { "hm-revenue-customs" }
+
+          it { is_expected.to eq "feedex_0000-00-00_2015-06-01_hm-revenue-customs.csv" }
+        end
       end
 
       context "with a from date set" do
-        let(:filter_from) { Date.new(2015, 4, 1) }
+        let(:from) { Date.new(2015, 4, 1) }
 
         context "with a root path" do
           let(:path_prefix) { "/" }
@@ -73,10 +83,16 @@ RSpec.describe FeedbackExportRequest, type: :model do
 
           it { is_expected.to eq "feedex_2015-04-01_2015-06-01_gov_and_stuff_news-and-features.csv" }
         end
+
+        context "with an organisation slug" do
+          let(:organisation_slug) { "hm-revenue-customs" }
+
+          it { is_expected.to eq "feedex_2015-04-01_2015-06-01_hm-revenue-customs.csv" }
+        end
       end
 
       context "with a to date set" do
-        let(:filter_to) { Date.new(2015, 5, 1) }
+        let(:to) { Date.new(2015, 5, 1) }
 
         context "with a root path" do
           let(:path_prefix) { "/" }
@@ -95,11 +111,18 @@ RSpec.describe FeedbackExportRequest, type: :model do
 
           it { is_expected.to eq "feedex_0000-00-00_2015-05-01_gov_and_stuff_news-and-features.csv" }
         end
+
+
+        context "with an organisation slug" do
+          let(:organisation_slug) { "hm-revenue-customs" }
+
+          it { is_expected.to eq "feedex_0000-00-00_2015-05-01_hm-revenue-customs.csv" }
+        end
       end
 
       context "with both dates set" do
-        let(:filter_from) { Date.new(2015, 4, 1) }
-        let(:filter_to) { Date.new(2015, 5, 1) }
+        let(:from) { Date.new(2015, 4, 1) }
+        let(:to) { Date.new(2015, 5, 1) }
 
         context "with a root path" do
           let(:path_prefix) { "/" }
@@ -118,20 +141,30 @@ RSpec.describe FeedbackExportRequest, type: :model do
 
           it { is_expected.to eq "feedex_2015-04-01_2015-05-01_gov_and_stuff_news-and-features.csv" }
         end
+
+        context "with an organisation slug" do
+          let(:organisation_slug) { "hm-revenue-customs" }
+
+          it { is_expected.to eq "feedex_2015-04-01_2015-05-01_hm-revenue-customs.csv" }
+        end
       end
     end
   end
 
   describe "#results" do
-    subject { described_class.new(filter_from: Date.new(2015, 4),
-                                  filter_to: Date.new(2015, 5),
-                                  path_prefix: "/").results }
+    subject do
+      described_class.new(filters: {from: Date.new(2015, 4),
+                                    to: Date.new(2015, 5),
+                                    path_prefix: "/",
+                                    organisation_slug: "hm-revenue-customs"}).results
+    end
 
     it "uses the scope from the model with the correct parameters" do
       contact = double("AnonymousContact")
       expect(AnonymousContact).to receive(:for_query_parameters).with(from: Date.new(2015, 4),
                                                                       to: Date.new(2015, 5),
-                                                                      path_prefix: "/").
+                                                                      path_prefix: "/",
+                                                                      organisation_slug: "hm-revenue-customs").
         and_return(double("scope", most_recent_last: [contact]))
 
       expect(subject).to eq [contact]

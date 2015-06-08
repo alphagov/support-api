@@ -4,6 +4,9 @@ require 'duplicate_detector'
 class AnonymousContact < ActiveRecord::Base
   before_save :detect_personal_information
 
+  belongs_to :content_item
+  has_many :organisations, through: :content_item
+
   validates :referrer, url: true, length: { maximum: 2048 }, allow_nil: true
   validates :path,     url: true, length: { maximum: 2048 }, presence: true
   validates :user_agent, length: { maximum: 2048 }
@@ -19,18 +22,24 @@ class AnonymousContact < ActiveRecord::Base
   scope :only_actionable, -> { where(is_actionable: true) }
   scope :most_recent_first, -> { order("created_at DESC") }
   scope :most_recent_last, -> { order("created_at ASC") }
-  scope :matching_path_prefix, ->(path) { where("path LIKE ?", path + "%") if path }
+  scope :matching_path_prefix, ->(path) { where("anonymous_contacts.path LIKE ?", path + "%") if path }
   scope :created_between_days, -> (first_date, last_date) { where(created_at: first_date..last_date.at_end_of_day) }
+  scope :for_organisation_slug, -> (slug) { joins(:organisations).where(organisations: {slug: slug}) }
 
   scope :for_query_parameters, ->(options={}) do
     path_prefix = options[:path_prefix]
     from = options[:from] || Date.new(1970)
     to = options[:to] || Date.today
+    organisation_slug = options[:organisation_slug]
 
-    only_actionable.
+    query = only_actionable.
       free_of_personal_info.
-      matching_path_prefix(path_prefix).
       created_between_days(from, to)
+
+    query = query.matching_path_prefix(path_prefix) if path_prefix
+    query = query.for_organisation_slug(organisation_slug) if organisation_slug
+
+    query
   end
 
   PAGE_SIZE = 50

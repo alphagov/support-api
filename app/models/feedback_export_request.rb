@@ -2,27 +2,29 @@ require 'csv'
 require 'plek'
 
 class FeedbackExportRequest < ActiveRecord::Base
-  validates :notification_email, :filter_to, :path_prefix, presence: true
+  validates :notification_email, :filters, presence: true
+
+  serialize :filters, Hash
 
   before_validation on: :create do
-    self.filter_to ||= Date.today
-    self.path_prefix ||= "/"
+    filters[:to] ||= Date.today
     generate_filename! if filename.nil?
   end
 
   def generate_filename!
     parts = [
       "feedex",
-      filter_from.nil? ? "0000-00-00" : filter_from.to_date.iso8601,
-      filter_to.nil? ? Date.today.iso8601 : filter_to.to_date.iso8601,
+      filters[:from].nil? ? "0000-00-00" : filters[:from].to_date.iso8601,
+      filters[:to].nil? ? Date.today.iso8601 : filters[:to].to_date.iso8601,
     ]
-    parts += self.path_prefix.split("/").reject(&:blank?)
+    parts += filters[:path_prefix].split("/").reject(&:blank?) if filters[:path_prefix].present?
+    parts << filters[:organisation_slug] if filters[:organisation_slug].present?
     self.filename = "#{parts.join("_")}.csv"
   end
 
   def results
     AnonymousContact.
-      for_query_parameters(path_prefix: path_prefix, from: filter_from, to: filter_to).
+      for_query_parameters(filters).
       most_recent_last
   end
 
