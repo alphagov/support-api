@@ -7,6 +7,12 @@ module AnonymousFeedback
         ordering = "last_7_days"
       end
       organisation = Organisation.find_by(slug: params[:slug])
+
+      if organisation.nil?
+        render nothing: true, status: :not_found
+        return
+      end
+
       anonymous_feedback_counts = ContentItem.
         for_organisation(organisation).
         summary(ordering)

@@ -53,4 +53,9 @@ RSpec.describe AnonymousFeedback::OrganisationsController, type: :controller do
         end
       end
     end
+
+    context "with an invalid organisation" do
+      it { is_expected.to be_not_found }
+    end
+  end
 end
