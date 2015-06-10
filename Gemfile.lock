@@ -74,12 +74,12 @@ GEM
       plek
       rack-cache
       rest-client (~> 1.8.0)
-    gds_zendesk (1.0.4)
+    gds_zendesk (1.0.5)
       null_logger (= 0.0.1)
-      zendesk_api (= 1.6.3)
+      zendesk_api (= 1.8.0)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
-    hashie (3.4.1)
+    hashie (3.4.2)
     hitimes (1.2.2)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
@@ -222,9 +222,9 @@ GEM
       crack (>= 0.3.2)
     whenever (0.9.4)
       chronic (>= 0.6.3)
-    zendesk_api (1.6.3)
+    zendesk_api (1.8.0)
       faraday (~> 0.9)
-      hashie (>= 1.2, < 4.0)
+      hashie (>= 1.2, < 4.0, != 3.3.0)
       inflection
       mime-types
       multi_json
@@ -240,7 +240,7 @@ DEPENDENCIES
   factory_girl_rails (= 4.5.0)
   fakefs
   gds-api-adapters (= 18.6.0)
-  gds_zendesk (= 1.0.4)
+  gds_zendesk (= 1.0.5)
   kaminari (~> 0.16.3)
   logstasher (= 0.6.5)
   mlanett-redis-lock (= 0.2.6)

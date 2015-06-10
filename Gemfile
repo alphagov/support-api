@@ -10,7 +10,7 @@ gem 'unicorn', '4.9.0'
 gem 'gds-api-adapters', '18.6.0'
 gem 'whenever', '0.9.4', require: false
 gem 'mlanett-redis-lock', '0.2.6'
-gem "gds_zendesk", '1.0.4'
+gem "gds_zendesk", '1.0.5'
 gem "plek", "1.10.0"
 gem 'kaminari', "~> 0.16.3"
 gem 'user_agent_parser'
