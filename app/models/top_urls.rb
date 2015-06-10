@@ -29,7 +29,7 @@ class TopUrls
       where(created_at: @period_in_question).
       where(page_owner: org_acronym).
       select("page_owner, path, count(*) as number_of_paths").
-      group(:path).
+      group(:path, :page_owner).
       order("number_of_paths desc, path asc").
       limit(NUMBER_OF_PATHS_PER_ORG)
   end
