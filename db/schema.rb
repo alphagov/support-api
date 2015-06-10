@@ -22,14 +22,14 @@ ActiveRecord::Schema.define(version: 20150611133227) do
     t.string   "page_owner",                  limit: 255
     t.text     "user_agent",                  limit: 65535
     t.string   "referrer",                    limit: 2048
-    t.boolean  "javascript_enabled",          limit: 1
+    t.boolean  "javascript_enabled"
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
     t.string   "personal_information_status", limit: 255
     t.string   "slug",                        limit: 255
     t.integer  "service_satisfaction_rating", limit: 4
     t.text     "user_specified_url",          limit: 65535
-    t.boolean  "is_actionable",               limit: 1,     default: true, null: false
+    t.boolean  "is_actionable",                             default: true, null: false
     t.string   "reason_why_not_actionable",   limit: 255
     t.string   "path",                        limit: 2048,                 null: false
     t.integer  "content_item_id",             limit: 4
