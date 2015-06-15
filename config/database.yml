@@ -17,10 +17,24 @@ postgresql_default: &postgresql_default
   # See http://www.postgresql.org/docs/9.1/static/manage-ag-templatedbs.html for details
   template: template0
 
-development:
-  <<: *<%= db_type%>_default
+mysql_development: &mysql_development
+  <<: *mysql_default
   database: support_contacts_development
 
-test:
-  <<: *<%= db_type%>_default
+postgresql_development: &postgresql_development
+  <<: *postgresql_default
+  database: support_contacts_development
+
+development:
+  <<: *<%= db_type%>_development
+
+mysql_test: &mysql_test
+  <<: *mysql_default
   database: support_contacts_test
+
+postgresql_test: &postgresql_test
+  <<: *postgresql_default
+  database: support_contacts_test
+
+test:
+  <<: *<%= db_type%>_test

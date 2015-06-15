@@ -15,6 +15,8 @@ gem "gds_zendesk", '1.0.5'
 gem "plek", "1.10.0"
 gem 'kaminari', "~> 0.16.3"
 gem 'user_agent_parser'
+gem 'ruby-progressbar'
+gem 'sequel'
 
 group :development do
   gem 'spring', '1.3.5'
