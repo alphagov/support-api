@@ -1,20 +1,40 @@
-development: &development
+<% db_type = ENV["SUPPORT_API_DB_TYPE"].nil? ? "mysql" : ENV["SUPPORT_API_DB_TYPE"] %>
+
+mysql_default: &mysql_default
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: support_contacts_development
-  pool: 5
   username: support_contacts
   password: support_contacts
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
-test: &test
-  adapter: mysql2
-  encoding: utf8
-  reconnect: false
-  database: support_contacts_test
+postgresql_default: &postgresql_default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
-  username: support_contacts
-  password: support_contacts
+  # Necessary to allow creating a db with different encodings.
+  # See http://www.postgresql.org/docs/9.1/static/manage-ag-templatedbs.html for details
+  template: template0
+
+mysql_development: &mysql_development
+  <<: *mysql_default
+  database: support_contacts_development
+
+postgresql_development: &postgresql_development
+  <<: *postgresql_default
+  database: support_contacts_development
+
+development:
+  <<: *<%= db_type%>_development
+
+mysql_test: &mysql_test
+  <<: *mysql_default
+  database: support_contacts_test
+
+postgresql_test: &postgresql_test
+  <<: *postgresql_default
+  database: support_contacts_test
+
+test:
+  <<: *<%= db_type%>_test

@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.1'
 gem 'rails-api', '0.4.0'
 gem 'mysql2', '0.3.18'
+gem 'pg', '0.18.2'
 gem 'logstasher', '0.6.5'
 gem 'airbrake', '4.1.0'
 gem 'sidekiq', '3.3.4'
@@ -14,6 +15,8 @@ gem "gds_zendesk", '1.0.5'
 gem "plek", "1.10.0"
 gem 'kaminari', "~> 0.16.3"
 gem 'user_agent_parser'
+gem 'ruby-progressbar'
+gem 'sequel'
 
 group :development do
   gem 'spring', '1.3.5'
