@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.2'
 gem 'rails-api', '0.4.0'
 gem 'mysql2', '0.3.18'
 gem 'pg', '0.18.2'
