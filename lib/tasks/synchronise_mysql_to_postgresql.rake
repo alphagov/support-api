@@ -1,4 +1,4 @@
-task "db:sync" do
+task "db:sync" => :environment do
   BATCH_SIZE = 2500
 
   mysql = Sequel.connect(ActiveRecord::Base.configurations["mysql_#{Rails.env}"])
