@@ -15,11 +15,11 @@ Bundler.require(*Rails.groups)
 
 module SupportApi
   def self.postgresql?
-    ENV["SUPPORT_API_DB_TYPE"] == "postgresql"
+    ENV["SUPPORT_API_DB_TYPE"].blank? || ENV["SUPPORT_API_DB_TYPE"] == "postgresql"
   end
 
   def self.mysql?
-    ENV["SUPPORT_API_DB_TYPE"].blank? || ENV["SUPPORT_API_DB_TYPE"] == "mysql"
+    ENV["SUPPORT_API_DB_TYPE"] == "mysql"
   end
 
   class Application < Rails::Application

@@ -1,4 +1,4 @@
-<% db_type = ENV["SUPPORT_API_DB_TYPE"].nil? ? "mysql" : ENV["SUPPORT_API_DB_TYPE"] %>
+<% db_type = ENV["SUPPORT_API_DB_TYPE"].nil? ? "postgresql" : ENV["SUPPORT_API_DB_TYPE"] %>
 
 mysql_default: &mysql_default
   adapter: mysql2

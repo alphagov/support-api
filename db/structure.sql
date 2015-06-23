@@ -280,7 +280,7 @@ CREATE INDEX index_anonymous_contacts_on_created_at_and_path ON anonymous_contac
 -- Name: index_anonymous_contacts_on_path; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_anonymous_contacts_on_path ON anonymous_contacts USING btree (path);
+CREATE INDEX index_anonymous_contacts_on_path ON anonymous_contacts USING btree (path varchar_pattern_ops);
 
 
 --
@@ -356,4 +356,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150604140707');
 INSERT INTO schema_migrations (version) VALUES ('20150611133227');
 
 INSERT INTO schema_migrations (version) VALUES ('20150612130729');
+
+INSERT INTO schema_migrations (version) VALUES ('20150623151655');
 

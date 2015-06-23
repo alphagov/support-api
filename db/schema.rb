@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150612130729) do
+ActiveRecord::Schema.define(version: 20150623151655) do
 
   create_table "anonymous_contacts", force: :cascade do |t|
     t.string   "type",                        limit: 255
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20150612130729) do
   add_index "anonymous_contacts", ["content_item_id", "created_at"], name: "index_anonymous_contacts_on_content_item_id_and_created_at", using: :btree
   add_index "anonymous_contacts", ["created_at", "path"], name: "index_anonymous_contacts_on_created_at_and_path", length: {"created_at"=>nil, "path"=>128}, using: :btree
   add_index "anonymous_contacts", ["created_at"], name: "index_anonymous_contacts_on_created_at", using: :btree
-  add_index "anonymous_contacts", ["path"], name: "index_anonymous_contacts_on_path", length: {"path"=>255}, using: :btree
+  add_index "anonymous_contacts", ["path"], name: "index_anonymous_contacts_on_path", length: {"path"=>128}, using: :btree
 
   create_table "content_items", force: :cascade do |t|
     t.string   "path",       limit: 2048, null: false
