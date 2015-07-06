@@ -8,7 +8,7 @@ gem 'logstasher', '0.6.5'
 gem 'airbrake', '4.1.0'
 gem 'sidekiq', '3.3.4'
 gem 'unicorn', '4.9.0'
-gem 'gds-api-adapters', '18.6.0'
+gem 'gds-api-adapters', '20.1.1'
 gem 'whenever', '0.9.4', require: false
 gem 'mlanett-redis-lock', '0.2.6'
 gem "gds_zendesk", '1.0.5'

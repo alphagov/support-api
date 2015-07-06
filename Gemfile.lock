@@ -67,7 +67,7 @@ GEM
     fakefs (0.6.7)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
-    gds-api-adapters (18.6.0)
+    gds-api-adapters (20.1.1)
       link_header
       lrucache (~> 0.1.1)
       null_logger
@@ -115,7 +115,7 @@ GEM
     null_logger (0.0.1)
     pg (0.18.2)
     plek (1.10.0)
-    rack (1.6.2)
+    rack (1.6.4)
     rack-cache (1.2)
       rack (>= 0.4)
     rack-test (0.6.3)
@@ -242,7 +242,7 @@ DEPENDENCIES
   ci_reporter_rspec (= 1.0.0)
   factory_girl_rails (= 4.5.0)
   fakefs
-  gds-api-adapters (= 18.6.0)
+  gds-api-adapters (= 20.1.1)
   gds_zendesk (= 1.0.5)
   kaminari (~> 0.16.3)
   logstasher (= 0.6.5)
