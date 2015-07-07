@@ -14,14 +14,6 @@ require "action_view/railtie"
 Bundler.require(*Rails.groups)
 
 module SupportApi
-  def self.postgresql?
-    ENV["SUPPORT_API_DB_TYPE"].blank? || ENV["SUPPORT_API_DB_TYPE"] == "postgresql"
-  end
-
-  def self.mysql?
-    ENV["SUPPORT_API_DB_TYPE"] == "mysql"
-  end
-
   class Application < Rails::Application
     require "support_api"
 
@@ -41,10 +33,6 @@ module SupportApi
     # Disable Rack::Cache
     config.action_dispatch.rack_cache = nil
 
-    if SupportApi.postgresql?
-      config.active_record.schema_format = :sql
-    else
-      config.active_record.schema_format = :ruby
-    end
+    config.active_record.schema_format = :sql
   end
 end
