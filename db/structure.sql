@@ -3,7 +3,8 @@
 --
 
 SET statement_timeout = 0;
-SET client_encoding = 'SQL_ASCII';
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
@@ -284,24 +285,17 @@ CREATE INDEX index_anonymous_contacts_on_path ON anonymous_contacts USING btree 
 
 
 --
--- Name: index_content_items_organisations_on_content_item_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_content_items_organisations_unique; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_content_items_organisations_on_content_item_id ON content_items_organisations USING btree (content_item_id);
-
-
---
--- Name: index_content_items_organisations_on_organisation_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_content_items_organisations_on_organisation_id ON content_items_organisations USING btree (organisation_id);
+CREATE UNIQUE INDEX index_content_items_organisations_unique ON content_items_organisations USING btree (content_item_id, organisation_id);
 
 
 --
 -- Name: index_organisations_on_content_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_organisations_on_content_id ON organisations USING btree (content_id);
+CREATE UNIQUE INDEX index_organisations_on_content_id ON organisations USING btree (content_id);
 
 
 --
@@ -358,4 +352,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150611133227');
 INSERT INTO schema_migrations (version) VALUES ('20150612130729');
 
 INSERT INTO schema_migrations (version) VALUES ('20150623151655');
+
+INSERT INTO schema_migrations (version) VALUES ('20150915134640');
 
