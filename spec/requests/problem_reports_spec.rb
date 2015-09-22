@@ -102,6 +102,11 @@ javascript_enabled: true
   end
 
   context "fetching" do
+    let!(:gds) {
+      create(:organisation,
+        slug: "government-digital-service"
+      )
+    }
     let!(:problem_report) {
       create(:problem_report,
         what_wrong: "A",
@@ -110,7 +115,7 @@ javascript_enabled: true
         referrer: "https://www.gov.uk/browse",
         user_agent: "Safari",
         created_at: Date.new(2015,02,02),
-        content_item: create(:content_item, path: "/help"),
+        content_item: create(:content_item, path: "/help", organisations: [gds]),
       )
     }
 
