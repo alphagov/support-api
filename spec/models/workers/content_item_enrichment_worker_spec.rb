@@ -15,13 +15,13 @@ describe ContentItemEnrichmentWorker do
       problem_report.reload
     end
 
-    it "creates a content item for the problem report, but no orgs" do
+    it "creates a content item for the problem report" do
       expect(problem_report.content_item.path).to eq("/non-existent-page")
       expect(problem_report.content_item.organisations.first["title"]).to eq("Government Digital Service")
     end
   end
 
-  context "for a problem report that relates to a piece of mainstream content" do
+  context "for a problem report that relates to an existing piece of content" do
     let(:hmrc) { Organisation.where(slug: 'hm-revenue-customs').first }
     let(:vat_rates_content_api_response) {
       api_response = artefact_for_slug("vat-rates").tap do |hash|
@@ -46,7 +46,7 @@ describe ContentItemEnrichmentWorker do
       problem_report.reload
     end
 
-    it "creates a content item for the problem report, but no orgs" do
+    it "creates a content item for the problem report" do
       expect(problem_report.content_item.path).to eq("/vat-rates")
       expect(problem_report.content_item.organisations).to eq([hmrc])
     end
