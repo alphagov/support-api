@@ -4,8 +4,6 @@ class ContentItem < ActiveRecord::Base
   has_many :anonymous_contacts
   validates :path, presence: true
 
-  before_create :fetch_organisations, unless: ->(content_item) { content_item.organisations.present? }
-
   scope :for_organisation, ->(organisation) {
     joins(:organisations).
     where(organisations: { id: organisation.id})
@@ -35,6 +33,11 @@ class ContentItem < ActiveRecord::Base
       map { |row| integers_for_sum_columns(row) }
   end
 
+  def fetch_organisations
+    self.organisations = Organisation.for_path(path)
+    save!
+  end
+
 private
   def self.sum_column(options)
     "SUM(
@@ -42,10 +45,6 @@ private
             ELSE 0
             END
         )"
-  end
-
-  def fetch_organisations
-    self.organisations = Organisation.for_path(path)
   end
 
   def self.integers_for_sum_columns(row)
