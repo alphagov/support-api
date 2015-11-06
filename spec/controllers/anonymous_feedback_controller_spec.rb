@@ -39,6 +39,50 @@ describe AnonymousFeedbackController do
       )
     end
 
+    describe "limiting the page count" do
+      before do
+        create(:problem_report, path: "/tax-disc", what_doing: "First contact", what_wrong: "Nowt")
+        create(:problem_report, path: "/tax-disc", what_doing: "Second contact", what_wrong: "Owt")
+        create_list(:anonymous_contact, 98, path: "/tax-disc")
+        create(:problem_report, path: "/tax-disc", what_doing: "Last contact", what_wrong: "Something")
+        stub_const("AnonymousContact::MAX_PAGES", 2)
+      end
+
+      it "limits the counts to the max number of pages" do
+        get :index, path_prefix: "/tax-disc", page: 1
+        expect(json_response).to include(
+          "page_size" => 50,
+          "total_count" => 100,
+          "current_page" => 1,
+          "pages" => 2,
+        )
+        expect(json_response["results"][0]["what_doing"]).to eq("Last contact")
+      end
+
+      it "truncates at the max page count" do
+        get :index, path_prefix: "/tax-disc", page: 2
+        expect(json_response).to include(
+          "page_size" => 50,
+          "total_count" => 100,
+          "current_page" => 2,
+          "pages" => 2,
+        )
+        expect(json_response["results"].map {|r| r["what_doing"] }).to_not include("First contact")
+        expect(json_response["results"].last["what_doing"]).to eq("Second contact")
+      end
+
+      it "doesn't show more than the max pages" do
+        get :index, path_prefix: "/tax-disc", page: 3
+        expect(json_response).to include(
+          "page_size" => 50,
+          "total_count" => 100,
+          "current_page" => 3,
+          "pages" => 2,
+          "results" => []
+        )
+      end
+    end
+
     describe "filter by organisation" do
       let(:hmrc) { create(:organisation, slug: 'hm-revenue-customs') }
       let(:ukvi) { create(:organisation, slug: 'uk-visas-and-immigration') }
