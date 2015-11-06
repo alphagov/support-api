@@ -42,6 +42,7 @@ class AnonymousContact < ActiveRecord::Base
     query
   end
 
+  MAX_PAGES = 200
   PAGE_SIZE = 50
   paginates_per PAGE_SIZE
 
