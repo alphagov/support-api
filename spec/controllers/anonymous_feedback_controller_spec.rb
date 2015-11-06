@@ -78,7 +78,8 @@ describe AnonymousFeedbackController do
           "total_count" => 100,
           "current_page" => 3,
           "pages" => 2,
-          "results" => []
+          "results" => [],
+          "results_limited" => true
         )
       end
     end

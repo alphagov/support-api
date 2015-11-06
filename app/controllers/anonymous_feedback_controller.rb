@@ -15,6 +15,7 @@ class AnonymousFeedbackController < ApplicationController
 
     json[:from_date] = dates[0] if dates[0]
     json[:to_date] = dates[1] if dates[1]
+    json[:results_limited] = results_limited if results_limited
 
     render json: json
   end
@@ -38,6 +39,10 @@ class AnonymousFeedbackController < ApplicationController
 
   def total_count
     @total_count ||= scope.limit(AnonymousContact::MAX_PAGES * AnonymousContact::PAGE_SIZE).count
+  end
+
+  def results_limited
+    total_count >= AnonymousContact::PAGE_SIZE * AnonymousContact::MAX_PAGES
   end
 
   def pages
