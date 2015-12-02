@@ -47,6 +47,7 @@ describe OrganisationLookup do
         tags: [
           {
             id: "https://www.gov.uk/api/tags/organisation/uk-visas-and-immigration.json",
+            content_id: "04148522-b0c1-4137-b687-5f3c3bdd561a",
             slug: "uk-visas-and-immigration",
             web_url: "https://www.gov.uk/government/organisations/uk-visas-and-immigration",
             title: "UK Visas and Immigration",
@@ -71,6 +72,7 @@ describe OrganisationLookup do
         content_api_has_an_artefact("contact-ukvi", default_content_api_response)
 
         expect(api.organisations_for("/contact-ukvi/overview")).to eq([
+          content_id: "04148522-b0c1-4137-b687-5f3c3bdd561a",
           slug: "uk-visas-and-immigration",
           web_url: "https://www.gov.uk/government/organisations/uk-visas-and-immigration",
           title: "UK Visas and Immigration",
@@ -86,6 +88,7 @@ describe OrganisationLookup do
         )
 
         expect(api.organisations_for("/government/publications/customer-service-commitments-uk-visas-and-immigration")).to eq([
+          content_id: "04148522-b0c1-4137-b687-5f3c3bdd561a",
           slug: "uk-visas-and-immigration",
           web_url: "https://www.gov.uk/government/organisations/uk-visas-and-immigration",
           title: "UK Visas and Immigration",
