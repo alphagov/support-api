@@ -1,9 +1,9 @@
-require 'content_api/base_info_lookup'
+require 'organisation_lookups/base_info_lookup'
 
-module ContentAPI
-  class DefaultOrgContentLookup
+module OrganisationLookups
+  class GDSOwnedContentLookup
     def applies?(path)
-      true
+      path =~ %r{(^/$|^/browse|^/contact($|/)|^/search|^/help($|/))}
     end
 
     def organisations_for(path)

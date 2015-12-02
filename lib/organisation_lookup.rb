@@ -1,21 +1,21 @@
 require 'uri'
 
-require 'content_api/depts_and_policy_content_lookup'
-require 'content_api/gds_owned_content_lookup'
-require 'content_api/mainstream_info_lookup'
-require 'content_api/orgs_content_lookup'
-require 'content_api/worldwide_orgs_content_lookup'
-require 'content_api/default_org_content_lookup'
+require 'organisation_lookups/depts_and_policy_content_lookup'
+require 'organisation_lookups/gds_owned_content_lookup'
+require 'organisation_lookups/mainstream_info_lookup'
+require 'organisation_lookups/orgs_content_lookup'
+require 'organisation_lookups/worldwide_orgs_content_lookup'
+require 'organisation_lookups/default_org_content_lookup'
 
 class OrganisationLookup
   def initialize(content_api, content_store)
     @lookups = [
-      ContentAPI::GDSOwnedContentLookup.new,
-      ContentAPI::MainstreamInfoLookup.new(content_api),
-      ContentAPI::OrgsContentLookup.new(content_store),
-      ContentAPI::WorldwideOrgsContentLookup.new,
-      ContentAPI::DeptsAndPolicyContentLookup.new(content_api),
-      ContentAPI::DefaultOrgContentLookup.new,
+      OrganisationLookups::GDSOwnedContentLookup.new,
+      OrganisationLookups::MainstreamInfoLookup.new(content_api),
+      OrganisationLookups::OrgsContentLookup.new(content_store),
+      OrganisationLookups::WorldwideOrgsContentLookup.new,
+      OrganisationLookups::DeptsAndPolicyContentLookup.new(content_api),
+      OrganisationLookups::DefaultOrgContentLookup.new,
     ]
   end
 

@@ -1,6 +1,6 @@
-require 'content_api/base_info_lookup'
+require 'organisation_lookups/base_info_lookup'
 
-module ContentAPI
+module OrganisationLookups
   class OrgsContentLookup
     def initialize(content_store)
       @content_store = content_store

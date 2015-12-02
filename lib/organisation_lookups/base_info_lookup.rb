@@ -1,4 +1,4 @@
-module ContentAPI
+module OrganisationLookups
   class BaseInfoLookup
     def initialize(content_api)
       @content_api = content_api
