@@ -1,5 +1,3 @@
-require 'content_api/organisation_lookup'
-
 class Organisation < ActiveRecord::Base
   has_and_belongs_to_many :content_items
   has_many :problem_reports, through: :content_items
