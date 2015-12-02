@@ -8,6 +8,7 @@ module OrganisationLookups
       response = @content_store.content_item(path)
       if response && organisation?(response)
         [{
+          content_id: response["content_id"],
           slug: response["base_path"].split("/").last,
           web_url: Plek.new.website_root + response["base_path"],
           title: response["title"],

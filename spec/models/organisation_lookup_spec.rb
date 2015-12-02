@@ -107,6 +107,7 @@ describe OrganisationLookup do
     context "(organisation pages)" do
       let(:hmrc_info) {
         {
+          content_id: "6667cce2-e809-4e21-ae09-cb0bdc1ddda3",
           slug: "hm-revenue-customs",
           web_url: "http://www.dev.gov.uk/government/organisations/hm-revenue-customs",
           title: "HM Revenue & Customs",
@@ -115,6 +116,7 @@ describe OrganisationLookup do
 
       let(:hmrc_org_content_store_response) {
         {
+          content_id: "6667cce2-e809-4e21-ae09-cb0bdc1ddda3",
           base_path: "/government/organisations/hm-revenue-customs",
           format: "placeholder_organisation",
           title: "HM Revenue & Customs",
