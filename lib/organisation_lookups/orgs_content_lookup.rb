@@ -1,4 +1,3 @@
-require 'organisation_lookups/base_info_lookup'
 require 'organisation_lookups/content_store_with_organisations'
 
 module OrganisationLookups

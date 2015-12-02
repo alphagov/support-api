@@ -1,5 +1,3 @@
-require 'organisation_lookups/base_info_lookup'
-
 module OrganisationLookups
   class DefaultOrgContentLookup
     def applies?(path)

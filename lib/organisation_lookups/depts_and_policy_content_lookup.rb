@@ -1,7 +1,7 @@
-require 'organisation_lookups/base_info_lookup'
+require 'organisation_lookups/content_api_lookup'
 
 module OrganisationLookups
-  class DeptsAndPolicyContentLookup < BaseInfoLookup
+  class DeptsAndPolicyContentLookup < ContentAPILookup
     def applies?(path)
       path =~ %r{^/government/} && path !~ %r{^/government/organisations}
     end

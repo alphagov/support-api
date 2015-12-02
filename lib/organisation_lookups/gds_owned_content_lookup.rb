@@ -1,4 +1,4 @@
-require 'organisation_lookups/base_info_lookup'
+require 'organisation_lookups/content_api_lookup'
 
 module OrganisationLookups
   class GDSOwnedContentLookup

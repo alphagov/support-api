@@ -1,7 +1,7 @@
 require 'organisation_lookups/content_api_with_organisations'
 
 module OrganisationLookups
-  class BaseInfoLookup
+  class ContentAPILookup
     def initialize(content_api)
       @content_api_with_orgs = ContentAPIWithOrganisations.new(content_api)
     end
