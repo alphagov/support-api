@@ -1,5 +1,7 @@
 module OrganisationLookups
-  class DefaultOrgContentLookup
+  # For any content items where the interested organisation cannot be determined,
+  # it's assigned to GDS, which runs GOV.UK
+  class CatchallAssignToGDS
     def applies?(path)
       true
     end

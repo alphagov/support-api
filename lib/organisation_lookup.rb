@@ -1,21 +1,21 @@
 require 'uri'
 
-require 'organisation_lookups/depts_and_policy_content_lookup'
-require 'organisation_lookups/gds_owned_content_lookup'
-require 'organisation_lookups/mainstream_info_lookup'
-require 'organisation_lookups/orgs_content_lookup'
-require 'organisation_lookups/worldwide_orgs_content_lookup'
-require 'organisation_lookups/default_org_content_lookup'
+require 'organisation_lookups/departments_and_policy_pages'
+require 'organisation_lookups/govuk_team_owned_pages'
+require 'organisation_lookups/mainstream_pages'
+require 'organisation_lookups/organisation_pages'
+require 'organisation_lookups/worldwide_organisation_pages'
+require 'organisation_lookups/catchall_assign_to_gds'
 
 class OrganisationLookup
   def initialize(content_api, content_store)
     @lookups = [
-      OrganisationLookups::GDSOwnedContentLookup.new,
-      OrganisationLookups::MainstreamInfoLookup.new(content_api),
-      OrganisationLookups::OrgsContentLookup.new(content_store),
-      OrganisationLookups::WorldwideOrgsContentLookup.new,
-      OrganisationLookups::DeptsAndPolicyContentLookup.new(content_api),
-      OrganisationLookups::DefaultOrgContentLookup.new,
+      OrganisationLookups::GOVUKTeamOwnedPages.new,
+      OrganisationLookups::MainstreamPages.new(content_api),
+      OrganisationLookups::OrganisationPages.new(content_store),
+      OrganisationLookups::WorldwideOrganisationPages.new,
+      OrganisationLookups::DepartmentsAndPolicyPages.new(content_api),
+      OrganisationLookups::CatchallAssignToGDS.new,
     ]
   end
 

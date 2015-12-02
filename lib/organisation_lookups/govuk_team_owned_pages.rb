@@ -1,7 +1,7 @@
 require 'organisation_lookups/content_api_lookup'
 
 module OrganisationLookups
-  class GDSOwnedContentLookup
+  class GOVUKTeamOwnedPages
     def applies?(path)
       path =~ %r{(^/$|^/browse|^/contact($|/)|^/search|^/help($|/))}
     end

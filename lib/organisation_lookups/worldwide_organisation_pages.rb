@@ -1,5 +1,5 @@
 module OrganisationLookups
-  class WorldwideOrgsContentLookup
+  class WorldwideOrganisationPages
     def applies?(path)
       path =~ %r{^/government/world/organisations}
     end

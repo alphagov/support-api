@@ -1,7 +1,7 @@
 require 'organisation_lookups/content_store_with_organisations'
 
 module OrganisationLookups
-  class OrgsContentLookup
+  class OrganisationPages
     def initialize(content_store)
       @content_store_with_orgs = ContentStoreWithOrganisations.new(content_store)
     end
