@@ -113,6 +113,7 @@ describe OrganisationLookup do
       let(:hmrc_org_content_store_response) {
         {
           base_path: "/government/organisations/hm-revenue-customs",
+          format: "placeholder_organisation",
           title: "HM Revenue & Customs",
         }
       }
