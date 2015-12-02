@@ -11,12 +11,7 @@ module OrganisationLookups
     end
 
     def organisations_for(path)
-      @content_api_with_orgs.organisations_for(content_item_api_path(path))
-    end
-
-  private
-    def content_item_api_path(path)
-      raise "should be implemented in the subclass"
+      @content_api_with_orgs.organisations_for(path_of_parent_content_item(path))
     end
   end
 end
