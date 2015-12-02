@@ -9,11 +9,11 @@ require 'content_api/default_org_content_lookup'
 
 module ContentAPI
   class EnhancedContentAPI
-    def initialize(content_api, organisations_api)
+    def initialize(content_api, content_store)
       @lookups = [
         GDSOwnedContentLookup.new,
         MainstreamInfoLookup.new(content_api),
-        OrgsContentLookup.new(organisations_api),
+        OrgsContentLookup.new(content_store),
         WorldwideOrgsContentLookup.new,
         DeptsAndPolicyContentLookup.new(content_api),
         DefaultOrgContentLookup.new
