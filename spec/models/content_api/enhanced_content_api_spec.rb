@@ -14,8 +14,8 @@ module ContentAPI
     let(:content_store) { GdsApi::ContentStore.new(Plek.find('content-store')) }
     subject(:api) { EnhancedContentAPI.new(content_api, content_store) }
 
-    context "mapping multi-page content to slugs" do
-      it "maps mainstream guide sections to the guide root" do
+    context "combining multi-page content around the 'parent' content item" do
+      it "associates sub-page paths with the parent path" do
         mappings = {
           [ "/contact-ukvi", "/contact-ukvi/overview" ] => "/contact-ukvi",
           [ "/tax-disc"] => "/tax-disc",
