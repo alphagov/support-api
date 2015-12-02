@@ -1,18 +1,18 @@
 require 'rails_helper'
-require 'content_api/enhanced_content_api'
+require 'content_api/organisation_lookup'
 require 'plek'
 require 'gds_api/test_helpers/content_api'
 require 'gds_api/test_helpers/content_store'
 require 'gds_api/content_api'
 
 module ContentAPI
-  describe EnhancedContentAPI do
+  describe OrganisationLookup do
     include GdsApi::TestHelpers::ContentApi
     include GdsApi::TestHelpers::ContentStore
 
     let(:content_api) { GdsApi::ContentApi.new(Plek.find('contentapi')) }
     let(:content_store) { GdsApi::ContentStore.new(Plek.find('content-store')) }
-    subject(:api) { EnhancedContentAPI.new(content_api, content_store) }
+    subject(:api) { OrganisationLookup.new(content_api, content_store) }
 
     context "combining multi-page content around the 'parent' content item" do
       it "associates sub-page paths with the parent path" do

@@ -8,7 +8,7 @@ require 'content_api/worldwide_orgs_content_lookup'
 require 'content_api/default_org_content_lookup'
 
 module ContentAPI
-  class EnhancedContentAPI
+  class OrganisationLookup
     def initialize(content_api, content_store)
       @lookups = [
         GDSOwnedContentLookup.new,
