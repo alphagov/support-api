@@ -29,7 +29,7 @@ module OrganisationLookups
       end
     end
 
-    def content_item_path(path)
+    def path_of_parent_content_item(path)
       path
     end
   end

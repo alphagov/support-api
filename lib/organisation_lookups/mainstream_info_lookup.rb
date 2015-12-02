@@ -7,10 +7,10 @@ module OrganisationLookups
     end
 
     def content_item_api_path(path)
-      content_item_path(path)
+      path_of_parent_content_item(path)
     end
 
-    def content_item_path(path)
+    def path_of_parent_content_item(path)
       "/" + path.split("/")[1]
     end
   end

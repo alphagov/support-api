@@ -36,7 +36,7 @@ describe OrganisationLookup do
       }
 
       mappings.each do |source_paths, content_item_path|
-        source_paths.each { |source_path| expect(api.content_item_path(source_path)).to eq(content_item_path) }
+        source_paths.each { |source_path| expect(api.path_of_parent_content_item(source_path)).to eq(content_item_path) }
       end
     end
   end

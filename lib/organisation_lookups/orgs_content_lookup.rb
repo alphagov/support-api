@@ -12,11 +12,11 @@ module OrganisationLookups
     end
 
     def organisations_for(path)
-      path_to_lookup = content_item_path(path)
+      path_to_lookup = path_of_parent_content_item(path)
       @content_store_with_orgs.organisations_for(path_to_lookup)
     end
 
-    def content_item_path(path)
+    def path_of_parent_content_item(path)
       URI(path).path.split("/")[0..3].join("/")
     end
   end

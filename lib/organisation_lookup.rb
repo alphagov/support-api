@@ -28,8 +28,8 @@ class OrganisationLookup
     nil
   end
 
-  def content_item_path(path)
+  def path_of_parent_content_item(path)
     lookup = @lookups.detect { |lookup| lookup.applies?(path) }
-    lookup.content_item_path(path)
+    lookup.path_of_parent_content_item(path)
   end
 end

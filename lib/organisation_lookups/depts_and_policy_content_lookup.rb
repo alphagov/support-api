@@ -7,10 +7,10 @@ module OrganisationLookups
     end
 
     def content_item_api_path(path)
-      content_item_path(path)
+      path_of_parent_content_item(path)
     end
 
-    def content_item_path(path)
+    def path_of_parent_content_item(path)
       # to handle sub-pages that belong to a particular document (eg an HTML publication)
       # eg /government/publications/customer-service-commitments-uk-visas-and-immigration/uk-visas-and-immigration-customer-commitments
       # the path is stripped back to the parent page
