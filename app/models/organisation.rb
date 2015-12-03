@@ -6,6 +6,7 @@ class Organisation < ActiveRecord::Base
   validates :slug, presence: true
   validates :web_url, presence: true
   validates :title, presence: true
+  validates :content_id, presence: true
 
   def self.for_path(path)
     orgs_data = SupportApi.organisation_lookup.organisations_for(path) || []
