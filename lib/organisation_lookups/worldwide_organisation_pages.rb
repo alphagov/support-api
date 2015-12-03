@@ -1,7 +1,5 @@
-require 'content_api/base_info_lookup'
-
-module ContentAPI
-  class WorldwideOrgsContentLookup
+module OrganisationLookups
+  class WorldwideOrganisationPages
     def applies?(path)
       path =~ %r{^/government/world/organisations}
     end
@@ -29,7 +27,7 @@ module ContentAPI
       end
     end
 
-    def content_item_path(path)
+    def path_of_parent_content_item(path)
       path
     end
   end

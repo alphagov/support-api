@@ -1,9 +1,9 @@
-require 'content_api/base_info_lookup'
-
-module ContentAPI
-  class GDSOwnedContentLookup
+module OrganisationLookups
+  # For any content items where the interested organisation cannot be determined,
+  # it's assigned to GDS, which runs GOV.UK
+  class CatchallAssignToGDS
     def applies?(path)
-      path =~ %r{(^/$|^/browse|^/contact($|/)|^/search|^/help($|/))}
+      true
     end
 
     def organisations_for(path)
@@ -14,7 +14,7 @@ module ContentAPI
       }]
     end
 
-    def content_item_path(path)
+    def path_of_parent_content_item(path)
       path
     end
   end

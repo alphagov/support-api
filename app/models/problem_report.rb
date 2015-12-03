@@ -1,5 +1,4 @@
 require 'csv'
-require 'content_api/enhanced_content_api'
 
 class ProblemReport < AnonymousContact
   validates :what_doing, length: { maximum: 2 ** 16 }
@@ -16,7 +15,7 @@ class ProblemReport < AnonymousContact
   scope :with_known_page_owner, -> { where.not(page_owner: nil) }
 
   def content_item_path
-    SupportApi::enhanced_content_api.content_item_path(path)
+    SupportApi.organisation_lookup.path_of_parent_content_item(path)
   end
 
   def type

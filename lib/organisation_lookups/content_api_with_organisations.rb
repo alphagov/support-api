@@ -1,15 +1,10 @@
-module ContentAPI
-  class BaseInfoLookup
+module OrganisationLookups
+  class ContentAPIWithOrganisations
     def initialize(content_api)
       @content_api = content_api
     end
 
-    def applies?(path)
-      false
-    end
-
     def organisations_for(path)
-      path = content_item_api_path(path)
       response = api_response(path)
 
       if response && response["tags"]
@@ -19,14 +14,17 @@ module ContentAPI
       end
     end
 
-    private
-    def content_item_api_path(path)
-      raise "should be implemented in the subclass"
-    end
-
+  private
     def orgs_from_tags(tags)
       org_tags = tags.select {|t| t["details"]["type"] == "organisation" }
-      org_tags.map { |tag| { slug: tag["slug"], web_url: tag["web_url"], title: tag["title"] } }
+      org_tags.map { |tag|
+        {
+          content_id: tag["content_id"],
+          slug: tag["slug"],
+          web_url: tag["web_url"],
+          title: tag["title"],
+        }
+      }
     end
 
     def api_response(api_path)

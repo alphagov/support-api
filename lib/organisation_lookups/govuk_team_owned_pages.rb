@@ -1,9 +1,9 @@
-require 'content_api/base_info_lookup'
+require 'organisation_lookups/content_api_lookup'
 
-module ContentAPI
-  class DefaultOrgContentLookup
+module OrganisationLookups
+  class GOVUKTeamOwnedPages
     def applies?(path)
-      true
+      path =~ %r{(^/$|^/browse|^/contact($|/)|^/search|^/help($|/))}
     end
 
     def organisations_for(path)
@@ -14,7 +14,7 @@ module ContentAPI
       }]
     end
 
-    def content_item_path(path)
+    def path_of_parent_content_item(path)
       path
     end
   end
