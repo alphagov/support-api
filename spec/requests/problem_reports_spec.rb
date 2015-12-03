@@ -104,9 +104,7 @@ javascript_enabled: true
 
   context "fetching" do
     let!(:gds) {
-      create(:organisation,
-        slug: "government-digital-service"
-      )
+      create(:gds)
     }
     let!(:problem_report) {
       create(:problem_report,

@@ -10,6 +10,7 @@ describe ContentItemEnrichmentWorker do
     let(:problem_report) { create(:problem_report, path: "/unknown-org-page") }
 
     before do
+      create(:gds)
       content_api_does_not_have_an_artefact("unknown-org-page")
       subject.perform(problem_report.id)
       problem_report.reload

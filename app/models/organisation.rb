@@ -9,10 +9,7 @@ class Organisation < ActiveRecord::Base
   validates :content_id, presence: true
 
   def self.for_path(path)
-    orgs_data = SupportApi.organisation_lookup.organisations_for(path) || []
-    orgs_data.map { |org_info|
-      Organisation.create_with(org_info).find_or_create_by(content_id: org_info[:content_id])
-    }
+    SupportApi.organisation_lookup.organisations_for(path)
   end
 
   def as_json(options)
