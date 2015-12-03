@@ -9,7 +9,9 @@ class Organisation < ActiveRecord::Base
 
   def self.for_path(path)
     orgs_data = SupportApi.organisation_lookup.organisations_for(path) || []
-    orgs_data.map {|org_info| Organisation.where(org_info).first_or_create! }
+    orgs_data.map { |org_info|
+      Organisation.create_with(org_info).find_or_create_by(content_id: org_info[:content_id])
+    }
   end
 
   def as_json(options)

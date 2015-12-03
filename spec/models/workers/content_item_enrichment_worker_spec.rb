@@ -27,6 +27,7 @@ describe ContentItemEnrichmentWorker do
       api_response = artefact_for_slug("vat-rates").tap do |hash|
         hash["tags"] = [
           {
+            content_id: "6667cce2-e809-4e21-ae09-cb0bdc1ddda3",
             slug: "hm-revenue-customs",
             web_url: "https://www.gov.uk/government/organisations/hm-revenue-customs",
             title: "HM Revenue & Customs",
@@ -59,6 +60,7 @@ describe ContentItemEnrichmentWorker do
       api_response = artefact_for_slug("vat-rates").tap do |hash|
         hash["tags"] = [
           {
+            content_id: "6667cce2-e809-4e21-ae09-cb0bdc1ddda3",
             slug: "hm-revenue-customs",
             web_url: "https://www.gov.uk/government/organisations/hm-revenue-customs",
             title: "HM Revenue & Customs",
@@ -73,6 +75,7 @@ describe ContentItemEnrichmentWorker do
       api_response = artefact_for_slug("vat-rates").tap do |hash|
         hash["tags"] = [
           {
+            content_id: "38eb5d8f-2d89-480c-8655-e2e7ac23f8f4",
             slug: "air-accidents-investigation-branch",
             web_url: "https://www.gov.uk/government/organisations/air-accidents-investigation-branch",
             title: "aaib",
