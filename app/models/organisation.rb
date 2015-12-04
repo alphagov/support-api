@@ -6,10 +6,10 @@ class Organisation < ActiveRecord::Base
   validates :slug, presence: true
   validates :web_url, presence: true
   validates :title, presence: true
+  validates :content_id, presence: true
 
   def self.for_path(path)
-    orgs_data = SupportApi.organisation_lookup.organisations_for(path) || []
-    orgs_data.map {|org_info| Organisation.where(org_info).first_or_create! }
+    SupportApi.organisation_lookup.organisations_for(path)
   end
 
   def as_json(options)

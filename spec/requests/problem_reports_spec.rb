@@ -16,6 +16,7 @@ describe "Problem reports" do
     api_response = artefact_for_slug("vat-rates").tap do |hash|
       hash["tags"] = [
         {
+          content_id: "6667cce2-e809-4e21-ae09-cb0bdc1ddda3",
           slug: "hm-revenue-customs",
           web_url: "https://www.gov.uk/government/organisations/hm-revenue-customs",
           title: "HM Revenue & Customs",
@@ -103,9 +104,7 @@ javascript_enabled: true
 
   context "fetching" do
     let!(:gds) {
-      create(:organisation,
-        slug: "government-digital-service"
-      )
+      create(:gds)
     }
     let!(:problem_report) {
       create(:problem_report,

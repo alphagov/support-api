@@ -5,26 +5,12 @@ module OrganisationLookups
     end
 
     def organisations_for(path)
-      case path
-      when /dfid/ then
-        [{
-          slug: "department-for-international-development",
-          web_url: "https://www.gov.uk/government/organisations/department-for-international-development",
-          title: "Department for International Development",
-        }]
-      when /uk-trade-investment/ then
-        [{
-          slug: "uk-trade-investment",
-          web_url: "https://www.gov.uk/government/organisations/uk-trade-investment",
-          title: "UK Trade & Investment",
-        }]
-      else
-        [{
-          slug: "foreign-commonwealth-office",
-          web_url: "https://www.gov.uk/government/organisations/foreign-commonwealth-office",
-          title: "Foreign & Commonwealth Office",
-        }]
-      end
+      org_slug = case path
+                 when /dfid/ then "department-for-international-development"
+                 when /uk-trade-investment/ then "uk-trade-investment"
+                 else "foreign-commonwealth-office"
+                 end
+      [Organisation.find_by!(slug: org_slug)]
     end
 
     def path_of_parent_content_item(path)

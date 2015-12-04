@@ -164,7 +164,7 @@ CREATE TABLE organisations (
     updated_at timestamp without time zone NOT NULL,
     acronym character varying(255),
     govuk_status character varying(255),
-    content_id character varying(255)
+    content_id character varying(255) NOT NULL
 );
 
 
@@ -354,4 +354,8 @@ INSERT INTO schema_migrations (version) VALUES ('20150612130729');
 INSERT INTO schema_migrations (version) VALUES ('20150623151655');
 
 INSERT INTO schema_migrations (version) VALUES ('20150915134640');
+
+INSERT INTO schema_migrations (version) VALUES ('20151202212408');
+
+INSERT INTO schema_migrations (version) VALUES ('20151203001139');
 

@@ -18,12 +18,13 @@ module OrganisationLookups
     def orgs_from_tags(tags)
       org_tags = tags.select {|t| t["details"]["type"] == "organisation" }
       org_tags.map { |tag|
-        {
+        org_info = {
           content_id: tag["content_id"],
           slug: tag["slug"],
           web_url: tag["web_url"],
           title: tag["title"],
         }
+        Organisation.create_with(org_info).find_or_create_by(content_id: org_info[:content_id])
       }
     end
 

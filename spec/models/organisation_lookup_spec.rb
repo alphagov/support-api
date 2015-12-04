@@ -9,6 +9,8 @@ describe OrganisationLookup do
   include GdsApi::TestHelpers::ContentApi
   include GdsApi::TestHelpers::ContentStore
 
+  let!(:gds) { create(:gds) }
+
   let(:content_api) { GdsApi::ContentApi.new(Plek.find('contentapi')) }
   let(:content_store) { GdsApi::ContentStore.new(Plek.find('content-store')) }
   subject(:api) { OrganisationLookup.new(content_api, content_store) }
@@ -59,23 +61,17 @@ describe OrganisationLookup do
       }
     }
 
-    let(:gds_org_info) {
-      {
-        slug: "government-digital-service",
-        web_url: "https://www.gov.uk/government/organisations/government-digital-service",
-        title: "Government Digital Service",
-      }
-    }
-
     context "(mainstream content)" do
       it "fetches the organisations" do
         content_api_has_an_artefact("contact-ukvi", default_content_api_response)
 
         expect(api.organisations_for("/contact-ukvi/overview")).to eq([
-          content_id: "04148522-b0c1-4137-b687-5f3c3bdd561a",
-          slug: "uk-visas-and-immigration",
-          web_url: "https://www.gov.uk/government/organisations/uk-visas-and-immigration",
-          title: "UK Visas and Immigration",
+          Organisation.find_by!(
+            content_id: "04148522-b0c1-4137-b687-5f3c3bdd561a",
+            slug: "uk-visas-and-immigration",
+            web_url: "https://www.gov.uk/government/organisations/uk-visas-and-immigration",
+            title: "UK Visas and Immigration",
+          )
         ])
       end
     end
@@ -88,10 +84,12 @@ describe OrganisationLookup do
         )
 
         expect(api.organisations_for("/government/publications/customer-service-commitments-uk-visas-and-immigration")).to eq([
-          content_id: "04148522-b0c1-4137-b687-5f3c3bdd561a",
-          slug: "uk-visas-and-immigration",
-          web_url: "https://www.gov.uk/government/organisations/uk-visas-and-immigration",
-          title: "UK Visas and Immigration",
+          Organisation.find_by!(
+            content_id: "04148522-b0c1-4137-b687-5f3c3bdd561a",
+            slug: "uk-visas-and-immigration",
+            web_url: "https://www.gov.uk/government/organisations/uk-visas-and-immigration",
+            title: "UK Visas and Immigration",
+          )
         ])
       end
     end
@@ -99,7 +97,7 @@ describe OrganisationLookup do
     context "(GDS-owned pages)" do
       it "should have GDS as the owning org" do
         [ "/", "/help", "/help/beta", "/contact", "/contact/govuk", "/search", "/browse", "/browse/driving" ].each do |gds_owned_path|
-          expect(api.organisations_for(gds_owned_path)).to eq([gds_org_info])
+          expect(api.organisations_for(gds_owned_path)).to eq([gds])
         end
       end
     end
@@ -131,7 +129,7 @@ describe OrganisationLookup do
           "/government/organisations/hm-revenue-customs/contact/corporation-tax-enquiries",
           "/government/organisations/hm-revenue-customs/services-information",
         ].each do |hmrc_path|
-          expect(api.organisations_for(hmrc_path)).to eq([hmrc_info])
+          expect(api.organisations_for(hmrc_path)).to eq([Organisation.find_by!(hmrc_info)])
         end
       end
     end
@@ -144,7 +142,7 @@ describe OrganisationLookup do
 
       it "should be attributed to GDS" do
         ["/non-existent-page", "/page-not-found"].each do |gds_owned_path|
-          expect(api.organisations_for(gds_owned_path)).to eq([gds_org_info])
+          expect(api.organisations_for(gds_owned_path)).to eq([gds])
         end
       end
     end
