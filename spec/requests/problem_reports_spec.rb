@@ -2,10 +2,12 @@ require 'json'
 require 'csv'
 require 'plek'
 require 'gds_api/test_helpers/content_api'
+require 'gds_api/test_helpers/content_store'
 require 'rails_helper'
 
 describe "Problem reports" do
   include GdsApi::TestHelpers::ContentApi
+  include GdsApi::TestHelpers::ContentStore
 
   # In order to improve information and services on GOV.UK
   # As a publisher
@@ -46,6 +48,7 @@ describe "Problem reports" do
 
   it "accepts and saves problem reports from the 'Is there anything wrong with this page?' form" do
     content_api_has_an_artefact("vat-rates", vat_rates_content_api_response)
+    content_store_does_not_have_item('/vat-rates')
 
     zendesk_request = expect_zendesk_to_receive_ticket(
       "subject" => "/vat-rates",

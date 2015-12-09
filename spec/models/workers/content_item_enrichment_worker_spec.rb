@@ -1,24 +1,27 @@
 require 'rails_helper'
 require 'gds_api/test_helpers/content_api'
+require 'gds_api/test_helpers/content_store'
 
 describe ContentItemEnrichmentWorker do
   include GdsApi::TestHelpers::ContentApi
+  include GdsApi::TestHelpers::ContentStore
 
   subject { ContentItemEnrichmentWorker.new }
 
   context "for a problem report about a piece of content we can't determine the organisation for" do
     let(:problem_report) { create(:problem_report, path: "/unknown-org-page") }
+    let!(:gds) { create(:gds) }
 
     before do
-      create(:gds)
       content_api_does_not_have_an_artefact("unknown-org-page")
+      content_store_does_not_have_item('/unknown-org-page')
       subject.perform(problem_report.id)
       problem_report.reload
     end
 
     it "assigns the problem_report to GDS" do
       expect(problem_report.content_item.path).to eq("/unknown-org-page")
-      expect(problem_report.content_item.organisations.first["title"]).to eq("Government Digital Service")
+      expect(problem_report.content_item.organisations).to eq([gds])
     end
   end
 
@@ -43,6 +46,7 @@ describe ContentItemEnrichmentWorker do
     let(:problem_report) { create(:problem_report, path: "/vat-rates") }
 
     before do
+      content_store_does_not_have_item('/vat-rates')
       content_api_has_an_artefact("vat-rates", vat_rates_content_api_response)
       subject.perform(problem_report.id)
       problem_report.reload
@@ -55,8 +59,8 @@ describe ContentItemEnrichmentWorker do
   end
 
   context "for a problem report about a piece of content whose organisation has changed" do
-    let(:hmrc) { Organisation.where(slug: 'hm-revenue-customs').first }
-    let(:aaib) { Organisation.where(slug: 'air-accidents-investigation-branch').first }
+    let(:hmrc) { Organisation.find_by(slug: 'hm-revenue-customs') }
+    let(:aaib) { Organisation.find_by(slug: 'air-accidents-investigation-branch') }
     let(:vat_rates_content_api_response) {
       api_response = artefact_for_slug("vat-rates").tap do |hash|
         hash["tags"] = [
@@ -91,6 +95,7 @@ describe ContentItemEnrichmentWorker do
     let(:problem_report) { create(:problem_report, path: "/vat-rates") }
 
     before do
+      content_store_does_not_have_item('/vat-rates')
       content_api_has_an_artefact("vat-rates", vat_rates_content_api_response)
       subject.perform(problem_report.id)
       problem_report.reload
