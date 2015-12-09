@@ -13,6 +13,8 @@ class ServiceFeedbackPPUploaderWorker
     )
     request_details = ServiceFeedbackAggregatedMetrics.new(Time.utc(year, month, day), transaction_slug).to_h
     api.submit_service_feedback_day_aggregate(transaction_slug, request_details)
+  rescue GdsApi::PerformancePlatformDatasetNotConfigured => e
+    Rails.logger.warn(e.message)
   end
 
   def self.run
