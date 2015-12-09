@@ -60,6 +60,22 @@ describe ContentItemLookup do
     }
   }
 
+  let(:case_study_content_store_response) {
+    {
+      base_path: '/government/case-studies/gender-identity',
+      format: 'case_study',
+      links: {
+        lead_organisations: [
+          {
+            content_id: "e1dfcc51-9bda-444c-94f2-d5e4c4b3cd0b",
+            title: "Civil Service Fast Stream",
+            base_path: "/organisations/civil-service-fast-stream",
+          },
+        ]
+      }
+    }
+  }
+
   let(:hmrc) {
     Organisation.find_by!(
       content_id: "6667cce2-e809-4e21-ae09-cb0bdc1ddda3",
@@ -80,6 +96,16 @@ describe ContentItemLookup do
 
   let!(:gds) { create(:gds) }
   let!(:dfid) { create(:dfid) }
+
+  it "fetches content items from the Content Store" do
+    content_store_has_item('/government/case-studies/gender-identity', case_study_content_store_response)
+    content_api_does_not_have_an_artefact('government/case-studies/gender-identity')
+
+    content_item = subject.lookup('/government/case-studies/gender-identity')
+
+    expect(content_item.path).to eq('/government/case-studies/gender-identity')
+    expect(content_item.organisations).to eq([ Organisation.find_by!(slug: 'civil-service-fast-stream') ])
+  end
 
   it "fetches an organisation page from the Content Store" do
     content_store_has_item('/government/organisations/hm-revenue-customs', hmrc_org_content_store_response)
