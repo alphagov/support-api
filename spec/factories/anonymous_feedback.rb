@@ -51,6 +51,13 @@ FactoryGirl.define do
       web_url "https://www.gov.uk/government/organisations/foreign-commonwealth-office"
       title "Foreign & Commonwealth Office"
     end
+
+    factory :hmrc do
+      content_id "6667cce2-e809-4e21-ae09-cb0bdc1ddda3"
+      slug "hm-revenue-customs"
+      web_url "https://www.gov.uk/government/organisations/hm-revenue-customs"
+      title "HM Revenue & Customs"
+    end
   end
 
   factory :content_item do

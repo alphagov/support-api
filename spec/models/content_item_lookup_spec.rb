@@ -60,6 +60,13 @@ describe ContentItemLookup do
     }
   }
 
+  let(:hmrc_contact_page_content_store_response) {
+    {
+      base_path: '/government/organisations/hm-revenue-customs/contact/vat-enquiries',
+      format: "placeholder",
+    }
+  }
+
   let(:case_study_content_store_response) {
     {
       base_path: '/government/case-studies/gender-identity',
@@ -96,6 +103,7 @@ describe ContentItemLookup do
 
   let!(:gds) { create(:gds) }
   let!(:dfid) { create(:dfid) }
+  let!(:hmrc) { create(:hmrc) }
 
   it "fetches content items from the Content Store" do
     content_store_has_item('/government/case-studies/gender-identity', case_study_content_store_response)
@@ -172,6 +180,16 @@ describe ContentItemLookup do
 
       expect(content_item.path).to eq('/government/world/organisations/dfid-bangladesh')
       expect(content_item.organisations).to eq([dfid])
+    end
+
+    it "guesses HMRC as the org for HMRC contact pages" do
+      content_store_has_item("/government/organisations/hm-revenue-customs/contact/vat-enquiries", hmrc_contact_page_content_store_response)
+      content_api_does_not_have_an_artefact('government/organisations/hm-revenue-customs/contact/vat-enquiries')
+
+      content_item = subject.lookup('/government/organisations/hm-revenue-customs/contact/vat-enquiries')
+
+      expect(content_item.path).to eq('/government/organisations/hm-revenue-customs/contact/vat-enquiries')
+      expect(content_item.organisations).to eq([hmrc])
     end
 
     it "returns a completely new content item with GDS as the org (so the problem report is assigned to at least one org)" do
