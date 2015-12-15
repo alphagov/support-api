@@ -1,3 +1,3 @@
 module SupportApi
-  mattr_accessor :organisation_lookup
+  mattr_accessor :content_item_lookup
 end
