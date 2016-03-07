@@ -41,8 +41,6 @@ Rails.application.routes.draw do
     get '/organisations/:slug', to: "organisations#show"
   end
 
-  # TODO: Remove this endpoint once the support app has been repointed to /organisations
-  get '/anonymous-feedback/organisations', to: "organisations#index"
   resources :organisations,
             only: [:index, :show],
             format: false,
