@@ -42,7 +42,7 @@ describe "Organisations that have feedback left on 'their' content" do
   end
 
   it "can be retrieved (so that it's possible to not deal with orgs that have no feedback)" do
-    get_json "/anonymous-feedback/organisations"
+    get_json "/organisations"
 
     expect(json_response).to contain_exactly(hmrc_info, ukvi_info)
   end
