@@ -77,6 +77,39 @@ ALTER SEQUENCE anonymous_contacts_id_seq OWNED BY anonymous_contacts.id;
 
 
 --
+-- Name: archived_service_feedbacks; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE archived_service_feedbacks (
+    id integer NOT NULL,
+    type character varying,
+    slug character varying,
+    service_satisfaction_rating integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: archived_service_feedbacks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE archived_service_feedbacks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: archived_service_feedbacks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE archived_service_feedbacks_id_seq OWNED BY archived_service_feedbacks.id;
+
+
+--
 -- Name: content_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -207,6 +240,13 @@ ALTER TABLE ONLY anonymous_contacts ALTER COLUMN id SET DEFAULT nextval('anonymo
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY archived_service_feedbacks ALTER COLUMN id SET DEFAULT nextval('archived_service_feedbacks_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY content_items ALTER COLUMN id SET DEFAULT nextval('content_items_id_seq'::regclass);
 
 
@@ -230,6 +270,14 @@ ALTER TABLE ONLY organisations ALTER COLUMN id SET DEFAULT nextval('organisation
 
 ALTER TABLE ONLY anonymous_contacts
     ADD CONSTRAINT anonymous_contacts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: archived_service_feedbacks_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY archived_service_feedbacks
+    ADD CONSTRAINT archived_service_feedbacks_pkey PRIMARY KEY (id);
 
 
 --
@@ -358,4 +406,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150915134640');
 INSERT INTO schema_migrations (version) VALUES ('20151202212408');
 
 INSERT INTO schema_migrations (version) VALUES ('20151203001139');
+
+INSERT INTO schema_migrations (version) VALUES ('20160511164547');
 
