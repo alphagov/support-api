@@ -1,0 +1,2 @@
+class AggregatedServiceFeedback < AnonymousContact
+end
