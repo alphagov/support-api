@@ -22,6 +22,10 @@ every 1.day, :at => '12:10 am' do
   rake "anonymous_feedback_deduplication:nightly"
 end
 
+every 1.day, :at => '7:00 am' do
+  rake "service_feedback_aggregation:daily"
+end
+
 every 1.day, :at => '12:50 am' do
   rake "api_sync:import_organisations"
 end

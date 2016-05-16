@@ -15,6 +15,8 @@ private
     INSERT INTO anonymous_contacts (
       type,
       path,
+      is_actionable,
+      personal_information_status,
       created_at,
       updated_at,
       service_satisfaction_rating,
@@ -23,6 +25,8 @@ private
     SELECT
       'AggregatedServiceFeedback',
       path,
+      true,
+      'absent',
       DATE_TRUNC('day',created_at),
       DATE_TRUNC('day',created_at),
       service_satisfaction_rating,
@@ -31,7 +35,7 @@ private
       WHERE type = 'ServiceFeedback'
       AND created_at >= '#{@date}'
       AND created_at < '#{@date + 1.day}'
-      GROUP BY 2, 3, 5;
+      GROUP BY 2, 5, 7;
     SQL
   end
 
