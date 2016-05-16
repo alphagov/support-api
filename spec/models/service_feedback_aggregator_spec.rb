@@ -26,7 +26,6 @@ describe ServiceFeedbackAggregator do
 
   let!(:service_feedback_aggregator) { ServiceFeedbackAggregator.new }
 
-
   context "aggregating service feedbacks" do
 
     before { service_feedback_aggregator.run(Time.new(2013,2,10)) }
@@ -59,3 +58,15 @@ describe ServiceFeedbackAggregator do
       end
     end
   end
+
+  context "archiving service feedbacks" do
+    let(:date) { Time.new(2013,2,11) }
+
+    it "copies service feedbacks to the archived service feedback table" do
+      expect(ArchivedServiceFeedback.count).to eq 0
+      aggregator = ServiceFeedbackAggregator.new
+      aggregator.run(Time.new(2013,2,11))
+      expect(ArchivedServiceFeedback.count).to eq 1
+    end
+  end
+end
