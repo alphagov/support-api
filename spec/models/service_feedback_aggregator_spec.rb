@@ -69,4 +69,32 @@ describe ServiceFeedbackAggregator do
       expect(ArchivedServiceFeedback.count).to eq 1
     end
   end
+
+  context "deleting service feedbacks" do
+    let(:aggregator) { ServiceFeedbackAggregator.new }
+
+    context "when they have no details" do
+      it "deletes service feedbacks from the anonymous contacts table" do
+        expect(ServiceFeedback.count).to eq 2
+        aggregator.run(Time.new(2013,2,10))
+        expect(ServiceFeedback.count).to eq 0
+      end
+    end
+
+    context "when they have details" do
+      it "doesn't delete service feedbacks from the anonymous contacts table" do
+        create(
+          :service_feedback,
+          service_satisfaction_rating: 1,
+          slug: "done/register-to-vote",
+          details: "A fantastic service",
+          created_at: Time.new(2013,2,10,10)
+        )
+
+        expect(ServiceFeedback.count).to eq 3
+        aggregator.run(Time.new(2013,2,10))
+        expect(ServiceFeedback.count).to eq 1
+      end
+    end
+  end
 end

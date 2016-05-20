@@ -5,6 +5,7 @@ class ServiceFeedbackAggregator
     ActiveRecord::Base.transaction do
       ActiveRecord::Base.connection.execute(create_aggregate)
       ActiveRecord::Base.connection.execute(copy_to_archive)
+      ActiveRecord::Base.connection.execute(delete_from_anonymous_contacts)
     end
   end
 
@@ -49,6 +50,16 @@ private
       service_satisfaction_rating
     FROM anonymous_contacts
     WHERE type = 'ServiceFeedback'
+    AND created_at >= '#{@date}'
+    AND created_at < '#{@date + 1.day}'
+    SQL
+  end
+
+  def delete_from_anonymous_contacts
+    <<-SQL
+    DELETE FROM anonymous_contacts
+    WHERE type = 'ServiceFeedback'
+    AND details IS NULL
     AND created_at >= '#{@date}'
     AND created_at < '#{@date + 1.day}'
     SQL
