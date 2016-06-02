@@ -2,6 +2,7 @@ class ServiceFeedbackAggregator
 
   def run(date)
     @date = date
+    return reason_for_not_running if reason_for_not_running
     ActiveRecord::Base.transaction do
       ActiveRecord::Base.connection.execute(create_aggregate)
       ActiveRecord::Base.connection.execute(copy_to_archive)
@@ -10,6 +11,19 @@ class ServiceFeedbackAggregator
   end
 
 private
+
+  def reason_for_not_running
+    reason = nil
+    reason = "Cannot aggregate today's feedback until tomorrow" if @date.to_date == Date.today
+    reason = "Already aggregated" if AggregatedServiceFeedback.where(updated_at: time_range_for(@date)).count > 0
+    reason
+  end
+
+  def time_range_for(date)
+    time = Time.zone.parse(@date.to_s)
+    ((time.midnight - 1.day)..time.midnight)
+  end
+
   def create_aggregate
     <<-SQL
     INSERT INTO anonymous_contacts (

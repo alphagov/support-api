@@ -5,7 +5,7 @@ namespace :service_feedback_aggregation do
     require 'distributed_lock'
 
     DistributedLock.new('service_feedback_aggregation').lock do
-      date_range = Date.yesterday..Date.today
+      date_range = Date.yesterday..Date.yesterday
       aggregate(date_range)
       Rails.logger.info "Daily service feedback aggregation has finished"
     end

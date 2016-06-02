@@ -28,7 +28,7 @@ describe ServiceFeedbackAggregator do
 
   context "aggregating service feedbacks" do
 
-    before { service_feedback_aggregator.run(Time.new(2013,2,10)) }
+    before { service_feedback_aggregator.run(date) }
 
     context "when there are two service feedbacks" do
       context "with the same rating" do
@@ -53,6 +53,22 @@ describe ServiceFeedbackAggregator do
         let(:date) { Time.new(2013,2,10,11) }
 
         it "there is only one aggregated service feedback" do
+          expect(AggregatedServiceFeedback.all.count).to eq 1
+        end
+      end
+
+      context "when the date is today's date" do
+        let(:date) { Time.now }
+
+        it "doesn't run the aggregation" do
+          expect(AggregatedServiceFeedback.all.count).to eq 0
+        end
+      end
+
+      context "when there is already an aggregate for that date" do
+        it "doesn't run the aggregation" do
+          expect(AggregatedServiceFeedback.all.count).to eq 1
+          expect(service_feedback_aggregator.run(date)).to eq "Already aggregated"
           expect(AggregatedServiceFeedback.all.count).to eq 1
         end
       end
