@@ -1,7 +1,10 @@
 class ServiceFeedbackAggregator
 
-  def run(date)
+  def initialize(date)
     @date = date
+  end
+
+  def run
     return reason_for_not_running if reason_for_not_running
     ActiveRecord::Base.transaction do
       ActiveRecord::Base.connection.execute(create_aggregate)
