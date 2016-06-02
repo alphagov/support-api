@@ -26,10 +26,14 @@ namespace :service_feedback_aggregation do
     puts "Processing feedback from #{date_range.first} to #{date_range.last}"
     date_range.each do |date|
       start_time = Time.now
-      aggregator = ServiceFeedbackAggregator.new
-      aggregator.run(date)
+      aggregator = ServiceFeedbackAggregator.new(date)
+      aggregator.run
       end_time = Time.now
-      puts "Aggregation complete for #{date}. Duration: #{end_time - start_time}"
+      if aggregator.reason_for_not_running
+        puts "Cannot run aggregation for #{date}. #{aggregator.reason_for_not_running}"
+      else
+        puts "Aggregation complete for #{date}. Duration: #{end_time - start_time}"
+      end
     end
     puts "Service Feedback has been aggregated and extracted to a different table"
   end
