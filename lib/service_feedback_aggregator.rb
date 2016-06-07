@@ -20,7 +20,7 @@ private
   def check_reason_for_not_running
     if @date.to_date == Date.today
       @reason_for_not_running = "Cannot aggregate today's feedback until tomorrow"
-    elsif AggregatedServiceFeedback.where(updated_at: time_range_for(@date)).count > 0
+    elsif AggregatedServiceFeedback.where(created_at: time_range_for(@date)).count > 0
       @reason_for_not_running = "Already aggregated"
     else
       @reason_for_not_running = nil
