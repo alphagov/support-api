@@ -68,8 +68,23 @@ describe ServiceFeedbackAggregator do
       context "when there is already an aggregate for that date" do
         it "doesn't run the aggregation" do
           expect(AggregatedServiceFeedback.all.count).to eq 1
-          expect(service_feedback_aggregator.run).to eq "Already aggregated"
           expect{ service_feedback_aggregator.run }.not_to change{ AggregatedServiceFeedback.count }
+          expect(service_feedback_aggregator.reason_for_not_running).to eq "Already aggregated"
+        end
+      end
+
+      context "with consecutive dates" do
+        let(:previous_service_feedback_aggregator) { ServiceFeedbackAggregator.new(Time.new(2013,2,10,10)) } #TODO:refactor
+        it "creates aggregated service feedback for each date" do
+          subsequent_date = Time.new(2013,2,11)
+          create(
+            :service_feedback,
+            service_satisfaction_rating: 1,
+            slug: "done/register-to-vote",
+            created_at: subsequent_date
+          )
+          second_service_feedback_aggregator = ServiceFeedbackAggregator.new(subsequent_date)
+          expect{second_service_feedback_aggregator.run}.to change{ AggregatedServiceFeedback.count }.from(1).to(2)
         end
       end
     end
