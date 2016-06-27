@@ -5,7 +5,7 @@ require 'gds_api/support_api'
 class ProblemReportDailyTotalsPPUploaderWorker
   include Sidekiq::Worker
 
-  def perform(year, month, day)
+  def perform(year, month, day, _govuk_headers = nil)
     logger.info("Uploading problem report daily totals for #{year}-#{month}-#{day}")
     pp_api = GdsApi::PerformancePlatform::DataIn.new(
       PP_DATA_IN_API[:url],
