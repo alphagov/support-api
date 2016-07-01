@@ -3,7 +3,7 @@ require 'gds_api/performance_platform/data_in'
 class ProblemReportStatsPPUploaderWorker
   include Sidekiq::Worker
 
-  def perform(year, month, _govuk_headers = nil)
+  def perform(year, month)
     logger.info("Uploading corporate content problem report statistics for #{year}-#{month}")
     api = GdsApi::PerformancePlatform::DataIn.new(
       PP_DATA_IN_API[:url],

@@ -1,7 +1,7 @@
 class ContentItemEnrichmentWorker
   include Sidekiq::Worker
 
-  def perform(problem_report_id, _govuk_headers = nil)
+  def perform(problem_report_id)
     problem_report = ProblemReport.find(problem_report_id)
     path = URI(problem_report.path).path # normalise the path before looking it up
     problem_report.content_item = fetch_content_item(path)

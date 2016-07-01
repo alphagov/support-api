@@ -5,7 +5,7 @@ gem 'rails-api', '0.4.0'
 gem 'pg', '0.18.2'
 gem 'logstasher', '0.6.2'
 gem 'airbrake', '4.1.0'
-gem 'govuk_sidekiq', '0.0.3'
+gem 'govuk_sidekiq', '0.0.4'
 gem 'unicorn', '4.9.0'
 gem 'gds-api-adapters', '26.4.0'
 gem 'whenever', '0.9.4', require: false
