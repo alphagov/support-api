@@ -4,6 +4,7 @@ describe FeedbackCsvRowPresenter do
   subject(:instance) { described_class.new(row) }
   let(:problem_report) { build(:problem_report, created_at: Time.utc(2015,4), what_doing: "Finding the thing", what_wrong: "Couldn't find the thing\nThanks") }
   let(:service_feedback) { build(:service_feedback, created_at: Time.utc(2015,4), details: "It was good\nWell done", service_satisfaction_rating: 3) }
+  let(:aggregated_service_feedback) { build(:aggregated_service_feedback, created_at: Time.utc(2015,4), details: 1, service_satisfaction_rating: 3) }
   let(:long_form_contact) { build(:long_form_contact, created_at: Time.utc(2015,4), details: "It was really good\nReally.\nGood job") }
 
   describe "#to_a" do
@@ -43,6 +44,24 @@ describe FeedbackCsvRowPresenter do
           row.user_agent,
           "http://www.example.com/foo",
           "service-feedback"
+        ]
+      end
+    end
+
+    context "for aggregated service feedback" do
+      let(:row) { aggregated_service_feedback }
+      it "presents the correct columns" do
+        expect(subject).to eq [
+          "2015-04-01 00:00:00",
+          row.path,
+          "Rating of #{row.service_satisfaction_rating}: #{row.details}",
+          "3",
+          "IE",
+          "9.0",
+          "Windows Vista",
+          row.user_agent,
+          "http://www.example.com/foo",
+          "aggregated-service-feedback"
         ]
       end
     end
