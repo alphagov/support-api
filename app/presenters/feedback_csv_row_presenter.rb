@@ -19,7 +19,7 @@ class FeedbackCsvRowPresenter
       row.created_at.strftime("%F %T"),
       row.type == "service-feedback" ? row.slug : row.path,
       details_text,
-      row.type == "service-feedback" ? row.service_satisfaction_rating.to_s : "",
+      service_satisfaction_rating,
       parsed_user_agent.family,
       parsed_user_agent.version.to_s,
       parsed_user_agent.os.family,
@@ -41,6 +41,16 @@ class FeedbackCsvRowPresenter
       row.details
     when "long-form-contact"
       row.details
+    when "aggregated-service-feedback"
+      "Rating of #{row.service_satisfaction_rating}: #{row.details}"
+    end
+  end
+
+  def service_satisfaction_rating
+    if row.type =~ /^(aggregated-)?service-feedback$/
+      row.service_satisfaction_rating.to_s
+    else
+      ""
     end
   end
 end

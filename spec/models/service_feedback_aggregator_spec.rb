@@ -45,12 +45,12 @@ describe ServiceFeedbackAggregator do
         let(:rating) { 2 }
 
         it "creates two aggregated service feedbacks with a rating of 1 and 2" do
-          expect(AggregatedServiceFeedback.pluck(:service_satisfaction_rating)).to eq([2,1])
+          expect(AggregatedServiceFeedback.pluck(:service_satisfaction_rating)).to include(1, 2)
         end
       end
 
       context "with different dates" do
-        let(:date) { Time.new(2013,2,10,11) }
+        let(:date) { Time.new(2013,2,11) }
 
         it "creates only one aggregated service feedback" do
           expect(AggregatedServiceFeedback.all.count).to eq 1

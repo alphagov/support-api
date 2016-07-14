@@ -13,6 +13,11 @@ FactoryGirl.define do
       service_satisfaction_rating 5
     end
 
+    factory :aggregated_service_feedback, class: AggregatedServiceFeedback do
+      path { "/done/#{slug}" }
+      slug "apply-carers-allowance"
+    end
+
     factory :long_form_contact, class: LongFormContact
   end
 
