@@ -30,6 +30,12 @@ Rails.application.routes.draw do
               controller: "export_requests",
               as: "export_request"
 
+    resources "global-export-requests",
+              only: [:create],
+              format: false,
+              controller: "global_export_requests",
+              as: "global_export_request"
+
     get '/problem-reports/:date/totals',
         constraints: { date: /\d{4}-\d{2}-\d{2}/ },
         to: 'problem_reports#totals'
