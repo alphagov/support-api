@@ -47,4 +47,23 @@ describe ContentItem do
       { path: "/def", last_7_days: 0, last_30_days: 0, last_90_days: 4 }
     ])
   end
+
+  it "aggregates content items with similar paths" do
+    create(:content_item, organisations: orgs, path: "/abc",
+      anonymous_contacts: [
+        create(:anonymous_contact, created_at: 15.days.ago),
+        create(:anonymous_contact, created_at: 15.days.ago),
+      ]
+    )
+    create(:content_item, organisations: orgs, path: "/abc",
+      anonymous_contacts: [
+        create(:anonymous_contact, created_at: 15.days.ago),
+        create(:anonymous_contact, created_at: 15.days.ago),
+      ]
+    )
+
+    expect(ContentItem.summary).to eq([
+      { path: "/abc", last_7_days: 0, last_30_days: 4, last_90_days: 4 },
+    ])
+  end
 end
