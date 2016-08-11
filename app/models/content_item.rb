@@ -23,7 +23,7 @@ class ContentItem < ActiveRecord::Base
       select("#{last_30_days} AS last_30_days").
       select("#{last_90_days} AS last_90_days").
       where("anonymous_contacts.created_at > ?", midnight_last_night - 90.days).
-      group("content_items.id").
+      group("content_items.path").
       having("#{last_7_days} + #{last_30_days} + #{last_90_days} > 0").
       order("#{ordering} #{ordering_mode}")
 
