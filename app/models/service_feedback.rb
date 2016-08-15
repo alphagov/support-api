@@ -23,10 +23,8 @@ class ServiceFeedback < AnonymousContact
   end
 
   def self.aggregates_by_rating
-    zero_defaults = Hash[*(1..5).map {|n| [n, 0] }.flatten]
     select("service_satisfaction_rating, count(*) as cnt").
-      group(:service_satisfaction_rating).
-      inject(zero_defaults) { |memo, result| memo[result[:service_satisfaction_rating]] = result[:cnt]; memo }
+      group(:service_satisfaction_rating)
   end
 
   def self.with_comments_count

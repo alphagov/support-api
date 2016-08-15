@@ -14,11 +14,14 @@ describe ServiceFeedback do
   end
 
   it "aggregates by rating" do
-    expect(ServiceFeedback.aggregates_by_rating).to eq(
+    result_attrs = ServiceFeedback.aggregates_by_rating.inject({}) do |m, r|
+      m[r[:service_satisfaction_rating]] = r[:cnt]
+      m
+    end
+
+    expect(result_attrs).to eq(
       1 => 1,
       2 => 1,
-      3 => 0,
-      4 => 0,
       5 => 1
     )
   end

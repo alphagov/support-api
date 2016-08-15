@@ -12,13 +12,20 @@ class ServiceFeedbackAggregatedMetrics
 
   private
   def aggregates
-    by_rating = filter_by_day_and_slug.aggregates_by_rating
+    {
+      "comments" => filter_by_day_and_slug.with_comments_count,
+      "total" => ratings.values.inject(:+) || 0,
+    }.tap do |result|
+      (1..5).each { |i| result["rating_#{i}"] = (ratings[i] || 0) }
+    end
+  end
 
-    results_array = by_rating.map {|rating, count| ["rating_#{rating}", count] }.flatten +
-                    [ "comments", filter_by_day_and_slug.with_comments_count ] +
-                    [ "total", by_rating.values.inject(:+)]
-
-    Hash[*results_array]
+  def ratings
+    @results ||= Hash[
+      filter_by_day_and_slug.
+        aggregates_by_rating.
+        reduce({}) { |m, r| m[r[:service_satisfaction_rating]] = r[:cnt]; m }
+    ]
   end
 
   def metadata
