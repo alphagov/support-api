@@ -69,6 +69,21 @@ describe ServiceFeedbackAggregator do
           expect(ServiceFeedback.pluck(:details)).to eq ["A fantastic service"]
         end
       end
+
+      context "and a duplicate piece of feedback" do
+        before do
+          create(:duplicate_service_feedback,
+                 service_satisfaction_rating: 1,
+                 slug: "register-to-vote",
+                 created_at: date,
+                )
+        end
+
+        it "doesn't include it in the sum of feedback for that rating" do
+          aggregator.run
+          expect(AggregatedServiceFeedback.find_by(service_satisfaction_rating: 1).details).to eq "2"
+        end
+      end
     end
 
     context "with different ratings" do

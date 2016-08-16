@@ -11,6 +11,11 @@ FactoryGirl.define do
       path { "/done/#{slug}" }
       slug "apply-carers-allowance"
       service_satisfaction_rating 5
+
+      factory :duplicate_service_feedback, class: ServiceFeedback do
+        is_actionable false
+        reason_why_not_actionable "duplicate"
+      end
     end
 
     factory :aggregated_service_feedback, class: AggregatedServiceFeedback do

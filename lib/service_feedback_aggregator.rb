@@ -56,6 +56,7 @@ private
       count(service_satisfaction_rating)
       FROM anonymous_contacts
       WHERE type = 'ServiceFeedback'
+      AND is_actionable = true
       AND created_at >= '#{@date}'
       AND created_at < '#{@date + 1.day}'
       GROUP BY 2, 5, 7;
