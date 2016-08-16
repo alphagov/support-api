@@ -1,18 +1,24 @@
 require 'date'
 require 'gds_api/performance_platform/data_in'
-require 'service_feedback_aggregated_metrics'
+require 'performance_platform_service_feedback_metrics'
 
 class ServiceFeedbackPPUploaderWorker
   include Sidekiq::Worker
 
   def perform(year, month, day, transaction_slug)
     logger.info("Uploading statistics for #{year}-#{month}-#{day}, slug #{transaction_slug}")
+
     api = GdsApi::PerformancePlatform::DataIn.new(
       PP_DATA_IN_API[:url],
       bearer_token: PP_DATA_IN_API[:bearer_token]
     )
-    request_details = ServiceFeedbackAggregatedMetrics.new(Time.utc(year, month, day), transaction_slug).to_h
-    api.submit_service_feedback_day_aggregate(transaction_slug, request_details)
+
+    payload = PerformancePlatformServiceFeedbackMetrics.new(
+      day: Time.utc(year, month, day),
+      slug: transaction_slug,
+    ).call
+
+    api.submit_service_feedback_day_aggregate(transaction_slug, payload)
   rescue GdsApi::PerformancePlatformDatasetNotConfigured => e
     Rails.logger.warn(e.message)
   end

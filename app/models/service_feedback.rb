@@ -22,12 +22,7 @@ class ServiceFeedback < AnonymousContact
     uniq.pluck(:slug).sort
   end
 
-  def self.aggregates_by_rating
-    select("service_satisfaction_rating, count(*) as cnt").
-      group(:service_satisfaction_rating)
-  end
-
-  def self.with_comments_count
-    where("details IS NOT NULL").count
+  def self.with_comments
+    where("details IS NOT NULL")
   end
 end
