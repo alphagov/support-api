@@ -7,7 +7,7 @@ class ServiceFeedbackAggregator
   end
 
   def run
-    return reason_for_not_running if check_reason_for_not_running
+    raise_if_should_not_run
     ActiveRecord::Base.transaction do
       ActiveRecord::Base.connection.execute(create_aggregate)
       ActiveRecord::Base.connection.execute(copy_to_archive)
@@ -17,14 +17,16 @@ class ServiceFeedbackAggregator
 
 private
 
-  def check_reason_for_not_running
+  def raise_if_should_not_run
     if @date.to_date == Date.today
-      @reason_for_not_running = "Cannot aggregate today's feedback until tomorrow"
-    elsif AggregatedServiceFeedback.where("created_at >= '#{parsed_date(@date)}' AND created_at < '#{parsed_date(@date) + 1.day}'").count > 0
-      @reason_for_not_running = "Already aggregated"
-    else
-      @reason_for_not_running = nil
+      raise "Cannot aggregate today's feedback until tomorrow"
+    elsif aggregations_already_present?
+      raise "Already aggregated for #{@date}"
     end
+  end
+
+  def aggregations_already_present?
+    AggregatedServiceFeedback.where(created_at: @date.midnight..(@date + 1.day)).count > 0
   end
 
   def parsed_date(date)
