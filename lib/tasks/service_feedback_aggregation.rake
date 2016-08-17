@@ -29,11 +29,7 @@ namespace :service_feedback_aggregation do
       aggregator = ServiceFeedbackAggregator.new(date)
       aggregator.run
       end_time = Time.now
-      if aggregator.reason_for_not_running
-        puts "Cannot run aggregation for #{date}. #{aggregator.reason_for_not_running}"
-      else
-        puts "Aggregation complete for #{date}. Duration: #{end_time - start_time}"
-      end
+      puts "Aggregation complete for #{date}. Duration: #{end_time - start_time}"
     end
     puts "Service Feedback has been aggregated and extracted to a different table"
   end
