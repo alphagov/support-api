@@ -14,6 +14,18 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
       subject { response }
 
       it { is_expected.to be_accepted }
+
+      it "creates a feedback export request with the correct filters" do
+        expect(FeedbackExportRequest.count).to eq(1)
+        feedback_export_request = FeedbackExportRequest.last
+
+        expect(feedback_export_request.filters).to eq({
+          from: Date.new(2015, 05, 01),
+          to: Date.new(2015, 06, 01),
+          organisation_slug: nil,
+          path_prefix: "/",
+        })
+      end
     end
 
     context "posted with invalid parameters" do
