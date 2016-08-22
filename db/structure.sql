@@ -53,7 +53,8 @@ CREATE TABLE anonymous_contacts (
     is_actionable boolean DEFAULT true NOT NULL,
     reason_why_not_actionable character varying(255),
     path character varying(2048) NOT NULL,
-    content_item_id integer
+    content_item_id integer,
+    marked_as_spam boolean DEFAULT false NOT NULL
 );
 
 
@@ -408,4 +409,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151202212408');
 INSERT INTO schema_migrations (version) VALUES ('20151203001139');
 
 INSERT INTO schema_migrations (version) VALUES ('20160511164547');
+
+INSERT INTO schema_migrations (version) VALUES ('20160822145924');
 
