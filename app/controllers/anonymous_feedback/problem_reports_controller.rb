@@ -50,12 +50,40 @@ module AnonymousFeedback
       end
     end
 
+    def mark_reviewed_for_spam
+      if mark_supplied_reports_as_reviewed_and_spam
+        render json: { "success" => true }, status: 200
+      else
+        render json: { "success" => false }, status: 404
+      end
+    end
+
   private
     def problem_report_params
       params.require(:problem_report).permit(
         :path, :referrer, :javascript_enabled, :user_agent, :what_doing,
         :what_wrong, :source, :page_owner
       )
+    end
+
+    def mark_supplied_reports_as_reviewed_and_spam
+      begin
+        ProblemReport.find(reviewed_problem_reports_hash.keys).each do |problem_report|
+          review_attrs = { reviewed: true, marked_as_spam: reviewed_problem_reports_hash[problem_report.id.to_s] }
+
+          if problem_report.update(review_attrs)
+            true
+          else
+            false
+          end
+        end
+      rescue ActiveRecord::RecordNotFound
+        false
+      end
+    end
+
+    def reviewed_problem_reports_hash
+      params.require(:reviewed_problem_report_ids)
     end
 
     def filters
