@@ -44,6 +44,10 @@ Rails.application.routes.draw do
         constraints: { period: /\d{4}-\d{2}(-\d{2})?/ },
         to: 'problem_reports#index'
 
+    put '/problem-reports/mark-reviewed-for-spam',
+         format: false,
+         to: 'problem_reports#mark_reviewed_for_spam'
+
     get '/organisations/:slug', to: "organisations#show"
   end
 

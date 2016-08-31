@@ -15,7 +15,7 @@ describe "Problem reports" do
 
   let(:hmrc) { Organisation.where(slug: 'hm-revenue-customs').first }
   let(:vat_rates_content_api_response) {
-    api_response = artefact_for_slug("vat-rates").tap do |hash|
+     artefact_for_slug("vat-rates").tap do |hash|
       hash["tags"] = [
         {
           content_id: "6667cce2-e809-4e21-ae09-cb0bdc1ddda3",
@@ -184,6 +184,87 @@ javascript_enabled: true
           ["where feedback was left", "creation date", "feedback", "user came from"],
           ["http://www.dev.gov.uk/help", "2015-02-02", "action: B\nproblem: A", "https://www.gov.uk/browse"],
         ])
+      end
+    end
+  end
+
+  context 'reviewing for spam' do
+    let(:problem_report_1)  { create(:problem_report) }
+    let(:problem_report_2)  { create(:problem_report) }
+    let(:problem_report_3)  { create(:problem_report) }
+
+    context 'when succesfully supplied with a list of problem feedback reviews' do
+      before do
+        json_payload = {
+            reviewed_problem_report_ids:
+            {
+              "#{problem_report_1.id}": true,
+              "#{problem_report_2.id}": true,
+              "#{problem_report_3.id}": false
+            }
+        }.to_json
+
+        put '/anonymous-feedback/problem-reports/mark-reviewed-for-spam', json_payload,
+          {"CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json'}
+      end
+
+      it 'returns a 200 OK' do
+        expect(response.status).to eq(200)
+        expect(JSON.parse(response.body)).to eq({ "success" => true })
+      end
+
+      it 'marks all supplied reports as reviewed' do
+        expect(problem_report_1.reload.reviewed?).to eq true
+        expect(problem_report_2.reload.reviewed?).to eq true
+        expect(problem_report_3.reload.reviewed?).to eq true
+      end
+
+      it 'marks the specified reports as spam' do
+        expect(problem_report_1.reload.marked_as_spam?).to eq true
+        expect(problem_report_2.reload.marked_as_spam?).to eq true
+        expect(problem_report_3.reload.marked_as_spam?).to eq false
+      end
+    end
+
+    context "when the supplied feedback reviews have already been reviewed" do
+      before do
+        problem_report_1.update(reviewed: true, marked_as_spam: true)
+
+        json_payload = {
+            reviewed_problem_report_ids:
+            {
+              "#{problem_report_1.id}": false
+            }
+        }.to_json
+
+        put '/anonymous-feedback/problem-reports/mark-reviewed-for-spam', json_payload,
+          {"CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json'}
+      end
+
+      it "overwrite any reviewed reports with the supplied spam marking" do
+        expect(problem_report_1.reload.reviewed?).to eq true
+        expect(problem_report_1.reload.marked_as_spam?).to eq false
+      end
+    end
+
+    context 'when supplied with ids that are non-existent' do
+      let(:id) { 1 }
+
+      before do
+        json_payload = {
+            reviewed_problem_report_ids:
+            {
+              "#{id}": true,
+            }
+        }.to_json
+
+        put '/anonymous-feedback/problem-reports/mark-reviewed-for-spam', json_payload,
+          {"CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json'}
+      end
+
+      it 'returns a 404' do
+        expect(response.status).to eq 404
+        expect(JSON.parse(response.body)).to eq({ "success" => false })
       end
     end
   end
