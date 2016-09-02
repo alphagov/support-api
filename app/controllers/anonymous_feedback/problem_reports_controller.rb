@@ -1,9 +1,10 @@
+require 'problem_report_list'
+
 module AnonymousFeedback
   class ProblemReportsController < ApplicationController
     include ActionController::MimeResponds
 
     before_action :load_selected_organisation, only: [:index]
-    before_action :parse_interval, only: [:index]
 
     def totals
       date = DateTime.parse(params[:date]) rescue nil
@@ -22,21 +23,7 @@ module AnonymousFeedback
     end
 
     def index
-      query = if @selected_organisation
-                @selected_organisation.problem_reports.only_actionable
-              else
-                ProblemReport.only_actionable
-              end
-      @results = query.where(created_at: @interval)
-
-      if @results.empty?
-        head 204
-      else
-        respond_to do |format|
-          format.json { render json: @results }
-          format.csv { send_data ProblemReport.to_csv(@results) }
-        end
-      end
+      render json: ProblemReportList.new(problem_report_index_params).to_json
     end
 
     def create
@@ -59,6 +46,10 @@ module AnonymousFeedback
     end
 
   private
+    def problem_report_index_params
+      params.permit(:from_date, :to_date, :include_reviewed, :page)
+    end
+
     def problem_report_params
       params.require(:problem_report).permit(
         :path, :referrer, :javascript_enabled, :user_agent, :what_doing,
@@ -69,7 +60,9 @@ module AnonymousFeedback
     def mark_supplied_reports_as_reviewed_and_spam
       begin
         ProblemReport.find(reviewed_problem_reports_hash.keys).each do |problem_report|
-          review_attrs = { reviewed: true, marked_as_spam: reviewed_problem_reports_hash[problem_report.id.to_s] }
+          marked_as_spam = reviewed_problem_reports_hash[problem_report.id.to_s]
+
+          review_attrs = { reviewed: true, marked_as_spam: marked_as_spam }
 
           if problem_report.update(review_attrs)
             true
