@@ -105,89 +105,6 @@ javascript_enabled: true
     )
   end
 
-  context "fetching" do
-    let!(:gds) {
-      create(:gds)
-    }
-    let!(:problem_report) {
-      create(:problem_report,
-        what_wrong: "A",
-        what_doing: "B",
-        path: "/help", # this will automatically be assigned to GDS
-        referrer: "https://www.gov.uk/browse",
-        user_agent: "Safari",
-        created_at: Date.new(2015,02,02),
-        content_item: create(:content_item, path: "/help", organisations: [gds]),
-      )
-    }
-
-    let(:expected_output) {
-      {
-        "id" => problem_report.id,
-        "type" => "problem-report",
-        "what_wrong" => "A",
-        "what_doing" => "B",
-        "url" => "http://www.dev.gov.uk/help",
-        "referrer" => "https://www.gov.uk/browse",
-        "user_agent" => "Safari",
-      }
-    }
-
-    it "filters the results by a time period" do
-      get_json "/anonymous-feedback/problem-reports/2015-02"
-      expect(response.status).to eq(200)
-      expect(json_response.size).to eq(1)
-      expect(json_response.first).to include(expected_output)
-
-      get_json "/anonymous-feedback/problem-reports/2015-02-02"
-      expect(json_response.size).to eq(1)
-      expect(json_response.first).to include(expected_output)
-
-      get_json "/anonymous-feedback/problem-reports/2015-01"
-      expect(response.status).to eq(204)
-
-      get_json "/anonymous-feedback/problem-reports/2015-02-03"
-      expect(response.status).to eq(204)
-    end
-
-    context "for a particular organisation" do
-      it "returns not found if the org doesn't exist" do
-        get_json "/anonymous-feedback/problem-reports/2015-02?organisation_slug=hm-revenue-customs"
-
-        expect(response.status).to eq(404)
-      end
-
-      it "filters the results by a time period" do
-        get_json "/anonymous-feedback/problem-reports/2015-02?organisation_slug=government-digital-service"
-        expect(response.status).to eq(200)
-        expect(json_response.size).to eq(1)
-        expect(json_response.first).to include(expected_output)
-
-        get_json "/anonymous-feedback/problem-reports/2015-02-02?organisation_slug=government-digital-service"
-        expect(json_response.size).to eq(1)
-        expect(json_response.first).to include(expected_output)
-
-        get_json "/anonymous-feedback/problem-reports/2015-01?organisation_slug=government-digital-service"
-        expect(response.status).to eq(204)
-
-        get_json "/anonymous-feedback/problem-reports/2015-02-03?organisation_slug=government-digital-service"
-        expect(response.status).to eq(204)
-      end
-
-      it "returns CSV output" do
-        get "/anonymous-feedback/problem-reports/2015-02.csv?organisation_slug=government-digital-service"
-
-        expect(response.status).to eq(200)
-        csv_response = CSV.parse(response.body)
-
-        expect(csv_response).to eq([
-          ["where feedback was left", "creation date", "feedback", "user came from"],
-          ["http://www.dev.gov.uk/help", "2015-02-02", "action: B\nproblem: A", "https://www.gov.uk/browse"],
-        ])
-      end
-    end
-  end
-
   context 'reviewing for spam' do
     let(:problem_report_1)  { create(:problem_report) }
     let(:problem_report_2)  { create(:problem_report) }
@@ -274,5 +191,53 @@ private
     post '/anonymous-feedback/problem-reports',
          { "problem_report" => options }.to_json,
          {"CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json'}
+  end
+end
+
+describe 'Retrieving Problem Reports' do
+  let!(:gds) {
+    create(:gds)
+  }
+
+  let(:what_wrong) { "Help" }
+  let(:what_doing) { "Skiing" }
+  let(:path)       { "/help" }
+  let(:referrer)   { "https://www.gov.uk/browse" }
+  let(:user_agent) { "Safari" }
+  let(:created_at) { Date.new(2015, 02, 02) }
+
+  let!(:problem_report) {
+    create(:problem_report,
+           what_wrong: what_wrong,
+           what_doing: what_doing,
+           path: path,
+           referrer: referrer,
+           user_agent: user_agent,
+           created_at: created_at,
+           content_item: create(:content_item, path: "/help", organisations: [gds]),
+           reviewed: false
+          )
+  }
+
+  context 'with a full set of filter parameters supplied' do
+    let!(:earliest_problem_report_unreviewed) { create :problem_report, created_at: created_at - 2.weeks }
+    let!(:earlier_problem_report_reviewed) { create :problem_report, created_at: created_at - 2.days, reviewed: true }
+    let!(:later_problem_report_reviewed) { create :problem_report, created_at: created_at + 1.day, reviewed: true }
+    let!(:later_problem_report_unreviewed) { create :problem_report, created_at: created_at + 1.day }
+
+    let(:from_date) { created_at - 1.week }
+    let(:to_date) { created_at + 1.day }
+
+    before do
+      stub_const("AnonymousContact::PAGE_SIZE", 2)
+
+      get "/anonymous-feedback/problem-reports", from_date: from_date.to_s, to_date: to_date.to_s, include_reviewed: true, page: 2
+    end
+
+    it 'returns problem reports that fulfil those filters exactly' do
+      expect(json_response["results"].length).to eq 2
+      expect(json_response["results"].first.values).to include problem_report.id
+      expect(json_response["results"].second.values).to include earlier_problem_report_reviewed.id
+    end
   end
 end

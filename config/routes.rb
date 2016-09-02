@@ -40,8 +40,7 @@ Rails.application.routes.draw do
         constraints: { date: /\d{4}-\d{2}-\d{2}/ },
         to: 'problem_reports#totals'
 
-    get '/problem-reports/:period',
-        constraints: { period: /\d{4}-\d{2}(-\d{2})?/ },
+    get '/problem-reports',
         to: 'problem_reports#index'
 
     put '/problem-reports/mark-reviewed-for-spam',

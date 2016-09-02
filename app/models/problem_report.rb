@@ -21,7 +21,7 @@ class ProblemReport < AnonymousContact
   def as_json(options = {})
     attributes_to_serialise = [
       :type, :path, :id, :created_at, :what_wrong, :what_doing,
-      :referrer, :user_agent,
+      :referrer, :user_agent, :marked_as_spam, :reviewed
     ]
     super({
       only: attributes_to_serialise,
