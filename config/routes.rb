@@ -47,6 +47,11 @@ Rails.application.routes.draw do
     get '/organisations/:slug', to: "organisations#show"
   end
 
+  resources 'page-improvements',
+            controller: 'page_improvements',
+            as: 'page_improvement',
+            only: [:create]
+
   resources :organisations,
             only: [:index, :show],
             format: false,
