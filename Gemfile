@@ -12,7 +12,6 @@ gem 'whenever', '0.9.7', require: false
 gem 'mlanett-redis-lock', '0.2.7'
 gem "gds_zendesk", '2.2.0'
 gem "plek", "1.12.0"
-gem 'kaminari', "~> 0.17.0"
 gem 'user_agent_parser'
 
 group :development do

@@ -180,11 +180,4 @@ describe AnonymousContact, :type => :model do
       end
     end
   end
-
-  describe "pagination" do
-    it "returns maximum of 50 results" do
-      create_list(:anonymous_contact, 70)
-      expect(AnonymousContact.page(1).count).to eq(50)
-    end
-  end
 end
