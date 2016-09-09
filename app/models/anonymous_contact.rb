@@ -44,7 +44,6 @@ class AnonymousContact < ActiveRecord::Base
 
   MAX_PAGES = 200
   PAGE_SIZE = 50
-  paginates_per PAGE_SIZE
 
   def self.deduplicate_contacts_created_between(interval)
     contacts = where(created_at: interval).order("created_at asc")
