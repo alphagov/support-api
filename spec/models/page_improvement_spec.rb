@@ -22,13 +22,14 @@ describe PageImprovement, '#zendesk_ticket_attributes' do
       path: '/service-manual/test',
       description: 'I love this page.',
       name: 'John',
-      email: 'john@example.com'
+      email: 'john@example.com',
+      user_agent: 'Safari',
     })
 
     expect(page_improvement.zendesk_ticket_attributes).to eq({
       'subject' => '/service-manual/test',
       'comment' => {
-        'body' => "[Details]\nI love this page.\n\n[Name]\nJohn\n\n[Email]\njohn@example.com\n\n[Path]\n/service-manual/test"
+        'body' => "[Details]\nI love this page.\n\n[Name]\nJohn\n\n[Email]\njohn@example.com\n\n[Path]\n/service-manual/test\n\n[User agent]\nSafari"
       }
     })
   end
@@ -37,12 +38,13 @@ describe PageImprovement, '#zendesk_ticket_attributes' do
     page_improvement = described_class.new({
       path: '/service-manual/test',
       description: 'I love this page.',
+      user_agent: 'Safari',
     })
 
     expect(page_improvement.zendesk_ticket_attributes).to eq({
       'subject' => '/service-manual/test',
       'comment' => {
-        'body' => "[Details]\nI love this page.\n\n[Name]\n\n\n[Email]\n\n\n[Path]\n/service-manual/test"
+        'body' => "[Details]\nI love this page.\n\n[Name]\n\n\n[Email]\n\n\n[Path]\n/service-manual/test\n\n[User agent]\nSafari"
       }
     })
   end
