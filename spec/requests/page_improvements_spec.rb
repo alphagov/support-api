@@ -6,7 +6,7 @@ describe "Page Improvements" do
 
     post '/page-improvements', { path: '/service-manual/agile', description: 'I have a problem' }
 
-    assert_response :success
+    expect(response.code).to eq('201')
     expect(response_hash).to include('status' => 'success')
   end
 
