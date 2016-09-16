@@ -15,11 +15,30 @@ class PageImprovement
     {
       'subject' => path,
       'comment' => {
-        'body' => "[Details]\n#{description}\n\n[Name]\n#{name}\n\n[Email]\n#{email}\n\n[Path]\n#{path}\n\n[User agent]\n#{user_agent}"
+        'body' => ticket_body
       }
     }
   end
 
 private
   attr_reader :description, :email, :name, :path, :user_agent
+
+  def ticket_body
+    <<-TICKET_BODY.strip_heredoc
+      [Details]
+      #{description}
+
+      [Name]
+      #{name}
+
+      [Email]
+      #{email}
+
+      [Path]
+      #{path}
+
+      [User agent]
+      #{user_agent}
+    TICKET_BODY
+  end
 end
