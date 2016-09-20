@@ -10,6 +10,7 @@ describe AnonymousFeedback::GlobalExportRequestsController, type: :controller do
           from_date: "2015-05-01",
           to_date: "2015-06-01",
           notification_email: "foo@example.com",
+          exclude_spam: true
         }
 
         expect(response).to be_accepted
