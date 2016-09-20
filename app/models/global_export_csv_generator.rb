@@ -1,7 +1,8 @@
 class GlobalExportCsvGenerator
-  def initialize(from_date, to_date)
+  def initialize(from_date, to_date, exclude_spam)
     @from_date = from_date
     @to_date = to_date
+    @exclude_spam = exclude_spam
   end
 
   def call
@@ -12,12 +13,15 @@ private
   attr_reader :from_date, :to_date
 
   def results
-    ProblemReport.
+    results = ProblemReport.
       created_between_days(from_date, to_date).
       select("date(created_at) as created_at_date, COUNT(id) as report_count").
       group("created_at_date").
-      order("created_at_date").
-      limit(10_000)
+      order("created_at_date")
+
+    results = results.where(marked_as_spam: false) if @exclude_spam
+
+    results.limit(10_000)
   end
 
   def generate_csv
@@ -28,6 +32,6 @@ private
   end
 
   def filename
-    "feedex_#{from_date.iso8601}_#{to_date.iso8601}.csv"
+    "feedex_#{from_date.iso8601}_#{to_date.iso8601}#{ @exclude_spam ? '_spam_excluded' : ''}.csv"
   end
 end
