@@ -14,7 +14,22 @@ describe "Page Improvements" do
     zendesk_request = expect_zendesk_to_receive_ticket(
       "subject" => "/service-manual/agile",
       "comment" => {
-        "body" => "[Details]\nI have a problem\n\n[Name]\nJohn\n\n[Email]\njohn@example.com\n\n[Path]\n/service-manual/agile\n\n[User agent]\nSafari\n"
+        "body" => <<-TICKET_BODY.strip_heredoc
+                    [Details]
+                    I have a problem
+
+                    [Name]
+                    John
+
+                    [Email]
+                    john@example.com
+
+                    [Path]
+                    /service-manual/agile
+
+                    [User agent]
+                    Safari
+                  TICKET_BODY
       }
     )
 

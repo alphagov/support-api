@@ -29,7 +29,22 @@ describe PageImprovement, '#zendesk_ticket_attributes' do
     expect(page_improvement.zendesk_ticket_attributes).to eq({
       'subject' => '/service-manual/test',
       'comment' => {
-        'body' => "[Details]\nI love this page.\n\n[Name]\nJohn\n\n[Email]\njohn@example.com\n\n[Path]\n/service-manual/test\n\n[User agent]\nSafari\n"
+        'body' => <<-TICKET_BODY.strip_heredoc
+                    [Details]
+                    I love this page.
+
+                    [Name]
+                    John
+
+                    [Email]
+                    john@example.com
+
+                    [Path]
+                    /service-manual/test
+
+                    [User agent]
+                    Safari
+                  TICKET_BODY
       }
     })
   end
@@ -44,7 +59,22 @@ describe PageImprovement, '#zendesk_ticket_attributes' do
     expect(page_improvement.zendesk_ticket_attributes).to eq({
       'subject' => '/service-manual/test',
       'comment' => {
-        'body' => "[Details]\nI love this page.\n\n[Name]\n\n\n[Email]\n\n\n[Path]\n/service-manual/test\n\n[User agent]\nSafari\n"
+        'body' => <<-TICKET_BODY.strip_heredoc
+                    [Details]
+                    I love this page.
+
+                    [Name]
+
+
+                    [Email]
+
+
+                    [Path]
+                    /service-manual/test
+
+                    [User agent]
+                    Safari
+                  TICKET_BODY
       }
     })
   end
