@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 describe PageImprovement, 'validations' do
-  it 'validates presence of path' do
+  it 'validates presence of url' do
     page_improvement = described_class.new({})
     page_improvement.valid?
 
-    expect(page_improvement.errors.messages).to include(path: include("can't be blank"))
+    expect(page_improvement.errors.messages).to include(url: include("can't be blank"))
   end
 
   it 'validates presence of description' do
@@ -19,7 +19,7 @@ end
 describe PageImprovement, '#zendesk_ticket_attributes' do
   it "generates a hash of attributes to create a Zendesk ticket" do
     page_improvement = described_class.new({
-      path: '/service-manual/test',
+      url: 'https://gov.uk/service-manual/test',
       description: 'I love this page.',
       name: 'John',
       email: 'john@example.com',
@@ -27,7 +27,7 @@ describe PageImprovement, '#zendesk_ticket_attributes' do
     })
 
     expect(page_improvement.zendesk_ticket_attributes).to eq({
-      'subject' => '/service-manual/test',
+      'subject' => 'https://gov.uk/service-manual/test',
       'comment' => {
         'body' => <<-TICKET_BODY.strip_heredoc
                     [Details]
@@ -39,8 +39,8 @@ describe PageImprovement, '#zendesk_ticket_attributes' do
                     [Email]
                     john@example.com
 
-                    [Path]
-                    /service-manual/test
+                    [URL]
+                    https://gov.uk/service-manual/test
 
                     [User agent]
                     Safari
@@ -51,13 +51,13 @@ describe PageImprovement, '#zendesk_ticket_attributes' do
 
   it "generates a hash of attributes where the body omits the optional name and email" do
     page_improvement = described_class.new({
-      path: '/service-manual/test',
+      url: 'https://gov.uk/service-manual/test',
       description: 'I love this page.',
       user_agent: 'Safari',
     })
 
     expect(page_improvement.zendesk_ticket_attributes).to eq({
-      'subject' => '/service-manual/test',
+      'subject' => 'https://gov.uk/service-manual/test',
       'comment' => {
         'body' => <<-TICKET_BODY.strip_heredoc
                     [Details]
@@ -69,8 +69,8 @@ describe PageImprovement, '#zendesk_ticket_attributes' do
                     [Email]
 
 
-                    [Path]
-                    /service-manual/test
+                    [URL]
+                    https://gov.uk/service-manual/test
 
                     [User agent]
                     Safari

@@ -1,10 +1,10 @@
 class PageImprovement
   include ActiveModel::Validations
 
-  validates_presence_of :description, :path
+  validates_presence_of :description, :url
 
   def initialize(attributes)
-    @path = attributes.fetch(:path, nil)
+    @url = attributes.fetch(:url, nil)
     @description = attributes.fetch(:description, nil)
     @name = attributes.fetch(:name, nil)
     @email = attributes.fetch(:email, nil)
@@ -13,7 +13,7 @@ class PageImprovement
 
   def zendesk_ticket_attributes
     {
-      'subject' => path,
+      'subject' => url,
       'comment' => {
         'body' => ticket_body
       }
@@ -21,7 +21,7 @@ class PageImprovement
   end
 
 private
-  attr_reader :description, :email, :name, :path, :user_agent
+  attr_reader :description, :email, :name, :url, :user_agent
 
   def ticket_body
     <<-TICKET_BODY.strip_heredoc
@@ -34,8 +34,8 @@ private
       [Email]
       #{email}
 
-      [Path]
-      #{path}
+      [URL]
+      #{url}
 
       [User agent]
       #{user_agent}
