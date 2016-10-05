@@ -5,7 +5,11 @@ class ContentAPILookup
 
   def lookup(path)
     response = api_response(path)
-    ContentItem.new(path: URI(response["web_url"]).path, organisations: organisations_from(response)) if response
+
+    LookedUpContentItem.new(
+      path: URI(response['web_url']).path,
+      organisations: organisations_from(response),
+    ) if response.present?
   end
 
   def organisations_from(response)
@@ -19,15 +23,14 @@ class ContentAPILookup
 private
   def orgs_from_tags(tags)
     org_tags = tags.select {|t| t["details"]["type"] == "organisation" }
-    org_tags.map { |tag|
-      org_info = {
+    org_tags.map do |tag|
+      {
         content_id: tag["content_id"],
         slug: tag["slug"],
         web_url: tag["web_url"],
         title: tag["title"],
       }
-      Organisation.create_with(org_info).find_or_create_by(content_id: org_info[:content_id])
-    }
+    end
   end
 
   def api_response(path)

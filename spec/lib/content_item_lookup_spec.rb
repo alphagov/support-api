@@ -67,38 +67,40 @@ describe ContentItemLookup do
     }
   }
 
+  let(:civil_service_fast_stream_org_response) {
+    {
+      content_id: "e1dfcc51-9bda-444c-94f2-d5e4c4b3cd0b",
+      title: "Civil Service Fast Stream",
+      base_path: "/organisations/civil-service-fast-stream",
+    }
+  }
+
   let(:case_study_content_store_response) {
     {
       base_path: '/government/case-studies/gender-identity',
       format: 'case_study',
       links: {
-        lead_organisations: [
-          {
-            content_id: "e1dfcc51-9bda-444c-94f2-d5e4c4b3cd0b",
-            title: "Civil Service Fast Stream",
-            base_path: "/organisations/civil-service-fast-stream",
-          },
-        ]
+        lead_organisations: [civil_service_fast_stream_org_response],
       }
     }
   }
 
   let(:hmrc) {
-    Organisation.find_by!(
+    Organisation.create_with(
       content_id: "6667cce2-e809-4e21-ae09-cb0bdc1ddda3",
       slug: "hm-revenue-customs",
       web_url: "http://www.dev.gov.uk/government/organisations/hm-revenue-customs",
       title: "HM Revenue & Customs",
-    )
+    ).find_or_create_by(slug: 'hm-revenue-customs')
   }
 
   let(:ukvi) {
-    Organisation.find_by!(
+    Organisation.create_with(
       content_id: "04148522-b0c1-4137-b687-5f3c3bdd561a",
       slug: "uk-visas-and-immigration",
       web_url: "https://www.gov.uk/government/organisations/uk-visas-and-immigration",
       title: "UK Visas and Immigration",
-    )
+    ).find_or_create_by(slug: 'uk-visas-and-immigration')
   }
 
   let!(:gds) { create(:gds) }
@@ -112,7 +114,7 @@ describe ContentItemLookup do
     content_item = subject.lookup('/government/case-studies/gender-identity')
 
     expect(content_item.path).to eq('/government/case-studies/gender-identity')
-    expect(content_item.organisations).to eq([ Organisation.find_by!(slug: 'civil-service-fast-stream') ])
+    expect(content_item.organisations.first).to match(hash_including(slug: 'civil-service-fast-stream'))
   end
 
   it "fetches an organisation page from the Content Store" do
@@ -122,7 +124,7 @@ describe ContentItemLookup do
     content_item = subject.lookup('/government/organisations/hm-revenue-customs')
 
     expect(content_item.path).to eq('/government/organisations/hm-revenue-customs')
-    expect(content_item.organisations).to eq([hmrc])
+    expect(content_item.organisations.first).to match(hash_including(hmrc.attributes.slice(:slug, :web_url)))
   end
 
   it "fetches artefacts from the Content API" do
@@ -132,7 +134,7 @@ describe ContentItemLookup do
     content_item = subject.lookup('/contact-ukvi')
 
     expect(content_item.path).to eq("/contact-ukvi")
-    expect(content_item.organisations).to eq([ukvi])
+    expect(content_item.organisations.first).to match(hash_including(ukvi.attributes.slice(:slug, :web_url)))
   end
 
   it "takes the orgs from Content API if the item is in both Content API and Content Store, and Content Store returns no orgs" do
@@ -142,7 +144,7 @@ describe ContentItemLookup do
     content_item = subject.lookup('/contact-ukvi')
 
     expect(content_item.path).to eq("/contact-ukvi")
-    expect(content_item.organisations).to eq([ukvi])
+    expect(content_item.organisations.first).to match(hash_including(ukvi.attributes.slice(:slug, :web_url)))
   end
 
   context "when the path cannot be found in either Content API or Content Store" do
@@ -155,7 +157,7 @@ describe ContentItemLookup do
       content_item = subject.lookup('/contact-ukvi/overview')
 
       expect(content_item.path).to eq("/contact-ukvi")
-      expect(content_item.organisations).to eq([ukvi])
+      expect(content_item.organisations.first).to match(hash_including(ukvi.attributes.slice(:slug, :web_url)))
     end
 
     it "guesses the 'parent' path for smart-answer paths" do
@@ -167,7 +169,7 @@ describe ContentItemLookup do
       content_item = subject.lookup('/check-uk-visa/y/australia')
 
       expect(content_item.path).to eq("/check-uk-visa")
-      expect(content_item.organisations).to eq([ukvi])
+      expect(content_item.organisations.first).to match(hash_including(ukvi.attributes.slice(:slug, :web_url)))
     end
 
     it "guesses the organisation for certain world organisation content" do
@@ -179,7 +181,7 @@ describe ContentItemLookup do
       content_item = subject.lookup('/government/world/organisations/dfid-bangladesh')
 
       expect(content_item.path).to eq('/government/world/organisations/dfid-bangladesh')
-      expect(content_item.organisations).to eq([dfid])
+      expect(content_item.organisations.first).to match(hash_including(dfid.attributes.slice(:slug, :web_url)))
     end
 
     it "guesses HMRC as the org for HMRC contact pages" do
@@ -189,7 +191,7 @@ describe ContentItemLookup do
       content_item = subject.lookup('/government/organisations/hm-revenue-customs/contact/vat-enquiries')
 
       expect(content_item.path).to eq('/government/organisations/hm-revenue-customs/contact/vat-enquiries')
-      expect(content_item.organisations).to eq([hmrc])
+    expect(content_item.organisations.first).to match(hash_including(hmrc.attributes.slice(:slug, :web_url)))
     end
 
     it "returns a completely new content item with GDS as the org (so the problem report is assigned to at least one org)" do
@@ -199,7 +201,7 @@ describe ContentItemLookup do
       content_item = subject.lookup('/help')
 
       expect(content_item.path).to eq("/help")
-      expect(content_item.organisations).to eq([gds])
+      expect(content_item.organisations.first).to match(hash_including(gds.attributes.slice(:slug, :web_url)))
     end
   end
 end
