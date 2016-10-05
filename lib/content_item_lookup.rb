@@ -1,6 +1,15 @@
 require 'content_api_lookup'
 require 'content_store_lookup'
 
+class LookedUpContentItem
+  attr_accessor :path, :organisations
+
+  def initialize(path:, organisations: [])
+    @path = path
+    @organisations = organisations
+  end
+end
+
 class ContentItemLookup
   def initialize(content_store:, content_api:)
     @content_store_lookup = ContentStoreLookup.new(content_store)
@@ -10,7 +19,7 @@ class ContentItemLookup
   def lookup(path)
     content_item = lookup_in_content_store_and_content_api(path) ||
       lookup_in_content_store_and_content_api(guess_alternate_path(path)) ||
-      ContentItem.new(path: path)
+      LookedUpContentItem.new(path: path)
     content_item.tap { |item| item.organisations = guess_organisations_for(item.path) if item.organisations.empty? }
   end
 
@@ -18,8 +27,12 @@ private
   def lookup_in_content_store_and_content_api(path)
     content_store_item = @content_store_lookup.lookup(path)
     content_api_item = @content_api_lookup.lookup(path)
+    build_item(content_store_item, content_api_item)
+  end
+
+  def build_item(content_store_item, content_api_item)
     if content_store_item && content_api_item && content_store_item.organisations.empty?
-      ContentItem.new(path: content_store_item.path, organisations: content_api_item.organisations)
+      LookedUpContentItem.new(path: content_store_item.path, organisations: content_api_item.organisations)
     else
       content_store_item || content_api_item
     end
@@ -56,6 +69,14 @@ private
                  # the owning organisation defaults to the owners of GOV.UK
                  'government-digital-service'
                end
-    [Organisation.find_by!(slug: org_slug)]
+
+    org = Organisation.find_by!(slug: org_slug)
+
+    [{
+      content_id: org.content_id,
+      slug: org.slug,
+      web_url: org.web_url,
+      title: org.title,
+    }]
   end
 end
