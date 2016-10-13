@@ -7,7 +7,13 @@ gem 'logstasher', '0.6.2'
 gem 'airbrake', '4.1.0'
 gem 'govuk_sidekiq', '0.0.4'
 gem 'unicorn', '5.1.0'
-gem 'gds-api-adapters', '32.2.1'
+
+if ENV['API_DEV']
+  gem "gds-api-adapters", :path => '../gds-api-adapters'
+else
+  gem 'gds-api-adapters', '32.2.1'
+end
+
 gem 'whenever', '0.9.7', require: false
 gem 'mlanett-redis-lock', '0.2.7'
 gem "gds_zendesk", '2.2.0'
