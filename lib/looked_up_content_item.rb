@@ -20,9 +20,6 @@ private
                  when /uk-trade-investment/ then "uk-trade-investment"
                  else "foreign-commonwealth-office"
                  end
-               elsif path =~ %r{^/government/organisations/hm-revenue-customs/contact}
-                 # TODO: remove this once Contacts Admin populates `links#organisations` in the Content Store
-                 "hm-revenue-customs"
                else
                  # if we can't determine the org of any content,
                  # the owning organisation defaults to the owners of GOV.UK
