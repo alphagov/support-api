@@ -8,7 +8,7 @@ class ContentStoreLookup
 
     begin
       response = @content_store.content_item(path)
-    rescue GdsApi::HTTPNotFound
+    rescue GdsApi::HTTPNotFound, GdsApi::HTTPGone
       response = nil
     end
 

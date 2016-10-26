@@ -39,7 +39,7 @@ private
 
     begin
       @content_api.artefact(slug)
-    rescue GdsApi::HTTPNotFound
+    rescue GdsApi::HTTPNotFound, GdsApi::HTTPGone
       nil
     end
   end
