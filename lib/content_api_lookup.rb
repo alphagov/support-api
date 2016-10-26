@@ -36,6 +36,11 @@ private
   def api_response(path)
     slug = path[1..-1] # the content API expects "vat-rates" instead of "/vat-rates"
     return nil if slug.nil? || slug.empty?
-    @content_api.artefact(slug)
+
+    begin
+      @content_api.artefact(slug)
+    rescue GdsApi::HTTPNotFound
+      nil
+    end
   end
 end
