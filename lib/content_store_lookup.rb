@@ -5,7 +5,12 @@ class ContentStoreLookup
 
   def lookup(path)
     return nil if path.empty?
-    response = @content_store.content_item(path)
+
+    begin
+      response = @content_store.content_item(path)
+    rescue GdsApi::HTTPNotFound
+      response = nil
+    end
 
     LookedUpContentItem.new(
       path: response['base_path'],
