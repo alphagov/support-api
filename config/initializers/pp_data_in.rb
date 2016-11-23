@@ -1,4 +1,4 @@
 PP_DATA_IN_API = {
-  url: "http://www.performance.dev.gov.uk",
-  bearer_token: 'XXXXXXXXXXXXX'
+  url: ENV["PP_DATA_URL"] || "http://www.performance.dev.gov.uk",
+  bearer_token: ENV["PP_DATA_BEARER_TOKEN"] || 'XXXXXXXXXXXXX'
 }
