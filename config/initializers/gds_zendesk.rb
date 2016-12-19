@@ -6,12 +6,10 @@ ZENDESK_ANONYMOUS_TICKETS_REQUESTER_EMAIL = ENV["ZENDESK_ANONYMOUS_TICKET_EMAIL"
 
 GDS_ZENDESK_CLIENT = if Rails.env.development?
                        GDSZendesk::DummyClient.new(logger: Rails.logger)
-                     elsif Rails.env.test?
+                     else
                        GDSZendesk::Client.new(
                          username: ENV["ZENDESK_CLIENT_USERNAME"] || "abc",
                          password: ENV["ZENDESK_CLIENT_PASSWORD"] || "def",
                          logger: Rails.logger
                        )
-                     else
-                       nil # this file is overwritten in prod
                      end
