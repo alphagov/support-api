@@ -77,6 +77,7 @@ node {
     }
 
     stage("Run tests") {
+      govuk.runRakeTask("db:reset")
       govuk.runRakeTask("ci:setup:rspec default")
     }
 
