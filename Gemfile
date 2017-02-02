@@ -33,6 +33,7 @@ group :development, :test do
   gem 'ci_reporter_rspec', '1.0.0'
   gem 'shoulda-matchers', '3.1.1'
   gem 'timecop', '0.7.3'
+  gem 'govuk-lint'
 end
 
 group :test do
