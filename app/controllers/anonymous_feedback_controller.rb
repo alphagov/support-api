@@ -1,3 +1,5 @@
+require 'date_parser'
+
 class AnonymousFeedbackController < ApplicationController
   def index
     unless params[:organisation_slug].present? || params[:path_prefix].present?
