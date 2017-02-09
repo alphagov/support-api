@@ -3,16 +3,17 @@ require 'organisation_importer'
 
 describe OrganisationImporter do
   before do
-    organisations = organisations_api_response.map {|o|
-      OpenStruct.new(
-        title: o[:name],
-        details: OpenStruct.new(slug: o[:slug],
-                                govuk_status: "live",
-                                abbreviation: o[:abbreviation],
-                                content_id: o[:content_id]),
-        web_url: "https://gov.uk/government/organisations/#{o[:slug]}"
-      )
-    }
+    organisations = organisations_api_response.map do |o|
+      {
+        "title" => o[:name],
+        "details" => { "slug" => o[:slug],
+                       "govuk_status" => "live",
+                       "abbreviation" => o[:abbreviation],
+                       "content_id" => o[:content_id]
+                     },
+        "web_url" => "https://gov.uk/government/organisations/#{o[:slug]}",
+      }
+    end
     stub_subsequent_pages = double(with_subsequent_pages: organisations)
     allow_any_instance_of(GdsApi::Organisations).to receive(:organisations)
       .and_return(stub_subsequent_pages)
@@ -24,17 +25,19 @@ describe OrganisationImporter do
       name: "Ministry of Magic",
       abbreviation: "MOM",
       content_id: "abcdef"
-    },{
+     },
+     {
       slug: "ministry-of-fun-and-games",
       name: "Ministry of Fun and Games",
       abbreviation: "MOFG",
       content_id: "123456"
-    },{
+     },
+     {
       slug: "ministry-of-unicorns",
       name: "Ministry of Unicorns",
       abbreviation: "MOU",
       content_id: "c0ffee"
-    }]
+     }]
   end
 
   before do
