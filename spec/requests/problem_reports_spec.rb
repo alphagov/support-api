@@ -119,8 +119,9 @@ javascript_enabled: true
             }
         }.to_json
 
-        put '/anonymous-feedback/problem-reports/mark-reviewed-for-spam', json_payload,
-          {"CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json'}
+        put '/anonymous-feedback/problem-reports/mark-reviewed-for-spam',
+            params: json_payload,
+            headers: { "CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json' }
       end
 
       it 'returns a 200 OK' do
@@ -152,8 +153,9 @@ javascript_enabled: true
             }
         }.to_json
 
-        put '/anonymous-feedback/problem-reports/mark-reviewed-for-spam', json_payload,
-          {"CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json'}
+        put '/anonymous-feedback/problem-reports/mark-reviewed-for-spam',
+            params: json_payload,
+            headers: { "CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json' }
       end
 
       it "overwrite any reviewed reports with the supplied spam marking" do
@@ -173,8 +175,9 @@ javascript_enabled: true
             }
         }.to_json
 
-        put '/anonymous-feedback/problem-reports/mark-reviewed-for-spam', json_payload,
-          {"CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json'}
+        put '/anonymous-feedback/problem-reports/mark-reviewed-for-spam',
+            params: json_payload,
+            headers: { "CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json' }
       end
 
       it 'returns a 404' do
@@ -187,8 +190,8 @@ javascript_enabled: true
 private
   def user_submits_a_problem_report(options)
     post '/anonymous-feedback/problem-reports',
-         { "problem_report" => options }.to_json,
-         {"CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json'}
+         params: { "problem_report" => options }.to_json,
+         headers: { "CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json' }
   end
 end
 
@@ -229,7 +232,8 @@ describe 'Retrieving Problem Reports' do
     before do
       stub_const("AnonymousContact::PAGE_SIZE", 2)
 
-      get "/anonymous-feedback/problem-reports", from_date: from_date.to_s, to_date: to_date.to_s, include_reviewed: true, page: 2
+      get "/anonymous-feedback/problem-reports",
+          params: { from_date: from_date.to_s, to_date: to_date.to_s, include_reviewed: true, page: 2 }
     end
 
     it 'returns problem reports that fulfil those filters exactly' do

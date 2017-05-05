@@ -44,8 +44,8 @@ describe "Service feedback" do
     }
 
     post '/anonymous-feedback/service-feedback',
-         { "service_feedback" => options }.to_json,
-         {"CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json'}
+         params: { "service_feedback" => options }.to_json,
+         headers: { "CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json' }
 
     expect(response.status).to eq(422)
     expect(JSON.parse(response.body)["errors"]).to include(
@@ -57,8 +57,8 @@ describe "Service feedback" do
   private
   def user_submits_satisfaction_survey_on_done_page(options)
     post '/anonymous-feedback/service-feedback',
-         { "service_feedback" => options }.to_json,
-         {"CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json'}
+         params: { "service_feedback" => options }.to_json,
+         headers: { "CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json' }
 
     expect(response.status).to eq(202)
   end

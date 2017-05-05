@@ -5,9 +5,11 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
     context "posted with valid parameters" do
       before do
         expect(GenerateFeedbackCsvWorker).to receive(:perform_async).once.with(instance_of(Fixnum))
-        post :create, export_request: {
-          from: "2015-05-01", to: "2015-06-01",
-          path_prefix: "/", notification_email: "foo@example.com"
+        post :create, params: {
+          export_request: {
+            from: "2015-05-01", to: "2015-06-01",
+            path_prefix: "/", notification_email: "foo@example.com"
+          }
         }
       end
 
@@ -31,9 +33,11 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
     context "posted with invalid parameters" do
       before do
         expect(GenerateFeedbackCsvWorker).to receive(:perform_async).never
-        post :create, export_request: {
-          from: "2015-05-01", to: "2015-06-01",
-          path_prefix: "/"
+        post :create, params: {
+          export_request: {
+            from: "2015-05-01", to: "2015-06-01",
+            path_prefix: "/"
+          }
         }
       end
 
@@ -44,7 +48,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
   end
 
   describe "#show" do
-    before { get :show, id: id }
+    before { get :show, params: { id: id } }
 
     subject { response }
 

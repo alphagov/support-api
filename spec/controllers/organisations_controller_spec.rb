@@ -33,7 +33,7 @@ RSpec.describe OrganisationsController, type: :controller do
       let!(:organisation) { create :organisation }
 
       it "renders the organisation as json" do
-        get :show, slug: "ministry-of-magic"
+        get :show, params: { slug: "ministry-of-magic" }
         expect(JSON.parse(response.body)).to eq(
           "title" => "Ministry of Magic",
           "slug" => "ministry-of-magic",
@@ -46,7 +46,7 @@ RSpec.describe OrganisationsController, type: :controller do
 
     context "for an invalid organisation" do
       it "returns a 404" do
-        get :show, slug: "ministry-of-magic"
+        get :show, params: { slug: "ministry-of-magic" }
 
         expect(response).to be_not_found
       end
