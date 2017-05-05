@@ -10,7 +10,7 @@ module AnonymousFeedback
       date = DateTime.parse(params[:date]) rescue nil
 
       if date.nil?
-        head 422
+        head :unprocessable_entity
       else
         totals = ProblemReport.totals_for(date)
         result = {
@@ -31,7 +31,7 @@ module AnonymousFeedback
 
       if request.valid?
         ProblemReportWorker.perform_async(problem_report_params)
-        render nothing: true, status: 202
+        head :accepted
       else
         render json: { "errors" => request.errors.to_a }, status: 422
       end
@@ -89,13 +89,13 @@ module AnonymousFeedback
                   when /^\d{4}-\d{2}$/ then DateTime.strptime(filters[:period], '%Y-%m').all_month
                   else nil
                   end
-      head 422 unless @interval
+      head :unprocessable_entity unless @interval
     end
 
     def load_selected_organisation
       if filters[:organisation_slug]
         @selected_organisation = Organisation.find_by(slug: filters[:organisation_slug])
-        head 404 unless @selected_organisation
+        head :not_found unless @selected_organisation
       end
     end
   end

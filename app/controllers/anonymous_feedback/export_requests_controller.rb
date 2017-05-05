@@ -5,7 +5,7 @@ class AnonymousFeedback::ExportRequestsController < ApplicationController
 
     if export_request.save
       GenerateFeedbackCsvWorker.perform_async(export_request.id)
-      render nothing: true, status: 202
+      head :accepted
     else
       render json: { "errors" => export_request.errors.to_a }, status: 422
     end
@@ -20,7 +20,7 @@ class AnonymousFeedback::ExportRequestsController < ApplicationController
         "ready" => !export_request.generated_at.nil?
       }
     else
-      head 404
+      head :not_found
     end
   end
 

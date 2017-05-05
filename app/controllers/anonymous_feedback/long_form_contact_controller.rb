@@ -5,7 +5,7 @@ module AnonymousFeedback
 
       if request.valid?
         LongFormContactWorker.perform_async(long_form_contact_params)
-        render nothing: true, status: 202
+        head :accepted
       else
         render json: { "errors" => request.errors.to_a }, status: 422
       end

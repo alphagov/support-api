@@ -9,7 +9,7 @@ class OrganisationsController < ApplicationController
     if organisation
       render json: organisation
     else
-      render nothing: true, status: :not_found
+      head :not_found
     end
   end
 end
