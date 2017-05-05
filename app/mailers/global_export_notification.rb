@@ -1,7 +1,4 @@
-class GlobalExportNotification < ActionMailer::Base
-  default from: "inside-government@digital.cabinet-office.gov.uk"
-  layout false
-
+class GlobalExportNotification < ApplicationMailer
   def notification_email(notification_email, filename, csv_contents)
     attachments[filename] = csv_contents
 
