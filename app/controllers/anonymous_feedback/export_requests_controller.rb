@@ -27,7 +27,7 @@ class AnonymousFeedback::ExportRequestsController < ApplicationController
   private
     def export_request_params
       permitted_params = %i(from to path_prefix organisation notification_email)
-      clean_params = params.require(:export_request).permit(*permitted_params)
+      clean_params = params.require(:export_request).permit(*permitted_params).to_h
       {
         filters: {
           from: DateParser.parse(clean_params[:from]),

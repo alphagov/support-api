@@ -15,7 +15,7 @@ module AnonymousFeedback
     def long_form_contact_params
       params.require(:long_form_contact).permit(
         :path, :referrer, :javascript_enabled, :user_agent, :details, :user_specified_url
-      )
+      ).to_h
     end
   end
 end

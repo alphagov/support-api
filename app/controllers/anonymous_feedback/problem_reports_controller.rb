@@ -47,14 +47,14 @@ module AnonymousFeedback
 
   private
     def problem_report_index_params
-      params.permit(:from_date, :to_date, :include_reviewed, :page)
+      params.permit(:from_date, :to_date, :include_reviewed, :page).to_h
     end
 
     def problem_report_params
       params.require(:problem_report).permit(
         :path, :referrer, :javascript_enabled, :user_agent, :what_doing,
         :what_wrong, :source, :page_owner
-      )
+      ).to_h
     end
 
     def mark_supplied_reports_as_reviewed_and_spam

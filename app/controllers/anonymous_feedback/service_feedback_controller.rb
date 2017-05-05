@@ -15,7 +15,7 @@ module AnonymousFeedback
     def service_feedback_params
       params.require(:service_feedback).permit(
         :slug, :path, :referrer, :javascript_enabled, :user_agent, :details, :service_satisfaction_rating
-      )
+      ).to_h
     end
   end
 end
