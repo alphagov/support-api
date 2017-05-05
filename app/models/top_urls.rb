@@ -40,7 +40,7 @@ class TopUrls
       with_known_page_owner.
       order("page_owner asc").
       select(:page_owner).
-      uniq.
+      distinct.
       map(&:page_owner)
   end
 
