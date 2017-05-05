@@ -1,7 +1,7 @@
 require 'csv'
 require 'plek'
 
-class FeedbackExportRequest < ActiveRecord::Base
+class FeedbackExportRequest < ApplicationRecord
   validates :notification_email, :filters, presence: true
 
   serialize :filters, Hash

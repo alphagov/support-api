@@ -1,2 +1,2 @@
-class ArchivedServiceFeedback < ActiveRecord::Base
+class ArchivedServiceFeedback < ApplicationRecord
 end

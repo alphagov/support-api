@@ -1,7 +1,7 @@
 require 'field_which_may_contain_personal_information'
 require 'duplicate_detector'
 
-class AnonymousContact < ActiveRecord::Base
+class AnonymousContact < ApplicationRecord
   before_save :detect_personal_information
 
   belongs_to :content_item
