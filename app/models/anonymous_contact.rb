@@ -4,7 +4,7 @@ require 'duplicate_detector'
 class AnonymousContact < ApplicationRecord
   before_save :detect_personal_information
 
-  belongs_to :content_item
+  belongs_to :content_item, optional: true
   has_many :organisations, through: :content_item
 
   validates :referrer, url: true, length: { maximum: 2048 }, allow_nil: true
