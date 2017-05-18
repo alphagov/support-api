@@ -1,12 +1,10 @@
 require 'json'
 require 'csv'
 require 'plek'
-require 'gds_api/test_helpers/content_api'
 require 'gds_api/test_helpers/content_store'
 require 'rails_helper'
 
 describe "Problem reports" do
-  include GdsApi::TestHelpers::ContentApi
   include GdsApi::TestHelpers::ContentStore
 
   # In order to improve information and services on GOV.UK
@@ -14,20 +12,21 @@ describe "Problem reports" do
   # I want to record and view bugs, gripes submitted by GOV.UK users
 
   let(:hmrc) { Organisation.where(slug: 'hm-revenue-customs').first }
-  let(:vat_rates_content_api_response) {
-     artefact_for_slug("vat-rates").tap do |hash|
-      hash["tags"] = [
-        {
-          content_id: "6667cce2-e809-4e21-ae09-cb0bdc1ddda3",
-          slug: "hm-revenue-customs",
-          web_url: "https://www.gov.uk/government/organisations/hm-revenue-customs",
-          title: "HM Revenue & Customs",
-          details: {
-            type: "organisation",
+  let(:vat_rates_content_store_response) {
+    {
+      base_path: '/vat-rates',
+      title: 'VAT Rates',
+      links: {
+        organisations: [
+          {
+            content_id: '6667cce2-e809-4e21-ae09-cb0bdc1ddda3',
+            base_path: '/hm-revenue-customs',
+            title: 'HM Revenue & Customs',
+            document_type: 'organisation',
           }
-        }
-      ]
-    end
+        ]
+      }
+    }
   }
 
   it "calculates the problem report totals by day" do
@@ -47,8 +46,7 @@ describe "Problem reports" do
   end
 
   it "accepts and saves problem reports from the 'Is there anything wrong with this page?' form" do
-    content_api_has_an_artefact("vat-rates", vat_rates_content_api_response)
-    content_store_does_not_have_item('/vat-rates')
+    content_store_has_item('/vat-rates', vat_rates_content_store_response)
 
     zendesk_request = expect_zendesk_to_receive_ticket(
       "subject" => "/vat-rates",
