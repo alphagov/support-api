@@ -12,7 +12,7 @@ class LookedUpContentItem
 
 private
   # ideally we can always find the content item in either the Content Store
-  # or the Content API, but in case we can't, determine a sensible default
+  # but in case we can't, determine a sensible default
   def guess_organisations_for(path)
     org_slug = if path =~ %r{^/government/world/organisations}
                  case path
