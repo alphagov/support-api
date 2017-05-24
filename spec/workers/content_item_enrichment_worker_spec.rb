@@ -9,7 +9,7 @@ describe ContentItemEnrichmentWorker do
   let(:problem_report) { create(:problem_report, path: path) }
   subject(:worker) { described_class.new }
 
-  context "with an entry in both the content api and content store" do
+  context "with an entry in the content store" do
     before do
       create(:gds)
       content_store_has_item(path)
