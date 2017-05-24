@@ -8,10 +8,10 @@ class ServiceFeedbackAggregator
 
   def run
     raise_if_should_not_run
-    ActiveRecord::Base.transaction do
-      ActiveRecord::Base.connection.execute(create_aggregate)
-      ActiveRecord::Base.connection.execute(copy_to_archive)
-      ActiveRecord::Base.connection.execute(delete_from_anonymous_contacts)
+    ApplicationRecord.transaction do
+      ApplicationRecord.connection.execute(create_aggregate)
+      ApplicationRecord.connection.execute(copy_to_archive)
+      ApplicationRecord.connection.execute(delete_from_anonymous_contacts)
     end
   end
 

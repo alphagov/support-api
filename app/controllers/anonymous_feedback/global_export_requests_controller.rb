@@ -3,7 +3,7 @@ class AnonymousFeedback::GlobalExportRequestsController < ApplicationController
     export_request = GlobalExportRequest.new(global_export_request_params)
     if export_request.valid?
       GenerateGlobalExportCsvWorker.perform_async(global_export_request_params)
-      render nothing: true, status: 202
+      head :accepted
     else
       render json: { "errors" => export_request.errors.to_a }, status: 422
     end
@@ -18,7 +18,7 @@ private
       :exclude_spam
     ]
 
-    clean_params = params.require(:global_export_request).permit(*permitted_params)
+    clean_params = params.require(:global_export_request).permit(*permitted_params).to_h
     {
       from_date: DateParser.parse(clean_params[:from_date]),
       to_date: DateParser.parse(clean_params[:to_date]),

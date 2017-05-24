@@ -6,7 +6,7 @@ RSpec.describe AnonymousFeedback::OrganisationsController, type: :controller do
     let(:ordering) { "last_30_days" }
 
     subject do
-      get :show, slug: slug, ordering: ordering
+      get :show, params: { slug: slug, ordering: ordering }
       response
     end
 

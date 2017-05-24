@@ -19,7 +19,7 @@ class ServiceFeedback < AnonymousContact
   end
 
   def self.transaction_slugs
-    uniq.pluck(:slug).sort
+    distinct.pluck(:slug).sort
   end
 
   def self.with_comments

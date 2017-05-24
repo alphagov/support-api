@@ -5,7 +5,7 @@ module AnonymousFeedback
 
       if request.valid?
         ServiceFeedbackWorker.perform_async(service_feedback_params)
-        render nothing: true, status: 202
+        head :accepted
       else
         render json: { "errors" => request.errors.to_a }, status: 422
       end
@@ -15,7 +15,7 @@ module AnonymousFeedback
     def service_feedback_params
       params.require(:service_feedback).permit(
         :slug, :path, :referrer, :javascript_enabled, :user_agent, :details, :service_satisfaction_rating
-      )
+      ).to_h
     end
   end
 end

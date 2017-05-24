@@ -6,11 +6,13 @@ describe AnonymousFeedback::GlobalExportRequestsController, type: :controller do
       it "succeeds" do
         expect(GenerateGlobalExportCsvWorker).to receive(:perform_async).once
 
-        response = post :create, global_export_request: {
-          from_date: "2015-05-01",
-          to_date: "2015-06-01",
-          notification_email: "foo@example.com",
-          exclude_spam: true
+        response = post :create, params: {
+          global_export_request: {
+            from_date: "2015-05-01",
+            to_date: "2015-06-01",
+            notification_email: "foo@example.com",
+            exclude_spam: true
+          }
         }
 
         expect(response).to be_accepted
@@ -21,9 +23,11 @@ describe AnonymousFeedback::GlobalExportRequestsController, type: :controller do
       it "fails" do
         expect(GenerateGlobalExportCsvWorker).not_to receive(:perform_async)
 
-        response = post :create, global_export_request: {
-          from_date: "2015-05-01",
-          to_date: "2015-06-01",
+        response = post :create, params: {
+          global_export_request: {
+            from_date: "2015-05-01",
+            to_date: "2015-06-01",
+          }
         }
 
         expect(response).to be_unprocessable

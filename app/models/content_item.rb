@@ -1,4 +1,4 @@
-class ContentItem < ActiveRecord::Base
+class ContentItem < ApplicationRecord
   has_and_belongs_to_many :organisations
   has_many :problem_reports, class_name: "ProblemReport"
   has_many :anonymous_contacts

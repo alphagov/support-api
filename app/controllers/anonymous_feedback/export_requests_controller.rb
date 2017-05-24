@@ -5,7 +5,7 @@ class AnonymousFeedback::ExportRequestsController < ApplicationController
 
     if export_request.save
       GenerateFeedbackCsvWorker.perform_async(export_request.id)
-      render nothing: true, status: 202
+      head :accepted
     else
       render json: { "errors" => export_request.errors.to_a }, status: 422
     end
@@ -20,14 +20,14 @@ class AnonymousFeedback::ExportRequestsController < ApplicationController
         "ready" => !export_request.generated_at.nil?
       }
     else
-      head 404
+      head :not_found
     end
   end
 
   private
     def export_request_params
       permitted_params = %i(from to path_prefix organisation notification_email)
-      clean_params = params.require(:export_request).permit(*permitted_params)
+      clean_params = params.require(:export_request).permit(*permitted_params).to_h
       {
         filters: {
           from: DateParser.parse(clean_params[:from]),

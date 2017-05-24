@@ -62,7 +62,7 @@ true
 private
   def user_submits_a_long_form_anonymous_contact(options)
     post '/anonymous-feedback/long-form-contacts',
-         { "long_form_contact" => options }.to_json,
-         {"CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json'}
+         params: { "long_form_contact" => options }.to_json,
+         headers: { "CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json' }
   end
 end

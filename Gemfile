@@ -1,10 +1,14 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.7.1'
-gem 'rails-api', '0.4.0'
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://github.com/#{repo_name}.git"
+end
+
+gem 'rails', '~> 5.0.2'
 gem 'pg', '~> 0.18.2'
 gem 'logstasher', '0.6.2'
-gem 'airbrake', '4.1.0'
+gem 'airbrake', github: 'alphagov/airbrake', branch: 'silence-dep-warnings-for-rails-5'
 gem 'govuk_sidekiq', '0.0.4'
 gem 'unicorn', '5.1.0'
 
@@ -21,7 +25,10 @@ gem "plek", "1.12.0"
 gem 'user_agent_parser'
 
 group :development do
-  gem 'spring', '1.7.2'
+  gem 'listen', '~> 3.0.5'
+
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
 group :development, :test do

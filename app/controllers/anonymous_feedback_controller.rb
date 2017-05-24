@@ -35,7 +35,7 @@ class AnonymousFeedbackController < ApplicationController
 
   def dates
     [DateParser.parse(params[:from]), DateParser.parse(params[:to])].tap do |dates|
-      dates.sort! if params[:from] && params[:to]
+      dates.sort! if dates[0] && dates[1]
     end
   end
 

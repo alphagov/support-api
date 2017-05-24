@@ -5,7 +5,7 @@ module AnonymousFeedback
 
       if request.valid?
         LongFormContactWorker.perform_async(long_form_contact_params)
-        render nothing: true, status: 202
+        head :accepted
       else
         render json: { "errors" => request.errors.to_a }, status: 422
       end
@@ -15,7 +15,7 @@ module AnonymousFeedback
     def long_form_contact_params
       params.require(:long_form_contact).permit(
         :path, :referrer, :javascript_enabled, :user_agent, :details, :user_specified_url
-      )
+      ).to_h
     end
   end
 end

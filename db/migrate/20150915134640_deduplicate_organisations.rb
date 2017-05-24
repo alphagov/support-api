@@ -1,5 +1,5 @@
 class DeduplicateOrganisations < ActiveRecord::Migration
-  class Organisation < ActiveRecord::Base
+  class Organisation < ApplicationRecord
     has_and_belongs_to_many :content_items
   end
 
@@ -61,6 +61,6 @@ private
   end
 
   def execute(sql)
-    ActiveRecord::Base.connection.execute(sql)
+    ApplicationRecord.connection.execute(sql)
   end
 end

@@ -1,4 +1,4 @@
-class Organisation < ActiveRecord::Base
+class Organisation < ApplicationRecord
   has_and_belongs_to_many :content_items
   has_many :problem_reports, through: :content_items
   has_many :anonymous_contacts, through: :content_items
