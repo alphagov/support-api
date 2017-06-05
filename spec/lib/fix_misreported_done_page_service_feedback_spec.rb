@@ -1,5 +1,7 @@
 require 'fix_misreported_done_page_service_feedback'
 require 'rails_helper'
+require "gds_api/test_helpers/performance_platform/data_in"
+
 
 RSpec.describe FixMisreportedDonePageServiceFeedback do
   let(:start_date) { Date.new(2014, 6, 10) }
@@ -80,12 +82,17 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
     end
 
     context 'for AggregatedServiceFeedback instances' do
+      include GdsApi::TestHelpers::PerformancePlatform::DataIn
+
       context 'with "/done"-less version of supplied path' do
+        let!(:perf_platform_request) { stub_service_feedback_day_aggregate_submission(service_slug) }
+
         context 'created before the start date' do
           let!(:aggregated_service_feedback) do
             FactoryGirl.create(
               :aggregated_service_feedback,
               service_satisfaction_rating: 1,
+              details: 4,
               slug: service_slug,
               path: "/#{service_slug}",
               created_at: start_date - 10,
@@ -96,6 +103,11 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
             subject.fix!(service_slug)
             expect(aggregated_service_feedback.reload.path).not_to eq "/done/#{service_slug}"
           end
+
+          it 'is not pushed to the performance platform' do
+            subject.fix!(service_slug)
+            expect(perf_platform_request).not_to have_been_requested
+          end
         end
 
         context 'created after the end date' do
@@ -103,6 +115,7 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
             FactoryGirl.create(
               :aggregated_service_feedback,
               service_satisfaction_rating: 1,
+              details: 4,
               slug: service_slug,
               path: "/#{service_slug}",
               created_at: end_date + 10,
@@ -113,6 +126,11 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
             subject.fix!(service_slug)
             expect(aggregated_service_feedback.reload.path).not_to eq "/done/#{service_slug}"
           end
+
+          it 'is not pushed to the performance platform' do
+            subject.fix!(service_slug)
+            expect(perf_platform_request).not_to have_been_requested
+          end
         end
 
         context 'created between the start and end dates' do
@@ -120,6 +138,7 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
             FactoryGirl.create(
               :aggregated_service_feedback,
               service_satisfaction_rating: 1,
+              details: 4,
               slug: service_slug,
               path: "/#{service_slug}",
               created_at: inbetween_date,
@@ -130,7 +149,52 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
             subject.fix!(service_slug)
             expect(aggregated_service_feedback.reload.path).to eq "/done/#{service_slug}"
           end
+
+          it 'is pushed to the performance platform' do
+            subject.fix!(service_slug)
+            expect(perf_platform_request).to have_been_requested
+          end
+
+          it 'swallows "no aggregates found" raised by calculating the data for each day' do
+            allow_any_instance_of(PerformancePlatformServiceFeedbackMetrics).to receive(:call).and_raise(RuntimeError, "Aggregated feedback items not found!")
+            expect {
+              subject.fix!(service_slug)
+            }.not_to raise_error
+          end
         end
+      end
+
+      it 'pushes aggregated data to the performance platform for each day in the range there is data' do
+        FactoryGirl.create(
+          :aggregated_service_feedback,
+          service_satisfaction_rating: 1,
+          details: 4,
+          slug: service_slug,
+          path: "/#{service_slug}",
+          created_at: start_date,
+        )
+        FactoryGirl.create(
+          :aggregated_service_feedback,
+          service_satisfaction_rating: 1,
+          details: 6,
+          slug: service_slug,
+          path: "/#{service_slug}",
+          created_at: inbetween_date,
+        )
+        FactoryGirl.create(
+          :aggregated_service_feedback,
+          service_satisfaction_rating: 1,
+          details: 2,
+          slug: service_slug,
+          path: "/#{service_slug}",
+          created_at: end_date,
+        )
+        perf_platform_request = stub_service_feedback_day_aggregate_submission(service_slug)
+        subject.fix!(service_slug)
+        expect(perf_platform_request).to have_been_requested.times(3)
+        expect(perf_platform_request.with(body: hash_including(_timestamp: start_date.to_datetime.iso8601))).to have_been_requested
+        expect(perf_platform_request.with(body: hash_including(_timestamp: inbetween_date.to_datetime.iso8601))).to have_been_requested
+        expect(perf_platform_request.with(body: hash_including(_timestamp: end_date.to_datetime.iso8601))).to have_been_requested
       end
 
       it 'ignores those having paths with suffixes of the supplied service' do
@@ -149,6 +213,14 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
   end
 
   describe '#fix_all!' do
+    include GdsApi::TestHelpers::PerformancePlatform::DataIn
+
+    before {
+      stub_service_feedback_day_aggregate_submission('service-1')
+      stub_service_feedback_day_aggregate_submission('service-2')
+      stub_service_feedback_day_aggregate_submission('service-3')
+    }
+
     let!(:done_page_1) { FactoryGirl.create(:service_feedback, path: '/done/service-1') }
     let!(:done_page_2) { FactoryGirl.create(:service_feedback, path: '/done/service-2') }
     let!(:done_page_3) { FactoryGirl.create(:long_form_contact, path: '/done/service-3', details: 'Hi there') }

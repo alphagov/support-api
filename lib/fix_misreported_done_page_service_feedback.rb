@@ -17,8 +17,8 @@ class FixMisreportedDonePageServiceFeedback
     logger.info("Investigating `#{done_page_path}` for misreported service feedback between #{start_date} and #{end_date}")
 
     fix_feedback(ServiceFeedback, service_slug, done_page_path)
-    fix_feedback(AggregatedServiceFeedback, service_slug, done_page_path)
-
+    aggregated_feedback_fixed = fix_feedback(AggregatedServiceFeedback, service_slug, done_page_path)
+    push_to_peformance_plaftorm(service_slug) if aggregated_feedback_fixed > 0
   end
 
 private
@@ -45,5 +45,20 @@ private
     end
 
     how_many_to_fix
+  end
+
+  def date_range_for_feedback
+    start_date..end_date
+  end
+
+  def push_to_peformance_plaftorm(service_slug)
+    date_range_for_feedback.to_a.each do |feedback_date|
+      begin
+        ServiceFeedbackPPUploaderWorker.new.perform(feedback_date.year, feedback_date.month, feedback_date.day, service_slug)
+        logger.info("Pushing aggregated `#{service_slug}` feedback for #{feedback_date.iso8601} to performance platform")
+      rescue RuntimeError => e
+        raise unless e.message == "Aggregated feedback items not found!"
+      end
+    end
   end
 end
