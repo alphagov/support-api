@@ -3,8 +3,11 @@ require 'user_agent_parser'
 class FeedbackCsvRowPresenter
   attr_reader :row
 
-  HEADER_ROW = ["creation date", "path or service name", "feedback", "service satisfaction rating",
-                "browser name", "browser version", "browser platform", "user agent", "referrer", "type"]
+  HEADER_ROW = [
+    "creation date", "path or service name", "feedback", "service satisfaction rating",
+    "browser name", "browser version", "browser platform", "user agent", "referrer", "type",
+    "primary organisation", "all organisations"
+  ].freeze
 
   def self.parser
     Thread.current[:user_agent_parser] ||= UserAgentParser::Parser.new
@@ -25,7 +28,9 @@ class FeedbackCsvRowPresenter
       parsed_user_agent.os.family,
       row.user_agent,
       row.referrer,
-      row.type
+      row.type,
+      primary_organisation,
+      all_organisations
     ]
   end
 
@@ -52,5 +57,13 @@ class FeedbackCsvRowPresenter
     else
       ""
     end
+  end
+
+  def primary_organisation
+    row.organisations.first.try(:title) || ""
+  end
+
+  def all_organisations
+    row.organisations.map(&:title).join("|")
   end
 end
