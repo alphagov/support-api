@@ -107,5 +107,13 @@ describe FeedbackCsvRowPresenter do
 
       it { is_expected.to eq("It was really good\nReally.\nGood job") }
     end
+
+    context "for aggregated service feedback" do
+      let(:row) { aggregated_service_feedback }
+
+      it 'is a sentence explaining the rating and how many ratings there were' do
+        expect(subject).to eq("Rating of 3: 1")
+      end
+    end
   end
 end
