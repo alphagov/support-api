@@ -24,7 +24,9 @@ describe FeedbackCsvRowPresenter do
           "Windows Vista",
           row.user_agent,
           "http://www.example.com/foo",
-          "problem-report"
+          "problem-report",
+          "",
+          ""
         ]
       end
     end
@@ -43,7 +45,9 @@ describe FeedbackCsvRowPresenter do
           "Windows Vista",
           row.user_agent,
           "http://www.example.com/foo",
-          "service-feedback"
+          "service-feedback",
+          "",
+          ""
         ]
       end
     end
@@ -61,7 +65,9 @@ describe FeedbackCsvRowPresenter do
           "Windows Vista",
           row.user_agent,
           "http://www.example.com/foo",
-          "aggregated-service-feedback"
+          "aggregated-service-feedback",
+          "",
+          ""
         ]
       end
     end
@@ -80,8 +86,102 @@ describe FeedbackCsvRowPresenter do
           "Windows Vista",
           row.user_agent,
           "http://www.example.com/foo",
-          "long-form-contact"
+          "long-form-contact",
+          "",
+          ""
         ]
+      end
+    end
+  end
+
+  describe "#primary_organisation" do
+    subject { instance.primary_organisation }
+    let(:row) { create(:anonymous_contact, content_item: content_item) }
+
+    context "for feedback with no content item" do
+      let(:content_item) { nil }
+
+      it "is the empty string" do
+        expect(subject).to eq ""
+      end
+    end
+
+    context "for feedback with a content item" do
+      let(:content_item) { build(:content_item, organisations: organisations) }
+
+      context "that has no organisations" do
+        let(:organisations) { [] }
+
+        it "is the empty string" do
+          expect(subject).to eq ""
+        end
+      end
+
+      context "for feedback with a content item has one organisation" do
+        let(:organisations) { [build(:organisation, title: "Department for Ursine Affairs")] }
+
+        it "is that organisation's title" do
+          expect(subject).to eq "Department for Ursine Affairs"
+        end
+      end
+
+      context "for feedback with a content item has more than one organisations" do
+        let(:organisations) {
+          [
+            build(:organisation, title: "Apiarian Embassy"),
+            build(:organisation, title: "Department for Ursine Affairs")
+          ]
+        }
+
+        it "is the first organisation's title" do
+          expect(subject).to eq "Apiarian Embassy"
+        end
+      end
+    end
+  end
+
+  describe "#all_organisations" do
+    subject { instance.all_organisations }
+    let(:row) { create(:anonymous_contact, content_item: content_item) }
+
+    context "for feedback with no content item" do
+      let(:content_item) { nil }
+
+      it "is the empty string" do
+        expect(subject).to eq ""
+      end
+    end
+
+    context "for feedback with a content item" do
+      let(:content_item) { build(:content_item, organisations: organisations) }
+
+      context "that has no organisations" do
+        let(:organisations) { [] }
+
+        it "is the empty string" do
+          expect(subject).to eq ""
+        end
+      end
+
+      context "for feedback with a content item has one organisation" do
+        let(:organisations) { [build(:organisation, title: "Department for Ursine Affairs")] }
+
+        it "is that organisation's title" do
+          expect(subject).to eq "Department for Ursine Affairs"
+        end
+      end
+
+      context "for feedback with a content item has more than one organisations" do
+        let(:organisations) {
+          [
+            build(:organisation, title: "Apiarian Embassy"),
+            build(:organisation, title: "Department for Ursine Affairs")
+          ]
+        }
+
+        it "is the all the organisation's titles separated by `|`" do
+          expect(subject).to eq "Apiarian Embassy|Department for Ursine Affairs"
+        end
       end
     end
   end
@@ -106,6 +206,14 @@ describe FeedbackCsvRowPresenter do
       let(:row) { long_form_contact }
 
       it { is_expected.to eq("It was really good\nReally.\nGood job") }
+    end
+
+    context "for aggregated service feedback" do
+      let(:row) { aggregated_service_feedback }
+
+      it 'is a sentence explaining the rating and how many ratings there were' do
+        expect(subject).to eq("Rating of 3: 1")
+      end
     end
   end
 end

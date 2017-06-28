@@ -196,7 +196,7 @@ RSpec.describe FeedbackExportRequest, type: :model do
     end
 
     it "uses the FeedbackCsvRowPresenter to format the row" do
-      header = "creation date,path or service name,feedback,service satisfaction rating,browser name,browser version,browser platform,user agent,referrer,type"
+      header = "creation date,path or service name,feedback,service satisfaction rating,browser name,browser version,browser platform,user agent,referrer,type,primary organisation,all organisations"
       allow_any_instance_of(FeedbackCsvRowPresenter).to receive(:to_a).and_return(["a", "b", "c"])
       expect(subject.string).to eq "#{header}\na,b,c\na,b,c\n"
     end
