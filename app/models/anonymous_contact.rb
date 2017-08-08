@@ -7,7 +7,7 @@ class AnonymousContact < ApplicationRecord
   belongs_to :content_item, optional: true
   has_many :organisations, through: :content_item
 
-  validates :referrer, url: true, length: { maximum: 2048 }, allow_nil: true
+  validates :referrer, referrer_url: true, length: { maximum: 2048 }, allow_nil: true
   validates :path,     url: true, length: { maximum: 2048 }, presence: true
   validates :user_agent, length: { maximum: 2048 }
   validates :details, length: { maximum: 2 ** 16 }
