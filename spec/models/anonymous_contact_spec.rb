@@ -59,6 +59,7 @@ describe AnonymousContact, :type => :model do
     it { should allow_value("http://" + ("a" * 2040)).for(:referrer) }
     it { should_not allow_value("http://" + ("a" * 2050)).for(:referrer) }
     it { should_not allow_value("http://bla.example.org:9292/méh/fào?bar").for(:referrer) }
+    it { should allow_value("android-app://com.google.android.googlequicksearchbox").for(:referrer) }
   end
 
   context "when duplicates are present" do
