@@ -8,8 +8,8 @@ end
 gem 'rails', '~> 5.0.2'
 gem 'pg', '~> 0.18.2'
 gem 'logstasher', '0.6.2'
-gem 'airbrake', github: 'alphagov/airbrake', branch: 'silence-dep-warnings-for-rails-5'
-gem 'govuk_sidekiq', '1.0.3'
+gem 'govuk_sidekiq', '~> 2.0'
+gem 'govuk_app_config', '~> 0.2.0'
 gem 'unicorn', '5.1.0'
 
 if ENV['API_DEV']
