@@ -9,13 +9,13 @@ gem 'rails', '~> 5.0.2'
 gem 'pg', '~> 0.18.2'
 gem 'logstasher', '0.6.2'
 gem 'airbrake', github: 'alphagov/airbrake', branch: 'silence-dep-warnings-for-rails-5'
-gem 'govuk_sidekiq', '0.0.4'
+gem 'govuk_sidekiq', '1.0.3'
 gem 'unicorn', '5.1.0'
 
 if ENV['API_DEV']
   gem "gds-api-adapters", :path => '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '37.4.0'
+  gem 'gds-api-adapters', '~> 48.0'
 end
 
 gem 'whenever', '0.9.7', require: false

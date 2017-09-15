@@ -68,7 +68,7 @@ class BackfillHistoricAggregatedServiceFeedback
   end
 
   def performance_platform_data_out
-    @data_out ||= GdsApi::PerformancePlatform::DataOut.new("http://www.performance.service.gov.uk")
+    @data_out ||= GdsApi::PerformancePlatform::DataOut.new("https://www.performance.service.gov.uk")
   end
 
   def slug_matches_aggregated_feedback?(transaction_slug)
