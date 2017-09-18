@@ -13,7 +13,7 @@ describe "problem report totals PP upload" do
         { "path" => "/tax-disc", "total" => 1 },
       ]
     }
-    stub_problem_report_daily_totals_for(Date.new(2014,9,29), response.to_json)
+    stub_support_api_problem_report_daily_totals_for(Date.new(2014, 9, 29), response.to_json)
 
     stub_upload_request = stub_problem_report_daily_totals_submission([
       {
