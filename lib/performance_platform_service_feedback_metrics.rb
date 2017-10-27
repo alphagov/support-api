@@ -36,8 +36,6 @@ private
     aggregated_feedback_items = AggregatedServiceFeedback.
       where(path: path, created_at: time_interval)
 
-    raise "Aggregated feedback items not found!" if aggregated_feedback_items.count == 0
-
     aggregated_feedback_items.inject({}) do |memo, item|
       memo[item.service_satisfaction_rating] = item.details.to_i
       memo
