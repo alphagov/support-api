@@ -155,11 +155,12 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
             expect(perf_platform_request).to have_been_requested
           end
 
-          it 'swallows "no aggregates found" raised by calculating the data for each day' do
-            allow_any_instance_of(PerformancePlatformServiceFeedbackMetrics).to receive(:call).and_raise(RuntimeError, "Aggregated feedback items not found!")
-            expect {
-              subject.fix!(service_slug)
-            }.not_to raise_error
+        end
+
+        context 'no aggregate data returned' do
+          it 'doesn\'t send' do
+            subject.fix!(service_slug)
+            expect(perf_platform_request).not_to have_been_requested
           end
         end
       end

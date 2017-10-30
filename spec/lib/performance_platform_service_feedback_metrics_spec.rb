@@ -6,21 +6,6 @@ describe PerformancePlatformServiceFeedbackMetrics do
     described_class.new(day: Date.new(2013, 2, 10), slug: 'apply-carers-allowance')
   }
 
-  context "without any aggregated feedback for that day" do
-    before do
-      create(:aggregated_service_feedback,
-             service_satisfaction_rating: 1,
-             slug: "abcde",
-             created_at: Date.new(2013,2,9),
-             details: 1,
-            )
-    end
-
-    it "raises an error" do
-      expect { metric_generator.call }.to raise_error("Aggregated feedback items not found!")
-    end
-  end
-
   context "with valid aggregated feedback" do
     before do
       create(:aggregated_service_feedback,

@@ -53,12 +53,8 @@ private
 
   def push_to_peformance_plaftorm(service_slug)
     date_range_for_feedback.to_a.each do |feedback_date|
-      begin
-        ServiceFeedbackPPUploaderWorker.new.perform(feedback_date.year, feedback_date.month, feedback_date.day, service_slug)
-        logger.info("Pushing aggregated `#{service_slug}` feedback for #{feedback_date.iso8601} to performance platform")
-      rescue RuntimeError => e
-        raise unless e.message == "Aggregated feedback items not found!"
-      end
+      ServiceFeedbackPPUploaderWorker.new.perform(feedback_date.year, feedback_date.month, feedback_date.day, service_slug)
+      logger.info("Pushing aggregated `#{service_slug}` feedback for #{feedback_date.iso8601} to performance platform")
     end
   end
 end

@@ -18,7 +18,9 @@ class ServiceFeedbackPPUploaderWorker
       slug: transaction_slug,
     ).call
 
-    api.submit_service_feedback_day_aggregate(transaction_slug, payload)
+    unless payload["total"].nil?
+      api.submit_service_feedback_day_aggregate(transaction_slug, payload)
+    end
   rescue GdsApi::PerformancePlatformDatasetNotConfigured => e
     Rails.logger.warn(e.message)
   end
