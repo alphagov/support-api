@@ -45,7 +45,7 @@ end
 
 group :test do
   gem 'factory_girl_rails', '~> 4.7.0'
-  gem 'webmock', '~> 1.21.0' # Updating this requires changing gds_zendesk helpers
+  gem 'webmock', '~> 2.3.0' # Updating this requires changing gds_zendesk helpers
   gem 'fakefs', require: 'fakefs/safe'
   gem "pry-byebug"
 end
