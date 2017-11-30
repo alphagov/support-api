@@ -8,7 +8,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
         post :create, params: {
           export_request: {
             from: "2015-05-01", to: "2015-06-01",
-            path_prefix: "/", notification_email: "foo@example.com"
+            path_prefixes: ["/"], notification_email: "foo@example.com"
           }
         }
       end
@@ -25,7 +25,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
           from: Date.new(2015, 05, 01),
           to: Date.new(2015, 06, 01),
           organisation_slug: nil,
-          path_prefix: "/",
+          path_prefixes: ["/"],
         })
       end
     end
@@ -36,7 +36,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
         post :create, params: {
           export_request: {
             from: "2015-05-01", to: "2015-06-01",
-            path_prefix: "/"
+            path_prefixes: ["/"]
           }
         }
       end
@@ -44,6 +44,38 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
       subject { response }
 
       it { is_expected.to be_unprocessable }
+    end
+
+    context "with backwards compatible `path_prefix` param" do
+      before do
+        expect(GenerateFeedbackCsvWorker).to receive(:perform_async).once.with(instance_of(Integer))
+        post :create, params: {
+          export_request:
+            {
+              from: "2015-05-01",
+              to: "2015-06-01",
+              path_prefix: "/",
+              notification_email: "foo@example.com",
+              organisation: ""
+            }
+        }
+      end
+
+      subject { response }
+
+      it { is_expected.to be_accepted }
+
+      it "creates a feedback export request with the correct filters" do
+        expect(FeedbackExportRequest.count).to eq(1)
+        feedback_export_request = FeedbackExportRequest.last
+
+        expect(feedback_export_request.filters).to eq(
+          from: Date.new(2015, 0o5, 0o1),
+          to: Date.new(2015, 0o6, 0o1),
+          path_prefixes: ["/"],
+          organisation_slug: ""
+        )
+      end
     end
   end
 

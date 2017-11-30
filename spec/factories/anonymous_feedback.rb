@@ -75,7 +75,7 @@ FactoryGirl.define do
   end
 
   factory :feedback_export_request do
-    filters Hash.new(path_prefix: "/",
+    filters Hash.new(path_prefixes: "/",
                      from: Date.new(2015,5),
                      to: Date.new(2015,6))
     notification_email "foo@example.com"

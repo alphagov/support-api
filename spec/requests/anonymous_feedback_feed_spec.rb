@@ -41,7 +41,7 @@ describe "Anonymous feedback feed" do
     end
 
     it "returns feedback with the appropriate fields in reverse chronological order" do
-      get_json "/anonymous-feedback?path_prefix=/"
+      get_json "/anonymous-feedback?path_prefixes[]=/"
       expect(response.status).to eq(200)
 
       expect(json_response["results"]).to eq([

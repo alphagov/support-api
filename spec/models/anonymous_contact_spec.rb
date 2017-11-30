@@ -82,19 +82,19 @@ describe AnonymousContact, :type => :model do
   end
 
   context "scopes" do
-    describe "matching_path_prefix" do
+    describe "matching_path_prefixes" do
       let!(:a) { contact(path: "/some-calculator/y/abc") }
       let!(:b) { contact(path: "/some-calculator/y/abc/x") }
       let!(:c) { contact(path: "/tax-disc") }
 
-      it "can find urls beginning with the given path" do
-        result = AnonymousContact.matching_path_prefix("/some-calculator")
+      it "can find urls beginning with the given paths" do
+        result = AnonymousContact.matching_path_prefixes(["/some-calculator", "/tax-disc"])
 
-        expect(result).to contain_exactly(a, b)
+        expect(result).to contain_exactly(a, b, c)
       end
 
       it "is a no-op when given a nil path" do
-        result = AnonymousContact.matching_path_prefix(nil)
+        result = AnonymousContact.matching_path_prefixes(nil)
 
         expect(result).to contain_exactly(a, b, c)
       end
@@ -146,11 +146,12 @@ describe AnonymousContact, :type => :model do
       let!(:personal_info) { contact(path: "/gov", details: "foo@example.com") }
       let!(:not_actionable) { contact(path: "/gov", is_actionable: false, reason_why_not_actionable: "spam") }
 
-      subject { described_class.for_query_parameters(path_prefix: path_prefix,
+      subject {
+        described_class.for_query_parameters(path_prefixes: path_prefixes,
                                                      from: from,
                                                      to: to).sort }
 
-      let(:path_prefix) { nil }
+      let(:path_prefixes) { nil }
       let(:from) { nil }
       let(:to)   { nil }
 
@@ -176,7 +177,7 @@ describe AnonymousContact, :type => :model do
       end
 
       context "with a restrictive path prefix" do
-        let(:path_prefix) { "/gov" }
+        let(:path_prefixes) { ["/gov"] }
         it { is_expected.to eq [contact_1] }
       end
     end

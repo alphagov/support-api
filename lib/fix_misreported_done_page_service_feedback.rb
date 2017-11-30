@@ -26,7 +26,7 @@ private
   attr_reader :logger, :start_date, :end_date
 
   def all_done_page_paths
-    @all_done_page_paths ||= ServiceFeedback.matching_path_prefix('/done').select(:path).distinct.pluck(:path)
+    @all_done_page_paths ||= ServiceFeedback.matching_path_prefixes(['/done']).select(:path).distinct.pluck(:path)
   end
 
   def fetch_misreported_service_feedback(service_slug, for_feedback_type: ServiceFeedback)
