@@ -34,7 +34,7 @@ end
 group :development, :test do
   gem 'rspec-rails', '3.5.1'
   gem 'rspec-collection_matchers', '1.1.2'
-  gem 'simplecov', '0.12.0', require: false
+  gem 'simplecov', '0.15.1', require: false
   gem 'simplecov-rcov', '0.2.3', require: false
   gem 'ci_reporter', '2.0.0'
   gem 'ci_reporter_rspec', '1.0.0'
