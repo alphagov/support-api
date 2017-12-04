@@ -4,7 +4,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
   describe "#create" do
     context "posted with valid parameters" do
       before do
-        expect(GenerateFeedbackCsvWorker).to receive(:perform_async).once.with(instance_of(Fixnum))
+        expect(GenerateFeedbackCsvWorker).to receive(:perform_async).once.with(instance_of(Integer))
         post :create, params: {
           export_request: {
             from: "2015-05-01", to: "2015-06-01",
