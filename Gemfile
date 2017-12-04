@@ -20,7 +20,7 @@ end
 
 gem 'whenever', '0.9.7', require: false
 gem 'mlanett-redis-lock', '0.2.7'
-gem "gds_zendesk", '2.2.0'
+gem "gds_zendesk", '3.0.0'
 gem "plek", "1.12.0"
 gem 'user_agent_parser'
 
@@ -45,7 +45,7 @@ end
 
 group :test do
   gem 'factory_girl_rails', '~> 4.7.0'
-  gem 'webmock', '~> 2.3.0' # Updating this requires changing gds_zendesk helpers
+  gem 'webmock', '~> 2.3.0'
   gem 'fakefs', require: 'fakefs/safe'
   gem "pry-byebug"
 end
