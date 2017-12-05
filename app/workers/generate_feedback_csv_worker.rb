@@ -5,7 +5,7 @@ class GenerateFeedbackCsvWorker
 
   def perform(*args)
     feedback_export_request = case args.first
-                              when Fixnum
+                              when Integer
                                 FeedbackExportRequest.find(args.first)
                               when FeedbackExportRequest
                                 args.first
