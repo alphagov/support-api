@@ -24,6 +24,7 @@ class AnonymousContact < ApplicationRecord
   scope :most_recent_last, -> { order("created_at ASC") }
   scope :created_between_days, -> (first_date, last_date) { where(created_at: first_date..last_date.at_end_of_day) }
   scope :for_organisation_slug, -> (slug) { joins(:organisations).where(organisations: {slug: slug}) }
+  scope :for_document_type, ->(document_type) { joins(:content_item).where(content_items: { document_type: document_type }) }
 
   scope :matching_path_prefixes, ->(paths) do
     if paths.present?
@@ -37,6 +38,7 @@ class AnonymousContact < ApplicationRecord
     from = options[:from] || Date.new(1970)
     to = options[:to] || Date.today
     organisation_slug = options[:organisation_slug]
+    document_type = options[:document_type]
 
     query = only_actionable.
       free_of_personal_info.
@@ -44,6 +46,7 @@ class AnonymousContact < ApplicationRecord
 
     query = query.matching_path_prefixes(path_prefixes) if path_prefixes.present?
     query = query.for_organisation_slug(organisation_slug) if organisation_slug
+    query = query.for_document_type(document_type) if document_type
 
     query
   end

@@ -96,6 +96,27 @@ describe AnonymousFeedbackController do
       end
     end
 
+    describe "it allows search by document type" do
+      it "is returns a successful result with any `document_type`" do
+        create(:content_item, document_type: 'smart_answer', path: '/calculate-your-holiday-entitlement')
+        get :index, params: { document_type: 'smart_answer' }
+        expect(response).to be_success
+      end
+
+      it "returns an empty result when no results are found" do
+        get :index, params: { path_prefixes: ["/non-existent"] }
+
+        expect(response).to be_success
+        expect(json_response).to eq(
+          "results" => [],
+          "page_size" => 50,
+          "total_count" => 0,
+          "current_page" => 1,
+          "pages" => 0,
+                                     )
+      end
+    end
+
     describe "limiting the page count" do
       before do
         create(:problem_report, path: "/tax-disc", what_doing: "First contact", what_wrong: "Nowt")
@@ -173,6 +194,52 @@ describe AnonymousFeedbackController do
         create(:problem_report, path: "/xyz", content_item: hmrc_content)
 
         get :index, params: { organisation_slug: "hm-revenue-customs", path_prefixes: ["/xyz"] }
+
+        expect(json_response["total_count"]).to eq(1)
+        expect(json_response["results"].first["path"]).to eq("/xyz")
+      end
+    end
+
+    describe "filter by document type" do
+      let(:hmrc) { create(:organisation, slug: 'hm-revenue-customs') }
+      let(:smart_answer) {
+        create(:content_item,
+                                  document_type: 'smart_answer',
+                                  path: '/calculate-your-holiday-entitlement',
+                                  organisations: [hmrc])
+      }
+      let(:case_study) { create(:content_item, document_type: 'case_study', path: '/government/case-studies/out-of-syria-back-into-school') }
+      let!(:sa_problem_report) { create(:problem_report, path: "/xyz", content_item: smart_answer) }
+      let!(:cs_problem_reports) { create_list(:problem_report, 2, content_item: case_study) }
+
+      it "returns only feedback belonging to the smart_answer" do
+        get :index, params: { document_type: "smart_answer" }
+        expect(json_response["total_count"]).to eq(1)
+        ids_of_returned_problem_reports = json_response["results"].map { |r| r["id"] }.sort
+        expect(ids_of_returned_problem_reports).to eq([sa_problem_report.id])
+      end
+
+      context "if a document type doesn't exist" do
+        before { get :index, params: { document_type: "made-up-document-type" } }
+        it "doesn't return an error" do
+          expect(response).to have_http_status(200)
+        end
+
+        it "returns no results" do
+          expect(json_response["total_count"]).to eq(0)
+          expect(json_response["results"]).to be_empty
+        end
+      end
+
+      it "combines with path filters" do
+        get :index, params: { document_type: "smart_answer", path_prefixes: ["/xyz"] }
+
+        expect(json_response["total_count"]).to eq(1)
+        expect(json_response["results"].first["path"]).to eq("/xyz")
+      end
+
+      it "combines with organisation slug and" do
+        get :index, params: { document_type: "smart_answer", organisation_slug: "hm-revenue-customs" }
 
         expect(json_response["total_count"]).to eq(1)
         expect(json_response["results"].first["path"]).to eq("/xyz")

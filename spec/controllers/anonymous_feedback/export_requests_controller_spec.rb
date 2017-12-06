@@ -7,8 +7,10 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
         expect(GenerateFeedbackCsvWorker).to receive(:perform_async).once.with(instance_of(Integer))
         post :create, params: {
           export_request: {
-            from: "2015-05-01", to: "2015-06-01",
-            path_prefixes: ["/"], notification_email: "foo@example.com"
+            from: "2015-05-01",
+            to: "2015-06-01",
+            path_prefixes: ["/"],
+            notification_email: "foo@example.com"
           }
         }
       end
@@ -21,12 +23,14 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
         expect(FeedbackExportRequest.count).to eq(1)
         feedback_export_request = FeedbackExportRequest.last
 
-        expect(feedback_export_request.filters).to eq({
-          from: Date.new(2015, 05, 01),
-          to: Date.new(2015, 06, 01),
-          organisation_slug: nil,
-          path_prefixes: ["/"],
-        })
+        expect(feedback_export_request.filters).to eq(
+          {
+            from: Date.new(2015, 05, 01),
+            to: Date.new(2015, 06, 01),
+            organisation_slug: nil,
+            path_prefixes: ["/"],
+          }
+        )
       end
     end
 
@@ -35,7 +39,8 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
         expect(GenerateFeedbackCsvWorker).to receive(:perform_async).never
         post :create, params: {
           export_request: {
-            from: "2015-05-01", to: "2015-06-01",
+            from: "2015-05-01",
+            to: "2015-06-01",
             path_prefixes: ["/"]
           }
         }
@@ -56,7 +61,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
               to: "2015-06-01",
               path_prefix: "/",
               notification_email: "foo@example.com",
-              organisation: ""
+              organisation: "",
             }
         }
       end
@@ -70,10 +75,12 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
         feedback_export_request = FeedbackExportRequest.last
 
         expect(feedback_export_request.filters).to eq(
-          from: Date.new(2015, 0o5, 0o1),
-          to: Date.new(2015, 0o6, 0o1),
-          path_prefixes: ["/"],
-          organisation_slug: ""
+          {
+            from: Date.new(2015, 0o5, 0o1),
+            to: Date.new(2015, 0o6, 0o1),
+            path_prefixes: ["/"],
+            organisation_slug: "",
+          }
         )
       end
     end
