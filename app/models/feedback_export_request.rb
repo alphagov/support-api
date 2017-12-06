@@ -22,8 +22,9 @@ class FeedbackExportRequest < ApplicationRecord
     if path_filters
       parts += segments_of_first_path + and_x_number_of_other_paths
     end
-    parts << filters[:organisation_slug] if filters[:organisation_slug]
-    self.filename = "#{parts.join('_')}.csv"
+    parts << filters[:organisation_slug] if filters[:organisation_slug].present?
+    parts << filters[:document_type] if filters[:document_type].present?
+    self.filename = "#{parts.join("_")}.csv"
   end
 
   def path_filters

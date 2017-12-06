@@ -28,7 +28,7 @@ class AnonymousFeedback::ExportRequestsController < ApplicationController
 
   private
     def export_request_params
-      permitted_params = [:from, :to, :organisation, :notification_email, :path_prefix, path_prefixes: []]
+      permitted_params = [:from, :to, :organisation, :notification_email, :document_type, :path_prefix, path_prefixes: []]
       clean_params = params.require(:export_request).permit(*permitted_params).to_h
       if clean_params[:path_prefix].present?
         clean_params[:path_prefixes] = [clean_params[:path_prefix]]
@@ -40,7 +40,8 @@ class AnonymousFeedback::ExportRequestsController < ApplicationController
           from: DateParser.parse(clean_params[:from]),
           to: DateParser.parse(clean_params[:to]),
           path_prefixes: clean_params[:path_prefixes],
-          organisation_slug: clean_params[:organisation]
+          organisation_slug: clean_params[:organisation],
+          document_type: clean_params[:document_type]
         },
         notification_email: clean_params[:notification_email]
       }

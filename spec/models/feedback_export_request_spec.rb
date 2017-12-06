@@ -27,6 +27,8 @@ RSpec.describe FeedbackExportRequest, type: :model do
     let(:from) { nil }
     let(:to)   { nil }
     let(:organisation_slug) { nil }
+    let(:document_type) { nil }
+
     let(:instance) do
       described_class.new(
         filters: {
@@ -34,7 +36,8 @@ RSpec.describe FeedbackExportRequest, type: :model do
           path_prefixes: path_prefixes,
           from: from,
           to: to,
-          organisation_slug: organisation_slug
+          organisation_slug: organisation_slug,
+          document_type: document_type
         }
      )
     end
@@ -79,6 +82,12 @@ RSpec.describe FeedbackExportRequest, type: :model do
 
           it { is_expected.to eq "feedex_0000-00-00_2015-06-01_hm-revenue-customs.csv" }
         end
+
+        context "with a document type" do
+          let(:document_type) { "smart_answer" }
+
+          it { is_expected.to eq "feedex_0000-00-00_2015-06-01_smart_answer.csv" }
+        end
       end
 
       context "with a from date set" do
@@ -106,6 +115,12 @@ RSpec.describe FeedbackExportRequest, type: :model do
           let(:organisation_slug) { "hm-revenue-customs" }
 
           it { is_expected.to eq "feedex_2015-04-01_2015-06-01_hm-revenue-customs.csv" }
+        end
+
+        context "with a document type" do
+          let(:document_type) { "smart_answer" }
+
+          it { is_expected.to eq "feedex_2015-04-01_2015-06-01_smart_answer.csv" }
         end
       end
 
@@ -136,6 +151,12 @@ RSpec.describe FeedbackExportRequest, type: :model do
 
           it { is_expected.to eq "feedex_0000-00-00_2015-05-01_hm-revenue-customs.csv" }
         end
+
+        context "with a document type" do
+          let(:document_type) { "smart_answer" }
+
+          it { is_expected.to eq "feedex_0000-00-00_2015-05-01_smart_answer.csv" }
+        end
       end
 
       context "with both dates set" do
@@ -164,6 +185,12 @@ RSpec.describe FeedbackExportRequest, type: :model do
           let(:organisation_slug) { "hm-revenue-customs" }
 
           it { is_expected.to eq "feedex_2015-04-01_2015-05-01_hm-revenue-customs.csv" }
+        end
+
+        context "with a document type" do
+          let(:document_type) { "smart_answer" }
+
+          it { is_expected.to eq "feedex_2015-04-01_2015-05-01_smart_answer.csv" }
         end
       end
 
@@ -209,7 +236,8 @@ RSpec.describe FeedbackExportRequest, type: :model do
           from: Date.new(2015, 4),
           to: Date.new(2015, 5),
           path_prefixes: ["/"],
-          organisation_slug: "hm-revenue-customs"
+          organisation_slug: "hm-revenue-customs",
+          document_type: "smart_answer"
         }
       ).results
     end
@@ -220,7 +248,8 @@ RSpec.describe FeedbackExportRequest, type: :model do
         from: Date.new(2015, 4),
         to: Date.new(2015, 5),
         path_prefixes: ["/"],
-        organisation_slug: "hm-revenue-customs"
+        organisation_slug: "hm-revenue-customs",
+        document_type: "smart_answer"
       ).and_return(double("scope", most_recent_last: [contact]))
 
       expect(subject).to eq [contact]

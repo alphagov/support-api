@@ -10,7 +10,9 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
             from: "2015-05-01",
             to: "2015-06-01",
             path_prefixes: ["/"],
-            notification_email: "foo@example.com"
+            notification_email: "foo@example.com",
+            organisation: "",
+            document_type: ""
           }
         }
       end
@@ -23,14 +25,11 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
         expect(FeedbackExportRequest.count).to eq(1)
         feedback_export_request = FeedbackExportRequest.last
 
-        expect(feedback_export_request.filters).to eq(
-          {
-            from: Date.new(2015, 05, 01),
-            to: Date.new(2015, 06, 01),
-            organisation_slug: nil,
-            path_prefixes: ["/"],
-          }
-        )
+        expect(feedback_export_request.filters).to eq(from: Date.new(2015, 0o5, 0o1),
+                                                      to: Date.new(2015, 0o6, 0o1),
+                                                      organisation_slug: "",
+                                                      path_prefixes: ["/"],
+                                                      document_type: "")
       end
     end
 
@@ -41,7 +40,9 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
           export_request: {
             from: "2015-05-01",
             to: "2015-06-01",
-            path_prefixes: ["/"]
+            path_prefixes: ["/"],
+            organisation: "",
+            document_type: ""
           }
         }
       end
@@ -62,6 +63,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
               path_prefix: "/",
               notification_email: "foo@example.com",
               organisation: "",
+              document_type: ""
             }
         }
       end
@@ -74,14 +76,11 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
         expect(FeedbackExportRequest.count).to eq(1)
         feedback_export_request = FeedbackExportRequest.last
 
-        expect(feedback_export_request.filters).to eq(
-          {
-            from: Date.new(2015, 0o5, 0o1),
-            to: Date.new(2015, 0o6, 0o1),
-            path_prefixes: ["/"],
-            organisation_slug: "",
-          }
-        )
+        expect(feedback_export_request.filters).to eq(from: Date.new(2015, 0o5, 0o1),
+                                                      to: Date.new(2015, 0o6, 0o1),
+                                                      path_prefixes: ["/"],
+                                                      organisation_slug: "",
+                                                      document_type: "")
       end
     end
   end
