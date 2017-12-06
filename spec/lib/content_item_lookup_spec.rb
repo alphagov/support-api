@@ -14,7 +14,7 @@ describe ContentItemLookup do
     {
       content_id: "6667cce2-e809-4e21-ae09-cb0bdc1ddda3",
       base_path: "/government/organisations/hm-revenue-customs",
-      format: "placeholder_organisation",
+      document_type: "placeholder_organisation",
       title: "HM Revenue & Customs",
     }
   }
@@ -37,21 +37,21 @@ describe ContentItemLookup do
   let(:contact_ukvi_content_store_response) {
     {
       base_path: '/contact-ukvi',
-      format: "placeholder",
+      document_type: "placeholder",
     }
   }
 
   let(:dfid_content_store_response) {
     {
       base_path: '/government/world/organisations/dfid-bangladesh',
-      format: "placeholder",
+      document_type: "placeholder",
     }
   }
 
   let(:hmrc_contact_page_content_store_response) {
     {
       base_path: '/government/organisations/hm-revenue-customs/contact/vat-enquiries',
-      format: "placeholder",
+      document_type: "placeholder",
     }
   }
 
@@ -66,7 +66,7 @@ describe ContentItemLookup do
   let(:case_study_content_store_response) {
     {
       base_path: '/government/case-studies/gender-identity',
-      format: 'case_study',
+      document_type: 'case_study',
       links: {
         lead_organisations: [civil_service_fast_stream_org_response],
       }
@@ -101,6 +101,7 @@ describe ContentItemLookup do
     content_item = subject.lookup('/government/case-studies/gender-identity')
 
     expect(content_item.path).to eq('/government/case-studies/gender-identity')
+    expect(content_item.document_type).to eq('case_study')
     expect(content_item.organisations.first).to match(hash_including(slug: 'civil-service-fast-stream'))
   end
 

@@ -1,9 +1,10 @@
 class LookedUpContentItem
-  attr_accessor :path
+  attr_accessor :path, :document_type
 
-  def initialize(path:, organisations: [])
+  def initialize(path:, organisations: [], document_type: nil)
     @path = path
     @organisations = organisations
+    @document_type = document_type
   end
 
   def organisations

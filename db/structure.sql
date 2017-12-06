@@ -131,7 +131,8 @@ CREATE TABLE content_items (
     id integer NOT NULL,
     path character varying(2048) NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    document_type character varying
 );
 
 
@@ -327,14 +328,6 @@ ALTER TABLE ONLY organisations
 
 
 --
--- Name: schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY schema_migrations
-    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
-
-
---
 -- Name: index_anonymous_contacts_on_content_item_id_and_created_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -416,6 +409,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20151203001139'),
 ('20160511164547'),
 ('20160822145924'),
-('20160826105129');
+('20160826105129'),
+('20171204124407'),
+('20171204155340');
 
 
