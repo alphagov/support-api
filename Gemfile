@@ -18,7 +18,7 @@ else
   gem 'gds-api-adapters', '~> 48.0'
 end
 
-gem 'whenever', '0.9.7', require: false
+gem 'whenever', '0.10.0', require: false
 gem 'mlanett-redis-lock', '0.2.7'
 gem "gds_zendesk", '3.0.0'
 gem "plek", "1.12.0"
