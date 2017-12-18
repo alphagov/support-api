@@ -1,8 +1,10 @@
 require 'date_parser'
 
 class AnonymousFeedbackController < ApplicationController
+  before_action :clean_params
+
   def index
-    unless params[:organisation_slug].present? || params[:path_prefix].present?
+    unless at_least_one_param_present?
       head :bad_request
       return
     end
@@ -24,13 +26,22 @@ class AnonymousFeedbackController < ApplicationController
 
   private
 
+  def at_least_one_param_present?
+    params[:organisation_slug].present? || params[:path_prefixes].present? || params[:document_type].present?
+  end
+
   def scope
     AnonymousContact.
-      for_query_parameters(path_prefix: params[:path_prefix],
+      for_query_parameters(path_prefixes: params[:path_prefixes],
                            organisation_slug: params[:organisation_slug],
+                           document_type: params[:document_type],
                            from: dates[0],
                            to: dates[1]).
       most_recent_first
+  end
+
+  def clean_params
+    params[:path_prefixes] = [params[:path_prefix]] if params[:path_prefix].present?
   end
 
   def dates

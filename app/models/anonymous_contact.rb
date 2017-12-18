@@ -22,22 +22,31 @@ class AnonymousContact < ApplicationRecord
   scope :only_actionable, -> { where(is_actionable: true) }
   scope :most_recent_first, -> { order("created_at DESC") }
   scope :most_recent_last, -> { order("created_at ASC") }
-  scope :matching_path_prefix, ->(path) { where("anonymous_contacts.path LIKE ?", path + "%") if path }
   scope :created_between_days, -> (first_date, last_date) { where(created_at: first_date..last_date.at_end_of_day) }
   scope :for_organisation_slug, -> (slug) { joins(:organisations).where(organisations: {slug: slug}) }
+  scope :for_document_type, ->(document_type) { joins(:content_item).where(content_items: { document_type: document_type }) }
+
+  scope :matching_path_prefixes, ->(paths) do
+    if paths.present?
+      similar_to = paths.map { |p| "#{p}%" }
+      where("anonymous_contacts.path LIKE ANY (ARRAY[?])", similar_to)
+    end
+  end
 
   scope :for_query_parameters, ->(options={}) do
-    path_prefix = options[:path_prefix]
+    path_prefixes = options[:path_prefixes]
     from = options[:from] || Date.new(1970)
     to = options[:to] || Date.today
     organisation_slug = options[:organisation_slug]
+    document_type = options[:document_type]
 
     query = only_actionable.
       free_of_personal_info.
       created_between_days(from, to)
 
-    query = query.matching_path_prefix(path_prefix) if path_prefix
+    query = query.matching_path_prefixes(path_prefixes) if path_prefixes.present?
     query = query.for_organisation_slug(organisation_slug) if organisation_slug
+    query = query.for_document_type(document_type) if document_type
 
     query
   end

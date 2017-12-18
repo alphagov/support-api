@@ -47,7 +47,9 @@ Rails.application.routes.draw do
          format: false,
          to: 'problem_reports#mark_reviewed_for_spam'
 
-    get '/organisations/:slug', to: "organisations#show"
+    get '/organisations/:slug', to: 'organisations#show'
+    get '/document-types', to: 'document_types#index', format: false
+    get '/document-types/:document_type', to: 'document_types#show', format: false
   end
 
   resources 'page-improvements',

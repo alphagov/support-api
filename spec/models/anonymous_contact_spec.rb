@@ -82,19 +82,38 @@ describe AnonymousContact, :type => :model do
   end
 
   context "scopes" do
-    describe "matching_path_prefix" do
+    describe "for_document_type" do
+      let!(:sa_content_items) { create_list(:content_item, 2, document_type: 'smart_answer') }
+      let!(:cs_content_items) { create_list(:content_item, 3, document_type: 'case_study') }
+      let!(:sa_contact1) { contact(path: "/tax-disc", content_item: sa_content_items[0]) }
+      let!(:sa_contact2) { contact(path: "/tax-disc2", content_item: sa_content_items[1]) }
+      let!(:sa_contact3) { contact(path: "/tax-disc3") }
+      let!(:cs_contact1) { contact(path: "/some-calculator1", content_item: cs_content_items[0]) }
+      let!(:cs_contact2) { contact(path: "/some-calculator2", content_item: cs_content_items[1]) }
+      let!(:cs_contact3) { contact(path: "/some-calculator3", content_item: cs_content_items[2]) }
+
+      it "can find content contacts associated with smart answers" do
+        result1 = AnonymousContact.for_document_type("smart_answer")
+        result2 = AnonymousContact.for_document_type("case_study")
+
+        expect(result1).to contain_exactly(sa_contact1, sa_contact2)
+        expect(result2).to contain_exactly(cs_contact1, cs_contact2, cs_contact3)
+      end
+    end
+
+    describe "matching_path_prefixes" do
       let!(:a) { contact(path: "/some-calculator/y/abc") }
       let!(:b) { contact(path: "/some-calculator/y/abc/x") }
       let!(:c) { contact(path: "/tax-disc") }
 
-      it "can find urls beginning with the given path" do
-        result = AnonymousContact.matching_path_prefix("/some-calculator")
+      it "can find urls beginning with the given paths" do
+        result = AnonymousContact.matching_path_prefixes(["/some-calculator", "/tax-disc"])
 
-        expect(result).to contain_exactly(a, b)
+        expect(result).to contain_exactly(a, b, c)
       end
 
       it "is a no-op when given a nil path" do
-        result = AnonymousContact.matching_path_prefix(nil)
+        result = AnonymousContact.matching_path_prefixes(nil)
 
         expect(result).to contain_exactly(a, b, c)
       end
@@ -141,26 +160,31 @@ describe AnonymousContact, :type => :model do
     end
 
     describe "for_query_parameters" do
-      let!(:contact_1) { contact(path: "/gov", created_at: Time.new(2015, 4, 10)) }
-      let!(:contact_2) { contact(path: "/courts", created_at: Time.new(2015, 5, 10)) }
+      let!(:smart_answer) { create(:content_item, document_type: 'smart_answer') }
+      let!(:contact_1) { contact(path: "/gov", created_at: Time.new(2015, 4, 10), content_item: smart_answer) }
+      let!(:contact_2) { contact(path: "/courts", created_at: Time.new(2015, 5, 10), content_item: smart_answer) }
+      let!(:contact_3) { contact(path: "/courts", created_at: Time.new(2015, 5, 10)) }
       let!(:personal_info) { contact(path: "/gov", details: "foo@example.com") }
       let!(:not_actionable) { contact(path: "/gov", is_actionable: false, reason_why_not_actionable: "spam") }
+      subject {
+        described_class.for_query_parameters(path_prefixes: path_prefixes,
+                                             from: from,
+                                             to: to,
+                                             document_type: document_type).sort
+      }
 
-      subject { described_class.for_query_parameters(path_prefix: path_prefix,
-                                                     from: from,
-                                                     to: to).sort }
-
-      let(:path_prefix) { nil }
+      let(:path_prefixes) { nil }
       let(:from) { nil }
       let(:to)   { nil }
+      let(:document_type) { nil }
 
       context "with no restrictions" do
-        it { is_expected.to eq [contact_1, contact_2].sort }
+        it { is_expected.to eq [contact_1, contact_2, contact_3].sort }
       end
 
       context "with a restrictive from date" do
         let(:from) { Date.new 2015, 5 }
-        it { is_expected.to eq [contact_2] }
+        it { is_expected.to eq [contact_2, contact_3] }
       end
 
       context "with a restrictive to date" do
@@ -176,8 +200,30 @@ describe AnonymousContact, :type => :model do
       end
 
       context "with a restrictive path prefix" do
-        let(:path_prefix) { "/gov" }
+        let(:path_prefixes) { ["/gov"] }
         it { is_expected.to eq [contact_1] }
+      end
+
+      context "with a document type" do
+        let(:document_type) { "smart_answer" }
+
+        it { is_expected.to eq([contact_1, contact_2]) }
+      end
+
+      context "with a non-existent document type" do
+        let(:document_type) { "made-up-document-type" }
+
+        it { is_expected.to be_empty }
+      end
+
+      context "with a nil document type" do
+        let(:document_type) { nil }
+
+        it "returns all contacts associated or not with a content item" do
+          expect(AnonymousContact.for_query_parameters(document_type: nil)).to include(contact_1)
+          expect(AnonymousContact.for_query_parameters(document_type: nil)).to include(contact_2)
+          expect(AnonymousContact.for_query_parameters(document_type: nil)).to include(contact_3)
+        end
       end
     end
   end

@@ -1,3 +1,5 @@
+require 'date_parser'
+
 class AnonymousFeedback::ExportRequestsController < ApplicationController
 
   def create
@@ -26,14 +28,20 @@ class AnonymousFeedback::ExportRequestsController < ApplicationController
 
   private
     def export_request_params
-      permitted_params = %i(from to path_prefix organisation notification_email)
+      permitted_params = [:from, :to, :organisation, :notification_email, :document_type, :path_prefix, path_prefixes: []]
       clean_params = params.require(:export_request).permit(*permitted_params).to_h
+      if clean_params[:path_prefix].present?
+        clean_params[:path_prefixes] = [clean_params[:path_prefix]]
+        clean_params.delete(:path_prefix)
+      end
+
       {
         filters: {
           from: DateParser.parse(clean_params[:from]),
           to: DateParser.parse(clean_params[:to]),
-          path_prefix: clean_params[:path_prefix],
-          organisation_slug: clean_params[:organisation]
+          path_prefixes: clean_params[:path_prefixes],
+          organisation_slug: clean_params[:organisation],
+          document_type: clean_params[:document_type]
         },
         notification_email: clean_params[:notification_email]
       }

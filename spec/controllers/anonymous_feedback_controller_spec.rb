@@ -2,41 +2,119 @@ require 'rails_helper'
 
 describe AnonymousFeedbackController do
   describe "#index" do
-    it "is a bad request with no `path_prefix` or `organisation_slug`" do
-      get :index
-      expect(response).to have_http_status(400)
+    describe "backwards compatibility for `path_prefix` param" do
+      before do
+        create(:anonymous_contact, path: "/tax-disc")
+      end
+
+      it "is a bad request with no `path_prefixes` or `organisation_slug`" do
+        get :index
+        expect(response).to have_http_status(400)
+      end
+
+      it "is backwards compatible with valid `path_prefix`" do
+        get :index, params: { path_prefix: "/tax-disc" }
+        expect(response).to be_success
+      end
+
+      it "is backwards compatible and returns an empty result when single path is provided" do
+        get :index, params: { path_prefix: "/non-existent" }
+
+        expect(response).to be_success
+        expect(json_response).to eq(
+          "results" => [],
+          "page_size" => 50,
+          "total_count" => 0,
+          "current_page" => 1,
+          "pages" => 0,
+        )
+      end
+
+      it "is backwards compatible and returns an empty result if the user has gone beyond the last page for a single path" do
+        get :index, params: { path_prefix: "/tax-disc", page: 2 }
+
+        expect(json_response).to eq(
+          "results" => [],
+          "page_size" => 50,
+          "total_count" => 1,
+          "current_page" => 2,
+          "pages" => 1,
+        )
+      end
     end
 
-    it "is successful with valid `path_prefix`" do
-      create_list(:anonymous_contact, 2, path: "/tax-disc")
-      get :index, params: { path_prefix: "/tax-disc" }
-      expect(response).to be_success
+    describe "it allows search by multiple path prefixes" do
+      before do
+        create_list(:anonymous_contact, 2, path: "/tax-disc")
+        create_list(:anonymous_contact, 2, path: "/vat-rates")
+      end
+
+      it "is successful with valid `path_prefixes`" do
+        get :index, params: { path_prefixes: ["/tax-disc", "/vat-rates"] }
+        expect(response).to be_success
+        expect(json_response["results"].count).to eq(4)
+        expect(json_response["page_size"]).to eq(50)
+        expect(json_response["total_count"]).to eq(4)
+        expect(json_response["current_page"]).to eq(1)
+        expect(json_response["pages"]).to eq(1)
+      end
+
+      it "returns an empty result when no results are found" do
+        get :index, params: { path_prefixes: ["/non-existent"] }
+
+        expect(response).to be_success
+        expect(json_response).to eq(
+          "results" => [],
+          "page_size" => 50,
+          "total_count" => 0,
+          "current_page" => 1,
+          "pages" => 0,
+        )
+      end
+
+      it "returns results for the valid paths out of a list" do
+        get :index, params: { path_prefixes: ["/non-existent", "/tax-disc", "/vat-rates"] }
+
+        expect(response).to be_success
+        expect(json_response["results"].count).to eq(4)
+        expect(json_response["page_size"]).to eq(50)
+        expect(json_response["total_count"]).to eq(4)
+        expect(json_response["current_page"]).to eq(1)
+        expect(json_response["pages"]).to eq(1)
+      end
+
+      it "returns an empty result if the user has gone beyond the last page" do
+        get :index, params: { path_prefixes: ["/tax-disc", "/vat-rates"], page: 2 }
+
+        expect(json_response).to eq(
+          "results" => [],
+          "page_size" => 50,
+          "total_count" => 4,
+          "current_page" => 2,
+          "pages" => 1,
+        )
+      end
     end
 
-    it "returns an empty result when no results are found" do
-      get :index, params: { path_prefix: "/non-existent" }
+    describe "it allows search by document type" do
+      it "is returns a successful result with any `document_type`" do
+        create(:content_item, document_type: 'smart_answer', path: '/calculate-your-holiday-entitlement')
+        get :index, params: { document_type: 'smart_answer' }
+        expect(response).to be_success
+      end
 
-      expect(response).to be_success
-      expect(json_response).to eq(
-        "results" => [],
-        "page_size" => 50,
-        "total_count" => 0,
-        "current_page" => 1,
-        "pages" => 0,
-      )
-    end
+      it "returns an empty result when no results are found" do
+        get :index, params: { path_prefixes: ["/non-existent"] }
 
-    it "returns an empty result if the user has gone beyond the last page" do
-      create_list(:anonymous_contact, 2, path: "/tax-disc")
-      get :index, params: { path_prefix: "/tax-disc", page: 2 }
-
-      expect(json_response).to eq(
-        "results" => [],
-        "page_size" => 50,
-        "total_count" => 2,
-        "current_page" => 2,
-        "pages" => 1,
-      )
+        expect(response).to be_success
+        expect(json_response).to eq(
+          "results" => [],
+          "page_size" => 50,
+          "total_count" => 0,
+          "current_page" => 1,
+          "pages" => 0,
+        )
+      end
     end
 
     describe "limiting the page count" do
@@ -49,7 +127,7 @@ describe AnonymousFeedbackController do
       end
 
       it "limits the counts to the max number of pages" do
-        get :index, params: { path_prefix: "/tax-disc", page: 1 }
+        get :index, params: { path_prefixes: ["/tax-disc"], page: 1 }
         expect(json_response).to include(
           "page_size" => 50,
           "total_count" => 100,
@@ -60,7 +138,7 @@ describe AnonymousFeedbackController do
       end
 
       it "truncates at the max page count" do
-        get :index, params: { path_prefix: "/tax-disc", page: 2 }
+        get :index, params: { path_prefixes: ["/tax-disc"], page: 2 }
         expect(json_response).to include(
           "page_size" => 50,
           "total_count" => 100,
@@ -72,7 +150,7 @@ describe AnonymousFeedbackController do
       end
 
       it "doesn't show more than the max pages" do
-        get :index, params: { path_prefix: "/tax-disc", page: 3 }
+        get :index, params: { path_prefixes: ["/tax-disc"], page: 3 }
         expect(json_response).to include(
           "page_size" => 50,
           "total_count" => 100,
@@ -115,7 +193,55 @@ describe AnonymousFeedbackController do
       it "combines with path filters" do
         create(:problem_report, path: "/xyz", content_item: hmrc_content)
 
-        get :index, params: { organisation_slug: "hm-revenue-customs", path_prefix: "/xyz" }
+        get :index, params: { organisation_slug: "hm-revenue-customs", path_prefixes: ["/xyz"] }
+
+        expect(json_response["total_count"]).to eq(1)
+        expect(json_response["results"].first["path"]).to eq("/xyz")
+      end
+    end
+
+    describe "filter by document type" do
+      let(:hmrc) { create(:organisation, slug: 'hm-revenue-customs') }
+      let(:smart_answer) {
+        create(
+          :content_item,
+          document_type: 'smart_answer',
+          path: '/calculate-your-holiday-entitlement',
+          organisations: [hmrc]
+        )
+      }
+      let(:case_study) { create(:content_item, document_type: 'case_study', path: '/government/case-studies/out-of-syria-back-into-school') }
+      let!(:sa_problem_report) { create(:problem_report, path: "/xyz", content_item: smart_answer) }
+      let!(:cs_problem_reports) { create_list(:problem_report, 2, content_item: case_study) }
+
+      it "returns only feedback belonging to the smart_answer" do
+        get :index, params: { document_type: "smart_answer" }
+        expect(json_response["total_count"]).to eq(1)
+        ids_of_returned_problem_reports = json_response["results"].map { |r| r["id"] }.sort
+        expect(ids_of_returned_problem_reports).to eq([sa_problem_report.id])
+      end
+
+      context "if a document type doesn't exist" do
+        before { get :index, params: { document_type: "made-up-document-type" } }
+        it "doesn't return an error" do
+          expect(response).to have_http_status(200)
+        end
+
+        it "returns no results" do
+          expect(json_response["total_count"]).to eq(0)
+          expect(json_response["results"]).to be_empty
+        end
+      end
+
+      it "combines with path filters" do
+        get :index, params: { document_type: "smart_answer", path_prefixes: ["/xyz"] }
+
+        expect(json_response["total_count"]).to eq(1)
+        expect(json_response["results"].first["path"]).to eq("/xyz")
+      end
+
+      it "combines with organisation slug and" do
+        get :index, params: { document_type: "smart_answer", organisation_slug: "hm-revenue-customs" }
 
         expect(json_response["total_count"]).to eq(1)
         expect(json_response["results"].first["path"]).to eq("/xyz")
@@ -127,7 +253,7 @@ describe AnonymousFeedbackController do
       let(:second_date) { Time.new(2014, 10, 31).utc }
       let(:third_date)  { Time.new(2014, 11, 25).utc }
       let(:last_date)   { Time.new(2014, 12, 12).utc }
-      let(:request)     { get :index, params: { path_prefix: "/", from: from, to: to } }
+      let(:request)     { get :index, params: { path_prefixes: ["/"], from: from, to: to } }
       let(:from)        { nil }
       let(:to)          { nil }
 

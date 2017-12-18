@@ -22,36 +22,57 @@ RSpec.describe FeedbackExportRequest, type: :model do
   end
 
   describe "#generate_filename!" do
-    let(:instance) do
-      described_class.new(filters: {path_prefix: path_prefix,
-                                    from: from,
-                                    to: to,
-                                    organisation_slug: organisation_slug })
-    end
     let(:path_prefix) { nil }
+    let(:path_prefixes) { nil }
     let(:from) { nil }
     let(:to)   { nil }
     let(:organisation_slug) { nil }
+    let(:document_type) { nil }
+
+    let(:instance) do
+      described_class.new(
+        filters: {
+          path_prefix: path_prefix,
+          path_prefixes: path_prefixes,
+          from: from,
+          to: to,
+          organisation_slug: organisation_slug,
+          document_type: document_type
+        }
+     )
+    end
 
     describe "the resulting filename" do
       before { instance.generate_filename! }
       subject(:filename) { instance.filename }
 
       context "with no dates set" do
+        context "with the old type of `path_prefix` filter" do
+          let(:path_prefix) { "/vat-rates" }
+
+          it { is_expected.to eq "feedex_0000-00-00_2015-06-01_vat-rates.csv" }
+        end
+
+        context "with a root path in the new type of `path_prefixes` filter" do
+          let(:path_prefixes) { ["/vat-rates"] }
+
+          it { is_expected.to eq "feedex_0000-00-00_2015-06-01_vat-rates.csv" }
+        end
+
         context "with a root path" do
-          let(:path_prefix) { "/" }
+          let(:path_prefixes) { ["/"] }
 
           it { is_expected.to eq "feedex_0000-00-00_2015-06-01.csv" }
         end
 
         context "with a single-level path" do
-          let(:path_prefix) { "/gov_and_stuff" }
+          let(:path_prefixes) { ["/gov_and_stuff"] }
 
           it { is_expected.to eq "feedex_0000-00-00_2015-06-01_gov_and_stuff.csv" }
         end
 
         context "with a multi-level path" do
-          let(:path_prefix) { "/gov_and_stuff/news-and-features" }
+          let(:path_prefixes) { ["/gov_and_stuff/news-and-features"] }
 
           it { is_expected.to eq "feedex_0000-00-00_2015-06-01_gov_and_stuff_news-and-features.csv" }
         end
@@ -61,25 +82,31 @@ RSpec.describe FeedbackExportRequest, type: :model do
 
           it { is_expected.to eq "feedex_0000-00-00_2015-06-01_hm-revenue-customs.csv" }
         end
+
+        context "with a document type" do
+          let(:document_type) { "smart_answer" }
+
+          it { is_expected.to eq "feedex_0000-00-00_2015-06-01_smart_answer.csv" }
+        end
       end
 
       context "with a from date set" do
         let(:from) { Date.new(2015, 4, 1) }
 
         context "with a root path" do
-          let(:path_prefix) { "/" }
+          let(:path_prefixes) { ["/"] }
 
           it { is_expected.to eq "feedex_2015-04-01_2015-06-01.csv" }
         end
 
         context "with a single-level path" do
-          let(:path_prefix) { "/gov_and_stuff" }
+          let(:path_prefixes) { ["/gov_and_stuff"] }
 
           it { is_expected.to eq "feedex_2015-04-01_2015-06-01_gov_and_stuff.csv" }
         end
 
         context "with a multi-level path" do
-          let(:path_prefix) { "/gov_and_stuff/news-and-features" }
+          let(:path_prefixes) { ["/gov_and_stuff/news-and-features"] }
 
           it { is_expected.to eq "feedex_2015-04-01_2015-06-01_gov_and_stuff_news-and-features.csv" }
         end
@@ -89,25 +116,31 @@ RSpec.describe FeedbackExportRequest, type: :model do
 
           it { is_expected.to eq "feedex_2015-04-01_2015-06-01_hm-revenue-customs.csv" }
         end
+
+        context "with a document type" do
+          let(:document_type) { "smart_answer" }
+
+          it { is_expected.to eq "feedex_2015-04-01_2015-06-01_smart_answer.csv" }
+        end
       end
 
       context "with a to date set" do
         let(:to) { Date.new(2015, 5, 1) }
 
         context "with a root path" do
-          let(:path_prefix) { "/" }
+          let(:path_prefixes) { ["/"] }
 
           it { is_expected.to eq "feedex_0000-00-00_2015-05-01.csv" }
         end
 
         context "with a single-level path" do
-          let(:path_prefix) { "/gov_and_stuff" }
+          let(:path_prefixes) { ["/gov_and_stuff"] }
 
           it { is_expected.to eq "feedex_0000-00-00_2015-05-01_gov_and_stuff.csv" }
         end
 
         context "with a multi-level path" do
-          let(:path_prefix) { "/gov_and_stuff/news-and-features" }
+          let(:path_prefixes) { ["/gov_and_stuff/news-and-features"] }
 
           it { is_expected.to eq "feedex_0000-00-00_2015-05-01_gov_and_stuff_news-and-features.csv" }
         end
@@ -118,6 +151,12 @@ RSpec.describe FeedbackExportRequest, type: :model do
 
           it { is_expected.to eq "feedex_0000-00-00_2015-05-01_hm-revenue-customs.csv" }
         end
+
+        context "with a document type" do
+          let(:document_type) { "smart_answer" }
+
+          it { is_expected.to eq "feedex_0000-00-00_2015-05-01_smart_answer.csv" }
+        end
       end
 
       context "with both dates set" do
@@ -125,19 +164,19 @@ RSpec.describe FeedbackExportRequest, type: :model do
         let(:to) { Date.new(2015, 5, 1) }
 
         context "with a root path" do
-          let(:path_prefix) { "/" }
+          let(:path_prefixes) { ["/"] }
 
           it { is_expected.to eq "feedex_2015-04-01_2015-05-01.csv" }
         end
 
         context "with a single-level path" do
-          let(:path_prefix) { "/gov_and_stuff" }
+          let(:path_prefixes) { ["/gov_and_stuff"] }
 
           it { is_expected.to eq "feedex_2015-04-01_2015-05-01_gov_and_stuff.csv" }
         end
 
         context "with a multi-level path" do
-          let(:path_prefix) { "/gov_and_stuff/news-and-features" }
+          let(:path_prefixes) { ["/gov_and_stuff/news-and-features"] }
 
           it { is_expected.to eq "feedex_2015-04-01_2015-05-01_gov_and_stuff_news-and-features.csv" }
         end
@@ -147,25 +186,71 @@ RSpec.describe FeedbackExportRequest, type: :model do
 
           it { is_expected.to eq "feedex_2015-04-01_2015-05-01_hm-revenue-customs.csv" }
         end
+
+        context "with a document type" do
+          let(:document_type) { "smart_answer" }
+
+          it { is_expected.to eq "feedex_2015-04-01_2015-05-01_smart_answer.csv" }
+        end
+      end
+
+      context "with multiple paths" do
+        context "with a root path" do
+          let(:path_prefixes) { ["/vat-rates", "/", "/guidance"] }
+
+          it { is_expected.to eq "feedex_0000-00-00_2015-06-01_vat-rates_and_2_other_paths.csv" }
+        end
+
+        context "with a root path as the first parameter" do
+          let(:path_prefixes) { ["/", "/vat-rates", "/guidance"] }
+
+          it { is_expected.to eq "feedex_0000-00-00_2015-06-01_base_path_and_2_other_paths.csv" }
+        end
+
+        context "with a single-level path" do
+          let(:path_prefixes) { ["/gov_and_stuff", "/vat-rates", "/guidance"] }
+
+          it { is_expected.to eq "feedex_0000-00-00_2015-06-01_gov_and_stuff_and_2_other_paths.csv" }
+        end
+
+        context "with a multi-level path" do
+          let(:path_prefixes) { ["/gov_and_stuff/news-and-features", "/vat-rates", "/guidance"] }
+
+          it { is_expected.to eq "feedex_0000-00-00_2015-06-01_gov_and_stuff_news-and-features_and_2_other_paths.csv" }
+        end
+
+        context "with an organisation slug" do
+          let(:path_prefixes) { ["/gov_and_stuff/news-and-features", "/vat-rates", "/guidance"] }
+          let(:organisation_slug) { "hm-revenue-customs" }
+
+          it { is_expected.to eq "feedex_0000-00-00_2015-06-01_gov_and_stuff_news-and-features_and_2_other_paths_hm-revenue-customs.csv" }
+        end
       end
     end
   end
 
   describe "#results" do
     subject do
-      described_class.new(filters: {from: Date.new(2015, 4),
-                                    to: Date.new(2015, 5),
-                                    path_prefix: "/",
-                                    organisation_slug: "hm-revenue-customs"}).results
+      described_class.new(
+        filters: {
+          from: Date.new(2015, 4),
+          to: Date.new(2015, 5),
+          path_prefixes: ["/"],
+          organisation_slug: "hm-revenue-customs",
+          document_type: "smart_answer"
+        }
+      ).results
     end
 
     it "uses the scope from the model with the correct parameters" do
       contact = double("AnonymousContact")
-      expect(AnonymousContact).to receive(:for_query_parameters).with(from: Date.new(2015, 4),
-                                                                      to: Date.new(2015, 5),
-                                                                      path_prefix: "/",
-                                                                      organisation_slug: "hm-revenue-customs").
-        and_return(double("scope", most_recent_last: [contact]))
+      expect(AnonymousContact).to receive(:for_query_parameters).with(
+        from: Date.new(2015, 4),
+        to: Date.new(2015, 5),
+        path_prefixes: ["/"],
+        organisation_slug: "hm-revenue-customs",
+        document_type: "smart_answer"
+      ).and_return(double("scope", most_recent_last: [contact]))
 
       expect(subject).to eq [contact]
     end
@@ -173,10 +258,17 @@ RSpec.describe FeedbackExportRequest, type: :model do
 
   describe "#generate_csv" do
     before do
-      create(:anonymous_contact, path: "/",
-                                 created_at: Time.utc(2015, 6, 1, 10),
-                                 referrer: "http://www.example.com/")
-      create(:anonymous_contact, path: "/gov", created_at: Time.utc(2015, 6, 1, 20))
+      create(
+        :anonymous_contact,
+        path: "/",
+        created_at: Time.utc(2015, 6, 1, 10),
+        referrer: "http://www.example.com/"
+      )
+      create(
+        :anonymous_contact,
+        path: "/gov",
+        created_at: Time.utc(2015, 6, 1, 20)
+      )
     end
 
     let(:io) { StringIO.new }
