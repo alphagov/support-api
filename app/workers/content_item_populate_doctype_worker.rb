@@ -3,19 +3,19 @@ class ContentItemPopulateDoctypeWorker
 
   def perform
     content_store = GdsApi::ContentStore.new(Plek.find('content-store'))
-    document_type_not_found = []
+    document_type_errors = []
 
     ContentItem.all.each do |content_item|
-      found_content_item = content_store.content_item(content_item.path)
+      begin
+        found_content_item = content_store.content_item(content_item.path)
 
-      if found_content_item.present?
-        document_type = looked_up_item["document_type"]
-        content_item.update_attributes(:document_type, document_type)
-      else
-        document_type_not_found << content_item.path
+        document_type = found_content_item["document_type"]
+        content_item.update_attribute(:document_type, document_type)
+      rescue StandardError => e
+        document_type_errors << "#{content_item.path} - Error: #{e.class} #{e.message}"
       end
     end
 
-    Rails.logger.warn "Document type not found for the following content items: #{document_type_not_found.join(', ')}"
+    Rails.logger.warn "There were errors with the following paths: #{document_type_errors.join(', ')}"
   end
 end
