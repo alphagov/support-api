@@ -71,7 +71,7 @@ GEM
     faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
-    gds-api-adapters (48.0.0)
+    gds-api-adapters (50.7.0)
       link_header
       lrucache (~> 0.1.1)
       null_logger
@@ -307,7 +307,7 @@ DEPENDENCIES
   ci_reporter_rspec (= 1.0.0)
   factory_girl_rails (~> 4.7.0)
   fakefs
-  gds-api-adapters (~> 48.0)
+  gds-api-adapters (~> 50.7)
   gds_zendesk (= 3.0.0)
   govuk-lint
   govuk_app_config (~> 0.2.0)
