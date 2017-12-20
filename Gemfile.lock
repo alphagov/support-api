@@ -283,7 +283,7 @@ GEM
       kgio (~> 2.6)
       raindrops (~> 0.7)
     user_agent_parser (2.4.1)
-    webmock (2.3.2)
+    webmock (3.1.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
@@ -329,7 +329,7 @@ DEPENDENCIES
   timecop (= 0.7.3)
   unicorn (= 5.1.0)
   user_agent_parser
-  webmock (~> 2.3.0)
+  webmock (~> 3.1.1)
   whenever (= 0.10.0)
 
 BUNDLED WITH
