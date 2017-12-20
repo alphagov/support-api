@@ -139,7 +139,7 @@ GEM
     parser (2.4.0.2)
       ast (~> 2.3)
     pg (0.18.4)
-    plek (1.12.0)
+    plek (2.0.0)
     powerpack (0.1.1)
     pry (0.11.3)
       coderay (~> 1.1.0)
@@ -316,7 +316,7 @@ DEPENDENCIES
   logstasher (= 0.6.2)
   mlanett-redis-lock (= 0.2.7)
   pg (~> 0.18.2)
-  plek (= 1.12.0)
+  plek (= 2.0.0)
   pry-byebug
   rails (~> 5.0.2)
   rspec-collection_matchers (= 1.1.2)
