@@ -32,7 +32,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '3.5.1'
+  gem 'rspec-rails', '3.5.2'
   gem 'rspec-collection_matchers', '1.1.2'
   gem 'simplecov', '0.15.1', require: false
   gem 'simplecov-rcov', '0.2.3', require: false
