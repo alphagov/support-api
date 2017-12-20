@@ -87,7 +87,7 @@ GEM
       rubocop (~> 0.51.0)
       rubocop-rspec (~> 1.16.0)
       scss_lint
-    govuk_app_config (0.2.0)
+    govuk_app_config (0.3.0)
       sentry-raven (~> 2.6.3)
       statsd-ruby (~> 1.4.0)
     govuk_sidekiq (2.0.0)
@@ -310,7 +310,7 @@ DEPENDENCIES
   gds-api-adapters (~> 48.0)
   gds_zendesk (= 3.0.0)
   govuk-lint
-  govuk_app_config (~> 0.2.0)
+  govuk_app_config (~> 0.3.0)
   govuk_sidekiq (~> 2.0)
   listen (~> 3.0.5)
   logstasher (= 0.6.2)
