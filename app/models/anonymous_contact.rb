@@ -29,7 +29,7 @@ class AnonymousContact < ApplicationRecord
   scope :matching_path_prefixes, ->(paths) do
     if paths.present?
       similar_to = paths.map { |p| "#{p}%" }
-      where("anonymous_contacts.path LIKE ANY (ARRAY[?])", similar_to)
+      where(similar_to.map { "anonymous_contacts.path LIKE ?" }.join(' OR '), *similar_to)
     end
   end
 
