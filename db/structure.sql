@@ -356,6 +356,13 @@ CREATE INDEX index_anonymous_contacts_on_path ON anonymous_contacts USING btree 
 
 
 --
+-- Name: index_content_items_on_document_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_content_items_on_document_type ON content_items USING btree (document_type);
+
+
+--
 -- Name: index_content_items_organisations_unique; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -411,6 +418,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20160822145924'),
 ('20160826105129'),
 ('20171204124407'),
-('20171204155340');
+('20171204155340'),
+('20180108153838');
 
 
