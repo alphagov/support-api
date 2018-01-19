@@ -45,7 +45,7 @@ end
 
 group :test do
   gem 'factory_girl_rails', '~> 4.7.0'
-  gem 'webmock', '~> 3.2.1'
+  gem 'webmock', '~> 3.3.0'
   gem 'fakefs', require: 'fakefs/safe'
   gem "pry-byebug"
 end
