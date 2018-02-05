@@ -58,17 +58,13 @@ Rails.application.configure do
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
-    logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
+    config.log_formatter = ::Logger::Formatter.new
   end
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
+  # config.log_formatter = ::Logger::Formatter.new
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-
-  config.logstasher.enabled = true
-  config.logstasher.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.json.log")
-  config.logstasher.suppress_app_log = true
 end
