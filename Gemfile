@@ -7,7 +7,7 @@ end
 
 gem 'rails', '~> 5.0.2'
 gem 'pg', '~> 0.21.0'
-gem 'govuk_sidekiq', '~> 2.0'
+gem 'govuk_sidekiq', '~> 3.0'
 gem 'govuk_app_config', '~> 1.3.0'
 
 if ENV['API_DEV']
