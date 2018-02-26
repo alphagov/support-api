@@ -62,5 +62,7 @@ Rails.application.routes.draw do
             format: false,
             param: :slug
 
+  get '/feedback-by-day/:date', to: 'feedback_by_day#index', format: false
+
   get "/healthcheck", :to => proc { [200, {}, ["OK"]] }
 end

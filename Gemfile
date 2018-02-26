@@ -16,6 +16,7 @@ else
   gem 'gds-api-adapters', '~> 51.2'
 end
 
+gem 'kaminari', '1.1.1'
 gem 'whenever', '0.10.0', require: false
 gem 'mlanett-redis-lock', '0.2.7'
 gem "gds_zendesk", '3.0.0'
@@ -30,6 +31,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'database_cleaner', '1.6.2'
   gem 'rspec-rails', '3.5.2'
   gem 'rspec-collection_matchers', '1.1.2'
   gem 'simplecov', '0.15.1', require: false
