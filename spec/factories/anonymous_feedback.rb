@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :anonymous_contact, class: AnonymousContact do
     javascript_enabled true
     path "/vat-rates"
