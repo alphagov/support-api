@@ -17,7 +17,7 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
       context 'with "/done"-less version of supplied path' do
         context 'created before the start date' do
           let!(:service_feedback) do
-            FactoryGirl.create(
+            FactoryBot.create(
               :service_feedback,
               service_satisfaction_rating: 1,
               slug: service_slug,
@@ -34,7 +34,7 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
 
         context 'created after the end date' do
           let!(:service_feedback) do
-            FactoryGirl.create(
+            FactoryBot.create(
               :service_feedback,
               service_satisfaction_rating: 1,
               slug: service_slug,
@@ -51,7 +51,7 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
 
         context 'created between the start and end dates' do
           let!(:service_feedback) do
-            FactoryGirl.create(
+            FactoryBot.create(
               :service_feedback,
               service_satisfaction_rating: 1,
               slug: service_slug,
@@ -68,7 +68,7 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
       end
 
       it 'ignores those having paths with suffixes of the supplied service' do
-        service_feedback = FactoryGirl.create(
+        service_feedback = FactoryBot.create(
           :service_feedback,
           service_satisfaction_rating: 1,
           slug: 'register-to-vote-abroad',
@@ -89,7 +89,7 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
 
         context 'created before the start date' do
           let!(:aggregated_service_feedback) do
-            FactoryGirl.create(
+            FactoryBot.create(
               :aggregated_service_feedback,
               service_satisfaction_rating: 1,
               details: 4,
@@ -112,7 +112,7 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
 
         context 'created after the end date' do
           let!(:aggregated_service_feedback) do
-            FactoryGirl.create(
+            FactoryBot.create(
               :aggregated_service_feedback,
               service_satisfaction_rating: 1,
               details: 4,
@@ -135,7 +135,7 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
 
         context 'created between the start and end dates' do
           let!(:aggregated_service_feedback) do
-            FactoryGirl.create(
+            FactoryBot.create(
               :aggregated_service_feedback,
               service_satisfaction_rating: 1,
               details: 4,
@@ -166,7 +166,7 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
       end
 
       it 'pushes aggregated data to the performance platform for each day in the range there is data' do
-        FactoryGirl.create(
+        FactoryBot.create(
           :aggregated_service_feedback,
           service_satisfaction_rating: 1,
           details: 4,
@@ -174,7 +174,7 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
           path: "/#{service_slug}",
           created_at: start_date,
         )
-        FactoryGirl.create(
+        FactoryBot.create(
           :aggregated_service_feedback,
           service_satisfaction_rating: 1,
           details: 6,
@@ -182,7 +182,7 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
           path: "/#{service_slug}",
           created_at: inbetween_date,
         )
-        FactoryGirl.create(
+        FactoryBot.create(
           :aggregated_service_feedback,
           service_satisfaction_rating: 1,
           details: 2,
@@ -199,7 +199,7 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
       end
 
       it 'ignores those having paths with suffixes of the supplied service' do
-        aggregated_service_feedback = FactoryGirl.create(
+        aggregated_service_feedback = FactoryBot.create(
           :aggregated_service_feedback,
           service_satisfaction_rating: 1,
           slug: 'register-to-vote-abroad',
@@ -222,12 +222,12 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
       stub_service_feedback_day_aggregate_submission('service-3')
     }
 
-    let!(:done_page_1) { FactoryGirl.create(:service_feedback, path: '/done/service-1') }
-    let!(:done_page_2) { FactoryGirl.create(:service_feedback, path: '/done/service-2') }
-    let!(:done_page_3) { FactoryGirl.create(:long_form_contact, path: '/done/service-3', details: 'Hi there') }
-    let!(:misreported_feedback_for_done_page_1) { FactoryGirl.create(:service_feedback, slug: 'service-1', path: '/service-1', created_at: inbetween_date) }
-    let!(:misreported_feedback_for_done_page_2) { FactoryGirl.create(:service_feedback, slug: 'service-2', path: '/service-2', created_at: inbetween_date) }
-    let!(:misreported_feedback_for_done_page_3) { FactoryGirl.create(:service_feedback, slug: 'service-3', path: '/service-3', created_at: inbetween_date) }
+    let!(:done_page_1) { FactoryBot.create(:service_feedback, path: '/done/service-1') }
+    let!(:done_page_2) { FactoryBot.create(:service_feedback, path: '/done/service-2') }
+    let!(:done_page_3) { FactoryBot.create(:long_form_contact, path: '/done/service-3', details: 'Hi there') }
+    let!(:misreported_feedback_for_done_page_1) { FactoryBot.create(:service_feedback, slug: 'service-1', path: '/service-1', created_at: inbetween_date) }
+    let!(:misreported_feedback_for_done_page_2) { FactoryBot.create(:service_feedback, slug: 'service-2', path: '/service-2', created_at: inbetween_date) }
+    let!(:misreported_feedback_for_done_page_3) { FactoryBot.create(:service_feedback, slug: 'service-3', path: '/service-3', created_at: inbetween_date) }
 
     it 'fixes misreported feedback for all /done pages that have service feedback' do
       subject.fix_all!

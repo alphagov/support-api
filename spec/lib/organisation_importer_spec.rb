@@ -41,11 +41,11 @@ describe OrganisationImporter do
   end
 
   before do
-    FactoryGirl.create(:organisation, title: "Ministry of Magic",
+    FactoryBot.create(:organisation, title: "Ministry of Magic",
                                       slug: "ministry-of-magic",
                                       acronym: "MOM",
                                       content_id: "abcdef")
-    FactoryGirl.create(:organisation, title: "Ministry of Fun",
+    FactoryBot.create(:organisation, title: "Ministry of Fun",
                                       slug: "ministry-of-fun",
                                       acronym: "MOF",
                                       content_id: "123456")
