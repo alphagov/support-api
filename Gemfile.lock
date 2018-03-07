@@ -217,7 +217,7 @@ GEM
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
       rspec-mocks (~> 3.5.0)
-    rspec-collection_matchers (1.1.2)
+    rspec-collection_matchers (1.1.3)
       rspec-expectations (>= 2.99.0.beta1)
     rspec-core (3.5.4)
       rspec-support (~> 3.5.0)
@@ -341,7 +341,7 @@ DEPENDENCIES
   plek (= 2.1.1)
   pry-byebug
   rails (~> 5.0.2)
-  rspec-collection_matchers (= 1.1.2)
+  rspec-collection_matchers (= 1.1.3)
   rspec-rails (= 3.5.2)
   shoulda-matchers (= 3.1.2)
   simplecov (= 0.15.1)
