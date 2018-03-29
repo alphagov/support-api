@@ -72,7 +72,7 @@ GEM
     faraday (0.14.0)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.23)
-    gds-api-adapters (52.4.0)
+    gds-api-adapters (52.5.0)
       addressable
       link_header
       lrucache (~> 0.1.1)
@@ -329,7 +329,7 @@ DEPENDENCIES
   database_cleaner (= 1.6.2)
   factory_bot_rails (~> 4.8.2)
   fakefs
-  gds-api-adapters (~> 52.4)
+  gds-api-adapters (~> 52.5)
   gds_zendesk (= 3.0.0)
   govuk-lint
   govuk_app_config (~> 1.4.1)
