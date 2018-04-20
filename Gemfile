@@ -31,7 +31,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'database_cleaner', '1.6.2'
+  gem 'database_cleaner', '1.7.0'
   gem 'rspec-rails', '3.5.2'
   gem 'rspec-collection_matchers', '1.1.3'
   gem 'simplecov', '0.16.1', require: false
