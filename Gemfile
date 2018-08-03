@@ -32,7 +32,7 @@ end
 
 group :development, :test do
   gem 'database_cleaner', '1.7.0'
-  gem 'rspec-rails', '3.5.2'
+  gem 'rspec-rails', '3.7.2'
   gem 'rspec-collection_matchers', '1.1.3'
   gem 'simplecov', '0.16.1', require: false
   gem 'simplecov-rcov', '0.2.3', require: false
