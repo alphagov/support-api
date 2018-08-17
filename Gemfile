@@ -44,7 +44,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'factory_bot_rails', '~> 4.10.0'
+  gem 'factory_bot_rails', '~> 4.11.0'
   gem 'webmock', '~> 3.4.2'
   gem 'fakefs', require: 'fakefs/safe'
   gem "pry-byebug"
