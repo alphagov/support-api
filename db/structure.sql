@@ -30,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: anonymous_contacts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: anonymous_contacts; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE anonymous_contacts (
@@ -79,7 +79,7 @@ ALTER SEQUENCE anonymous_contacts_id_seq OWNED BY anonymous_contacts.id;
 
 
 --
--- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE ar_internal_metadata (
@@ -91,7 +91,7 @@ CREATE TABLE ar_internal_metadata (
 
 
 --
--- Name: archived_service_feedbacks; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: archived_service_feedbacks; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE archived_service_feedbacks (
@@ -124,7 +124,7 @@ ALTER SEQUENCE archived_service_feedbacks_id_seq OWNED BY archived_service_feedb
 
 
 --
--- Name: content_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: content_items; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE content_items (
@@ -156,7 +156,7 @@ ALTER SEQUENCE content_items_id_seq OWNED BY content_items.id;
 
 
 --
--- Name: content_items_organisations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: content_items_organisations; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE content_items_organisations (
@@ -166,7 +166,7 @@ CREATE TABLE content_items_organisations (
 
 
 --
--- Name: feedback_export_requests; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: feedback_export_requests; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE feedback_export_requests (
@@ -200,7 +200,7 @@ ALTER SEQUENCE feedback_export_requests_id_seq OWNED BY feedback_export_requests
 
 
 --
--- Name: organisations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: organisations; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE organisations (
@@ -236,7 +236,7 @@ ALTER SEQUENCE organisations_id_seq OWNED BY organisations.id;
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE schema_migrations (
@@ -280,7 +280,7 @@ ALTER TABLE ONLY organisations ALTER COLUMN id SET DEFAULT nextval('organisation
 
 
 --
--- Name: anonymous_contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: anonymous_contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY anonymous_contacts
@@ -288,7 +288,7 @@ ALTER TABLE ONLY anonymous_contacts
 
 
 --
--- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY ar_internal_metadata
@@ -296,7 +296,7 @@ ALTER TABLE ONLY ar_internal_metadata
 
 
 --
--- Name: archived_service_feedbacks_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: archived_service_feedbacks_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY archived_service_feedbacks
@@ -304,7 +304,7 @@ ALTER TABLE ONLY archived_service_feedbacks
 
 
 --
--- Name: content_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: content_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY content_items
@@ -312,7 +312,7 @@ ALTER TABLE ONLY content_items
 
 
 --
--- Name: feedback_export_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: feedback_export_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY feedback_export_requests
@@ -320,7 +320,7 @@ ALTER TABLE ONLY feedback_export_requests
 
 
 --
--- Name: organisations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: organisations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY organisations
@@ -328,56 +328,63 @@ ALTER TABLE ONLY organisations
 
 
 --
--- Name: index_anonymous_contacts_on_content_item_id_and_created_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_anonymous_contacts_on_content_item_id_and_created_at; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_anonymous_contacts_on_content_item_id_and_created_at ON anonymous_contacts USING btree (content_item_id, created_at);
 
 
 --
--- Name: index_anonymous_contacts_on_created_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_anonymous_contacts_on_created_at; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_anonymous_contacts_on_created_at ON anonymous_contacts USING btree (created_at);
 
 
 --
--- Name: index_anonymous_contacts_on_created_at_and_path; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_anonymous_contacts_on_created_at_and_path; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_anonymous_contacts_on_created_at_and_path ON anonymous_contacts USING btree (created_at DESC, path varchar_pattern_ops);
 
 
 --
--- Name: index_anonymous_contacts_on_path; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_anonymous_contacts_on_path; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_anonymous_contacts_on_path ON anonymous_contacts USING btree (path varchar_pattern_ops);
 
 
 --
--- Name: index_content_items_on_document_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_content_items_on_document_type; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_content_items_on_document_type ON content_items USING btree (document_type);
 
 
 --
--- Name: index_content_items_organisations_unique; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_content_items_organisations_on_organisation_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE INDEX index_content_items_organisations_on_organisation_id ON content_items_organisations USING btree (organisation_id);
+
+
+--
+-- Name: index_content_items_organisations_unique; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE UNIQUE INDEX index_content_items_organisations_unique ON content_items_organisations USING btree (content_item_id, organisation_id);
 
 
 --
--- Name: index_organisations_on_content_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_organisations_on_content_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE UNIQUE INDEX index_organisations_on_content_id ON organisations USING btree (content_id);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
@@ -419,6 +426,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20160826105129'),
 ('20171204124407'),
 ('20171204155340'),
-('20180108153838');
-
-
+('20180108153838'),
+('20180906145408');
