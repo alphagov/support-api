@@ -80,11 +80,7 @@ class ContentItem < ApplicationRecord
 private
 
   def self.sum_column(options)
-    "SUM(
-       CASE WHEN anonymous_contacts.created_at BETWEEN '#{options[:from].to_s(:db)}' AND '#{options[:to].to_s(:db)}' THEN 1
-            ELSE 0
-            END
-        )"
+    "SUM((anonymous_contacts.created_at BETWEEN '#{options[:from].to_s(:db)}' AND '#{options[:to].to_s(:db)}')::INT)"
   end
 
   def self.integers_for_sum_columns(row)
