@@ -26,10 +26,7 @@ class ContentItem < ApplicationRecord
       .having("#{last_7_days} + #{last_30_days} + #{last_90_days} > 0")
       .order("#{ordering} #{ordering_mode}")
 
-    connection.
-      select_all(query).
-      map(&:symbolize_keys).
-      map { |row| integers_for_sum_columns(row) }
+    connection.select_all(query).map(&:symbolize_keys)
   end
 
   def self.doctype_summary(ordering: "last_7_days", document_type: nil)
@@ -46,10 +43,7 @@ class ContentItem < ApplicationRecord
         .having("#{last_7_days} + #{last_30_days} + #{last_90_days} > 0")
         .order("#{ordering} #{ordering_mode}")
 
-    connection.
-        select_all(query).
-        map(&:symbolize_keys).
-        map { |row| integers_for_sum_columns(row) }
+    connection.select_all(query).map(&:symbolize_keys)
   end
 
   def fetch_organisations
@@ -81,11 +75,5 @@ private
 
   def self.sum_column(options)
     "SUM((anonymous_contacts.created_at BETWEEN '#{options[:from].to_s(:db)}' AND '#{options[:to].to_s(:db)}')::INT)"
-  end
-
-  def self.integers_for_sum_columns(row)
-    # the pg ActiveRecord adapter returns strings, even for SUM columns
-    # see http://stackoverflow.com/questions/12571215/connection-select-value-only-returns-strings-in-postgres-with-pg-gem
-    Hash[row.map {|key,value| [key, (key == :path ? value : value.to_i)] }]
   end
 end
