@@ -3,46 +3,6 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "32bbd27bad73bdeb8e675465a21bee81baf307e60d88f8891c07e07ac275835e",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/models/content_item.rb",
-      "line": 46,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "joins(:anonymous_contacts).select(\"content_items.document_type as document_type\").select(\"#{last_7_days} AS last_7_days\").select(\"#{last_30_days} AS last_30_days\").select(\"#{last_90_days} AS last_90_days\").where(:document_type => document_type).where(\"anonymous_contacts.created_at > ?\", (midnight_last_night - 90.days)).group(\"content_items.document_type\").having(\"#{last_7_days} + #{last_30_days} + #{last_90_days} > 0\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ContentItem",
-        "method": "ContentItem.doctype_summary"
-      },
-      "user_input": "last_7_days",
-      "confidence": "Weak",
-      "note": "This is not a SQL injection because no user input is used at any point."
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "50a1fe3ebb68804a2c1d59893525cc100c553f636bc6fae5e5f738fcbfd02dc8",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/models/content_item.rb",
-      "line": 26,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "joins(:anonymous_contacts).select(\"content_items.path AS path\").select(\"#{last_7_days} AS last_7_days\").select(\"#{last_30_days} AS last_30_days\").select(\"#{last_90_days} AS last_90_days\").where(\"anonymous_contacts.created_at > ?\", (midnight_last_night - 90.days)).group(\"content_items.path\").having(\"#{last_7_days} + #{last_30_days} + #{last_90_days} > 0\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ContentItem",
-        "method": "ContentItem.summary"
-      },
-      "user_input": "last_7_days",
-      "confidence": "Weak",
-      "note": "This is not a SQL injection because no user input is used at any point."
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
       "fingerprint": "57f01479b7b44a00c607fc8beefdb37f7a7582fc31865e1d76caf9623d037e23",
       "check_name": "SQL",
       "message": "Possible SQL injection",
@@ -59,8 +19,48 @@
       "user_input": "Rails.env",
       "confidence": "Weak",
       "note": "This is not a SQL injection because no user input is used at any point."
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "7b165725021184fddd47bbf499b7da4f91a2472e4a4248bb543f9646a8d5ea35",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/content_item.rb",
+      "line": 26,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "joins(:anonymous_contacts).select(\"content_items.path AS path\").select(\"#{last_7_days} AS last_7_days\").select(\"#{last_30_days} AS last_30_days\").select(\"#{last_90_days} AS last_90_days\").where(\"anonymous_contacts.created_at > ?\", (midnight_last_night - 90.days)).group(\"content_items.path\").having(\"#{last_7_days} > 0 OR #{last_30_days} > 0 OR #{last_90_days} > 0\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ContentItem",
+        "method": "ContentItem.summary"
+      },
+      "user_input": "last_7_days",
+      "confidence": "Weak",
+      "note": "No user data."
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "8bb3980c595356ae94bed406824f9f17e0ac3728c0ce7998d68321c3df73b868",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/content_item.rb",
+      "line": 43,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "joins(:anonymous_contacts).select(\"content_items.document_type as document_type\").select(\"#{last_7_days} AS last_7_days\").select(\"#{last_30_days} AS last_30_days\").select(\"#{last_90_days} AS last_90_days\").where(:document_type => document_type).where(\"anonymous_contacts.created_at > ?\", (midnight_last_night - 90.days)).group(\"content_items.document_type\").having(\"#{last_7_days} > 0 OR #{last_30_days} > 0 OR #{last_90_days} > 0\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ContentItem",
+        "method": "ContentItem.doctype_summary"
+      },
+      "user_input": "last_7_days",
+      "confidence": "Weak",
+      "note": "No user data."
     }
   ],
-  "updated": "2018-09-07 10:32:31 +0100",
+  "updated": "2018-09-07 11:02:42 +0100",
   "brakeman_version": "4.3.1"
 }

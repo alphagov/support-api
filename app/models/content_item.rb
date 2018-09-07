@@ -23,7 +23,7 @@ class ContentItem < ApplicationRecord
       .select("#{last_90_days} AS last_90_days")
       .where("anonymous_contacts.created_at > ?", midnight_last_night - 90.days)
       .group("content_items.path")
-      .having("#{last_7_days} + #{last_30_days} + #{last_90_days} > 0")
+      .having("#{last_7_days} > 0 OR #{last_30_days} > 0 OR #{last_90_days} > 0")
       .order("#{ordering} #{ordering_mode}")
 
     connection.select_all(query).map(&:symbolize_keys)
@@ -40,7 +40,7 @@ class ContentItem < ApplicationRecord
         .where(document_type: document_type)
         .where("anonymous_contacts.created_at > ?", midnight_last_night - 90.days)
         .group("content_items.document_type")
-        .having("#{last_7_days} + #{last_30_days} + #{last_90_days} > 0")
+        .having("#{last_7_days} > 0 OR #{last_30_days} > 0 OR #{last_90_days} > 0")
         .order("#{ordering} #{ordering_mode}")
 
     connection.select_all(query).map(&:symbolize_keys)
