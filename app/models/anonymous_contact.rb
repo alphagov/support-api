@@ -14,7 +14,7 @@ class AnonymousContact < ApplicationRecord
   validates_inclusion_of :javascript_enabled, in: [ true, false ]
   validates_inclusion_of :personal_information_status, in: [ "suspected", "absent" ], allow_nil: true
   validates_inclusion_of :is_actionable, in: [ true, false ]
-  validates_presence_of :reason_why_not_actionable, unless: "is_actionable"
+  validates_presence_of :reason_why_not_actionable, unless: -> { is_actionable }
 
   scope :free_of_personal_info, -> {
     where(personal_information_status: "absent")
