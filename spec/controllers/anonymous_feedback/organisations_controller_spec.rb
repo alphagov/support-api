@@ -13,7 +13,7 @@ RSpec.describe AnonymousFeedback::OrganisationsController, type: :controller do
     context "with a valid organisation" do
       let!(:organisation) { create(:organisation) }
 
-      it { is_expected.to be_success }
+      it { is_expected.to be_successful }
 
       context "with a valid ordering" do
         it "returns the ordered summary for the organisation" do

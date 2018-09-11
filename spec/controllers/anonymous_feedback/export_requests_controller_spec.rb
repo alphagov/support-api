@@ -100,7 +100,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
       let(:export_request) { create(:feedback_export_request) }
       let(:id) { export_request.id }
 
-      it { is_expected.to be_success }
+      it { is_expected.to be_successful }
 
       it "returns the URL" do
         expect(JSON.parse(response.body)["filename"]).to eq export_request.filename
@@ -116,7 +116,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
       let(:export_request) { create(:feedback_export_request, generated_at: Time.now) }
       let(:id) { export_request.id }
 
-      it { is_expected.to be_success }
+      it { is_expected.to be_successful }
 
       it "returns the URL" do
         expect(JSON.parse(response.body)["filename"]).to eq export_request.filename

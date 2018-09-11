@@ -14,13 +14,13 @@ describe AnonymousFeedbackController do
 
       it "is backwards compatible with valid `path_prefix`" do
         get :index, params: { path_prefix: "/tax-disc" }
-        expect(response).to be_success
+        expect(response).to be_successful
       end
 
       it "is backwards compatible and returns an empty result when single path is provided" do
         get :index, params: { path_prefix: "/non-existent" }
 
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json_response).to eq(
           "results" => [],
           "page_size" => 50,
@@ -51,7 +51,7 @@ describe AnonymousFeedbackController do
 
       it "is successful with valid `path_prefixes`" do
         get :index, params: { path_prefixes: ["/tax-disc", "/vat-rates"] }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json_response["results"].count).to eq(4)
         expect(json_response["page_size"]).to eq(50)
         expect(json_response["total_count"]).to eq(4)
@@ -62,7 +62,7 @@ describe AnonymousFeedbackController do
       it "returns an empty result when no results are found" do
         get :index, params: { path_prefixes: ["/non-existent"] }
 
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json_response).to eq(
           "results" => [],
           "page_size" => 50,
@@ -75,7 +75,7 @@ describe AnonymousFeedbackController do
       it "returns results for the valid paths out of a list" do
         get :index, params: { path_prefixes: ["/non-existent", "/tax-disc", "/vat-rates"] }
 
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json_response["results"].count).to eq(4)
         expect(json_response["page_size"]).to eq(50)
         expect(json_response["total_count"]).to eq(4)
@@ -100,13 +100,13 @@ describe AnonymousFeedbackController do
       it "is returns a successful result with any `document_type`" do
         create(:content_item, document_type: 'smart_answer', path: '/calculate-your-holiday-entitlement')
         get :index, params: { document_type: 'smart_answer' }
-        expect(response).to be_success
+        expect(response).to be_successful
       end
 
       it "returns an empty result when no results are found" do
         get :index, params: { path_prefixes: ["/non-existent"] }
 
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json_response).to eq(
           "results" => [],
           "page_size" => 50,
