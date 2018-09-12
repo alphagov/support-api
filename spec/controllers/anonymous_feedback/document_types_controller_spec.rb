@@ -14,7 +14,7 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
 
       subject { response }
 
-      it { is_expected.to be_success }
+      it { is_expected.to be_successful }
 
       it 'returns a result' do
         expect(JSON.parse(response.body)).to be_eql(%w[case_study smart_answer])
@@ -36,7 +36,7 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
 
       subject { response }
 
-      it { is_expected.to be_success }
+      it { is_expected.to be_successful }
 
       it 'returns an empty array' do
         expect(JSON.parse(response.body)).to be_eql([])
@@ -137,7 +137,7 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
     context 'with invalid ordering' do
       before { get :show, params: { document_type: 'smart_answer', ordering: 'foobar' } }
       subject { response }
-      it { is_expected.to be_success }
+      it { is_expected.to be_successful }
 
       it 'returns the default ordered summary for the organisation' do
         expect(JSON.parse(subject.body)).to eq(
