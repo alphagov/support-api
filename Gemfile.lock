@@ -75,7 +75,7 @@ GEM
     faraday (0.15.2)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.25)
-    gds-api-adapters (53.0.0)
+    gds-api-adapters (53.1.0)
       addressable
       link_header
       null_logger
@@ -334,7 +334,7 @@ DEPENDENCIES
   database_cleaner (= 1.7.0)
   factory_bot_rails (~> 4.11.1)
   fakefs
-  gds-api-adapters (~> 53.0)
+  gds-api-adapters (~> 53.1)
   gds_zendesk (= 3.0.0)
   govuk-lint
   govuk_app_config (~> 1.8.0)
