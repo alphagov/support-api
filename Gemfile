@@ -8,7 +8,7 @@ end
 gem 'rails', '~> 5.2.1'
 gem 'pg', '~> 0.21.0'
 gem 'govuk_sidekiq', '~> 3.0'
-gem 'govuk_app_config', '~> 1.9.1'
+gem 'govuk_app_config', '~> 1.9.2'
 
 if ENV['API_DEV']
   gem "gds-api-adapters", :path => '../gds-api-adapters'
