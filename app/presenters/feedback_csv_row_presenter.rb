@@ -25,7 +25,7 @@ class FeedbackCsvRowPresenter
       service_satisfaction_rating,
       parsed_user_agent.family,
       parsed_user_agent.version.to_s,
-      parsed_user_agent.os.family,
+      "#{parsed_user_agent.os.family} #{parsed_user_agent.os.version}",
       row.user_agent,
       row.referrer,
       row.type,
