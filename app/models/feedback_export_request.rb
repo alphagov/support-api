@@ -65,6 +65,6 @@ class FeedbackExportRequest < ApplicationRecord
   end
 
   def url
-    Plek.find('support') + "/anonymous_feedback/export_requests/#{id}"
+    Plek.find('support', external: true) + "/anonymous_feedback/export_requests/#{id}"
   end
 end
