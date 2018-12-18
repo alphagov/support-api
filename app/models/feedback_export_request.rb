@@ -55,13 +55,11 @@ class FeedbackExportRequest < ApplicationRecord
       most_recent_last
   end
 
-  def generate_csv(io)
-    csv = CSV.new(io)
-    csv << FeedbackCsvRowPresenter::HEADER_ROW
-    results.find_each do |row|
-      csv << FeedbackCsvRowPresenter.new(row).to_a
+  def generate_csv
+    CSV.generate do |csv|
+      csv << FeedbackCsvRowPresenter::HEADER_ROW
+      results.find_each { |row| csv << FeedbackCsvRowPresenter.new(row).to_a }
     end
-    io
   end
 
   def url
