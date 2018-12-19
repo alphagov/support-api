@@ -31,6 +31,9 @@ It has 3 main functions:
 3. a background job used to aggregate service feedback and write it to the [performance
    platform][performance-platform]
 
+### CSV exports
+When a CSV export is requested by the support app, a CSV file is generated and saved in Amazon S3.
+
 ### Dependencies
 
 - [content-store](https://github.com/alphagov/content-store) - Support API can receive feedback about any

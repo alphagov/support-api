@@ -271,26 +271,20 @@ RSpec.describe FeedbackExportRequest, type: :model do
       )
     end
 
-    let(:io) { StringIO.new }
-
-    subject(:generate_csv) { described_class.new.generate_csv(io) }
+    subject(:generate_csv) { described_class.new.generate_csv }
 
     it "has 2 records plus a header" do
-      expect(subject.string.each_line.count).to eq 3
+      expect(subject.each_line.count).to eq 3
     end
 
     it "is parseable as a CSV" do
-      expect(CSV.parse(subject.string).count).to eq 3
-    end
-
-    it "doesn't close the IO object" do
-      expect(subject).to_not be_closed
+      expect(CSV.parse(subject).count).to eq 3
     end
 
     it "uses the FeedbackCsvRowPresenter to format the row" do
       header = "creation date,path or service name,feedback,service satisfaction rating,browser name,browser version,browser platform,user agent,referrer,type,primary organisation,all organisations"
       allow_any_instance_of(FeedbackCsvRowPresenter).to receive(:to_a).and_return(["a", "b", "c"])
-      expect(subject.string).to eq "#{header}\na,b,c\na,b,c\n"
+      expect(subject).to eq "#{header}\na,b,c\na,b,c\n"
     end
   end
 end

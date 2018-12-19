@@ -1,41 +1,32 @@
 require 'rails_helper'
-require 'fakefs/spec_helpers'
 
 describe GenerateFeedbackCsvWorker, :type => :worker do
-  describe ".create_file" do
-    include FakeFS::SpecHelpers
-
-    before { FakeFS.activate! }
-    after { FakeFS.deactivate! }
-
-    subject { GenerateFeedbackCsvWorker.create_file("foo.csv") }
-
-    it "creates the file in the configured root" do
-      subject
-      expect(File.exist?("/data/uploads/support-api/csvs/foo.csv")).to be true
-    end
-
-    it { is_expected.to_not be_closed }
-  end
-
   describe "#perform" do
     let(:feedback_export_request) { create(:feedback_export_request) }
-    let!(:io) do
-      StringIO.new.tap { |io| expect(described_class).to receive(:create_file).and_return(io) }
-    end
 
     before do
       create(:anonymous_contact, created_at: Time.new(2015, 5, 10))
+
+      Fog.mock!
+      ENV['AWS_REGION'] = 'eu-west-1'
+      ENV['AWS_ACCESS_KEY_ID'] = 'test'
+      ENV['AWS_SECRET_ACCESS_KEY'] = 'test'
+      ENV['AWS_S3_BUCKET_NAME'] = 'test-bucket'
+
+      # Create an S3 bucket so the code being tested can find it
+      connection = Fog::Storage.new(
+        provider: 'AWS',
+        region: ENV['AWS_REGION'],
+        aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+        aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+      )
+      @directory = connection.directories.get(ENV['AWS_S3_BUCKET_NAME']) || connection.directories.create(key: ENV['AWS_S3_BUCKET_NAME'])
     end
 
     it "populates the file with the CSV for the request" do
       described_class.new.perform(feedback_export_request)
-      expect(io.string.split("\n").count).to eq 2
-    end
-
-    it "closes the file" do
-      described_class.new.perform(feedback_export_request)
-      expect(io).to be_closed
+      file = @directory.files.get(feedback_export_request.filename)
+      expect(file.body.split("\n").count).to eq 2
     end
 
     it "sends a notification email" do

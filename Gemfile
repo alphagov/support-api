@@ -7,6 +7,7 @@ end
 
 gem 'rails', '~> 5.2.2'
 gem 'pg', '~> 0.21.0'
+gem 'fog-aws', '~> 3.3'
 gem 'govuk_sidekiq', '~> 3.0'
 gem 'govuk_app_config', '~> 1.10.0'
 
@@ -25,7 +26,6 @@ gem 'user_agent_parser'
 
 group :development do
   gem 'listen', '~> 3.1.5'
-
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
@@ -46,6 +46,5 @@ end
 group :test do
   gem 'factory_bot_rails', '~> 4.11.1'
   gem 'webmock', '~> 3.4.2'
-  gem 'fakefs', require: 'fakefs/safe'
-  gem "pry-byebug"
+  gem 'pry-byebug'
 end
