@@ -94,7 +94,7 @@ GEM
       fog-core
       nokogiri (>= 1.5.11, < 2.0.0)
     formatador (0.2.5)
-    gds-api-adapters (55.0.1)
+    gds-api-adapters (55.0.2)
       addressable
       link_header
       null_logger
