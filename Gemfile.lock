@@ -331,7 +331,7 @@ GEM
       kgio (~> 2.6)
       raindrops (~> 0.7)
     user_agent_parser (2.5.0)
-    webmock (3.4.2)
+    webmock (3.5.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
@@ -377,7 +377,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   timecop (= 0.9.1)
   user_agent_parser
-  webmock (~> 3.4.2)
+  webmock (~> 3.5.1)
   whenever (= 0.10.0)
 
 BUNDLED WITH

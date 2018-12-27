@@ -45,6 +45,6 @@ end
 
 group :test do
   gem 'factory_bot_rails', '~> 4.11.1'
-  gem 'webmock', '~> 3.4.2'
+  gem 'webmock', '~> 3.5.1'
   gem 'pry-byebug'
 end
