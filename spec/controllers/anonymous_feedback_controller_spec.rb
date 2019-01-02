@@ -1,7 +1,9 @@
 require 'rails_helper'
 
-describe AnonymousFeedbackController do
+describe AnonymousFeedbackController, type: :controller do
   describe "#index" do
+    before { login_as_stub_user }
+
     describe "backwards compatibility for `path_prefix` param" do
       before do
         create(:anonymous_contact, path: "/tax-disc")
@@ -253,7 +255,6 @@ describe AnonymousFeedbackController do
       let(:second_date) { Time.new(2014, 10, 31).utc }
       let(:third_date)  { Time.new(2014, 11, 25).utc }
       let(:last_date)   { Time.new(2014, 12, 12).utc }
-      let(:request)     { get :index, params: { path_prefixes: ["/"], from: from, to: to } }
       let(:from)        { nil }
       let(:to)          { nil }
 
@@ -266,7 +267,7 @@ describe AnonymousFeedbackController do
 
       context "when no to and from dates specified" do
         it "should return all the contacts" do
-          request
+          get :index, params: { path_prefixes: ["/"], from: from, to: to }
 
           expect(json_response).to eq(
             "results" =>JSON.parse([@newest_contact, @third_contact, @second_contact, @first_contact].to_json),
@@ -283,7 +284,7 @@ describe AnonymousFeedbackController do
         let(:to)    {"1st December 2014"}
 
         it "returns relevant contacts" do
-          request
+          get :index, params: { path_prefixes: ["/"], from: from, to: to }
 
           expect(json_response).to eq(
             "results" =>JSON.parse([@third_contact, @second_contact].to_json),
@@ -301,7 +302,7 @@ describe AnonymousFeedbackController do
         let(:from)  {"13/10/2014"}
 
         it "returns relevant contacts" do
-          request
+          get :index, params: { path_prefixes: ["/"], from: from, to: to }
 
           expect(json_response).to eq(
             "results" =>JSON.parse([@newest_contact, @third_contact, @second_contact].to_json),
@@ -318,7 +319,7 @@ describe AnonymousFeedbackController do
         let(:to)  {"1st December 2014"}
 
         it "returns relevant contacts" do
-          request
+          get :index, params: { path_prefixes: ["/"], from: from, to: to }
 
           expect(json_response).to eq(
             "results" =>JSON.parse([@third_contact, @second_contact, @first_contact].to_json),
@@ -336,7 +337,7 @@ describe AnonymousFeedbackController do
         let(:from) {"24/11/2014"}
 
         it "returns relevant contacts" do
-          request
+          get :index, params: { path_prefixes: ["/"], from: from, to: to }
 
           expect(json_response).to eq(
             "results" =>JSON.parse([@newest_contact, @third_contact].to_json),

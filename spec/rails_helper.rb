@@ -48,6 +48,7 @@ RSpec.configure do |config|
   RSpec.configure do |config|
     config.include(Shoulda::Matchers::ActiveModel, type: :model)
     config.include(Shoulda::Matchers::ActiveRecord, type: :model)
+    config.include(AuthenticationHelper::ControllerMixin, type: :controller)
 
     config.before(:suite) do
       DatabaseCleaner.clean_with(:truncation)

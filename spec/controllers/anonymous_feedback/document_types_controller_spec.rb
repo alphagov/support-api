@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
   describe '#index' do
+    before { login_as_stub_user }
+
     context 'with existing content items' do
       let!(:sa_content_items) { create_list(:content_item, 2, document_type: 'smart_answer') }
       let!(:cs_content_items) { create_list(:content_item, 3, document_type: 'case_study') }
@@ -45,6 +47,8 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
   end
 
   describe '#show' do
+    before { login_as_stub_user }
+
     let!(:no_doctype_content_items) {
       create(
         :content_item,
