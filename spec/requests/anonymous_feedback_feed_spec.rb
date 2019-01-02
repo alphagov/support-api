@@ -91,4 +91,15 @@ describe "Anonymous feedback feed" do
       )
     end
   end
+
+  context "when the user is not authenticated" do
+    around do |example|
+      ClimateControl.modify(GDS_SSO_MOCK_INVALID: "1") { example.run }
+    end
+
+    it "returns an unauthorized response" do
+      get "/anonymous-feedback?path_prefixes[]=/"
+      expect(response).to be_unauthorized
+    end
+  end
 end

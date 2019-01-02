@@ -61,6 +61,17 @@ describe "Page Improvements" do
     expect(response_hash).to include('errors' => include('description' => include("can't be blank")))
   end
 
+  context "when the user is not authenticated" do
+    around do |example|
+      ClimateControl.modify(GDS_SSO_MOCK_INVALID: "1") { example.run }
+    end
+
+    it "returns an unauthorized response" do
+      post '/page-improvements', params: { url: 'https://gov.uk/service-manual/test' }
+      expect(response).to be_unauthorized
+    end
+  end
+
   def response_hash
     JSON.parse(response.body)
   end
