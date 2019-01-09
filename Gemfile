@@ -33,7 +33,6 @@ end
 
 group :development, :test do
   gem 'climate_control', '~> 0.2.0'
-  gem 'database_cleaner', '1.7.0'
   gem 'rspec-rails', '3.8.1'
   gem 'rspec-collection_matchers', '1.1.3'
   gem 'simplecov', '0.16.1', require: false
