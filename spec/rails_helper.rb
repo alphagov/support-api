@@ -41,21 +41,13 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
+  config.before :suite do
+    Rails.application.load_seed
+  end
+
   RSpec.configure do |config|
     config.include(Shoulda::Matchers::ActiveModel, type: :model)
     config.include(Shoulda::Matchers::ActiveRecord, type: :model)
-
-    config.before(:suite) do
-      DatabaseCleaner.clean_with(:truncation)
-    end
-
-    config.before(:each) do
-      DatabaseCleaner.strategy = :transaction
-      DatabaseCleaner.start
-    end
-
-    config.after(:each) do
-      DatabaseCleaner.clean
-    end
+    config.include(AuthenticationHelper::ControllerMixin, type: :controller)
   end
 end

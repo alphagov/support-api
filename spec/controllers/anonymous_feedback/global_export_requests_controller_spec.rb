@@ -2,6 +2,8 @@ require 'rails_helper'
 
 describe AnonymousFeedback::GlobalExportRequestsController, type: :controller do
   describe "#create" do
+    before { login_as_stub_user }
+
     context "with valid parameters" do
       it "succeeds" do
         expect(GenerateGlobalExportCsvWorker).to receive(:perform_async).once

@@ -5,6 +5,7 @@ RSpec.describe OrganisationsController, type: :controller do
     before do
       create :organisation, title: "Ministry of Magic"
       create :organisation, title: "Department of Fair Dos"
+      login_as_stub_user
     end
 
     it "renders an ordered json list of organisations" do
@@ -29,6 +30,8 @@ RSpec.describe OrganisationsController, type: :controller do
   end
 
   describe "#show" do
+    before { login_as_stub_user }
+
     context "for a valid organisation" do
       let!(:organisation) { create :organisation }
 

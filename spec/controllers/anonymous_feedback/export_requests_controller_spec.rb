@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
   describe "#create" do
+    before { login_as_stub_user }
+
     context "posted with valid parameters" do
       before do
         expect(GenerateFeedbackCsvWorker).to receive(:perform_async).once.with(instance_of(Integer))
@@ -86,7 +88,10 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
   end
 
   describe "#show" do
-    before { get :show, params: { id: id } }
+    before do
+      login_as_stub_user
+      get :show, params: { id: id }
+    end
 
     subject { response }
 

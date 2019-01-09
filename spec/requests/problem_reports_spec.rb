@@ -187,6 +187,27 @@ javascript_enabled: true
     end
   end
 
+  context "when the user is not authenticated" do
+    around do |example|
+      ClimateControl.modify(GDS_SSO_MOCK_INVALID: "1") { example.run }
+    end
+
+    it "returns an unauthorized response for post" do
+      post '/anonymous-feedback/problem-reports', params: {}
+      expect(response).to be_unauthorized
+    end
+
+    it "returns an unauthorized response for totals" do
+      get '/anonymous-feedback/problem-reports/2013-02-11/totals'
+      expect(response).to be_unauthorized
+    end
+
+    it "returns an unauthorized response for mark-reviewed-for-spam" do
+      put '/anonymous-feedback/problem-reports/mark-reviewed-for-spam', params: {}
+      expect(response).to be_unauthorized
+    end
+  end
+
 private
   def user_submits_a_problem_report(options)
     post '/anonymous-feedback/problem-reports',

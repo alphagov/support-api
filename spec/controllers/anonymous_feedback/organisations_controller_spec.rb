@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe AnonymousFeedback::OrganisationsController, type: :controller do
   describe "#show" do
+    before { login_as_stub_user }
+
     let(:slug) { "ministry-of-magic" }
     let(:ordering) { "last_30_days" }
 
