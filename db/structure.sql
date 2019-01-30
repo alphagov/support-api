@@ -149,6 +149,51 @@ ALTER SEQUENCE content_items_id_seq OWNED BY content_items.id;
 
 
 --
+-- Name: content_improvement_feedbacks; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE content_improvement_feedbacks (
+id bigint NOT NULL,
+description character varying NOT NULL,
+reviewed boolean DEFAULT false NOT NULL,
+marked_as_spam boolean DEFAULT false NOT NULL,
+personal_information_status character varying
+);
+
+
+--
+-- Name: content_improvement_feedbacks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE content_improvement_feedbacks_id_seq
+START WITH 1
+INCREMENT BY 1
+NO MINVALUE
+NO MAXVALUE
+CACHE 1;
+
+
+--
+-- Name: content_improvement_feedbacks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE content_improvement_feedbacks_id_seq OWNED BY content_improvement_feedbacks.id;
+
+
+--
+-- Name: content_improvement_feedbacks id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY content_improvement_feedbacks ALTER COLUMN id SET DEFAULT nextval('content_improvement_feedbacks_id_seq'::regclass);
+
+--
+-- Name: content_improvement_feedbacks content_improvement_feedbacks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY content_improvement_feedbacks
+ADD CONSTRAINT content_improvement_feedbacks_pkey PRIMARY KEY (id);
+
+--
 -- Name: content_items_organisations; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
@@ -472,4 +517,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171204155340'),
 ('20180108153838'),
 ('20180906145408'),
-('20181231135850');
+('20181231135850'),
+('20190130105818');
