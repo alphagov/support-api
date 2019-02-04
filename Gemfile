@@ -33,7 +33,7 @@ end
 
 group :development, :test do
   gem 'climate_control', '~> 0.2.0'
-  gem 'rspec-rails', '3.8.1'
+  gem 'rspec-rails', '3.8.2'
   gem 'rspec-collection_matchers', '1.1.3'
   gem 'simplecov', '0.16.1', require: false
   gem 'simplecov-rcov', '0.2.3', require: false
