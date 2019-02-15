@@ -311,7 +311,7 @@ GEM
       sass (~> 3.5, >= 3.5.5)
     sentry-raven (2.7.4)
       faraday (>= 0.7.6, < 1.0)
-    shoulda-matchers (3.1.2)
+    shoulda-matchers (3.1.3)
       activesupport (>= 4.0.0)
     sidekiq (5.2.3)
       connection_pool (~> 2.2, >= 2.2.2)
@@ -400,7 +400,7 @@ DEPENDENCIES
   rails (~> 5.2.2)
   rspec-collection_matchers (= 1.1.3)
   rspec-rails (= 3.8.2)
-  shoulda-matchers (= 3.1.2)
+  shoulda-matchers (= 3.1.3)
   simplecov (= 0.16.1)
   simplecov-rcov (= 0.2.3)
   spring
