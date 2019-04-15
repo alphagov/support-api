@@ -1,4 +1,4 @@
-class SerialiseExportFilters < ActiveRecord::Migration
+class SerialiseExportFilters < ActiveRecord::Migration[4.2]
   def up
     add_column :feedback_export_requests, :filters, :text
 

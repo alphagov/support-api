@@ -1,4 +1,4 @@
-class ReplaceEmptyPaths < ActiveRecord::Migration
+class ReplaceEmptyPaths < ActiveRecord::Migration[4.2]
   class ProblemReport < ApplicationRecord; end
 
   def up

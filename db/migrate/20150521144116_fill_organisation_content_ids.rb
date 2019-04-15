@@ -1,6 +1,6 @@
 require 'gds_api/content_register'
 
-class FillOrganisationContentIds < ActiveRecord::Migration
+class FillOrganisationContentIds < ActiveRecord::Migration[4.2]
   def up
     return if Organisation.count == 0
 

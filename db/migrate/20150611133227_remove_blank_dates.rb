@@ -1,4 +1,4 @@
-class RemoveBlankDates < ActiveRecord::Migration
+class RemoveBlankDates < ActiveRecord::Migration[4.2]
   def up
     # PostgreSQL can't have blank dates anyway.
     return if SupportApi.postgresql?

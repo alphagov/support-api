@@ -1,4 +1,4 @@
-class AddPathIndexForAnonymousContacts < ActiveRecord::Migration
+class AddPathIndexForAnonymousContacts < ActiveRecord::Migration[4.2]
   def up
     if SupportApi.postgresql?
       execute <<-SQL

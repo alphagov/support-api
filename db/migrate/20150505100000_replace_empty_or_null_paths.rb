@@ -1,4 +1,4 @@
-class ReplaceEmptyOrNullPaths < ActiveRecord::Migration
+class ReplaceEmptyOrNullPaths < ActiveRecord::Migration[4.2]
   def up
     Support::Requests::Anonymous::AnonymousContact.
       unscoped.

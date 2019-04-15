@@ -1,4 +1,4 @@
-class RemoveLowQualitySingleWordFeedback < ActiveRecord::Migration
+class RemoveLowQualitySingleWordFeedback < ActiveRecord::Migration[4.2]
   class Support::Requests::Anonymous::ProblemReport; end
 
   def up
