@@ -94,7 +94,7 @@ GEM
       fog-core
       nokogiri (>= 1.5.11, < 2.0.0)
     formatador (0.2.5)
-    gds-api-adapters (57.5.0)
+    gds-api-adapters (59.0.0)
       addressable
       link_header
       null_logger
@@ -175,7 +175,7 @@ GEM
     method_source (0.9.2)
     mime-types (3.2.2)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2018.0812)
+    mime-types-data (3.2019.0331)
     mimemagic (0.3.3)
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
@@ -386,7 +386,7 @@ DEPENDENCIES
   climate_control (~> 0.2.0)
   factory_bot_rails (~> 5.0.1)
   fog-aws (~> 3.3)
-  gds-api-adapters (~> 57.5.0)
+  gds-api-adapters (~> 59.0.0)
   gds-sso (~> 14.0.0)
   gds_zendesk (= 3.0.0)
   govuk-lint
