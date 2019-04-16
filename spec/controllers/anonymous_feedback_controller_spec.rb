@@ -351,5 +351,37 @@ describe AnonymousFeedbackController, type: :controller do
         end
       end
     end
+
+    context "when using POST as the HTTP method" do
+      context "with an existing content item" do
+        let(:content_item) do
+          create(:content_item, document_type: 'smart_answer', path: "/calculate-your-holiday-entitlement")
+        end
+
+        before do
+          create(:problem_report, content_item: content_item)
+        end
+
+        it "returns the content item in the results when searching for it" do
+          post :index, params: { document_type: 'smart_answer' }
+
+          expect(response).to be_successful
+          expect(json_response["total_count"]).to eq(1)
+        end
+
+        it "returns an empty result when no searching for something else" do
+          post :index, params: { path_prefixes: ["/non-existent"] }
+
+          expect(response).to be_successful
+          expect(json_response).to eq(
+            "results" => [],
+            "page_size" => 50,
+            "total_count" => 0,
+            "current_page" => 1,
+            "pages" => 0,
+          )
+        end
+      end
+    end
   end
 end

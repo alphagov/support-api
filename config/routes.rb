@@ -3,7 +3,9 @@ Rails.application.routes.draw do
             only: :index,
             format: false,
             controller: "anonymous_feedback",
-            as: "anonymous_feedback"
+            as: "anonymous_feedback" do
+              post :index
+            end
 
   scope "anonymous-feedback", module: "anonymous_feedback" do
     resources "service-feedback",
