@@ -7,7 +7,7 @@ end
 
 gem 'rails', '~> 5.2.3'
 gem 'pg', '~> 0.21.0'
-gem 'fog-aws', '~> 3.3'
+gem 'fog-aws', '~> 3.4'
 gem 'govuk_sidekiq', '~> 3.0'
 gem 'govuk_app_config', '~> 1.15.1'
 
