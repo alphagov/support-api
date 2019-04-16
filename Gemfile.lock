@@ -356,7 +356,7 @@ GEM
     unicorn (5.4.1)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    user_agent_parser (2.5.0)
+    user_agent_parser (2.5.1)
     warden (1.2.8)
       rack (>= 2.0.6)
     warden-oauth2 (0.0.1)
