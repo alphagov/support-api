@@ -24,7 +24,7 @@ class AnonymousFeedbackController < ApplicationController
     render json: json
   end
 
-  private
+private
 
   def at_least_one_param_present?
     params[:organisation_slug].present? || params[:path_prefixes].present? || params[:document_type].present?
