@@ -14,7 +14,7 @@ gem 'govuk_app_config', '~> 1.16.1'
 if ENV['API_DEV']
   gem "gds-api-adapters", :path => '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '~> 59.2.1'
+  gem 'gds-api-adapters', '~> 59.3.0'
 end
 
 gem 'kaminari', '1.1.1'
