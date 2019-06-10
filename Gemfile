@@ -39,7 +39,7 @@ group :development, :test do
   gem 'simplecov-rcov', '0.2.3', require: false
   gem 'ci_reporter', '2.0.0'
   gem 'ci_reporter_rspec', '1.0.0'
-  gem 'shoulda-matchers', '4.0.1'
+  gem 'shoulda-matchers', '4.1.0'
   gem 'timecop', '0.9.1'
   gem 'govuk-lint'
 end
