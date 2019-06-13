@@ -74,7 +74,7 @@ private
 
   def not_updated_for_a_year?(ticket)
     latest_update = ticket.updated_at || ticket.created_at
-    latest_update > 1.year.ago.to_datetime
+    latest_update < 1.year.ago.to_datetime
   end
 
   def is_end_user?(user)
