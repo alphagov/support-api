@@ -23,9 +23,10 @@ class ZendeskCleaner
 
   def delete_old_tickets
     @client.tickets.all! do |ticket|
+      users_with_existing_tickets.add(ticket.requester_id) if client.users.find!(id: ticket.requester_id)
+
       next unless @groups.include?(ticket.group_id)
 
-      users_with_existing_tickets.add(ticket.requester_id) if client.users.find!(id: ticket.requester_id)
       delete_tickets_older_than_a_year(ticket)
     end
   end
