@@ -64,7 +64,7 @@ private
   end
 
   def delete_tickets_older_than_a_year(ticket)
-    if not_updated_for_a_year?(ticket)
+    if is_closed?(ticket) && not_updated_for_a_year?(ticket)
       @tickets_to_delete.add(ticket.id)
       if @dry_run
         print '/'
@@ -72,6 +72,10 @@ private
         ticket.destroy!
       end
     end
+  end
+
+  def is_closed?(ticket)
+    ticket.status == 'closed'
   end
 
   def not_updated_for_a_year?(ticket)
