@@ -4,7 +4,7 @@ require 'time'
 class ZendeskCleaner
   attr_reader :client, :users_with_existing_tickets, :tickets_to_delete, :users_to_delete
 
-  def initialize(client, dry_run = true, groups = [])
+  def initialize(client, dry_run, groups = [])
     @client = client
     @dry_run = dry_run
     @groups = groups

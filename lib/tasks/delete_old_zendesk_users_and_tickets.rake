@@ -13,7 +13,7 @@ namespace :zendesk do
       config.retry = true
     end
 
-    cleaner = ZendeskCleaner.new(client, ENV.fetch('DRY_RUN', true), args.extras.map(&:to_i))
+    cleaner = ZendeskCleaner.new(client, ENV.has_key?('DRY_RUN'), args.extras.map(&:to_i))
 
     cleaner.display_current_num_of_tickets_and_users
 
