@@ -38,6 +38,7 @@ class ZendeskCleaner
   def delete_old_users
     @client.users.all! do |user|
       if is_end_user?(user) &&
+          is_not_in_an_org?(user) &&
           @users_with_existing_tickets.exclude?(user.id) &&
           has_been_active_within_a_year?(user)
 
@@ -80,5 +81,9 @@ private
 
   def is_end_user?(user)
     user.role.name == "end-user"
+  end
+
+  def is_not_in_an_org?(user)
+    user.organisation_id.nil?
   end
 end
