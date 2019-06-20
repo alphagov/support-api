@@ -39,11 +39,13 @@ class ZendeskCleaner
     @client.users.all! do |user|
       if is_end_user?(user) &&
           is_not_in_an_org?(user) &&
+          is_not_no_reply?(user) &&
           @users_with_existing_tickets.exclude?(user.id) &&
           has_been_active_within_a_year?(user)
 
         @users_to_delete.add(user.id)
         if @dry_run
+          puts user
           print '.'
         else
           user.destroy!
@@ -88,6 +90,10 @@ private
   end
 
   def is_not_in_an_org?(user)
-    user.organisation_id.nil?
+    user.organization_id.nil?
+  end
+
+  def is_not_no_reply?(user)
+    user.name != "Zendesk"
   end
 end

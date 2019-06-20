@@ -15,12 +15,12 @@ namespace :zendesk do
 
     cleaner = ZendeskCleaner.new(client, ENV.has_key?('DRY_RUN'), args.extras.map(&:to_i))
 
-    cleaner.display_current_num_of_tickets_and_users
+    # cleaner.display_current_num_of_tickets_and_users
 
-    cleaner.delete_old_tickets
+    # cleaner.delete_old_tickets
 
     cleaner.delete_old_users
 
-    cleaner.how_many_things_have_we_deleted
+    # cleaner.how_many_things_have_we_deleted
   end
 end
