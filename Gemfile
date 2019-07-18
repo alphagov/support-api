@@ -21,7 +21,7 @@ gem 'kaminari', '1.1.1'
 gem 'whenever', '1.0.0', require: false
 gem 'mlanett-redis-lock', '0.2.7'
 gem "gds_zendesk", '3.0.0'
-gem 'gds-sso', '~> 14.0.0'
+gem 'gds-sso', '~> 14.1.0'
 gem "plek", "3.0.0"
 gem 'user_agent_parser'
 
