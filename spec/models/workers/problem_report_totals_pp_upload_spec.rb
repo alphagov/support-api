@@ -7,14 +7,6 @@ describe "problem report totals PP upload" do
   include GdsApi::TestHelpers::PerformancePlatform::DataIn
 
   it "pushes data to the performance platform" do
-    response = {
-      data: [
-        { "path" => "/vat-rates", "total" => 2 },
-        { "path" => "/tax-disc", "total" => 1 },
-      ]
-    }
-    stub_support_api_problem_report_daily_totals_for(Date.new(2014, 9, 29), response.to_json)
-
     stub_upload_request = stub_problem_report_daily_totals_submission([
       {
         "_id" => "2014-09-29_vat-rates",
@@ -30,6 +22,20 @@ describe "problem report totals PP upload" do
         "pagePath" => "/tax-disc",
         "total" => 1
       }
+    ])
+
+    class MockEntry
+      attr_accessor :path, :total
+
+      def initialize(path, total)
+        @path = path
+        @total = total
+      end
+    end
+
+    allow(ProblemReport).to receive(:totals_for).and_return([
+      MockEntry.new('/vat-rates', 2),
+      MockEntry.new('/tax-disc', 1),
     ])
 
     Timecop.travel Time.utc(2014,9,30)

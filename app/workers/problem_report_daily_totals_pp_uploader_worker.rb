@@ -1,6 +1,5 @@
 require 'date'
 require 'gds_api/performance_platform/data_in'
-require 'gds_api/support_api'
 
 class ProblemReportDailyTotalsPPUploaderWorker
   include Sidekiq::Worker
@@ -11,10 +10,9 @@ class ProblemReportDailyTotalsPPUploaderWorker
       PP_DATA_IN_API[:url],
       bearer_token: PP_DATA_IN_API[:bearer_token]
     )
-    support_api = GdsApi::SupportApi.new(Plek.find('support-api'))
 
     date = Time.utc(year, month, day)
-    totals = support_api.problem_report_daily_totals_for(date).to_hash
+    totals = ProblemReport.totals_for(date)
 
     request_details = transform_daily_problem_report_totals(date, totals)
 
@@ -28,14 +26,14 @@ class ProblemReportDailyTotalsPPUploaderWorker
   end
 
 private
-  def transform_daily_problem_report_totals(date, totals)
-    totals["data"].map do |entry|
+  def transform_daily_problem_report_totals(date, report)
+    report.map do |entry|
       {
-        "_id" => "#{date.to_time.strftime("%Y-%m-%d")}_#{entry["path"].gsub("/", "")}",
-        "_timestamp" => date.to_datetime.iso8601,
-        "period" => "day",
-        "pagePath" => entry["path"],
-        "total" => entry["total"],
+        '_id' => "#{date.strftime('%Y-%m-%d')}_#{entry.path.gsub('/', '')}",
+        '_timestamp' => date.to_datetime.iso8601,
+        'period' => 'day',
+        'pagePath' => entry.path,
+        'total' => entry.total,
       }
     end
   end
