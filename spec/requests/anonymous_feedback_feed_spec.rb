@@ -13,8 +13,7 @@ describe "Anonymous feedback feed" do
         path: "/help",
         referrer: "https://www.gov.uk/browse",
         user_agent: "Safari",
-        created_at: Time.utc(2015, 02, 03),
-      )
+        created_at: Time.utc(2015, 02, 03),)
     end
 
     let!(:service_feedback) do
@@ -25,8 +24,7 @@ describe "Anonymous feedback feed" do
         created_at: Time.utc(2015, 02, 02),
         path: "/done/waste_carrier_or_broker_registration",
         referrer: "https://www.wastecarrier.service.gov.uk",
-        user_agent: "iPhone",
-      )
+        user_agent: "iPhone",)
     end
 
     let!(:long_form_contact) do
@@ -36,8 +34,7 @@ describe "Anonymous feedback feed" do
         path: "/contact/govuk",
         referrer: "https://www.gov.uk/contact",
         user_specified_url: "https://www.gov.uk/vat-rates",
-        user_agent: "iPhone",
-      )
+        user_agent: "iPhone",)
     end
 
     it "returns feedback with the appropriate fields in reverse chronological order" do

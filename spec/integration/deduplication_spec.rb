@@ -8,8 +8,7 @@ describe "de-duplication" do
       service_satisfaction_rating: 5,
       details: "this service is great",
       slug: "some-tx",
-      created_at: Time.parse("2013-01-15 12:00:00"),
-    )
+      created_at: Time.parse("2013-01-15 12:00:00"),)
   }
 
   let(:record2) {
@@ -17,8 +16,7 @@ describe "de-duplication" do
       service_satisfaction_rating: 3,
       details: "this service is meh",
       slug: "some-tx",
-      created_at: Time.parse("2013-01-15 12:00:00"),
-    )
+      created_at: Time.parse("2013-01-15 12:00:00"),)
   }
 
   let(:record3) {
@@ -26,8 +24,7 @@ describe "de-duplication" do
       service_satisfaction_rating: 3,
       details: "this service is meh",
       slug: "some-tx",
-      created_at: Time.parse("2013-01-15 12:00:01"),
-    )
+      created_at: Time.parse("2013-01-15 12:00:01"),)
   }
 
   context "nightly deduplication" do

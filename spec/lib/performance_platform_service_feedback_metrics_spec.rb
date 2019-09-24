@@ -12,27 +12,23 @@ describe PerformancePlatformServiceFeedbackMetrics do
              service_satisfaction_rating: 1,
              slug: "abcde",
              created_at: Date.new(2013, 2, 10),
-             details: 1,
-            )
+             details: 1,)
       create(:aggregated_service_feedback,
              service_satisfaction_rating: 3,
              slug: "apply-carers-allowance",
              created_at: Date.new(2013, 2, 10),
-             details: 4,
-            )
+             details: 4,)
       create(:aggregated_service_feedback,
              service_satisfaction_rating: 2,
              slug: "apply-carers-allowance",
              created_at: Date.new(2013, 2, 10),
-             details: 57,
-            )
+             details: 57,)
 
       create(:service_feedback,
              service_satisfaction_rating: 2,
              details: "this is an awesome service",
              slug: "apply-carers-allowance",
-             created_at: Date.new(2013, 2, 10),
-            )
+             created_at: Date.new(2013, 2, 10),)
     end
 
     it "generates the metadata" do
