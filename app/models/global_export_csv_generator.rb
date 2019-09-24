@@ -33,6 +33,6 @@ private
   end
 
   def filename
-    "feedex_#{from_date.iso8601}_#{to_date.iso8601}#{ @exclude_spam ? '_spam_excluded' : ''}.csv"
+    "feedex_#{from_date.iso8601}_#{to_date.iso8601}#{@exclude_spam ? '_spam_excluded' : ''}.csv"
   end
 end
