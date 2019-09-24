@@ -44,8 +44,8 @@ describe ProblemReportList, "#to_json" do
         "current_page" => 1,
         "pages" => 1,
         "page_size" => AnonymousContact::PAGE_SIZE,
-        "from_date" => "#{from_date}",
-        "to_date" => "#{to_date}",
+        "from_date" => (from_date).to_s,
+        "to_date" => (to_date).to_s,
       }
     }
 
