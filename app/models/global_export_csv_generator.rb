@@ -6,7 +6,7 @@ class GlobalExportCsvGenerator
   end
 
   def call
-    return filename, generate_csv
+    [filename, generate_csv]
   end
 
 private

@@ -4,6 +4,6 @@ class DateParser
 
     Date.parse(date)
   rescue ArgumentError
-    return nil
+    nil
   end
 end
