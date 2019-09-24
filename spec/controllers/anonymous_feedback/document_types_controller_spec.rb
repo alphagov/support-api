@@ -95,7 +95,7 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
               "path" => "/search",
               "last_7_days" => 0,
               "last_30_days" => 0,
-              "last_90_days" => 1
+              "last_90_days" => 1,
             }
           ]
         )
@@ -115,7 +115,7 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
               "path" => "/search",
               "last_7_days" => 0,
               "last_30_days" => 0,
-              "last_90_days" => 1
+              "last_90_days" => 1,
             }
           ]
         )
@@ -131,7 +131,7 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
               "path" => "/search",
               "last_7_days" => 0,
               "last_30_days" => 0,
-              "last_90_days" => 4
+              "last_90_days" => 4,
             }
           ]
         )
@@ -151,7 +151,7 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
               "path" => "/search",
               "last_7_days" => 0,
               "last_30_days" => 0,
-              "last_90_days" => 1
+              "last_90_days" => 1,
             }
           ]
         )
@@ -179,7 +179,7 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
               "path" => "/search",
               "last_7_days" => 2,
               "last_30_days" => 2,
-              "last_90_days" => 2
+              "last_90_days" => 2,
             }
           ]
         )

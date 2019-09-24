@@ -11,7 +11,7 @@ class ProblemReportList
       total_count: total_count,
       current_page: current_page,
       pages: pages,
-      page_size: AnonymousContact::PAGE_SIZE
+      page_size: AnonymousContact::PAGE_SIZE,
     }
 
     list[:from_date] = dates[0] if dates[0]

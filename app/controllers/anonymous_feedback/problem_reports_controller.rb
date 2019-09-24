@@ -15,7 +15,7 @@ module AnonymousFeedback
         totals = ProblemReport.totals_for(date)
         result = {
           date: date.to_time.iso8601,
-          data: totals.map { |entry| { path: entry.path, total: entry.total } }
+          data: totals.map { |entry| { path: entry.path, total: entry.total } },
         }
 
         render json: result

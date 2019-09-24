@@ -29,7 +29,7 @@ describe PageImprovement, "#zendesk_ticket_attributes" do
     expect(page_improvement.zendesk_ticket_attributes).to eq({
       "subject" => "https://gov.uk/service-manual/test",
       "comment" => {
-        "body" => <<-TICKET_BODY.strip_heredoc
+        "body" => <<-TICKET_BODY.strip_heredoc,
                     [Details]
                     I love this page.
 
@@ -45,7 +45,7 @@ describe PageImprovement, "#zendesk_ticket_attributes" do
                     [User agent]
                     Safari
                   TICKET_BODY
-      }
+      },
     })
   end
 
@@ -59,7 +59,7 @@ describe PageImprovement, "#zendesk_ticket_attributes" do
     expect(page_improvement.zendesk_ticket_attributes).to eq({
       "subject" => "https://gov.uk/service-manual/test",
       "comment" => {
-        "body" => <<-TICKET_BODY.strip_heredoc
+        "body" => <<-TICKET_BODY.strip_heredoc,
                     [Details]
                     I love this page.
 
@@ -75,7 +75,7 @@ describe PageImprovement, "#zendesk_ticket_attributes" do
                     [User agent]
                     Safari
                   TICKET_BODY
-      }
+      },
     })
   end
 end

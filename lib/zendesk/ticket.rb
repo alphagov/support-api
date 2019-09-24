@@ -12,7 +12,7 @@ module Zendesk
         requester: { "locale_id" => 1, "email" => requester[:email], "name" => requester[:name] },
         collaborators: collaborator_emails,
         tags: tags,
-        comment: { "body" => rendered_body }
+        comment: { "body" => rendered_body },
       }
     end
 

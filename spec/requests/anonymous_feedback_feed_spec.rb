@@ -56,7 +56,7 @@ describe "Anonymous feedback feed" do
           "user_agent" => "Safari",
           "created_at" => "2015-02-03T00:00:00.000Z",
           "marked_as_spam" => false,
-          "reviewed" => false
+          "reviewed" => false,
         },
         {
           "id" => service_feedback.id,

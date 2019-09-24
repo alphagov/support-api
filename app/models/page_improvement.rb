@@ -15,8 +15,8 @@ class PageImprovement
     {
       "subject" => url,
       "comment" => {
-        "body" => ticket_body
-      }
+        "body" => ticket_body,
+      },
     }
   end
 

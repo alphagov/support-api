@@ -35,7 +35,7 @@ describe ProblemReportList, "#to_json" do
         "referrer" => referrer,
         "user_agent" => user_agent,
         "path" => path,
-        "marked_as_spam" => false
+        "marked_as_spam" => false,
       }
     }
 
@@ -46,7 +46,7 @@ describe ProblemReportList, "#to_json" do
         "pages" => 1,
         "page_size" => AnonymousContact::PAGE_SIZE,
         "from_date" => "#{from_date.to_s}",
-        "to_date" => "#{to_date.to_s}"
+        "to_date" => "#{to_date.to_s}",
       }
     }
 

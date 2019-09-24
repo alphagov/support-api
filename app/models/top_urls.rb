@@ -17,7 +17,7 @@ class TopUrls
         "period" => "month",
         "organisation_acronym" => top_url.page_owner,
         "comment_count" => top_url.number_of_paths,
-        "url" => Plek.new.website_root + top_url.path
+        "url" => Plek.new.website_root + top_url.path,
       }
     end
   end

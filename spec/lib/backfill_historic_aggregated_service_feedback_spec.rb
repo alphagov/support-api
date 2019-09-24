@@ -33,7 +33,7 @@ describe BackfillHistoricAggregatedServiceFeedback, "#import_from_performance_pl
           "rating_4": 7,
           "rating_5": 9,
           "slug": "register-to-vote",
-          "total": 25
+          "total": 25,
         },
         {
           "_day_start_at": "2014-06-10T00:00:00+00:00",
@@ -52,7 +52,7 @@ describe BackfillHistoricAggregatedServiceFeedback, "#import_from_performance_pl
           "rating_4": 70,
           "rating_5": 90,
           "slug": other_transaction_slug,
-          "total": 25
+          "total": 25,
         },
         {
           "_day_start_at": "2014-06-11T00:00:00+00:00",
@@ -71,7 +71,7 @@ describe BackfillHistoricAggregatedServiceFeedback, "#import_from_performance_pl
           "rating_4": 9,
           "rating_5": 0,
           "slug": "register-to-vote",
-          "total": 35
+          "total": 35,
         },
         {
           "_day_start_at": "2014-06-12T00:00:00+00:00",
@@ -90,9 +90,9 @@ describe BackfillHistoricAggregatedServiceFeedback, "#import_from_performance_pl
           "rating_4": 38,
           "rating_5": 371,
           "slug": "register-to-vote",
-          "total": 418
+          "total": 418,
         },
-      ]
+      ],
     }
   }
 

@@ -13,14 +13,14 @@ describe "problem report totals PP upload" do
         "_timestamp" => "2014-09-29T00:00:00+00:00",
         "period" => "day",
         "pagePath" => "/vat-rates",
-        "total" => 2
+        "total" => 2,
       },
       {
         "_id" => "2014-09-29_tax-disc",
         "_timestamp" => "2014-09-29T00:00:00+00:00",
         "period" => "day",
         "pagePath" => "/tax-disc",
-        "total" => 1
+        "total" => 1,
       }
     ])
 

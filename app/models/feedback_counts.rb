@@ -14,7 +14,7 @@ class FeedbackCounts
         "period" => "month",
         "organisation_acronym" => page_owner,
         "comment_count" => count,
-        "total_gov_uk_dept_and_policy_comment_count" => absolute_count
+        "total_gov_uk_dept_and_policy_comment_count" => absolute_count,
       }
     end
   end

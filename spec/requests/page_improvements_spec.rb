@@ -15,7 +15,7 @@ describe "Page Improvements" do
     zendesk_request = expect_zendesk_to_receive_ticket(
       "subject" => "https://gov.uk/service-manual/test",
       "comment" => {
-        "body" => <<-TICKET_BODY.strip_heredoc
+        "body" => <<-TICKET_BODY.strip_heredoc,
                     [Details]
                     I have a problem
 

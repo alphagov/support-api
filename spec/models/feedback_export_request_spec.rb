@@ -37,7 +37,7 @@ RSpec.describe FeedbackExportRequest, type: :model do
           from: from,
           to: to,
           organisation_slug: organisation_slug,
-          document_type: document_type
+          document_type: document_type,
         }
      )
     end
@@ -237,7 +237,7 @@ RSpec.describe FeedbackExportRequest, type: :model do
           to: Date.new(2015, 5),
           path_prefixes: ["/"],
           organisation_slug: "hm-revenue-customs",
-          document_type: "smart_answer"
+          document_type: "smart_answer",
         }
       ).results
     end

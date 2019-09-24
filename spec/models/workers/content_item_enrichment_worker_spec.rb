@@ -70,8 +70,8 @@ describe ContentItemEnrichmentWorker do
               title: "HM Revenue & Customs",
               document_type: "organisation",
             }
-          ]
-        }
+          ],
+        },
       }
     }
     let(:vat_rates_content_store_response_new) {
@@ -86,8 +86,8 @@ describe ContentItemEnrichmentWorker do
               title: "aaib",
               document_type: "organisation",
             }
-          ]
-        }
+          ],
+        },
       }
     }
 

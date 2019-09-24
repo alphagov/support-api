@@ -24,8 +24,8 @@ describe "Problem reports" do
             title: "HM Revenue & Customs",
             document_type: "organisation",
           }
-        ]
-      }
+        ],
+      },
     }
   }
 
@@ -115,8 +115,8 @@ javascript_enabled: true
             {
               "#{problem_report_1.id}": true,
               "#{problem_report_2.id}": true,
-              "#{problem_report_3.id}": false
-            }
+              "#{problem_report_3.id}": false,
+            },
         }.to_json
 
         put "/anonymous-feedback/problem-reports/mark-reviewed-for-spam",
@@ -149,8 +149,8 @@ javascript_enabled: true
         json_payload = {
             reviewed_problem_report_ids:
             {
-              "#{problem_report_1.id}": false
-            }
+              "#{problem_report_1.id}": false,
+            },
         }.to_json
 
         put "/anonymous-feedback/problem-reports/mark-reviewed-for-spam",
@@ -172,7 +172,7 @@ javascript_enabled: true
             reviewed_problem_report_ids:
             {
               "#{id}": true,
-            }
+            },
         }.to_json
 
         put "/anonymous-feedback/problem-reports/mark-reviewed-for-spam",

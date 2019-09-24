@@ -25,7 +25,7 @@ private
       from_date: DateParser.parse(clean_params[:from_date]),
       to_date: DateParser.parse(clean_params[:to_date]),
       notification_email: clean_params[:notification_email],
-      exclude_spam: clean_params[:exclude_spam]
+      exclude_spam: clean_params[:exclude_spam],
     }
   end
 end

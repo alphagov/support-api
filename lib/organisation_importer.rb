@@ -58,7 +58,7 @@ class OrganisationImporter
       {
         "@message" => message,
         "@tags" => ["cron", "rake"],
-        "@timestamp" => datetime.iso8601
+        "@timestamp" => datetime.iso8601,
       }.to_json + "\n"
     }
   end

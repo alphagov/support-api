@@ -69,7 +69,7 @@ describe ContentItemLookup do
       document_type: "case_study",
       links: {
         lead_organisations: [civil_service_fast_stream_org_response],
-      }
+      },
     }
   }
 

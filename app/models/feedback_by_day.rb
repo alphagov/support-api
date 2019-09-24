@@ -19,7 +19,7 @@ class FeedbackByDay
       total_count: summary_query.total_count,
       current_page: summary_query.current_page,
       pages: summary_query.total_pages,
-      page_size: summary_query.limit_value
+      page_size: summary_query.limit_value,
     }
   end
 

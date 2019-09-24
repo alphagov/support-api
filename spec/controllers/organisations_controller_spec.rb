@@ -16,14 +16,14 @@ RSpec.describe OrganisationsController, type: :controller do
           "slug" => "department-of-fair-dos",
           "acronym" => "DOFD",
           "govuk_status" => "live",
-          "web_url" => "https://www.gov.uk/government/organisations/department-of-fair-dos"
+          "web_url" => "https://www.gov.uk/government/organisations/department-of-fair-dos",
         },
         {
           "title" => "Ministry of Magic",
           "slug" => "ministry-of-magic",
           "acronym" => "MOM",
           "govuk_status" => "live",
-          "web_url" => "https://www.gov.uk/government/organisations/ministry-of-magic"
+          "web_url" => "https://www.gov.uk/government/organisations/ministry-of-magic",
         }
       ]
     end

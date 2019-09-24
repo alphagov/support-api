@@ -21,7 +21,7 @@ describe FeedbackByDay do
       total_count: 3,
       current_page: 1,
       pages: 1,
-      page_size: 100
+      page_size: 100,
     }
     expect(FeedbackByDay.retrieve(Time.utc(2018, 2, 1), nil, nil)).to eq expected
   end
@@ -36,7 +36,7 @@ describe FeedbackByDay do
       total_count: 3,
       current_page: 1,
       pages: 1,
-      page_size: 100
+      page_size: 100,
     }
     expect(FeedbackByDay.retrieve(Time.utc(2018, 2, 1), nil, nil)).to eq expected
   end
@@ -54,7 +54,7 @@ describe FeedbackByDay do
         total_count: 153,
         current_page: 1,
         pages: 2,
-        page_size: 100
+        page_size: 100,
       }
       expect(FeedbackByDay.retrieve(Time.utc(2018, 2, 3), nil, nil)).to eq expected
     end
@@ -65,7 +65,7 @@ describe FeedbackByDay do
         total_count: 153,
         current_page: 2,
         pages: 2,
-        page_size: 100
+        page_size: 100,
       }
       expect(FeedbackByDay.retrieve(Time.utc(2018, 2, 3), 2, nil)).to eq expected
     end
@@ -76,7 +76,7 @@ describe FeedbackByDay do
         total_count: 153,
         current_page: 1,
         pages: 4,
-        page_size: 50
+        page_size: 50,
       }
       expect(FeedbackByDay.retrieve(Time.utc(2018, 2, 3), 1, 50)).to eq expected
     end
@@ -87,7 +87,7 @@ describe FeedbackByDay do
         total_count: 153,
         current_page: 4,
         pages: 4,
-        page_size: 50
+        page_size: 50,
       }
       expect(FeedbackByDay.retrieve(Time.utc(2018, 2, 3), 4, 50)).to eq expected
     end

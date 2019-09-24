@@ -47,7 +47,7 @@ describe "/feedback-by-day endpoint" do
         },
         {
           "path" => "/browse/tax",
-          "count" => 8
+          "count" => 8,
         }
       ])
       expect(json_response).to include(
@@ -72,7 +72,7 @@ describe "/feedback-by-day endpoint" do
         },
         {
           "path" => "/browse/tax",
-          "count" => 3
+          "count" => 3,
         }
       ])
       expect(json_response).to include(
@@ -112,7 +112,7 @@ describe "/feedback-by-day endpoint" do
       expect(json_response["results"]).to eq([
         {
           "path" => "/browse/tax",
-          "count" => 8
+          "count" => 8,
         }
       ])
       expect(json_response).to include(

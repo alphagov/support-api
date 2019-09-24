@@ -19,7 +19,7 @@ class AnonymousFeedback::ExportRequestsController < ApplicationController
     if export_request
       render json: {
         "filename" => export_request.filename,
-        "ready" => !export_request.generated_at.nil?
+        "ready" => !export_request.generated_at.nil?,
       }
     else
       head :not_found
@@ -41,9 +41,9 @@ class AnonymousFeedback::ExportRequestsController < ApplicationController
           to: DateParser.parse(clean_params[:to]),
           path_prefixes: clean_params[:path_prefixes],
           organisation_slug: clean_params[:organisation],
-          document_type: clean_params[:document_type]
+          document_type: clean_params[:document_type],
         },
-        notification_email: clean_params[:notification_email]
+        notification_email: clean_params[:notification_email],
       }
     end
 end
