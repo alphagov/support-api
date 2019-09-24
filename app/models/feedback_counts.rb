@@ -19,7 +19,7 @@ class FeedbackCounts
     end
   end
 
-  private
+private
 
   def feedback_counts
     ProblemReport.

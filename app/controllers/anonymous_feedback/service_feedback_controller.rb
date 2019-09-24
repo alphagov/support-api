@@ -11,7 +11,7 @@ module AnonymousFeedback
       end
     end
 
-    private
+  private
 
     def service_feedback_params
       params.require(:service_feedback).permit(

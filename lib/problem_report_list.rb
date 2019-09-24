@@ -21,7 +21,7 @@ class ProblemReportList
     list.to_json
   end
 
-  private
+private
 
   def dates
     from_date = DateParser.parse(@params[:from_date]) || Date.new(1970)

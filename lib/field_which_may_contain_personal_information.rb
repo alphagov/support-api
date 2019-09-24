@@ -10,7 +10,7 @@ class FieldWhichMayContainPersonalInformation
     include_email_address? or include_national_insurance_number?
   end
 
-  private
+private
 
   def include_email_address?
     not @text.nil? and @text =~ EMAIL_ADDRESS_PATTERN

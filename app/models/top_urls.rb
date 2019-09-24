@@ -22,7 +22,7 @@ class TopUrls
     end
   end
 
-  private
+private
 
   def top_urls_for(org_acronym)
     ProblemReport.

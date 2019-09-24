@@ -39,7 +39,7 @@ class AnonymousFeedbackComparator
     (r1["created_at"] - r2["created_at"]).abs < DUPLICATION_INTERVAL_IN_SECONDS
   end
 
-  private
+private
 
   def fields_same?(r1, r2)
     @fields_to_compare.all? { |field| r1[field] == r2[field] }

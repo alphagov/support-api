@@ -26,7 +26,7 @@ class AnonymousFeedback::ExportRequestsController < ApplicationController
     end
   end
 
-  private
+private
 
     def export_request_params
       permitted_params = [:from, :to, :organisation, :notification_email, :document_type, :path_prefix, path_prefixes: []]

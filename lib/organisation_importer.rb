@@ -13,7 +13,7 @@ class OrganisationImporter
     logger.info "Import complete"
   end
 
-  private
+private
 
   def create_or_update_organisation(organisation_from_api)
     organisation_attrs = {

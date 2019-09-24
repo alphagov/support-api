@@ -20,7 +20,7 @@ class ProblemReportPresenter
     ]
   end
 
-  private
+private
 
   def formatted_feedback
     [

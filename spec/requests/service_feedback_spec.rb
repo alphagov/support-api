@@ -65,7 +65,7 @@ describe "Service feedback" do
     end
   end
 
-  private
+private
 
   def user_submits_satisfaction_survey_on_done_page(options)
     post "/anonymous-feedback/service-feedback",

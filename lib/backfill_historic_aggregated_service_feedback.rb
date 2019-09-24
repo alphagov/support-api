@@ -40,7 +40,7 @@ class BackfillHistoricAggregatedServiceFeedback
     end
   end
 
-  private
+private
 
   def within_specified_dates(day)
     day >= @start_date && day <= @end_date
