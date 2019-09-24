@@ -150,7 +150,7 @@ describe ContentItemLookup do
       content_item = subject.lookup("/government/organisations/hm-revenue-customs/contact/vat-enquiries")
 
       expect(content_item.path).to eq("/government/organisations/hm-revenue-customs/contact/vat-enquiries")
-    expect(content_item.organisations.first).to match(hash_including(hmrc.attributes.slice(:slug, :web_url)))
+      expect(content_item.organisations.first).to match(hash_including(hmrc.attributes.slice(:slug, :web_url)))
     end
 
     it "returns a completely new content item with GDS as the org (so the problem report is assigned to at least one org)" do
