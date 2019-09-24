@@ -2,7 +2,7 @@ require "rails_helper"
 require "date_parser"
 
 describe DateParser do
-  subject() { described_class.parse(input) }
+  subject { described_class.parse(input) }
 
   context "with a valid short form date" do
     let(:input) { "13/10/2014" }
