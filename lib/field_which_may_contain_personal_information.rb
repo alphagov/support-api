@@ -1,6 +1,6 @@
 class FieldWhichMayContainPersonalInformation
-  NATIONAL_INSURANCE_NUMBER_PATTERN = /[a-zA-Z]{2}[0-9]{6}[a-zA-Z]{1}/
-  EMAIL_ADDRESS_PATTERN = /@/
+  NATIONAL_INSURANCE_NUMBER_PATTERN = /[a-zA-Z]{2}[0-9]{6}[a-zA-Z]{1}/.freeze
+  EMAIL_ADDRESS_PATTERN = /@/.freeze
 
   def initialize(text)
     @text = text
