@@ -12,11 +12,13 @@ class ContentStoreLookup
       response = nil
     end
 
-    LookedUpContentItem.new(
-      path: response["base_path"],
-      organisations: organisations_from(response),
-      document_type: response["document_type"] || "",
-    ) if response.present?
+    if response.present?
+      LookedUpContentItem.new(
+        path: response["base_path"],
+        organisations: organisations_from(response),
+        document_type: response["document_type"] || "",
+      )
+    end
   end
 
 private
