@@ -1,4 +1,4 @@
-require 'date_parser'
+require "date_parser"
 
 class AnonymousFeedbackController < ApplicationController
   before_action :clean_params

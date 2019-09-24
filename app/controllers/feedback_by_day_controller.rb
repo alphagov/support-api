@@ -1,4 +1,4 @@
-require 'date_parser'
+require "date_parser"
 
 class FeedbackByDayController < ApplicationController
   before_action :validate_params!, only: :index

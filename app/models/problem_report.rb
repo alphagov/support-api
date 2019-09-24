@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 class ProblemReport < AnonymousContact
   validates :what_doing, length: { maximum: 2 ** 16 }

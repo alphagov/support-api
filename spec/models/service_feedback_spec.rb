@@ -1,5 +1,5 @@
-require 'rails_helper'
-require 'date'
+require "rails_helper"
+require "date"
 
 describe ServiceFeedback do
   it { should validate_presence_of(:service_satisfaction_rating) }

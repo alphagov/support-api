@@ -1,4 +1,4 @@
-require 'gds_api/performance_platform/data_in'
+require "gds_api/performance_platform/data_in"
 
 class ProblemReportStatsPPUploaderWorker
   include Sidekiq::Worker

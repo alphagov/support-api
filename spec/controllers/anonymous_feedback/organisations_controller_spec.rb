@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe AnonymousFeedback::OrganisationsController, type: :controller do
   describe "#show" do

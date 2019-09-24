@@ -1,5 +1,5 @@
-require 'json'
-require 'rails_helper'
+require "json"
+require "rails_helper"
 
 describe "Long-form contacts" do
   # In order to improve information and services on GOV.UK
@@ -38,7 +38,7 @@ true
     expect(response.status).to eq(202)
 
     results = LongFormContact.where(
-      user_specified_url: 'https://www.gov.uk/vat-rates',
+      user_specified_url: "https://www.gov.uk/vat-rates",
       path: "/contact/govuk",
       details: "Make page less 'meh'",
     )
@@ -65,15 +65,15 @@ true
     end
 
     it "returns an unauthorized response" do
-      post '/anonymous-feedback/long-form-contacts', params: {}.to_json
+      post "/anonymous-feedback/long-form-contacts", params: {}.to_json
       expect(response).to be_unauthorized
     end
   end
 
 private
   def user_submits_a_long_form_anonymous_contact(options)
-    post '/anonymous-feedback/long-form-contacts',
+    post "/anonymous-feedback/long-form-contacts",
          params: { "long_form_contact" => options }.to_json,
-         headers: { "CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json' }
+         headers: { "CONTENT_TYPE" => "application/json", "HTTP_ACCEPT" => "application/json" }
   end
 end

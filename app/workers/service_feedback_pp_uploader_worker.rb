@@ -1,6 +1,6 @@
-require 'date'
-require 'gds_api/performance_platform/data_in'
-require 'performance_platform_service_feedback_metrics'
+require "date"
+require "gds_api/performance_platform/data_in"
+require "performance_platform_service_feedback_metrics"
 
 class ServiceFeedbackPPUploaderWorker
   include Sidekiq::Worker

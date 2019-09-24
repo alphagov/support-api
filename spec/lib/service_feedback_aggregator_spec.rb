@@ -108,7 +108,7 @@ describe ServiceFeedbackAggregator do
         2.times do |i|
           create(:service_feedback,
                  service_satisfaction_rating: 1,
-                 slug: 'register-to-vote',
+                 slug: "register-to-vote",
                  created_at: date - i.days,
                 )
         end

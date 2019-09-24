@@ -1,4 +1,4 @@
-require 'date_parser'
+require "date_parser"
 
 class AnonymousFeedback::GlobalExportRequestsController < ApplicationController
   def create

@@ -2,7 +2,7 @@ class ContentItemPopulateDoctypeWorker
   include Sidekiq::Worker
 
   def perform
-    content_store = GdsApi::ContentStore.new(Plek.find('content-store'))
+    content_store = GdsApi::ContentStore.new(Plek.find("content-store"))
     document_type_errors = []
 
     ContentItem.all.each do |content_item|

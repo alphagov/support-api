@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe FeedbackExportRequest, type: :model do
   before { Timecop.travel(Time.new(2015, 6, 1)) }

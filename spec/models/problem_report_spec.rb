@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe ProblemReport do
   it { should allow_value("abc").for(:what_doing) }

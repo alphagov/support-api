@@ -1,5 +1,5 @@
-require 'rails_helper'
-require 'date_parser'
+require "rails_helper"
+require "date_parser"
 
 describe DateParser do
   subject() { described_class.parse(input) }

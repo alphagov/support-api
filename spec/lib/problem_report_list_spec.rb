@@ -1,7 +1,7 @@
-require 'rails_helper'
-require 'problem_report_list'
+require "rails_helper"
+require "problem_report_list"
 
-describe ProblemReportList, '#to_json' do
+describe ProblemReportList, "#to_json" do
   let(:what_wrong) { "Help" }
   let(:what_doing) { "Skiing" }
   let(:path)       { "/help" }
@@ -21,7 +21,7 @@ describe ProblemReportList, '#to_json' do
           )
   }
 
-  context 'returns JSON structure' do
+  context "returns JSON structure" do
     let(:from_date) { created_at - 1.week }
     let(:to_date) { created_at + 1.week }
 
@@ -52,23 +52,23 @@ describe ProblemReportList, '#to_json' do
 
     let(:json) { JSON.parse(described_class.new({from_date: from_date.to_s, to_date: to_date.to_s}).to_json) }
 
-    it 'returns JSON representations of problem reports' do
+    it "returns JSON representations of problem reports" do
       expect(json["results"].first).to include(expected_report_json)
     end
 
-    it 'returns metadata about the results' do
+    it "returns metadata about the results" do
       expect(json).to include expected_metadata
     end
   end
 
-  context 'when supplied with no parameters' do
+  context "when supplied with no parameters" do
     let!(:earlier_problem_report) { create :problem_report, created_at: created_at - 1.day }
 
     before do
       stub_const("AnonymousContact::PAGE_SIZE", 2)
     end
 
-    it 'returns all reports' do
+    it "returns all reports" do
       json = JSON.parse(described_class.new({}).to_json)
 
       expect(json["results"].length).to eq 2
@@ -78,15 +78,15 @@ describe ProblemReportList, '#to_json' do
     end
   end
 
-  context 'pagination' do
+  context "pagination" do
     let!(:earlier_problem_report) { create :problem_report, created_at: created_at - 1.day }
 
     before do
       stub_const("AnonymousContact::PAGE_SIZE", 1)
     end
 
-    context 'when supplied with no parameters' do
-      it 'returns the first page of problem reports' do
+    context "when supplied with no parameters" do
+      it "returns the first page of problem reports" do
         json = JSON.parse(described_class.new({}).to_json)
 
         expect(json["current_page"]).to eq 1
@@ -96,8 +96,8 @@ describe ProblemReportList, '#to_json' do
       end
     end
 
-    context 'when supplied with a page number parameter' do
-      it 'returns results for that particular page' do
+    context "when supplied with a page number parameter" do
+      it "returns results for that particular page" do
         json = JSON(described_class.new({page: 2}).to_json)
 
         expect(json["current_page"]).to eq 2
@@ -108,15 +108,15 @@ describe ProblemReportList, '#to_json' do
     end
   end
 
-  context 'results scoped to dates' do
+  context "results scoped to dates" do
     let!(:earlier_problem_report) { create :problem_report, created_at: created_at - 1.day }
     let!(:later_problem_report) { create :problem_report, created_at: created_at + 1.week + 2.day }
 
-    context 'when supplied with start and end date parameters' do
+    context "when supplied with start and end date parameters" do
       let(:from_date) { created_at - 1.week }
       let(:to_date) { created_at + 1.week }
 
-      it 'returns problem reports that are scoped to the dates' do
+      it "returns problem reports that are scoped to the dates" do
         json = JSON.parse(described_class.new({from_date: from_date.to_s, to_date: to_date.to_s}).to_json)
 
         expect(json["results"].length).to eq 2
@@ -126,8 +126,8 @@ describe ProblemReportList, '#to_json' do
       end
     end
 
-    context 'when supplied with a start date parameter' do
-      it 'returns problem reports from that date until today' do
+    context "when supplied with a start date parameter" do
+      it "returns problem reports from that date until today" do
         json = JSON.parse(described_class.new({from_date: created_at.to_s}).to_json)
 
         expect(json["results"].length).to eq 2
@@ -138,10 +138,10 @@ describe ProblemReportList, '#to_json' do
     end
   end
 
-  context 'when no parameters are supplied' do
+  context "when no parameters are supplied" do
     let!(:reviewed_report) { create :problem_report, reviewed: true}
 
-    it 'returns problem reports that are not marked as reviewed only' do
+    it "returns problem reports that are not marked as reviewed only" do
       json = JSON.parse(described_class.new({}).to_json)
 
       expect(json["results"].length).to eq 1
@@ -149,7 +149,7 @@ describe ProblemReportList, '#to_json' do
     end
   end
 
-  context 'with a full set of filter parameters supplied' do
+  context "with a full set of filter parameters supplied" do
     let!(:earliest_problem_report_unreviewed) { create :problem_report, created_at: created_at - 2.weeks }
     let!(:earlier_problem_report_reviewed) { create :problem_report, created_at: created_at - 2.days, reviewed: true }
     let!(:later_problem_report_reviewed) { create :problem_report, created_at: created_at + 1.day, reviewed: true }
@@ -162,7 +162,7 @@ describe ProblemReportList, '#to_json' do
       stub_const("AnonymousContact::PAGE_SIZE", 2)
     end
 
-    it 'returns problem reports that fulfil those filters exactly' do
+    it "returns problem reports that fulfil those filters exactly" do
       json = JSON.parse(described_class.new({from_date: from_date.to_s, to_date: to_date.to_s, include_reviewed: true, page: 2}).to_json)
 
       expect(json["results"].length).to eq 2

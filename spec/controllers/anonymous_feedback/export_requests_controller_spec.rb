@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
   describe "#create" do

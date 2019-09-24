@@ -1,6 +1,6 @@
-require 'yaml'
-require 'gds_zendesk/client'
-require 'gds_zendesk/dummy_client'
+require "yaml"
+require "gds_zendesk/client"
+require "gds_zendesk/dummy_client"
 
 ZENDESK_ANONYMOUS_TICKETS_REQUESTER_EMAIL = ENV["ZENDESK_ANONYMOUS_TICKET_EMAIL"] || "api-user@example.com"
 

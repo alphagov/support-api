@@ -1,14 +1,14 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe "Page Improvements" do
   it "responds succesfully" do
     stub_zendesk_ticket_creation
 
-    post '/page-improvements',
-         params: { url: 'https://gov.uk/service-manual/test', description: 'I have a problem' }
+    post "/page-improvements",
+         params: { url: "https://gov.uk/service-manual/test", description: "I have a problem" }
 
-    expect(response.code).to eq('201')
-    expect(response_hash).to include('status' => 'success')
+    expect(response.code).to eq("201")
+    expect(response_hash).to include("status" => "success")
   end
 
   it "sends the feedback to Zendesk" do
@@ -34,31 +34,31 @@ describe "Page Improvements" do
       }
     )
 
-    post '/page-improvements',
+    post "/page-improvements",
          params: {
-           url: 'https://gov.uk/service-manual/test',
-           description: 'I have a problem',
-           name: 'John',
-           email: 'john@example.com',
-           user_agent: 'Safari',
+           url: "https://gov.uk/service-manual/test",
+           description: "I have a problem",
+           name: "John",
+           email: "john@example.com",
+           user_agent: "Safari",
          }
 
     expect(zendesk_request).to have_been_made
   end
 
   it "responds unsuccessfully if the feedback isn't valid" do
-    post '/page-improvements',
-         params: { url: 'https://gov.uk/service-manual/test' }
+    post "/page-improvements",
+         params: { url: "https://gov.uk/service-manual/test" }
 
-    expect(response.code).to eq('422')
-    expect(response_hash).to include('status' => 'error')
+    expect(response.code).to eq("422")
+    expect(response_hash).to include("status" => "error")
   end
 
   it "returns errors if the feedback isn't valid" do
-    post '/page-improvements',
-         params: { url: 'https://gov.uk/service-manual/test' }
+    post "/page-improvements",
+         params: { url: "https://gov.uk/service-manual/test" }
 
-    expect(response_hash).to include('errors' => include('description' => include("can't be blank")))
+    expect(response_hash).to include("errors" => include("description" => include("can't be blank")))
   end
 
   context "when the user is not authenticated" do
@@ -67,7 +67,7 @@ describe "Page Improvements" do
     end
 
     it "returns an unauthorized response" do
-      post '/page-improvements', params: { url: 'https://gov.uk/service-manual/test' }
+      post "/page-improvements", params: { url: "https://gov.uk/service-manual/test" }
       expect(response).to be_unauthorized
     end
   end

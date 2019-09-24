@@ -1,4 +1,4 @@
-require 'date_parser'
+require "date_parser"
 
 class ProblemReportList
   def initialize(problem_report_index_params)

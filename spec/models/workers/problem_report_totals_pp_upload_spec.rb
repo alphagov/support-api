@@ -34,8 +34,8 @@ describe "problem report totals PP upload" do
     end
 
     allow(ProblemReport).to receive(:totals_for).and_return([
-      MockEntry.new('/vat-rates', 2),
-      MockEntry.new('/tax-disc', 1),
+      MockEntry.new("/vat-rates", 2),
+      MockEntry.new("/tax-disc", 1),
     ])
 
     Timecop.travel Time.utc(2014,9,30)

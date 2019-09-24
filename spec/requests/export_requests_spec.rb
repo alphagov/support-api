@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe "Export requests" do
   context "when the user is not authenticated" do
@@ -7,7 +7,7 @@ describe "Export requests" do
     end
 
     it "returns an unauthorized response" do
-      post '/anonymous-feedback/export-requests', params: {}.to_json
+      post "/anonymous-feedback/export-requests", params: {}.to_json
       expect(response).to be_unauthorized
     end
   end

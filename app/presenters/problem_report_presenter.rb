@@ -1,4 +1,4 @@
-require 'plek'
+require "plek"
 
 class ProblemReportPresenter
   include ActionView::Helpers
@@ -14,7 +14,7 @@ class ProblemReportPresenter
   def to_a
     [
       Plek.new.website_root + @problem_report.path,
-      @problem_report.created_at.strftime('%Y-%m-%d'),
+      @problem_report.created_at.strftime("%Y-%m-%d"),
       formatted_feedback,
       @problem_report.referrer,
     ]

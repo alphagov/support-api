@@ -1,4 +1,4 @@
-require 'field_which_may_contain_personal_information'
+require "field_which_may_contain_personal_information"
 
 class ContentImprovementFeedback < ApplicationRecord
   before_save :detect_personal_information

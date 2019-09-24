@@ -1,5 +1,5 @@
-require 'zendesk/long_form_contact_ticket'
-require 'zendesk/problem_report_ticket'
+require "zendesk/long_form_contact_ticket"
+require "zendesk/problem_report_ticket"
 
 class ZendeskTicketWorker
   include Sidekiq::Worker

@@ -1,8 +1,8 @@
-require 'json'
-require 'csv'
-require 'plek'
-require 'gds_api/test_helpers/content_store'
-require 'rails_helper'
+require "json"
+require "csv"
+require "plek"
+require "gds_api/test_helpers/content_store"
+require "rails_helper"
 
 describe "Problem reports" do
   include GdsApi::TestHelpers::ContentStore
@@ -11,18 +11,18 @@ describe "Problem reports" do
   # As a publisher
   # I want to record and view bugs, gripes submitted by GOV.UK users
 
-  let(:hmrc) { Organisation.where(slug: 'hm-revenue-customs').first }
+  let(:hmrc) { Organisation.where(slug: "hm-revenue-customs").first }
   let(:vat_rates_content_store_response) {
     {
-      base_path: '/vat-rates',
-      title: 'VAT Rates',
+      base_path: "/vat-rates",
+      title: "VAT Rates",
       links: {
         organisations: [
           {
-            content_id: '6667cce2-e809-4e21-ae09-cb0bdc1ddda3',
-            base_path: '/hm-revenue-customs',
-            title: 'HM Revenue & Customs',
-            document_type: 'organisation',
+            content_id: "6667cce2-e809-4e21-ae09-cb0bdc1ddda3",
+            base_path: "/hm-revenue-customs",
+            title: "HM Revenue & Customs",
+            document_type: "organisation",
           }
         ]
       }
@@ -46,7 +46,7 @@ describe "Problem reports" do
   end
 
   it "accepts and saves problem reports from the 'Is there anything wrong with this page?' form" do
-    content_store_has_item('/vat-rates', vat_rates_content_store_response)
+    content_store_has_item("/vat-rates", vat_rates_content_store_response)
 
     zendesk_request = expect_zendesk_to_receive_ticket(
       "subject" => "/vat-rates",
@@ -103,12 +103,12 @@ javascript_enabled: true
     )
   end
 
-  context 'reviewing for spam' do
+  context "reviewing for spam" do
     let(:problem_report_1)  { create(:problem_report) }
     let(:problem_report_2)  { create(:problem_report) }
     let(:problem_report_3)  { create(:problem_report) }
 
-    context 'when succesfully supplied with a list of problem feedback reviews' do
+    context "when succesfully supplied with a list of problem feedback reviews" do
       before do
         json_payload = {
             reviewed_problem_report_ids:
@@ -119,23 +119,23 @@ javascript_enabled: true
             }
         }.to_json
 
-        put '/anonymous-feedback/problem-reports/mark-reviewed-for-spam',
+        put "/anonymous-feedback/problem-reports/mark-reviewed-for-spam",
             params: json_payload,
-            headers: { "CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json' }
+            headers: { "CONTENT_TYPE" => "application/json", "HTTP_ACCEPT" => "application/json" }
       end
 
-      it 'returns a 200 OK' do
+      it "returns a 200 OK" do
         expect(response.status).to eq(200)
         expect(JSON.parse(response.body)).to eq({ "success" => true })
       end
 
-      it 'marks all supplied reports as reviewed' do
+      it "marks all supplied reports as reviewed" do
         expect(problem_report_1.reload.reviewed?).to eq true
         expect(problem_report_2.reload.reviewed?).to eq true
         expect(problem_report_3.reload.reviewed?).to eq true
       end
 
-      it 'marks the specified reports as spam' do
+      it "marks the specified reports as spam" do
         expect(problem_report_1.reload.marked_as_spam?).to eq true
         expect(problem_report_2.reload.marked_as_spam?).to eq true
         expect(problem_report_3.reload.marked_as_spam?).to eq false
@@ -153,9 +153,9 @@ javascript_enabled: true
             }
         }.to_json
 
-        put '/anonymous-feedback/problem-reports/mark-reviewed-for-spam',
+        put "/anonymous-feedback/problem-reports/mark-reviewed-for-spam",
             params: json_payload,
-            headers: { "CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json' }
+            headers: { "CONTENT_TYPE" => "application/json", "HTTP_ACCEPT" => "application/json" }
       end
 
       it "overwrite any reviewed reports with the supplied spam marking" do
@@ -164,7 +164,7 @@ javascript_enabled: true
       end
     end
 
-    context 'when supplied with ids that are non-existent' do
+    context "when supplied with ids that are non-existent" do
       let(:id) { 1 }
 
       before do
@@ -175,12 +175,12 @@ javascript_enabled: true
             }
         }.to_json
 
-        put '/anonymous-feedback/problem-reports/mark-reviewed-for-spam',
+        put "/anonymous-feedback/problem-reports/mark-reviewed-for-spam",
             params: json_payload,
-            headers: { "CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json' }
+            headers: { "CONTENT_TYPE" => "application/json", "HTTP_ACCEPT" => "application/json" }
       end
 
-      it 'returns a 404' do
+      it "returns a 404" do
         expect(response.status).to eq 404
         expect(JSON.parse(response.body)).to eq({ "success" => false })
       end
@@ -193,30 +193,30 @@ javascript_enabled: true
     end
 
     it "returns an unauthorized response for post" do
-      post '/anonymous-feedback/problem-reports', params: {}
+      post "/anonymous-feedback/problem-reports", params: {}
       expect(response).to be_unauthorized
     end
 
     it "returns an unauthorized response for totals" do
-      get '/anonymous-feedback/problem-reports/2013-02-11/totals'
+      get "/anonymous-feedback/problem-reports/2013-02-11/totals"
       expect(response).to be_unauthorized
     end
 
     it "returns an unauthorized response for mark-reviewed-for-spam" do
-      put '/anonymous-feedback/problem-reports/mark-reviewed-for-spam', params: {}
+      put "/anonymous-feedback/problem-reports/mark-reviewed-for-spam", params: {}
       expect(response).to be_unauthorized
     end
   end
 
 private
   def user_submits_a_problem_report(options)
-    post '/anonymous-feedback/problem-reports',
+    post "/anonymous-feedback/problem-reports",
          params: { "problem_report" => options }.to_json,
-         headers: { "CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json' }
+         headers: { "CONTENT_TYPE" => "application/json", "HTTP_ACCEPT" => "application/json" }
   end
 end
 
-describe 'Retrieving Problem Reports' do
+describe "Retrieving Problem Reports" do
   let!(:gds) {
     create(:gds)
   }
@@ -241,7 +241,7 @@ describe 'Retrieving Problem Reports' do
           )
   }
 
-  context 'with a full set of filter parameters supplied' do
+  context "with a full set of filter parameters supplied" do
     let!(:earliest_problem_report_unreviewed) { create :problem_report, created_at: created_at - 2.weeks }
     let!(:earlier_problem_report_reviewed) { create :problem_report, created_at: created_at - 2.days, reviewed: true }
     let!(:later_problem_report_reviewed) { create :problem_report, created_at: created_at + 1.day, reviewed: true }
@@ -257,7 +257,7 @@ describe 'Retrieving Problem Reports' do
           params: { from_date: from_date.to_s, to_date: to_date.to_s, include_reviewed: true, page: 2 }
     end
 
-    it 'returns problem reports that fulfil those filters exactly' do
+    it "returns problem reports that fulfil those filters exactly" do
       expect(json_response["results"].length).to eq 2
       expect(json_response["results"].first.values).to include problem_report.id
       expect(json_response["results"].second.values).to include earlier_problem_report_reviewed.id

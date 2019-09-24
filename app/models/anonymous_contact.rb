@@ -1,5 +1,5 @@
-require 'field_which_may_contain_personal_information'
-require 'duplicate_detector'
+require "field_which_may_contain_personal_information"
+require "duplicate_detector"
 
 class AnonymousContact < ApplicationRecord
   before_save :detect_personal_information
@@ -29,7 +29,7 @@ class AnonymousContact < ApplicationRecord
   scope :matching_path_prefixes, ->(paths) do
     if paths.present?
       similar_to = paths.map { |p| "#{p}%" }
-      where(similar_to.map { "anonymous_contacts.path LIKE ?" }.join(' OR '), *similar_to)
+      where(similar_to.map { "anonymous_contacts.path LIKE ?" }.join(" OR "), *similar_to)
     end
   end
 

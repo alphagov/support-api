@@ -1,4 +1,4 @@
-require 'date'
+require "date"
 
 class CorporateContentProblemReportAggregatedMetrics
   def initialize(year, month)

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe FeedbackCsvRowPresenter do
   subject(:instance) { described_class.new(row) }
@@ -211,7 +211,7 @@ describe FeedbackCsvRowPresenter do
     context "for aggregated service feedback" do
       let(:row) { aggregated_service_feedback }
 
-      it 'is a sentence explaining the rating and how many ratings there were' do
+      it "is a sentence explaining the rating and how many ratings there were" do
         expect(subject).to eq("Rating of 3: 1")
       end
     end

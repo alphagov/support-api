@@ -1,4 +1,4 @@
-require 'gds_api/organisations'
+require "gds_api/organisations"
 
 class OrganisationImporter
   def run
@@ -17,15 +17,15 @@ class OrganisationImporter
 
   def create_or_update_organisation(organisation_from_api)
     organisation_attrs = {
-      title: organisation_from_api['title'],
-      slug: organisation_from_api['details']['slug'],
-      acronym: organisation_from_api['details']['abbreviation'],
-      govuk_status: organisation_from_api['details']['govuk_status'],
-      web_url: organisation_from_api['web_url'],
-      content_id: organisation_from_api['details']['content_id'],
+      title: organisation_from_api["title"],
+      slug: organisation_from_api["details"]["slug"],
+      acronym: organisation_from_api["details"]["abbreviation"],
+      govuk_status: organisation_from_api["details"]["govuk_status"],
+      web_url: organisation_from_api["web_url"],
+      content_id: organisation_from_api["details"]["content_id"],
     }
 
-    content_id = organisation_from_api['details']['content_id']
+    content_id = organisation_from_api["details"]["content_id"]
     existing_organisation = Organisation.find_by(content_id: content_id)
 
     if existing_organisation.present?
@@ -64,6 +64,6 @@ class OrganisationImporter
   end
 
   def organisations_api
-    @api_client ||= GdsApi::Organisations.new(Plek.current.find('whitehall-admin'))
+    @api_client ||= GdsApi::Organisations.new(Plek.current.find("whitehall-admin"))
   end
 end

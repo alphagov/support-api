@@ -1,5 +1,5 @@
-require 'spec_helper'
-require 'duplicate_detector'
+require "spec_helper"
+require "duplicate_detector"
 
 describe DuplicateDetector do
   let(:current_time) { Time.now }

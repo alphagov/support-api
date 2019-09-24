@@ -16,6 +16,6 @@ class FieldWhichMayContainPersonalInformation
   end
 
   def include_national_insurance_number?
-    not @text.nil? and @text.gsub(/\s/, '') =~ NATIONAL_INSURANCE_NUMBER_PATTERN
+    not @text.nil? and @text.gsub(/\s/, "") =~ NATIONAL_INSURANCE_NUMBER_PATTERN
   end
 end

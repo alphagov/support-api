@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe AnonymousFeedbackController, type: :controller do
   describe "#index" do
@@ -100,8 +100,8 @@ describe AnonymousFeedbackController, type: :controller do
 
     describe "it allows search by document type" do
       it "is returns a successful result with any `document_type`" do
-        create(:content_item, document_type: 'smart_answer', path: '/calculate-your-holiday-entitlement')
-        get :index, params: { document_type: 'smart_answer' }
+        create(:content_item, document_type: "smart_answer", path: "/calculate-your-holiday-entitlement")
+        get :index, params: { document_type: "smart_answer" }
         expect(response).to be_successful
       end
 
@@ -165,8 +165,8 @@ describe AnonymousFeedbackController, type: :controller do
     end
 
     describe "filter by organisation" do
-      let(:hmrc) { create(:organisation, slug: 'hm-revenue-customs') }
-      let(:ukvi) { create(:organisation, slug: 'uk-visas-and-immigration') }
+      let(:hmrc) { create(:organisation, slug: "hm-revenue-customs") }
+      let(:ukvi) { create(:organisation, slug: "uk-visas-and-immigration") }
       let(:ukvi_content) { create(:content_item, organisations: [ukvi]) }
       let(:hmrc_content) { create(:content_item, organisations: [hmrc]) }
       let!(:hmrc_problem_reports) { create_list(:problem_report, 3, path: "/abc", content_item: hmrc_content) }
@@ -203,16 +203,16 @@ describe AnonymousFeedbackController, type: :controller do
     end
 
     describe "filter by document type" do
-      let(:hmrc) { create(:organisation, slug: 'hm-revenue-customs') }
+      let(:hmrc) { create(:organisation, slug: "hm-revenue-customs") }
       let(:smart_answer) {
         create(
           :content_item,
-          document_type: 'smart_answer',
-          path: '/calculate-your-holiday-entitlement',
+          document_type: "smart_answer",
+          path: "/calculate-your-holiday-entitlement",
           organisations: [hmrc]
         )
       }
-      let(:case_study) { create(:content_item, document_type: 'case_study', path: '/government/case-studies/out-of-syria-back-into-school') }
+      let(:case_study) { create(:content_item, document_type: "case_study", path: "/government/case-studies/out-of-syria-back-into-school") }
       let!(:sa_problem_report) { create(:problem_report, path: "/xyz", content_item: smart_answer) }
       let!(:cs_problem_reports) { create_list(:problem_report, 2, content_item: case_study) }
 
@@ -355,7 +355,7 @@ describe AnonymousFeedbackController, type: :controller do
     context "when using POST as the HTTP method" do
       context "with an existing content item" do
         let(:content_item) do
-          create(:content_item, document_type: 'smart_answer', path: "/calculate-your-holiday-entitlement")
+          create(:content_item, document_type: "smart_answer", path: "/calculate-your-holiday-entitlement")
         end
 
         before do
@@ -363,7 +363,7 @@ describe AnonymousFeedbackController, type: :controller do
         end
 
         it "returns the content item in the results when searching for it" do
-          post :index, params: { document_type: 'smart_answer' }
+          post :index, params: { document_type: "smart_answer" }
 
           expect(response).to be_successful
           expect(json_response["total_count"]).to eq(1)

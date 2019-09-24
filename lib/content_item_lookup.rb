@@ -1,5 +1,5 @@
-require 'content_store_lookup'
-require 'looked_up_content_item'
+require "content_store_lookup"
+require "looked_up_content_item"
 
 class ContentItemLookup
   def initialize(content_store:)

@@ -1,9 +1,9 @@
-require 'rails_helper'
-require 'performance_platform_service_feedback_metrics'
+require "rails_helper"
+require "performance_platform_service_feedback_metrics"
 
 describe PerformancePlatformServiceFeedbackMetrics do
   subject(:metric_generator) {
-    described_class.new(day: Date.new(2013, 2, 10), slug: 'apply-carers-allowance')
+    described_class.new(day: Date.new(2013, 2, 10), slug: "apply-carers-allowance")
   }
 
   context "with valid aggregated feedback" do

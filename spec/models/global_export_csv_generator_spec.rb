@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe GlobalExportCsvGenerator do
   let(:from_date) { Date.new(2015, 6, 1) }
@@ -15,16 +15,16 @@ describe GlobalExportCsvGenerator do
   let(:result) { described_class.new(from_date, to_date, false).call.last }
 
   describe "#call" do
-    context 'with spam included' do
+    context "with spam included" do
 
       it "returns the correct reports" do
         expect(result.split("\n")).to eq([
-          'date,report_count',
-          '2015-06-01,3',
-          '2015-06-02,3',
-          '2015-06-03,1',
-          '2015-06-04,1',
-          '2015-06-05,1',
+          "date,report_count",
+          "2015-06-01,3",
+          "2015-06-02,3",
+          "2015-06-03,1",
+          "2015-06-04,1",
+          "2015-06-05,1",
         ])
       end
     end
@@ -41,17 +41,17 @@ describe GlobalExportCsvGenerator do
       expect(filename).to eq("feedex_#{from_date.iso8601}_#{to_date.iso8601}_spam_excluded.csv")
     end
 
-    context 'with spam excluded' do
+    context "with spam excluded" do
       let(:result) { described_class.new(from_date, to_date, true).call.last }
 
       it "returns the correct reports" do
         expect(result.split("\n")).to eq([
-          'date,report_count',
-          '2015-06-01,1',
-          '2015-06-02,3',
-          '2015-06-03,1',
-          '2015-06-04,1',
-          '2015-06-05,1',
+          "date,report_count",
+          "2015-06-01,1",
+          "2015-06-02,3",
+          "2015-06-03,1",
+          "2015-06-04,1",
+          "2015-06-05,1",
         ])
       end
     end

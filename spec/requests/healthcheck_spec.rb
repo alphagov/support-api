@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe "healthcheck path" do
   it "responds with 'OK'" do

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe "Organisations that have feedback left on 'their' content" do
   let(:hmrc_info) {

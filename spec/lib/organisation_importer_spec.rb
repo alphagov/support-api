@@ -1,5 +1,5 @@
-require 'rails_helper'
-require 'organisation_importer'
+require "rails_helper"
+require "organisation_importer"
 
 describe OrganisationImporter do
   before do

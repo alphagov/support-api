@@ -1,4 +1,4 @@
-require 'zendesk/ticket'
+require "zendesk/ticket"
 
 module Zendesk
   class LongFormContactTicket < Ticket
@@ -13,7 +13,7 @@ module Zendesk
 
   protected
     def template_name
-      'long_form_contact'
+      "long_form_contact"
     end
 
     def requester

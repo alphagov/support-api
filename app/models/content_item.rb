@@ -52,7 +52,7 @@ class ContentItem < ApplicationRecord
   end
 
   def self.all_document_types
-    self.distinct.pluck(:document_type).reject { |d| d == '' }.compact
+    self.distinct.pluck(:document_type).reject { |d| d == "" }.compact
   end
 
   def self.midnight_last_night

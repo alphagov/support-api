@@ -39,25 +39,25 @@ Rails.application.routes.draw do
               controller: "content_improvement",
               as: "content_improvement"
 
-    get '/problem-reports/:date/totals',
+    get "/problem-reports/:date/totals",
         constraints: { date: /\d{4}-\d{2}-\d{2}/ },
-        to: 'problem_reports#totals'
+        to: "problem_reports#totals"
 
-    get '/problem-reports',
-        to: 'problem_reports#index'
+    get "/problem-reports",
+        to: "problem_reports#index"
 
-    put '/problem-reports/mark-reviewed-for-spam',
+    put "/problem-reports/mark-reviewed-for-spam",
          format: false,
-         to: 'problem_reports#mark_reviewed_for_spam'
+         to: "problem_reports#mark_reviewed_for_spam"
 
-    get '/organisations/:slug', to: 'organisations#show'
-    get '/document-types', to: 'document_types#index', format: false
-    get '/document-types/:document_type', to: 'document_types#show', format: false
+    get "/organisations/:slug", to: "organisations#show"
+    get "/document-types", to: "document_types#index", format: false
+    get "/document-types/:document_type", to: "document_types#show", format: false
   end
 
-  resources 'page-improvements',
-            controller: 'page_improvements',
-            as: 'page_improvement',
+  resources "page-improvements",
+            controller: "page_improvements",
+            as: "page_improvement",
             only: [:create]
 
   resources :organisations,
@@ -65,7 +65,7 @@ Rails.application.routes.draw do
             format: false,
             param: :slug
 
-  get '/feedback-by-day/:date', to: 'feedback_by_day#index', format: false
+  get "/feedback-by-day/:date", to: "feedback_by_day#index", format: false
 
   get "/healthcheck", :to => proc { [200, {}, ["OK"]] }
 end

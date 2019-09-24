@@ -1,4 +1,4 @@
-require 'problem_report_list'
+require "problem_report_list"
 
 module AnonymousFeedback
   class ProblemReportsController < ApplicationController
@@ -85,8 +85,8 @@ module AnonymousFeedback
 
     def parse_interval
       @interval = case filters[:period]
-                  when /^\d{4}-\d{2}-\d{2}$/ then Time.strptime(filters[:period], '%Y-%m-%d').all_day
-                  when /^\d{4}-\d{2}$/ then DateTime.strptime(filters[:period], '%Y-%m').all_month
+                  when /^\d{4}-\d{2}-\d{2}$/ then Time.strptime(filters[:period], "%Y-%m-%d").all_day
+                  when /^\d{4}-\d{2}$/ then DateTime.strptime(filters[:period], "%Y-%m").all_month
                   else nil
                   end
       head :unprocessable_entity unless @interval

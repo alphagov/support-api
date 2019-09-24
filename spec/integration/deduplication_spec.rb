@@ -1,6 +1,6 @@
-require 'rails_helper'
-require 'time'
-require 'deduplication_worker'
+require "rails_helper"
+require "time"
+require "deduplication_worker"
 
 describe "de-duplication" do
   let(:record1) {

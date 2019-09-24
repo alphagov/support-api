@@ -1,7 +1,7 @@
-require 'rails_helper'
-require 'time'
-require 'json'
-require 'gds_api/test_helpers/performance_platform/data_in'
+require "rails_helper"
+require "time"
+require "json"
+require "gds_api/test_helpers/performance_platform/data_in"
 
 describe "corporate content problem report stats" do
   include GdsApi::TestHelpers::PerformancePlatform::DataIn

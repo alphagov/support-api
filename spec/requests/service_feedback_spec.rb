@@ -1,5 +1,5 @@
-require 'json'
-require 'rails_helper'
+require "json"
+require "rails_helper"
 
 describe "Service feedback" do
   # In order to fix and improve my service (that's linked on GOV.UK)
@@ -20,7 +20,7 @@ describe "Service feedback" do
       javascript_enabled: true,
     )
 
-    expect(ServiceFeedback.where(slug: 'find-court-tribunal').count).to eq(1)
+    expect(ServiceFeedback.where(slug: "find-court-tribunal").count).to eq(1)
   end
 
   it "accepts submissions without comments" do
@@ -32,7 +32,7 @@ describe "Service feedback" do
       javascript_enabled: true,
     )
 
-    expect(ServiceFeedback.where(slug: 'apply-carers-allowance').count).to eq(1)
+    expect(ServiceFeedback.where(slug: "apply-carers-allowance").count).to eq(1)
   end
 
   it "validates the service feedback" do
@@ -43,9 +43,9 @@ describe "Service feedback" do
       javascript_enabled: true,
     }
 
-    post '/anonymous-feedback/service-feedback',
+    post "/anonymous-feedback/service-feedback",
          params: { "service_feedback" => options }.to_json,
-         headers: { "CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json' }
+         headers: { "CONTENT_TYPE" => "application/json", "HTTP_ACCEPT" => "application/json" }
 
     expect(response.status).to eq(422)
     expect(JSON.parse(response.body)["errors"]).to include(
@@ -60,16 +60,16 @@ describe "Service feedback" do
     end
 
     it "returns an unauthorized response" do
-      post '/anonymous-feedback/service-feedback', params: {}
+      post "/anonymous-feedback/service-feedback", params: {}
       expect(response).to be_unauthorized
     end
   end
 
   private
   def user_submits_satisfaction_survey_on_done_page(options)
-    post '/anonymous-feedback/service-feedback',
+    post "/anonymous-feedback/service-feedback",
          params: { "service_feedback" => options }.to_json,
-         headers: { "CONTENT_TYPE" => 'application/json', 'HTTP_ACCEPT' => 'application/json' }
+         headers: { "CONTENT_TYPE" => "application/json", "HTTP_ACCEPT" => "application/json" }
 
     expect(response.status).to eq(202)
   end

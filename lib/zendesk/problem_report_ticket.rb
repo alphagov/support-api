@@ -1,6 +1,6 @@
-require 'uri'
-require 'zendesk/ticket'
-require 'plek'
+require "uri"
+require "zendesk/ticket"
+require "plek"
 
 module Zendesk
   class ProblemReportTicket < Ticket
@@ -15,7 +15,7 @@ module Zendesk
 
   protected
     def template_name
-      'problem_report'
+      "problem_report"
     end
 
     def requester

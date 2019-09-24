@@ -1,6 +1,6 @@
-require 'rails_helper'
-require 'date'
-require 'gds_api/test_helpers/performance_platform/data_in'
+require "rails_helper"
+require "date"
+require "gds_api/test_helpers/performance_platform/data_in"
 
 describe ProblemReportStatsPPUploaderWorker do
   include GdsApi::TestHelpers::PerformancePlatform::DataIn

@@ -1,4 +1,4 @@
-require 'gds_api/performance_platform/data_out'
+require "gds_api/performance_platform/data_out"
 
 class BackfillHistoricAggregatedServiceFeedback
   def initialize(start_date, end_date, logger)

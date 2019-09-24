@@ -1,10 +1,10 @@
 namespace :service_feedback_aggregation do
   desc "Extract service feedback of previous day to a different table, and add aggregated results"
   task :daily => :environment do
-    require 'service_feedback_aggregator'
-    require 'distributed_lock'
+    require "service_feedback_aggregator"
+    require "distributed_lock"
 
-    DistributedLock.new('service_feedback_aggregation').lock do
+    DistributedLock.new("service_feedback_aggregation").lock do
       date_range = Date.yesterday..Date.yesterday
       aggregate(date_range)
       Rails.logger.info "Daily service feedback aggregation has finished"
@@ -13,7 +13,7 @@ namespace :service_feedback_aggregation do
 
   desc "Extract service feedback of specified date to a different table, and add aggregated results. Enter date in DD-MM-YYYY format."
   task :date, [:start_date, :end_date] => :environment do |t, args|
-    require 'service_feedback_aggregator'
+    require "service_feedback_aggregator"
 
     start_date = Date.parse(args[:start_date])
     end_date = Date.parse(args[:end_date])

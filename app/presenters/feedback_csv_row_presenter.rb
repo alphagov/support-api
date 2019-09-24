@@ -1,4 +1,4 @@
-require 'user_agent_parser'
+require "user_agent_parser"
 
 class FeedbackCsvRowPresenter
   attr_reader :row

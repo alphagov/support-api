@@ -13,9 +13,9 @@ class PageImprovement
 
   def zendesk_ticket_attributes
     {
-      'subject' => url,
-      'comment' => {
-        'body' => ticket_body
+      "subject" => url,
+      "comment" => {
+        "body" => ticket_body
       }
     }
   end

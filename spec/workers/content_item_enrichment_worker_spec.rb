@@ -1,10 +1,10 @@
-require 'rails_helper'
-require 'gds_api/test_helpers/content_store'
+require "rails_helper"
+require "gds_api/test_helpers/content_store"
 
 describe ContentItemEnrichmentWorker do
   include GdsApi::TestHelpers::ContentStore
 
-  let(:raw_path) { 'my-magic-govuk-endpoint' }
+  let(:raw_path) { "my-magic-govuk-endpoint" }
   let(:path) { "/#{raw_path}" }
   let(:problem_report) { create(:problem_report, path: path) }
   subject(:worker) { described_class.new }

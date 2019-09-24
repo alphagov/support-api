@@ -26,8 +26,8 @@ private
 
   def generate_csv
     CSV.generate do |csv|
-      csv << ['date', 'report_count']
-      results.each { |r| csv << [r[:created_at_date].strftime('%Y-%m-%d'), r[:report_count]] }
+      csv << ["date", "report_count"]
+      results.each { |r| csv << [r[:created_at_date].strftime("%Y-%m-%d"), r[:report_count]] }
     end
   end
 

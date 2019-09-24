@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe "Anonymous feedback feed" do
   # In order to improve information and services on GOV.UK

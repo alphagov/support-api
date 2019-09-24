@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe ContentItem do
   let(:orgs) { create_list(:organisation, 2) }

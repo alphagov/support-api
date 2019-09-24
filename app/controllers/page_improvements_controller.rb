@@ -5,9 +5,9 @@ class PageImprovementsController < ApplicationController
     if page_improvement.valid?
       GDS_ZENDESK_CLIENT.ticket.create!(page_improvement.zendesk_ticket_attributes)
 
-      render json: { status: 'success' }, status: 201
+      render json: { status: "success" }, status: 201
     else
-      render json: { status: 'error', errors: page_improvement.errors }, status: 422
+      render json: { status: "error", errors: page_improvement.errors }, status: 422
     end
   end
 
