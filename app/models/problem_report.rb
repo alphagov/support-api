@@ -1,8 +1,8 @@
 require "csv"
 
 class ProblemReport < AnonymousContact
-  validates :what_doing, length: { maximum: 2 ** 16 }
-  validates :what_wrong, length: { maximum: 2 ** 16 }
+  validates :what_doing, length: { maximum: 2**16 }
+  validates :what_wrong, length: { maximum: 2**16 }
 
   scope :totals_for, ->(date) {
     where(created_at: date.beginning_of_day..date.end_of_day).

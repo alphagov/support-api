@@ -10,7 +10,7 @@ class AnonymousContact < ApplicationRecord
   validates :referrer, referrer_url: true, length: { maximum: 2048 }, allow_nil: true
   validates :path,     url: true, length: { maximum: 2048 }, presence: true
   validates :user_agent, length: { maximum: 2048 }
-  validates :details, length: { maximum: 2 ** 16 }
+  validates :details, length: { maximum: 2**16 }
   validates_inclusion_of :javascript_enabled, in: [true, false]
   validates_inclusion_of :personal_information_status, in: %w[suspected absent], allow_nil: true
   validates_inclusion_of :is_actionable, in: [true, false]

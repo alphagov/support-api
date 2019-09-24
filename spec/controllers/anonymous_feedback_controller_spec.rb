@@ -270,7 +270,7 @@ describe AnonymousFeedbackController, type: :controller do
           get :index, params: { path_prefixes: ["/"], from: from, to: to }
 
           expect(json_response).to eq(
-            "results" =>JSON.parse([@newest_contact, @third_contact, @second_contact, @first_contact].to_json),
+            "results" => JSON.parse([@newest_contact, @third_contact, @second_contact, @first_contact].to_json),
             "page_size" => 50,
             "total_count" => 4,
             "current_page" => 1,
@@ -287,7 +287,7 @@ describe AnonymousFeedbackController, type: :controller do
           get :index, params: { path_prefixes: ["/"], from: from, to: to }
 
           expect(json_response).to eq(
-            "results" =>JSON.parse([@third_contact, @second_contact].to_json),
+            "results" => JSON.parse([@third_contact, @second_contact].to_json),
             "from_date" => "2014-10-13",
             "to_date" => "2014-12-01",
             "page_size" => 50,
@@ -305,7 +305,7 @@ describe AnonymousFeedbackController, type: :controller do
           get :index, params: { path_prefixes: ["/"], from: from, to: to }
 
           expect(json_response).to eq(
-            "results" =>JSON.parse([@newest_contact, @third_contact, @second_contact].to_json),
+            "results" => JSON.parse([@newest_contact, @third_contact, @second_contact].to_json),
             "page_size" => 50,
             "total_count" => 3,
             "current_page" => 1,
@@ -322,7 +322,7 @@ describe AnonymousFeedbackController, type: :controller do
           get :index, params: { path_prefixes: ["/"], from: from, to: to }
 
           expect(json_response).to eq(
-            "results" =>JSON.parse([@third_contact, @second_contact, @first_contact].to_json),
+            "results" => JSON.parse([@third_contact, @second_contact, @first_contact].to_json),
             "page_size" => 50,
             "total_count" => 3,
             "current_page" => 1,
@@ -340,7 +340,7 @@ describe AnonymousFeedbackController, type: :controller do
           get :index, params: { path_prefixes: ["/"], from: from, to: to }
 
           expect(json_response).to eq(
-            "results" =>JSON.parse([@newest_contact, @third_contact].to_json),
+            "results" => JSON.parse([@newest_contact, @third_contact].to_json),
             "page_size" => 50,
             "total_count" => 2,
             "current_page" => 1,
