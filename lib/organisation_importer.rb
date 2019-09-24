@@ -54,7 +54,7 @@ private
   end
 
   def json_log_formatter
-    proc { |severity, datetime, progname, message|
+    proc { |_severity, datetime, _progname, message|
       {
         "@message" => message,
         "@tags" => %w[cron rake],

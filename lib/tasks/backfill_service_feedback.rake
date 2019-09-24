@@ -1,6 +1,6 @@
 namespace :backfill_service_feedback do
   desc "Overwrites aggregated service feedback with data from performance platform"
-  task :import_from_performance_platform, %i[start_date_string end_date_string slug] => :environment do |t, args|
+  task :import_from_performance_platform, %i[start_date_string end_date_string slug] => :environment do |_t, args|
     require File.join(Rails.root, "lib", "backfill_historic_aggregated_service_feedback")
 
     raise "Start and end date required" unless args[:start_date_string] && args[:end_date_string]
