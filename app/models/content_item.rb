@@ -6,7 +6,7 @@ class ContentItem < ApplicationRecord
 
   scope :for_organisation, ->(organisation) {
     joins(:organisations).
-    where(organisations: { id: organisation.id})
+    where(organisations: { id: organisation.id })
   }
 
   scope :for_document_type, ->(document_type) {

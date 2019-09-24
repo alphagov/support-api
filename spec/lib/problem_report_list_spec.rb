@@ -49,7 +49,7 @@ describe ProblemReportList, "#to_json" do
       }
     }
 
-    let(:json) { JSON.parse(described_class.new({from_date: from_date.to_s, to_date: to_date.to_s}).to_json) }
+    let(:json) { JSON.parse(described_class.new({ from_date: from_date.to_s, to_date: to_date.to_s }).to_json) }
 
     it "returns JSON representations of problem reports" do
       expect(json["results"].first).to include(expected_report_json)
@@ -97,7 +97,7 @@ describe ProblemReportList, "#to_json" do
 
     context "when supplied with a page number parameter" do
       it "returns results for that particular page" do
-        json = JSON(described_class.new({page: 2}).to_json)
+        json = JSON(described_class.new({ page: 2 }).to_json)
 
         expect(json["current_page"]).to eq 2
         expect(json["results"].length).to eq 1
@@ -116,7 +116,7 @@ describe ProblemReportList, "#to_json" do
       let(:to_date) { created_at + 1.week }
 
       it "returns problem reports that are scoped to the dates" do
-        json = JSON.parse(described_class.new({from_date: from_date.to_s, to_date: to_date.to_s}).to_json)
+        json = JSON.parse(described_class.new({ from_date: from_date.to_s, to_date: to_date.to_s }).to_json)
 
         expect(json["results"].length).to eq 2
 
@@ -127,7 +127,7 @@ describe ProblemReportList, "#to_json" do
 
     context "when supplied with a start date parameter" do
       it "returns problem reports from that date until today" do
-        json = JSON.parse(described_class.new({from_date: created_at.to_s}).to_json)
+        json = JSON.parse(described_class.new({ from_date: created_at.to_s }).to_json)
 
         expect(json["results"].length).to eq 2
 
@@ -162,7 +162,7 @@ describe ProblemReportList, "#to_json" do
     end
 
     it "returns problem reports that fulfil those filters exactly" do
-      json = JSON.parse(described_class.new({from_date: from_date.to_s, to_date: to_date.to_s, include_reviewed: true, page: 2}).to_json)
+      json = JSON.parse(described_class.new({ from_date: from_date.to_s, to_date: to_date.to_s, include_reviewed: true, page: 2 }).to_json)
 
       expect(json["results"].length).to eq 2
       expect(json["results"].first.values).to include problem_report.id

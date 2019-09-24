@@ -59,7 +59,7 @@ what_wrong: Fell on floor
 user_agent: Safari
 referrer: http://www.dev.gov.uk/pay-vat
 javascript_enabled: true
-"}
+" }
 )
 
     user_submits_a_problem_report(

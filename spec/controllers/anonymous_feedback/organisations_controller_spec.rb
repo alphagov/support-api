@@ -23,13 +23,13 @@ RSpec.describe AnonymousFeedback::OrganisationsController, type: :controller do
           expect(ContentItem).to receive(:for_organisation).with(organisation)
             .and_return(scope)
           expect(scope).to receive(:summary).with("last_30_days").and_return([{
-            "path" => "/", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 3}])
+            "path" => "/", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 3 }])
 
           expect(JSON.parse(subject.body)).to eq(
             "slug" => "ministry-of-magic",
             "title" => "Ministry of Magic",
             "anonymous_feedback_counts" => [
-              {"path" => "/", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 3},
+              { "path" => "/", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 3 },
             ],
           )
         end
@@ -43,13 +43,13 @@ RSpec.describe AnonymousFeedback::OrganisationsController, type: :controller do
           expect(ContentItem).to receive(:for_organisation).with(organisation)
             .and_return(scope)
           expect(scope).to receive(:summary).with("last_7_days").and_return([{
-            "path" => "/", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 3}])
+            "path" => "/", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 3 }])
 
           expect(JSON.parse(subject.body)).to eq(
             "slug" => "ministry-of-magic",
             "title" => "Ministry of Magic",
             "anonymous_feedback_counts" => [
-              {"path" => "/", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 3},
+              { "path" => "/", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 3 },
             ],
           )
         end
