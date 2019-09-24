@@ -13,7 +13,7 @@ describe "Anonymous feedback feed" do
         path: "/help",
         referrer: "https://www.gov.uk/browse",
         user_agent: "Safari",
-        created_at: Time.utc(2015, 02, 03),)
+        created_at: Time.utc(2015, 0o2, 0o3),)
     end
 
     let!(:service_feedback) do
@@ -21,7 +21,7 @@ describe "Anonymous feedback feed" do
         slug: "waste_carrier_or_broker_registration",
         service_satisfaction_rating: 3,
         details: "meh",
-        created_at: Time.utc(2015, 02, 02),
+        created_at: Time.utc(2015, 0o2, 0o2),
         path: "/done/waste_carrier_or_broker_registration",
         referrer: "https://www.wastecarrier.service.gov.uk",
         user_agent: "iPhone",)
@@ -30,7 +30,7 @@ describe "Anonymous feedback feed" do
     let!(:long_form_contact) do
       create(:long_form_contact,
         details: "The VAT rate is wrong",
-        created_at: Time.utc(2015, 02, 01),
+        created_at: Time.utc(2015, 0o2, 0o1),
         path: "/contact/govuk",
         referrer: "https://www.gov.uk/contact",
         user_specified_url: "https://www.gov.uk/vat-rates",

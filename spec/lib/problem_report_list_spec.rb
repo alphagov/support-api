@@ -7,7 +7,7 @@ describe ProblemReportList, "#to_json" do
   let(:path)       { "/help" }
   let(:referrer)   { "https://www.gov.uk/browse" }
   let(:user_agent) { "Safari" }
-  let(:created_at) { Date.new(2015, 02, 02) }
+  let(:created_at) { Date.new(2015, 0o2, 0o2) }
 
   let!(:problem_report) {
     create(:problem_report,

@@ -251,7 +251,7 @@ describe AnonymousFeedbackController, type: :controller do
     end
 
     describe "from and to parameters" do
-      let(:first_date)  { Time.new(2014, 01, 01).utc }
+      let(:first_date)  { Time.new(2014, 0o1, 0o1).utc }
       let(:second_date) { Time.new(2014, 10, 31).utc }
       let(:third_date)  { Time.new(2014, 11, 25).utc }
       let(:last_date)   { Time.new(2014, 12, 12).utc }
