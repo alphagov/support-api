@@ -1,6 +1,6 @@
 namespace :service_feedback_aggregation do
   desc "Extract service feedback of previous day to a different table, and add aggregated results"
-  task :daily => :environment do
+  task daily: :environment do
     require "service_feedback_aggregator"
     require "distributed_lock"
 

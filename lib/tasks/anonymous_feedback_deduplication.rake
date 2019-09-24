@@ -1,6 +1,6 @@
 namespace :anonymous_feedback_deduplication do
   desc "Trigger deduplication for yesterday's anonymous feedback"
-  task :nightly => :environment do
+  task nightly: :environment do
     require "deduplication_worker"
     require "distributed_lock"
 
@@ -11,7 +11,7 @@ namespace :anonymous_feedback_deduplication do
   end
 
   desc "Trigger deduplication for recently created anonymous feedback (run regularly)"
-  task :recent => :environment do
+  task recent: :environment do
     require "deduplication_worker"
     require "distributed_lock"
 

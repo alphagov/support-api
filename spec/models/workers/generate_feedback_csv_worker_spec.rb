@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe GenerateFeedbackCsvWorker, :type => :worker do
+describe GenerateFeedbackCsvWorker, type: :worker do
   describe "#perform" do
     let(:feedback_export_request) { create(:feedback_export_request) }
 

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe AnonymousContact, :type => :model do
+describe AnonymousContact, type: :model do
   def new_contact(options = {})
     build(:anonymous_contact, options)
   end
