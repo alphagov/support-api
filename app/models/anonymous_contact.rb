@@ -22,8 +22,8 @@ class AnonymousContact < ApplicationRecord
   scope :only_actionable, -> { where(is_actionable: true) }
   scope :most_recent_first, -> { order(created_at: :desc) }
   scope :most_recent_last, -> { order(created_at: :asc) }
-  scope :created_between_days, -> (first_date, last_date) { where(created_at: first_date..last_date.at_end_of_day) }
-  scope :for_organisation_slug, -> (slug) { joins(:organisations).where(organisations: { slug: slug }) }
+  scope :created_between_days, ->(first_date, last_date) { where(created_at: first_date..last_date.at_end_of_day) }
+  scope :for_organisation_slug, ->(slug) { joins(:organisations).where(organisations: { slug: slug }) }
   scope :for_document_type, ->(document_type) { joins(:content_item).where(content_items: { document_type: document_type }) }
 
   scope :matching_path_prefixes, ->(paths) do
