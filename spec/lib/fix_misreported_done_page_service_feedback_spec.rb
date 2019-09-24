@@ -154,7 +154,6 @@ RSpec.describe FixMisreportedDonePageServiceFeedback do
             subject.fix!(service_slug)
             expect(perf_platform_request).to have_been_requested
           end
-
         end
 
         context "no aggregate data returned" do

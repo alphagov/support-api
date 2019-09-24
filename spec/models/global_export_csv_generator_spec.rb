@@ -16,7 +16,6 @@ describe GlobalExportCsvGenerator do
 
   describe "#call" do
     context "with spam included" do
-
       it "returns the correct reports" do
         expect(result.split("\n")).to eq([
           "date,report_count",

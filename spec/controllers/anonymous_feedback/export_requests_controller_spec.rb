@@ -114,7 +114,6 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
       it "returns a status of not ready" do
         expect(JSON.parse(response.body)["ready"]).to be false
       end
-
     end
 
     context "requesting a processed export request" do

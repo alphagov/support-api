@@ -42,5 +42,4 @@ describe "corporate content problem report stats" do
     expect(stub_post1).to have_been_made
     expect(stub_post2).to have_been_made
   end
-
 end
