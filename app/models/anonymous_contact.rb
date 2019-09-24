@@ -77,6 +77,7 @@ class AnonymousContact < ApplicationRecord
   end
 
 private
+
   def detect_personal_information
     self.personal_information_status ||= personal_info_present? ? "suspected" : "absent"
   end

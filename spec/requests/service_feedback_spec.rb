@@ -66,6 +66,7 @@ describe "Service feedback" do
   end
 
   private
+
   def user_submits_satisfaction_survey_on_done_page(options)
     post "/anonymous-feedback/service-feedback",
          params: { "service_feedback" => options }.to_json,

@@ -71,6 +71,7 @@ true
   end
 
 private
+
   def user_submits_a_long_form_anonymous_contact(options)
     post "/anonymous-feedback/long-form-contacts",
          params: { "long_form_contact" => options }.to_json,

@@ -23,6 +23,7 @@ class TopUrls
   end
 
   private
+
   def top_urls_for(org_acronym)
     ProblemReport.
       only_actionable.

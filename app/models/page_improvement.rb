@@ -21,6 +21,7 @@ class PageImprovement
   end
 
 private
+
   attr_reader :description, :email, :name, :url, :user_agent
 
   def ticket_body

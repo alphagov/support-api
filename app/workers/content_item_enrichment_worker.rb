@@ -9,6 +9,7 @@ class ContentItemEnrichmentWorker
   end
 
 private
+
   def fetch_content_item(path)
     looked_up_item = SupportApi.content_item_lookup.lookup(path)
     if content_item = ContentItem.find_by(path: path)

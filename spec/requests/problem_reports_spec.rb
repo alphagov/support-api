@@ -209,6 +209,7 @@ javascript_enabled: true
   end
 
 private
+
   def user_submits_a_problem_report(options)
     post "/anonymous-feedback/problem-reports",
          params: { "problem_report" => options }.to_json,

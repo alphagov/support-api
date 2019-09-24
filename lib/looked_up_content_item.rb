@@ -12,6 +12,7 @@ class LookedUpContentItem
   end
 
 private
+
   # ideally we can always find the content item in either the Content Store
   # but in case we can't, determine a sensible default
   def guess_organisations_for(path)

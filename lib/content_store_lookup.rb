@@ -20,6 +20,7 @@ class ContentStoreLookup
   end
 
 private
+
   def organisations_from(response)
     if organisation?(response)
       [{

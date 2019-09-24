@@ -26,6 +26,7 @@ class ProblemReportDailyTotalsPPUploaderWorker
   end
 
 private
+
   def transform_daily_problem_report_totals(date, report)
     report.map do |entry|
       {

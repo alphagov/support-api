@@ -13,6 +13,7 @@ class ContentItemLookup
   end
 
 private
+
   def guess_alternate_path(path)
     if path =~ %r{/y/} || path =~ %r{(/apply|/renew)$} # smart answer or local transaction
       take_segments_of(path, number: 1)

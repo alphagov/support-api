@@ -21,6 +21,7 @@ class ProblemReportPresenter
   end
 
   private
+
   def formatted_feedback
     [
       word_wrap("action: #{@problem_report["what_doing"]}"),

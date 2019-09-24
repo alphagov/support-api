@@ -12,6 +12,7 @@ module Zendesk
     end
 
   protected
+
     def template_name
       "long_form_contact"
     end

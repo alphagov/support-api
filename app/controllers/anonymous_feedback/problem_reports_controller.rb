@@ -46,6 +46,7 @@ module AnonymousFeedback
     end
 
   private
+
     def problem_report_index_params
       params.permit(:from_date, :to_date, :include_reviewed, :page).to_h
     end

@@ -10,6 +10,7 @@ class GlobalExportCsvGenerator
   end
 
 private
+
   attr_reader :from_date, :to_date
 
   def results

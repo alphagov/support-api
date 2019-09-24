@@ -9,6 +9,7 @@ class PerformancePlatformServiceFeedbackMetrics
   end
 
 private
+
   attr_reader :day, :slug
 
   def counts

@@ -20,6 +20,7 @@ class FeedbackCounts
   end
 
   private
+
   def feedback_counts
     ProblemReport.
       only_actionable.

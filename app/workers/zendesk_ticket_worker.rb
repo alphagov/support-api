@@ -11,6 +11,7 @@ class ZendeskTicketWorker
   end
 
 private
+
   def ticket_for(anonymous_contact)
     case anonymous_contact
     when LongFormContact then Zendesk::LongFormContactTicket.new(anonymous_contact)

@@ -14,6 +14,7 @@ module Zendesk
     end
 
   protected
+
     def template_name
       "problem_report"
     end

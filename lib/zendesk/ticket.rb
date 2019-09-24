@@ -17,6 +17,7 @@ module Zendesk
     end
 
   private
+
     def rendered_body
       path_to_template = File.join(Rails.root, "app", "zendesk_tickets", "#{template_name}.erb")
       template = ERB.new(File.read(path_to_template))

@@ -12,6 +12,7 @@ class AnonymousFeedback::GlobalExportRequestsController < ApplicationController
   end
 
 private
+
   def global_export_request_params
     permitted_params = [
       :from_date,

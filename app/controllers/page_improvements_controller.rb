@@ -12,6 +12,7 @@ class PageImprovementsController < ApplicationController
   end
 
 private
+
   def page_improvement_attributes
     params.slice(:description, :url, :name, :email, :user_agent)
   end

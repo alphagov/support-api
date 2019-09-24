@@ -19,6 +19,7 @@ class DistributedLock
   end
 
 private
+
   def redis
     RedisClient.instance.connection
   end
