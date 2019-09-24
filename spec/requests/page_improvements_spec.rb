@@ -30,7 +30,7 @@ describe "Page Improvements" do
 
                     [User agent]
                     Safari
-                  TICKET_BODY
+        TICKET_BODY
       },
     )
 

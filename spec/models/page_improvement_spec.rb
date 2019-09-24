@@ -44,7 +44,7 @@ describe PageImprovement, "#zendesk_ticket_attributes" do
 
                     [User agent]
                     Safari
-                  TICKET_BODY
+        TICKET_BODY
       },
     )
   end
@@ -74,7 +74,7 @@ describe PageImprovement, "#zendesk_ticket_attributes" do
 
                     [User agent]
                     Safari
-                  TICKET_BODY
+        TICKET_BODY
       },
     )
   end
