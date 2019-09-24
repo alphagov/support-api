@@ -144,7 +144,7 @@ describe AnonymousContact, type: :model do
     describe "created_between_days" do
       let(:first_date) { Time.new(2014, 0o1, 0o1) }
       let(:second_date) { Time.new(2014, 10, 31) }
-      let(:third_date){ Time.new(2014, 11, 25) }
+      let(:third_date) { Time.new(2014, 11, 25) }
       let(:last_date) { Time.new(2014, 12, 12) }
 
       before do

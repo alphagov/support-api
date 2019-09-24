@@ -45,11 +45,11 @@ describe ServiceFeedbackAggregator do
       end
 
       it "archives the original service feedbacks" do
-        expect{ aggregator.run }.to change{ ArchivedServiceFeedback.count }.from(0).to(2)
+        expect { aggregator.run }.to change { ArchivedServiceFeedback.count }.from(0).to(2)
       end
 
       it "deletes service feedbacks from the anonymous contacts table" do
-        expect{ aggregator.run }.to change{ ServiceFeedback.count }.from(2).to(0)
+        expect { aggregator.run }.to change { ServiceFeedback.count }.from(2).to(0)
       end
 
       context "and a feedback entry that has details" do
