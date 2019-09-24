@@ -5,8 +5,8 @@ describe "Content Improvement Feedback" do
   context "successful post" do
     before do
       post "/anonymous-feedback/content_improvement",
-        params: { description: "this thing is missing" }.to_json,
-        headers: common_headers
+           params: { description: "this thing is missing" }.to_json,
+           headers: common_headers
     end
 
     it "responds successfully" do
@@ -26,8 +26,8 @@ describe "Content Improvement Feedback" do
   context "when the message contains personal information" do
     before do
       post "/anonymous-feedback/content_improvement",
-        params: { description: "contact me at user@domain.com" }.to_json,
-        headers: common_headers
+           params: { description: "contact me at user@domain.com" }.to_json,
+           headers: common_headers
     end
 
     it "responds successfully" do
@@ -47,8 +47,8 @@ describe "Content Improvement Feedback" do
   context "when the description is not supplied" do
     it "returns an appropriate error" do
       post "/anonymous-feedback/content_improvement",
-        params: {}.to_json,
-        headers: common_headers
+           params: {}.to_json,
+           headers: common_headers
 
       expect(response.status).to eq(422)
       expect(JSON.parse(response.body)["errors"]).to include(
@@ -60,8 +60,8 @@ describe "Content Improvement Feedback" do
   context "when the description is blank" do
     it "returns an appropriate error" do
       post "/anonymous-feedback/content_improvement",
-        params: { description: "" }.to_json,
-        headers: common_headers
+           params: { description: "" }.to_json,
+           headers: common_headers
 
       expect(response.status).to eq(422)
       expect(JSON.parse(response.body)["errors"]).to include(

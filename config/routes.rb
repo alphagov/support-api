@@ -47,8 +47,8 @@ Rails.application.routes.draw do
         to: "problem_reports#index"
 
     put "/problem-reports/mark-reviewed-for-spam",
-         format: false,
-         to: "problem_reports#mark_reviewed_for_spam"
+        format: false,
+        to: "problem_reports#mark_reviewed_for_spam"
 
     get "/organisations/:slug", to: "organisations#show"
     get "/document-types", to: "document_types#index", format: false

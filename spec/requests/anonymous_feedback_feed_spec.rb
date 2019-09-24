@@ -8,33 +8,33 @@ describe "Anonymous feedback feed" do
   context "by path" do
     let!(:problem_report) do
       create(:problem_report,
-        what_wrong: "A",
-        what_doing: "B",
-        path: "/help",
-        referrer: "https://www.gov.uk/browse",
-        user_agent: "Safari",
-        created_at: Time.utc(2015, 0o2, 0o3),)
+             what_wrong: "A",
+             what_doing: "B",
+             path: "/help",
+             referrer: "https://www.gov.uk/browse",
+             user_agent: "Safari",
+             created_at: Time.utc(2015, 0o2, 0o3),)
     end
 
     let!(:service_feedback) do
       create(:service_feedback,
-        slug: "waste_carrier_or_broker_registration",
-        service_satisfaction_rating: 3,
-        details: "meh",
-        created_at: Time.utc(2015, 0o2, 0o2),
-        path: "/done/waste_carrier_or_broker_registration",
-        referrer: "https://www.wastecarrier.service.gov.uk",
-        user_agent: "iPhone",)
+             slug: "waste_carrier_or_broker_registration",
+             service_satisfaction_rating: 3,
+             details: "meh",
+             created_at: Time.utc(2015, 0o2, 0o2),
+             path: "/done/waste_carrier_or_broker_registration",
+             referrer: "https://www.wastecarrier.service.gov.uk",
+             user_agent: "iPhone",)
     end
 
     let!(:long_form_contact) do
       create(:long_form_contact,
-        details: "The VAT rate is wrong",
-        created_at: Time.utc(2015, 0o2, 0o1),
-        path: "/contact/govuk",
-        referrer: "https://www.gov.uk/contact",
-        user_specified_url: "https://www.gov.uk/vat-rates",
-        user_agent: "iPhone",)
+             details: "The VAT rate is wrong",
+             created_at: Time.utc(2015, 0o2, 0o1),
+             path: "/contact/govuk",
+             referrer: "https://www.gov.uk/contact",
+             user_specified_url: "https://www.gov.uk/vat-rates",
+             user_agent: "iPhone",)
     end
 
     it "returns feedback with the appropriate fields in reverse chronological order" do
