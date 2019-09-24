@@ -12,7 +12,7 @@ class AnonymousContact < ApplicationRecord
   validates :user_agent, length: { maximum: 2048 }
   validates :details, length: { maximum: 2 ** 16 }
   validates_inclusion_of :javascript_enabled, in: [true, false]
-  validates_inclusion_of :personal_information_status, in: ["suspected", "absent"], allow_nil: true
+  validates_inclusion_of :personal_information_status, in: %w[suspected absent], allow_nil: true
   validates_inclusion_of :is_actionable, in: [true, false]
   validates_presence_of :reason_why_not_actionable, unless: -> { is_actionable }
 
@@ -56,7 +56,7 @@ class AnonymousContact < ApplicationRecord
 
   def self.deduplicate_contacts_created_between(interval)
     contacts = where(created_at: interval).order("created_at asc")
-    deduplication_attribute_names = attribute_names - ["id", "created_at", "updated_at"]
+    deduplication_attribute_names = attribute_names - %w[id created_at updated_at]
     duplicate_detector = DuplicateDetector.new(deduplication_attribute_names)
     contacts.each do |contact|
       if duplicate_detector.duplicate?(contact)

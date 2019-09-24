@@ -8,7 +8,7 @@ describe DuplicateDetector do
   let(:r2) { { "a" => "c", "created_at" => current_time } }
   let(:r3) { { "a" => "b", "created_at" => current_time } }
 
-  subject { DuplicateDetector.new(["a"]) }
+  subject { DuplicateDetector.new(%w[a]) }
 
   it "identifies duplicate records" do
     expect(subject.duplicate?(r1)).to be_falsey
@@ -17,7 +17,7 @@ describe DuplicateDetector do
   end
 
   context "the comparator" do
-    let(:comparator) { AnonymousFeedbackComparator.new(["a"]) }
+    let(:comparator) { AnonymousFeedbackComparator.new(%w[a]) }
 
     let(:r1) { { "a" => "b", "created_at" => current_time } }
     let(:r2) { r1.clone }

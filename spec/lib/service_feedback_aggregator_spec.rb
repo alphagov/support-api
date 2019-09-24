@@ -41,7 +41,7 @@ describe ServiceFeedbackAggregator do
 
       it "creates an aggregated service feedback with a count of 2" do
         aggregator.run
-        expect(AggregatedServiceFeedback.pluck(:details)).to eq ["2"]
+        expect(AggregatedServiceFeedback.pluck(:details)).to eq %w[2]
       end
 
       it "archives the original service feedbacks" do

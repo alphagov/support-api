@@ -11,7 +11,7 @@ describe CorporateContentProblemReportAggregatedMetrics do
   end
 
   before do
-    { 7 => ["a"], 5 => ["b", "c", "d"], 3 => ["e", "f"], 1 => ["g"] }.each do |count, slugs|
+    { 7 => %w[a], 5 => %w[b c d], 3 => %w[e f], 1 => %w[g] }.each do |count, slugs|
       slugs.each do |slug|
         count.times { create_report(page_owner: "co", created_at: Date.new(2013, 2, 10), path: "/#{slug}") }
       end
@@ -34,12 +34,12 @@ describe CorporateContentProblemReportAggregatedMetrics do
     context "metadata" do
       it "generates ids based on the slug and date" do
         ids = feedback_counts.map { |entry| entry["_id"] }
-        expect(ids).to eq(["201302_co", "201302_dft", "201302_hmrc"])
+        expect(ids).to eq(%w[201302_co 201302_dft 201302_hmrc])
       end
 
       it "sets the period to a day" do
         periods = feedback_counts.map { |entry| entry["period"] }
-        expect(periods.uniq).to eq(["month"])
+        expect(periods.uniq).to eq(%w[month])
       end
 
       it "sets the start time correctly" do
@@ -67,13 +67,13 @@ describe CorporateContentProblemReportAggregatedMetrics do
     context "metadata" do
       it "generates ids based on the slug and date" do
         ids = top_urls.map { |entry| entry["_id"] }
-        expected_ids = (1..5).map { |n| "201302_co_#{n}" } + ["201302_dft_1", "201302_hmrc_1"]
+        expected_ids = (1..5).map { |n| "201302_co_#{n}" } + %w[201302_dft_1 201302_hmrc_1]
         expect(ids).to eq(expected_ids)
       end
 
       it "sets the period to a day" do
         periods = top_urls.map { |entry| entry["period"] }
-        expect(periods.uniq).to eq(["month"])
+        expect(periods.uniq).to eq(%w[month])
       end
 
       it "sets the start time correctly" do

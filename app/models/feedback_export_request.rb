@@ -39,7 +39,7 @@ class FeedbackExportRequest < ApplicationRecord
 
   def and_x_number_of_other_paths
     count = path_filters.count - 1
-    base_path = path_filters.first == "/" ? ["base_path"] : []
+    base_path = path_filters.first == "/" ? %w[base_path] : []
     if count >= 2
       base_path + ["and", count, "other", "paths"]
     elsif count == 1

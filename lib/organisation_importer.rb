@@ -57,7 +57,7 @@ class OrganisationImporter
     proc { |severity, datetime, progname, message|
       {
         "@message" => message,
-        "@tags" => ["cron", "rake"],
+        "@tags" => %w[cron rake],
         "@timestamp" => datetime.iso8601,
       }.to_json + "\n"
     }

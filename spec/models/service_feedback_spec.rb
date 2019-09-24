@@ -14,6 +14,6 @@ describe ServiceFeedback do
   end
 
   it "provides a list of available slugs" do
-    expect(ServiceFeedback.transaction_slugs).to eq(["a", "b"])
+    expect(ServiceFeedback.transaction_slugs).to eq(%w[a b])
   end
 end

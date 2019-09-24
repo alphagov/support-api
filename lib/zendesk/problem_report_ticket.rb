@@ -9,7 +9,7 @@ module Zendesk
     end
 
     def tags
-      ["anonymous_feedback", "public_form", "report_a_problem"] +
+      %w[anonymous_feedback public_form report_a_problem] +
         source_tag_if_needed + govuk_referrer_tag_if_needed + page_owner_tag_if_needed
     end
 
@@ -32,7 +32,7 @@ module Zendesk
     end
 
     def govuk_referrer_tag_if_needed
-      referrer_url_on_gov_uk? ? ["govuk_referrer"] : []
+      referrer_url_on_gov_uk? ? %w[govuk_referrer] : []
     end
 
     def referrer_url_on_gov_uk?
