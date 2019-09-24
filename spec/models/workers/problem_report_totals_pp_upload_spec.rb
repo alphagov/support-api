@@ -38,7 +38,7 @@ describe "problem report totals PP upload" do
       MockEntry.new("/tax-disc", 1),
     ])
 
-    Timecop.travel Time.utc(2014,9,30)
+    Timecop.travel Time.utc(2014, 9, 30)
 
     ProblemReportDailyTotalsPPUploaderWorker.run
 

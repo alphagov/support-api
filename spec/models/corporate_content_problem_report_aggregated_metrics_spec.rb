@@ -13,13 +13,13 @@ describe CorporateContentProblemReportAggregatedMetrics do
   before do
     { 7 => ["a"], 5 => ["b", "c", "d"], 3 => ["e", "f"], 1 => ["g"] }.each do |count, slugs|
       slugs.each do |slug|
-        count.times { create_report(page_owner: "co", created_at: Date.new(2013,2,10), path: "/#{slug}") }
+        count.times { create_report(page_owner: "co", created_at: Date.new(2013, 2, 10), path: "/#{slug}") }
       end
     end
 
-    create_report(page_owner: "dft", created_at: Date.new(2013,2,10), path: "/h")
-    create_report(page_owner: "hmrc", created_at: Date.new(2013,2,10), path: "/i")
-    create_report(page_owner: "co", created_at: Date.new(2013,1,1), path: "/a")
+    create_report(page_owner: "dft", created_at: Date.new(2013, 2, 10), path: "/h")
+    create_report(page_owner: "hmrc", created_at: Date.new(2013, 2, 10), path: "/i")
+    create_report(page_owner: "co", created_at: Date.new(2013, 1, 1), path: "/a")
   end
 
   after do

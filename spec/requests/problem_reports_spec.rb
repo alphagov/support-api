@@ -30,7 +30,7 @@ describe "Problem reports" do
   }
 
   it "calculates the problem report totals by day" do
-    Timecop.travel Time.utc(2013,2,11)
+    Timecop.travel Time.utc(2013, 2, 11)
 
     create(:problem_report, path: "/vat-rates")
     create(:problem_report, path: "/vat-rates")

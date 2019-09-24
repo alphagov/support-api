@@ -7,7 +7,7 @@ describe "Service feedback" do
   # I want to record and view bugs, gripes and improvement suggestions submitted by the service users
 
   before do
-    Timecop.travel Time.utc(2013,2,28)
+    Timecop.travel Time.utc(2013, 2, 28)
   end
 
   it "accepts submissions with comments" do

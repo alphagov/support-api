@@ -2,7 +2,7 @@ require "rails_helper"
 require "service_feedback_aggregator"
 
 describe ServiceFeedbackAggregator do
-  let(:date) { Time.new(2013,2,10,10) }
+  let(:date) { Time.new(2013, 2, 10, 10) }
   subject(:aggregator) { ServiceFeedbackAggregator.new(date) }
 
   context "when run with today's date" do
