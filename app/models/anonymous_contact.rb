@@ -33,7 +33,7 @@ class AnonymousContact < ApplicationRecord
     end
   end
 
-  scope :for_query_parameters, ->(options={}) do
+  scope :for_query_parameters, ->(options = {}) do
     path_prefixes = options[:path_prefixes]
     from = options[:from] || Date.new(1970)
     to = options[:to] || Date.today
