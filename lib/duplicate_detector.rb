@@ -14,11 +14,11 @@ class DuplicateDetector
 
 private
   def matches_any_in_sliding_window?(record)
-    @records_in_sliding_window.any? {|saved_record| @comparator.same?(saved_record, record)}
+    @records_in_sliding_window.any? { |saved_record| @comparator.same?(saved_record, record) }
   end
 
   def slide_window_to_include(record)
-    @records_in_sliding_window.select! {|r| @comparator.created_within_a_short_interval?(r, record)}
+    @records_in_sliding_window.select! { |r| @comparator.created_within_a_short_interval?(r, record) }
     @records_in_sliding_window << record
   end
 end
@@ -40,6 +40,6 @@ class AnonymousFeedbackComparator
 
   private
   def fields_same?(r1, r2)
-    @fields_to_compare.all? {|field| r1[field] == r2[field] }
+    @fields_to_compare.all? { |field| r1[field] == r2[field] }
   end
 end

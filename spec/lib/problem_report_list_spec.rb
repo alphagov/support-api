@@ -139,7 +139,7 @@ describe ProblemReportList, "#to_json" do
   end
 
   context "when no parameters are supplied" do
-    let!(:reviewed_report) { create :problem_report, reviewed: true}
+    let!(:reviewed_report) { create :problem_report, reviewed: true }
 
     it "returns problem reports that are not marked as reviewed only" do
       json = JSON.parse(described_class.new({}).to_json)

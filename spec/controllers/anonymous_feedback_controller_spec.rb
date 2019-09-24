@@ -147,7 +147,7 @@ describe AnonymousFeedbackController, type: :controller do
           "current_page" => 2,
           "pages" => 2,
         )
-        expect(json_response["results"].map {|r| r["what_doing"] }).to_not include("First contact")
+        expect(json_response["results"].map { |r| r["what_doing"] }).to_not include("First contact")
         expect(json_response["results"].last["what_doing"]).to eq("Second contact")
       end
 
@@ -176,7 +176,7 @@ describe AnonymousFeedbackController, type: :controller do
         get :index, params: { organisation_slug: "hm-revenue-customs" }
 
         expect(json_response["total_count"]).to eq(3)
-        ids_of_returned_problem_reports = json_response["results"].map {|r| r["id"]}.sort
+        ids_of_returned_problem_reports = json_response["results"].map { |r| r["id"] }.sort
         expect(ids_of_returned_problem_reports).to eq(hmrc_problem_reports.map(&:id).sort)
       end
 
@@ -280,8 +280,8 @@ describe AnonymousFeedbackController, type: :controller do
       end
 
       context "human readable dates for 'from' and 'to'" do
-        let(:from)  {"13/10/2014"}
-        let(:to)    {"1st December 2014"}
+        let(:from)  { "13/10/2014" }
+        let(:to)    { "1st December 2014" }
 
         it "returns relevant contacts" do
           get :index, params: { path_prefixes: ["/"], from: from, to: to }
@@ -299,7 +299,7 @@ describe AnonymousFeedbackController, type: :controller do
       end
 
       context "only 'from' date specified" do
-        let(:from)  {"13/10/2014"}
+        let(:from)  { "13/10/2014" }
 
         it "returns relevant contacts" do
           get :index, params: { path_prefixes: ["/"], from: from, to: to }
@@ -316,7 +316,7 @@ describe AnonymousFeedbackController, type: :controller do
       end
 
       context "only 'to' date specified" do
-        let(:to)  {"1st December 2014"}
+        let(:to)  { "1st December 2014" }
 
         it "returns relevant contacts" do
           get :index, params: { path_prefixes: ["/"], from: from, to: to }
@@ -333,8 +333,8 @@ describe AnonymousFeedbackController, type: :controller do
       end
 
       context "dates entered in non-chronological order" do
-        let(:to)  {"13th December 2014"}
-        let(:from) {"24/11/2014"}
+        let(:to)  { "13th December 2014" }
+        let(:from) { "24/11/2014" }
 
         it "returns relevant contacts" do
           get :index, params: { path_prefixes: ["/"], from: from, to: to }
