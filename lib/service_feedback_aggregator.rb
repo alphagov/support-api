@@ -28,7 +28,7 @@ private
     AggregatedServiceFeedback.where(created_at: @date.midnight..(@date + 1.day)).count > 0
   end
 
-  def parsed_date(date)
+  def parsed_date(_date)
     Date.parse(@date.to_s).midnight
   end
 
