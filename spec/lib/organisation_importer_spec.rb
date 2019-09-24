@@ -9,8 +9,7 @@ describe OrganisationImporter do
         "details" => { "slug" => o[:slug],
                        "govuk_status" => "live",
                        "abbreviation" => o[:abbreviation],
-                       "content_id" => o[:content_id],
-                     },
+                       "content_id" => o[:content_id],},
         "web_url" => "https://gov.uk/government/organisations/#{o[:slug]}",
       }
     end
