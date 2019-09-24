@@ -8,9 +8,9 @@ class LongFormContact < AnonymousContact
   end
 
   def as_json(options = {})
-    attributes_to_serialise = [
-      :type, :path, :id, :created_at, :referrer, :user_agent,
-      :user_specified_url, :details
+    attributes_to_serialise = %i[
+      type path id created_at referrer user_agent
+      user_specified_url details
     ]
     super({
       only: attributes_to_serialise,

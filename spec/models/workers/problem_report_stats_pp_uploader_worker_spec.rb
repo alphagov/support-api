@@ -9,11 +9,11 @@ describe ProblemReportStatsPPUploaderWorker do
     Timecop.travel Date.new(2013, 2, 1)
 
     allow(CorporateContentProblemReportAggregatedMetrics).to receive(:new).with(2013, 1).and_return(
-      double(to_h: { "feedback_counts" => [:some, :counts], "top_urls" => [:some, :top, :urls] }),
+      double(to_h: { "feedback_counts" => %i[some counts], "top_urls" => %i[some top urls] }),
     )
 
-    stub_post1 = stub_corporate_content_problem_report_count_submission([:some, :counts])
-    stub_post2 = stub_corporate_content_urls_with_the_most_problem_reports_submission([:some, :top, :urls])
+    stub_post1 = stub_corporate_content_problem_report_count_submission(%i[some counts])
+    stub_post2 = stub_corporate_content_urls_with_the_most_problem_reports_submission(%i[some top urls])
 
     ProblemReportStatsPPUploaderWorker.run
 

@@ -9,6 +9,6 @@ class Organisation < ApplicationRecord
   validates :content_id, presence: true
 
   def as_json(options)
-    super(only: [:slug, :web_url, :title, :acronym, :govuk_status])
+    super(only: %i[slug web_url title acronym govuk_status])
   end
 end

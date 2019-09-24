@@ -12,7 +12,7 @@ namespace :service_feedback_aggregation do
   end
 
   desc "Extract service feedback of specified date to a different table, and add aggregated results. Enter date in DD-MM-YYYY format."
-  task :date, [:start_date, :end_date] => :environment do |t, args|
+  task :date, %i[start_date end_date] => :environment do |t, args|
     require "service_feedback_aggregator"
 
     start_date = Date.parse(args[:start_date])

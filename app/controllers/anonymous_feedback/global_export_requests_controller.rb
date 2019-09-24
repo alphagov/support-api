@@ -14,11 +14,11 @@ class AnonymousFeedback::GlobalExportRequestsController < ApplicationController
 private
 
   def global_export_request_params
-    permitted_params = [
-      :from_date,
-      :to_date,
-      :notification_email,
-      :exclude_spam,
+    permitted_params = %i[
+      from_date
+      to_date
+      notification_email
+      exclude_spam
     ]
 
     clean_params = params.require(:global_export_request).permit(*permitted_params).to_h

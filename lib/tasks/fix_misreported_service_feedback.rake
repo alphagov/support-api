@@ -1,6 +1,6 @@
 namespace :fix_misreported_service_feedback do
   desc "Moves service feedback from /service-name to /done/service-name (for a period the feedback was submitted with the wrong path for /done pages)"
-  task :all, [:start_date_string, :end_date_string] => :environment do |_t, args|
+  task :all, %i[start_date_string end_date_string] => :environment do |_t, args|
     require File.join(Rails.root, "lib", "fix_misreported_done_page_service_feedback")
 
     raise "Start and end date required" unless args[:start_date_string] && args[:end_date_string]
@@ -13,7 +13,7 @@ namespace :fix_misreported_service_feedback do
     fixer.fix_all!
   end
 
-  task :one, [:start_date_string, :end_date_string, :slug] => :environment do |_t, args|
+  task :one, %i[start_date_string end_date_string slug] => :environment do |_t, args|
     require File.join(Rails.root, "lib", "fix_misreported_done_page_service_feedback")
 
     raise "Start date, end date, and slug required" unless args[:start_date_string] && args[:end_date_string] && args[:slug]

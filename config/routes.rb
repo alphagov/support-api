@@ -22,7 +22,7 @@ Rails.application.routes.draw do
               as: "problem_report"
 
     resources "export-requests",
-              only: [:create, :show],
+              only: %i[create show],
               format: false,
               controller: "export_requests",
               as: "export_request"
@@ -61,7 +61,7 @@ Rails.application.routes.draw do
             only: [:create]
 
   resources :organisations,
-            only: [:index, :show],
+            only: %i[index show],
             format: false,
             param: :slug
 
