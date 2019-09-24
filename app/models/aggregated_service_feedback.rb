@@ -1,5 +1,4 @@
 class AggregatedServiceFeedback < AnonymousContact
-
   def type
     "aggregated-service-feedback"
   end
@@ -14,5 +13,4 @@ class AggregatedServiceFeedback < AnonymousContact
       methods: :url,
     }.merge(options))
   end
-
 end

@@ -1,5 +1,4 @@
 class ServiceFeedbackAggregator
-
   attr_reader :reason_for_not_running
 
   def initialize(date)

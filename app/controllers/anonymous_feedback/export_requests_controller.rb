@@ -1,7 +1,6 @@
 require "date_parser"
 
 class AnonymousFeedback::ExportRequestsController < ApplicationController
-
   def create
     export_request = FeedbackExportRequest.new(export_request_params)
 
