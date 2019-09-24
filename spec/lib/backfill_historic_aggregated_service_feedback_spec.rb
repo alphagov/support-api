@@ -96,7 +96,7 @@ describe BackfillHistoricAggregatedServiceFeedback, "#import_from_performance_pl
     }
   }
 
-  let!(:earlier_aggregated_service_feedback) { create :aggregated_service_feedback, service_satisfaction_rating: 1,  path: path_for_transaction, details: "2", created_at: start_date - 1.day }
+  let!(:earlier_aggregated_service_feedback) { create :aggregated_service_feedback, service_satisfaction_rating: 1, path: path_for_transaction, details: "2", created_at: start_date - 1.day }
 
   let!(:start_date_aggregated_service_feedback_rating_1) { create :aggregated_service_feedback, service_satisfaction_rating: 1, path: path_for_transaction, details: "2", created_at: start_date }
   let!(:start_date_aggregated_service_feedback_rating_2) { create :aggregated_service_feedback, service_satisfaction_rating: 2, path: path_for_transaction, details: "4", created_at: start_date }

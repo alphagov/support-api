@@ -316,7 +316,7 @@ describe AnonymousFeedbackController, type: :controller do
       end
 
       context "only 'to' date specified" do
-        let(:to)  { "1st December 2014" }
+        let(:to) { "1st December 2014" }
 
         it "returns relevant contacts" do
           get :index, params: { path_prefixes: ["/"], from: from, to: to }
@@ -333,7 +333,7 @@ describe AnonymousFeedbackController, type: :controller do
       end
 
       context "dates entered in non-chronological order" do
-        let(:to)  { "13th December 2014" }
+        let(:to) { "13th December 2014" }
         let(:from) { "24/11/2014" }
 
         it "returns relevant contacts" do
