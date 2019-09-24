@@ -36,7 +36,7 @@ module Zendesk
     end
 
     def referrer_url_on_gov_uk?
-      @contact.referrer and URI.parse(@contact.referrer).host == govuk_host
+      @contact.referrer && (URI.parse(@contact.referrer).host == govuk_host)
     end
 
     def govuk_host

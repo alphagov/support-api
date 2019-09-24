@@ -7,16 +7,16 @@ class FieldWhichMayContainPersonalInformation
   end
 
   def include_personal_info?
-    include_email_address? or include_national_insurance_number?
+    include_email_address? || include_national_insurance_number?
   end
 
 private
 
   def include_email_address?
-    not @text.nil? and @text =~ EMAIL_ADDRESS_PATTERN
+    (not @text.nil?) && @text =~(EMAIL_ADDRESS_PATTERN)
   end
 
   def include_national_insurance_number?
-    not @text.nil? and @text.gsub(/\s/, "") =~ NATIONAL_INSURANCE_NUMBER_PATTERN
+    (not @text.nil?) && @text.gsub(/\s/, "") =~(NATIONAL_INSURANCE_NUMBER_PATTERN)
   end
 end
