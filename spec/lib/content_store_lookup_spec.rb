@@ -23,7 +23,7 @@ describe ContentStoreLookup, "#lookup" do
 
   context "when the response indicates the item has gone" do
     before do
-       content_store_has_gone_item(path)
+      content_store_has_gone_item(path)
     end
 
     it "returns nil" do
