@@ -30,7 +30,7 @@ class FeedbackCsvRowPresenter
       row.referrer,
       row.type,
       primary_organisation,
-      all_organisations
+      all_organisations,
     ]
   end
 

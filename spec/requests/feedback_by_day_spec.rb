@@ -48,7 +48,7 @@ describe "/feedback-by-day endpoint" do
         {
           "path" => "/browse/tax",
           "count" => 8,
-        }
+        },
       ])
       expect(json_response).to include(
         "total_count" => 3,
@@ -73,7 +73,7 @@ describe "/feedback-by-day endpoint" do
         {
           "path" => "/browse/tax",
           "count" => 3,
-        }
+        },
       ])
       expect(json_response).to include(
         "total_count" => 3,
@@ -96,7 +96,7 @@ describe "/feedback-by-day endpoint" do
         {
           "path" => "/browse/benefits",
           "count" => 6,
-        }
+        },
       ])
       expect(json_response).to include(
         "total_count" => 3,
@@ -113,7 +113,7 @@ describe "/feedback-by-day endpoint" do
         {
           "path" => "/browse/tax",
           "count" => 8,
-        }
+        },
       ])
       expect(json_response).to include(
         "total_count" => 3,

@@ -69,7 +69,7 @@ describe ContentItemEnrichmentWorker do
               base_path: "/hm-revenue-customs",
               title: "HM Revenue & Customs",
               document_type: "organisation",
-            }
+            },
           ],
         },
       }
@@ -85,7 +85,7 @@ describe ContentItemEnrichmentWorker do
               base_path: "/air-accidents-investigation-branch",
               title: "aaib",
               document_type: "organisation",
-            }
+            },
           ],
         },
       }

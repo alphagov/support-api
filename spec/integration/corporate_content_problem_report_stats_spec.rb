@@ -15,7 +15,7 @@ describe "corporate content problem report stats" do
         "organisation_acronym" => "dft",
         "comment_count" => 1,
         "total_gov_uk_dept_and_policy_comment_count" => 1,
-      }
+      },
     ])
     stub_post2 = stub_corporate_content_urls_with_the_most_problem_reports_submission([
       {
@@ -25,7 +25,7 @@ describe "corporate content problem report stats" do
         "organisation_acronym" => "dft",
         "comment_count" => 1,
         "url" => "http://www.dev.gov.uk/abc",
-      }
+      },
     ])
 
     Timecop.travel Time.parse("2013-01-15 12:00:00")

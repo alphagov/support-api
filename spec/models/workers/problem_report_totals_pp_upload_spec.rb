@@ -21,7 +21,7 @@ describe "problem report totals PP upload" do
         "period" => "day",
         "pagePath" => "/tax-disc",
         "total" => 1,
-      }
+      },
     ])
 
     class MockEntry

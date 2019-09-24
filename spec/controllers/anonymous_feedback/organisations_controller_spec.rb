@@ -29,7 +29,7 @@ RSpec.describe AnonymousFeedback::OrganisationsController, type: :controller do
             "slug" => "ministry-of-magic",
             "title" => "Ministry of Magic",
             "anonymous_feedback_counts" => [
-              {"path" => "/", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 3}
+              {"path" => "/", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 3},
             ],
           )
         end
@@ -49,7 +49,7 @@ RSpec.describe AnonymousFeedback::OrganisationsController, type: :controller do
             "slug" => "ministry-of-magic",
             "title" => "Ministry of Magic",
             "anonymous_feedback_counts" => [
-              {"path" => "/", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 3}
+              {"path" => "/", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 3},
             ],
           )
         end

@@ -80,7 +80,7 @@ describe "Anonymous feedback feed" do
           "referrer" => "https://www.gov.uk/contact",
           "user_agent" => "iPhone",
           "created_at" => "2015-02-01T00:00:00.000Z",
-        }
+        },
       ])
 
       expect(json_response).to include(

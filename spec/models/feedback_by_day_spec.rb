@@ -16,7 +16,7 @@ describe FeedbackByDay do
       results: [
         { path: "/browse/abroad", count: 5 },
         { path: "/browse/benefits", count: 6 },
-        { path: "/browse/tax", count: 8 }
+        { path: "/browse/tax", count: 8 },
       ],
       total_count: 3,
       current_page: 1,
@@ -31,7 +31,7 @@ describe FeedbackByDay do
       results: [
         { path: "/browse/abroad", count: 5 },
         { path: "/browse/benefits", count: 6 },
-        { path: "/browse/tax", count: 8 }
+        { path: "/browse/tax", count: 8 },
       ],
       total_count: 3,
       current_page: 1,

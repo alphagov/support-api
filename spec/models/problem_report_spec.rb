@@ -20,7 +20,7 @@ describe ProblemReport do
 
       expect(result).to eq([
         { path: "/student-finance-login", total: 2 },
-        { path: "/vat-rates", total: 1 }
+        { path: "/vat-rates", total: 1 },
       ])
     end
   end

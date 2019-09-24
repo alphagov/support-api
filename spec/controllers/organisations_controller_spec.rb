@@ -24,7 +24,7 @@ RSpec.describe OrganisationsController, type: :controller do
           "acronym" => "MOM",
           "govuk_status" => "live",
           "web_url" => "https://www.gov.uk/government/organisations/ministry-of-magic",
-        }
+        },
       ]
     end
   end

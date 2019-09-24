@@ -34,17 +34,17 @@ describe ContentItem do
 
     expect(ContentItem.summary).to eq([
       { path: "/abc", last_7_days: 1, last_30_days: 2, last_90_days: 3 },
-      { path: "/def", last_7_days: 0, last_30_days: 0, last_90_days: 4 }
+      { path: "/def", last_7_days: 0, last_30_days: 0, last_90_days: 4 },
     ])
 
     expect(ContentItem.summary("last_90_days")).to eq([
       { path: "/def", last_7_days: 0, last_30_days: 0, last_90_days: 4 },
-      { path: "/abc", last_7_days: 1, last_30_days: 2, last_90_days: 3 }
+      { path: "/abc", last_7_days: 1, last_30_days: 2, last_90_days: 3 },
     ])
 
     expect(ContentItem.summary("path")).to eq([
       { path: "/abc", last_7_days: 1, last_30_days: 2, last_90_days: 3 },
-      { path: "/def", last_7_days: 0, last_30_days: 0, last_90_days: 4 }
+      { path: "/def", last_7_days: 0, last_30_days: 0, last_90_days: 4 },
     ])
   end
 

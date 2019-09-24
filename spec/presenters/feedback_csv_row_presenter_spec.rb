@@ -26,7 +26,7 @@ describe FeedbackCsvRowPresenter do
           "http://www.example.com/foo",
           "problem-report",
           "",
-          ""
+          "",
         ]
       end
     end
@@ -47,7 +47,7 @@ describe FeedbackCsvRowPresenter do
           "http://www.example.com/foo",
           "service-feedback",
           "",
-          ""
+          "",
         ]
       end
     end
@@ -67,7 +67,7 @@ describe FeedbackCsvRowPresenter do
           "http://www.example.com/foo",
           "aggregated-service-feedback",
           "",
-          ""
+          "",
         ]
       end
     end
@@ -88,7 +88,7 @@ describe FeedbackCsvRowPresenter do
           "http://www.example.com/foo",
           "long-form-contact",
           "",
-          ""
+          "",
         ]
       end
     end
@@ -129,7 +129,7 @@ describe FeedbackCsvRowPresenter do
         let(:organisations) {
           [
             build(:organisation, title: "Apiarian Embassy"),
-            build(:organisation, title: "Department for Ursine Affairs")
+            build(:organisation, title: "Department for Ursine Affairs"),
           ]
         }
 
@@ -175,7 +175,7 @@ describe FeedbackCsvRowPresenter do
         let(:organisations) {
           [
             build(:organisation, title: "Apiarian Embassy"),
-            build(:organisation, title: "Department for Ursine Affairs")
+            build(:organisation, title: "Department for Ursine Affairs"),
           ]
         }
 

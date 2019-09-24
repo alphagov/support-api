@@ -23,7 +23,7 @@ describe "Problem reports" do
             base_path: "/hm-revenue-customs",
             title: "HM Revenue & Customs",
             document_type: "organisation",
-          }
+          },
         ],
       },
     }

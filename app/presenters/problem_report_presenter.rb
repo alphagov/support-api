@@ -24,7 +24,7 @@ class ProblemReportPresenter
   def formatted_feedback
     [
       word_wrap("action: #{@problem_report["what_doing"]}"),
-      word_wrap("problem: #{@problem_report["what_wrong"]}")
+      word_wrap("problem: #{@problem_report["what_wrong"]}"),
     ].join("\n")
   end
 end
