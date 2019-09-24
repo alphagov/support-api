@@ -50,7 +50,7 @@ describe "Service feedback" do
     expect(response.status).to eq(422)
     expect(JSON.parse(response.body)["errors"]).to include(
       "Slug can't be blank",
-      "Service satisfaction rating is not included in the list"
+      "Service satisfaction rating is not included in the list",
     )
   end
 

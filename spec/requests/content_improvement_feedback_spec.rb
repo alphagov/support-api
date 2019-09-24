@@ -18,7 +18,7 @@ describe "Content Improvement Feedback" do
         description: "this thing is missing",
         reviewed: false,
         marked_as_spam: false,
-        personal_information_status: "absent"
+        personal_information_status: "absent",
       )
     end
   end
@@ -39,7 +39,7 @@ describe "Content Improvement Feedback" do
         description: "contact me at user@domain.com",
         reviewed: false,
         marked_as_spam: false,
-        personal_information_status: "suspected"
+        personal_information_status: "suspected",
       )
     end
   end

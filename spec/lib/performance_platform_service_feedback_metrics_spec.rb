@@ -31,7 +31,7 @@ describe PerformancePlatformServiceFeedbackMetrics do
              service_satisfaction_rating: 2,
              details: "this is an awesome service",
              slug: "apply-carers-allowance",
-             created_at: Date.new(2013,2,10)
+             created_at: Date.new(2013,2,10),
             )
     end
 

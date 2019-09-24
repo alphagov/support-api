@@ -17,7 +17,7 @@ class BackfillHistoricAggregatedServiceFeedback
         if within_specified_dates(day_of_feedback_summary) && transaction_slug == service_feedback_hash["slug"]
           aggregated_service_feedbacks = AggregatedServiceFeedback.where(
             created_at: day_of_feedback_summary.beginning_of_day..day_of_feedback_summary.end_of_day,
-            path: path_for_transaction_slug(transaction_slug)
+            path: path_for_transaction_slug(transaction_slug),
           )
 
           aggregated_service_feedbacks.each do |aggregated_feedback|

@@ -159,7 +159,7 @@ describe AnonymousFeedbackController, type: :controller do
           "current_page" => 3,
           "pages" => 2,
           "results" => [],
-          "results_limited" => true
+          "results_limited" => true,
         )
       end
     end
@@ -209,7 +209,7 @@ describe AnonymousFeedbackController, type: :controller do
           :content_item,
           document_type: "smart_answer",
           path: "/calculate-your-holiday-entitlement",
-          organisations: [hmrc]
+          organisations: [hmrc],
         )
       }
       let(:case_study) { create(:content_item, document_type: "case_study", path: "/government/case-studies/out-of-syria-back-into-school") }

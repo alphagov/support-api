@@ -9,7 +9,7 @@ describe ProblemReportStatsPPUploaderWorker do
     Timecop.travel Date.new(2013,2,1)
 
     allow(CorporateContentProblemReportAggregatedMetrics).to receive(:new).with(2013,1).and_return(
-      double(to_h: { "feedback_counts" => [ :some, :counts ], "top_urls" => [ :some, :top, :urls ] })
+      double(to_h: { "feedback_counts" => [ :some, :counts ], "top_urls" => [ :some, :top, :urls ] }),
     )
 
     stub_post1 = stub_corporate_content_problem_report_count_submission([ :some, :counts ])

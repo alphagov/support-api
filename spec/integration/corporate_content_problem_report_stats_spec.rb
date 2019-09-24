@@ -33,7 +33,7 @@ describe "corporate content problem report stats" do
     create(:problem_report,
       what_wrong: "this service is great",
       path: "/abc",
-      page_owner: "dft"
+      page_owner: "dft",
     )
 
     Timecop.travel Time.parse("2013-02-01 12:00:00")

@@ -237,7 +237,7 @@ describe "Retrieving Problem Reports" do
            user_agent: user_agent,
            created_at: created_at,
            content_item: create(:content_item, path: "/help", organisations: [gds]),
-           reviewed: false
+           reviewed: false,
           )
   }
 

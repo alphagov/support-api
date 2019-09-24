@@ -38,7 +38,7 @@ RSpec.describe FeedbackExportRequest, type: :model do
           to: to,
           organisation_slug: organisation_slug,
           document_type: document_type,
-        }
+        },
      )
     end
 
@@ -238,7 +238,7 @@ RSpec.describe FeedbackExportRequest, type: :model do
           path_prefixes: ["/"],
           organisation_slug: "hm-revenue-customs",
           document_type: "smart_answer",
-        }
+        },
       ).results
     end
 
@@ -249,7 +249,7 @@ RSpec.describe FeedbackExportRequest, type: :model do
         to: Date.new(2015, 5),
         path_prefixes: ["/"],
         organisation_slug: "hm-revenue-customs",
-        document_type: "smart_answer"
+        document_type: "smart_answer",
       ).and_return(double("scope", most_recent_last: [contact]))
 
       expect(subject).to eq [contact]
@@ -262,12 +262,12 @@ RSpec.describe FeedbackExportRequest, type: :model do
         :anonymous_contact,
         path: "/",
         created_at: Time.utc(2015, 6, 1, 10),
-        referrer: "http://www.example.com/"
+        referrer: "http://www.example.com/",
       )
       create(
         :anonymous_contact,
         path: "/gov",
-        created_at: Time.utc(2015, 6, 1, 20)
+        created_at: Time.utc(2015, 6, 1, 20),
       )
     end
 

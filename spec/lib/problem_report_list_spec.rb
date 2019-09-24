@@ -17,7 +17,7 @@ describe ProblemReportList, "#to_json" do
            referrer: referrer,
            user_agent: user_agent,
            created_at: created_at,
-           reviewed: false
+           reviewed: false,
           )
   }
 

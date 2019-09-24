@@ -8,7 +8,7 @@ class ProblemReportDailyTotalsPPUploaderWorker
     logger.info("Uploading problem report daily totals for #{year}-#{month}-#{day}")
     pp_api = GdsApi::PerformancePlatform::DataIn.new(
       PP_DATA_IN_API[:url],
-      bearer_token: PP_DATA_IN_API[:bearer_token]
+      bearer_token: PP_DATA_IN_API[:bearer_token],
     )
 
     date = Time.utc(year, month, day)

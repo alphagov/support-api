@@ -54,7 +54,7 @@ describe "/feedback-by-day endpoint" do
         "total_count" => 3,
         "current_page" => 1,
         "pages" => 1,
-        "page_size" => 100
+        "page_size" => 100,
       )
     end
 
@@ -79,7 +79,7 @@ describe "/feedback-by-day endpoint" do
         "total_count" => 3,
         "current_page" => 1,
         "pages" => 1,
-        "page_size" => 100
+        "page_size" => 100,
       )
     end
   end
@@ -102,7 +102,7 @@ describe "/feedback-by-day endpoint" do
         "total_count" => 3,
         "current_page" => 1,
         "pages" => 2,
-        "page_size" => 2
+        "page_size" => 2,
       )
     end
 
@@ -119,7 +119,7 @@ describe "/feedback-by-day endpoint" do
         "total_count" => 3,
         "current_page" => 2,
         "pages" => 2,
-        "page_size" => 2
+        "page_size" => 2,
       )
     end
   end

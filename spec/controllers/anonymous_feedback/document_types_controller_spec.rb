@@ -54,7 +54,7 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
         :content_item,
         document_type: "",
         created_at: 2.days.ago,
-        anonymous_contacts: create_list(:anonymous_contact, 2, created_at: 2.days.ago)
+        anonymous_contacts: create_list(:anonymous_contact, 2, created_at: 2.days.ago),
       )
     }
     let!(:nil_doctype_content_items) {
@@ -62,7 +62,7 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
         :content_item,
         document_type: nil,
         created_at: 2.days.ago,
-        anonymous_contacts: create_list(:anonymous_contact, 3, created_at: 2.days.ago)
+        anonymous_contacts: create_list(:anonymous_contact, 3, created_at: 2.days.ago),
       )
     }
     let!(:sa_content_items) {
@@ -70,7 +70,7 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
         :content_item,
         document_type: "smart_answer",
         created_at: 70.days.ago,
-        anonymous_contacts: create_list(:anonymous_contact, 1, created_at: 70.days.ago)
+        anonymous_contacts: create_list(:anonymous_contact, 1, created_at: 70.days.ago),
       )
     }
     let!(:cs_content_items) {
@@ -78,7 +78,7 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
         :content_item,
         document_type: "case_study",
         created_at: 32.days.ago,
-        anonymous_contacts: create_list(:anonymous_contact, 4, created_at: 32.days.ago)
+        anonymous_contacts: create_list(:anonymous_contact, 4, created_at: 32.days.ago),
       )
     }
 
@@ -97,7 +97,7 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
               "last_30_days" => 0,
               "last_90_days" => 1,
             }
-          ]
+          ],
         )
       end
     end
@@ -117,7 +117,7 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
               "last_30_days" => 0,
               "last_90_days" => 1,
             }
-          ]
+          ],
         )
       end
 
@@ -133,7 +133,7 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
               "last_30_days" => 0,
               "last_90_days" => 4,
             }
-          ]
+          ],
         )
       end
     end
@@ -153,7 +153,7 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
               "last_30_days" => 0,
               "last_90_days" => 1,
             }
-          ]
+          ],
         )
       end
     end
@@ -181,7 +181,7 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
               "last_30_days" => 2,
               "last_90_days" => 2,
             }
-          ]
+          ],
         )
       end
     end

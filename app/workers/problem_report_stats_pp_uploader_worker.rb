@@ -7,7 +7,7 @@ class ProblemReportStatsPPUploaderWorker
     logger.info("Uploading corporate content problem report statistics for #{year}-#{month}")
     api = GdsApi::PerformancePlatform::DataIn.new(
       PP_DATA_IN_API[:url],
-      bearer_token: PP_DATA_IN_API[:bearer_token]
+      bearer_token: PP_DATA_IN_API[:bearer_token],
     )
     stats = CorporateContentProblemReportAggregatedMetrics.new(year, month).to_h
     response = api.corporate_content_problem_report_count(stats["feedback_counts"])

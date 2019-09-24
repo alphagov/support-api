@@ -10,7 +10,7 @@ class ServiceFeedbackPPUploaderWorker
 
     api = GdsApi::PerformancePlatform::DataIn.new(
       PP_DATA_IN_API[:url],
-      bearer_token: PP_DATA_IN_API[:bearer_token]
+      bearer_token: PP_DATA_IN_API[:bearer_token],
     )
 
     payload = PerformancePlatformServiceFeedbackMetrics.new(

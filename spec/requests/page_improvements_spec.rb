@@ -31,7 +31,7 @@ describe "Page Improvements" do
                     [User agent]
                     Safari
                   TICKET_BODY
-      }
+      },
     )
 
     post "/page-improvements",

@@ -56,7 +56,7 @@ describe "Organisations that have feedback left on 'their' content" do
       "anonymous_feedback_counts" => [
         { "path" => "/abc", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 2 },
         { "path" => "/def", "last_7_days" => 0, "last_30_days" => 0, "last_90_days" => 3 },
-      ]
+      ],
     )
   end
 
@@ -69,7 +69,7 @@ describe "Organisations that have feedback left on 'their' content" do
       "anonymous_feedback_counts" => [
         { "path" => "/def", "last_7_days" => 0, "last_30_days" => 0, "last_90_days" => 3 },
         { "path" => "/abc", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 2 },
-      ]
+      ],
     )
   end
 
