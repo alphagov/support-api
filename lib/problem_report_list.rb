@@ -5,7 +5,7 @@ class ProblemReportList
     @params = problem_report_index_params
   end
 
-  def to_json
+  def to_json(*_args)
     list = {
       results: results,
       total_count: total_count,
