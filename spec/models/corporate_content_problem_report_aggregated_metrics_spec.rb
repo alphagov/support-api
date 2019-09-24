@@ -34,29 +34,29 @@ describe CorporateContentProblemReportAggregatedMetrics do
     context "metadata" do
       it "generates ids based on the slug and date" do
         ids = feedback_counts.map { |entry| entry["_id"] }
-        expect(ids).to eq([ "201302_co", "201302_dft", "201302_hmrc" ])
+        expect(ids).to eq(["201302_co", "201302_dft", "201302_hmrc"])
       end
 
       it "sets the period to a day" do
         periods = feedback_counts.map { |entry| entry["period"] }
-        expect(periods.uniq).to eq([ "month" ])
+        expect(periods.uniq).to eq(["month"])
       end
 
       it "sets the start time correctly" do
         timestamps = feedback_counts.map { |entry| entry["_timestamp"] }
-        expect(timestamps.uniq).to eq([ "2013-02-01T00:00:00+00:00" ])
+        expect(timestamps.uniq).to eq(["2013-02-01T00:00:00+00:00"])
       end
     end
 
     context "aggregated metrics" do
       it "includes comment counts, grouped by page owner" do
-        counts = feedback_counts.map { |entry| [ entry["organisation_acronym"], entry["comment_count"] ] }
-        expect(counts).to eq([ ["co", 29], ["dft", 1], ["hmrc", 1] ])
+        counts = feedback_counts.map { |entry| [entry["organisation_acronym"], entry["comment_count"]] }
+        expect(counts).to eq([["co", 29], ["dft", 1], ["hmrc", 1]])
       end
 
       it "includes the absolute count" do
         absolute_counts = feedback_counts.map { |entry| entry["total_gov_uk_dept_and_policy_comment_count"] }
-        expect(absolute_counts.uniq).to eq([ 31 ])
+        expect(absolute_counts.uniq).to eq([31])
       end
     end
   end
@@ -73,18 +73,18 @@ describe CorporateContentProblemReportAggregatedMetrics do
 
       it "sets the period to a day" do
         periods = top_urls.map { |entry| entry["period"] }
-        expect(periods.uniq).to eq([ "month" ])
+        expect(periods.uniq).to eq(["month"])
       end
 
       it "sets the start time correctly" do
         timestamps = top_urls.map { |entry| entry["_timestamp"] }
-        expect(timestamps.uniq).to eq([ "2013-02-01T00:00:00+00:00" ])
+        expect(timestamps.uniq).to eq(["2013-02-01T00:00:00+00:00"])
       end
     end
 
     context "aggregated metrics" do
       it "includes urls, comment counts, grouped by page owner" do
-        aggregates = top_urls.map { |entry| [ entry["organisation_acronym"], entry["url"], entry["comment_count"] ] }
+        aggregates = top_urls.map { |entry| [entry["organisation_acronym"], entry["url"], entry["comment_count"]] }
         expect(aggregates).to eq([
           ["co", "http://www.dev.gov.uk/a", 7],
           ["co", "http://www.dev.gov.uk/b", 5],

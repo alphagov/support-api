@@ -23,7 +23,7 @@ module Zendesk
     end
 
     def source_tag_if_needed
-      @contact.source.nil? ? [] : [ @contact.source ]
+      @contact.source.nil? ? [] : [@contact.source]
     end
 
     def page_owner_tag_if_needed
