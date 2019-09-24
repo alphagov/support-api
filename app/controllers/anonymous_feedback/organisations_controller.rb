@@ -2,9 +2,9 @@ module AnonymousFeedback
   class OrganisationsController < ApplicationController
     def show
       ordering = if %w(path last_7_days last_30_days last_90_days).include? params[:ordering]
-        params[:ordering]
-      else
-        "last_7_days"
+                   params[:ordering]
+                 else
+                   "last_7_days"
                  end
       organisation = Organisation.find_by(slug: params[:slug])
 

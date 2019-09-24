@@ -26,7 +26,7 @@ Safari
 
 [JavaScript Enabled]
 true
-" }
+" },
 )
 
     user_submits_a_long_form_anonymous_contact(

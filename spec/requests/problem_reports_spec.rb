@@ -59,7 +59,7 @@ what_wrong: Fell on floor
 user_agent: Safari
 referrer: http://www.dev.gov.uk/pay-vat
 javascript_enabled: true
-" }
+" },
 )
 
     user_submits_a_problem_report(
@@ -239,7 +239,7 @@ describe "Retrieving Problem Reports" do
            user_agent: user_agent,
            created_at: created_at,
            content_item: create(:content_item, path: "/help", organisations: [gds]),
-           reviewed: false,)
+           reviewed: false)
   }
 
   context "with a full set of filter parameters supplied" do
