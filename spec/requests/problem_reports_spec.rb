@@ -127,7 +127,7 @@ javascript_enabled: true
 
       it "returns a 200 OK" do
         expect(response.status).to eq(200)
-        expect(JSON.parse(response.body)).to eq({ "success" => true })
+        expect(JSON.parse(response.body)).to eq("success" => true)
       end
 
       it "marks all supplied reports as reviewed" do
@@ -183,7 +183,7 @@ javascript_enabled: true
 
       it "returns a 404" do
         expect(response.status).to eq 404
-        expect(JSON.parse(response.body)).to eq({ "success" => false })
+        expect(JSON.parse(response.body)).to eq("success" => false)
       end
     end
   end
