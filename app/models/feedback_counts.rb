@@ -32,6 +32,6 @@ private
   end
 
   def feedback_count_id_for(page_owner)
-    "#{@first_day_of_period.strftime("%Y%m")}_#{page_owner}"
+    "#{@first_day_of_period.strftime('%Y%m')}_#{page_owner}"
   end
 end

@@ -46,6 +46,6 @@ private
   end
 
   def top_url_id_for(page_owner, rank)
-    "#{@first_day_of_period.strftime("%Y%m")}_#{page_owner}_#{rank}"
+    "#{@first_day_of_period.strftime('%Y%m')}_#{page_owner}_#{rank}"
   end
 end
