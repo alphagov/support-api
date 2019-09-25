@@ -1,4 +1,4 @@
-require 'user_agent_parser'
+require "user_agent_parser"
 
 class FeedbackCsvRowPresenter
   attr_reader :row
@@ -30,7 +30,7 @@ class FeedbackCsvRowPresenter
       row.referrer,
       row.type,
       primary_organisation,
-      all_organisations
+      all_organisations,
     ]
   end
 

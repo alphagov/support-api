@@ -6,7 +6,7 @@ class ContentItem < ApplicationRecord
 
   scope :for_organisation, ->(organisation) {
     joins(:organisations).
-    where(organisations: { id: organisation.id})
+    where(organisations: { id: organisation.id })
   }
 
   scope :for_document_type, ->(document_type) {
@@ -52,7 +52,7 @@ class ContentItem < ApplicationRecord
   end
 
   def self.all_document_types
-    self.distinct.pluck(:document_type).reject { |d| d == '' }.compact
+    self.distinct.pluck(:document_type).reject { |d| d == "" }.compact
   end
 
   def self.midnight_last_night
@@ -70,8 +70,6 @@ class ContentItem < ApplicationRecord
   def self.last_90_days
     sum_column(from: midnight_last_night - 90.days, to: midnight_last_night)
   end
-
-private
 
   def self.sum_column(options)
     "SUM((anonymous_contacts.created_at BETWEEN '#{options[:from].to_s(:db)}' AND '#{options[:to].to_s(:db)}')::INT)"

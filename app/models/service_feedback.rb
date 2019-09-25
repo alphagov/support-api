@@ -1,6 +1,6 @@
 class ServiceFeedback < AnonymousContact
   validates_presence_of :slug, :service_satisfaction_rating
-  validates :details, length: { maximum: 2 ** 16 }
+  validates :details, length: { maximum: 2**16 }
   validates_inclusion_of :service_satisfaction_rating, in: (1..5).to_a
 
   def type
@@ -8,9 +8,9 @@ class ServiceFeedback < AnonymousContact
   end
 
   def as_json(options = {})
-    attributes_to_serialise = [
-      :type, :path, :id, :created_at, :referrer, :user_agent, :slug,
-      :service_satisfaction_rating, :details,
+    attributes_to_serialise = %i[
+      type path id created_at referrer user_agent slug
+      service_satisfaction_rating details
     ]
     super({
       only: attributes_to_serialise,

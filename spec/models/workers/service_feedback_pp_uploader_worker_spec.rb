@@ -1,12 +1,12 @@
-require 'rails_helper'
-require 'date'
-require 'gds_api/test_helpers/performance_platform/data_in'
+require "rails_helper"
+require "date"
+require "gds_api/test_helpers/performance_platform/data_in"
 
 describe ServiceFeedbackPPUploaderWorker do
   include GdsApi::TestHelpers::PerformancePlatform::DataIn
 
   before do
-    Timecop.travel Date.new(2013,2,11)
+    Timecop.travel Date.new(2013, 2, 11)
   end
 
   it "pushes yesterday's stats for each slug to the performance platform" do

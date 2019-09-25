@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module AnonymousFeedback
   describe ProblemReportsController, type: :controller do

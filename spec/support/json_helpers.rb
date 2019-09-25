@@ -5,8 +5,8 @@ module JsonHelpers
 
   def get_json(url)
     get url, headers: {
-      "CONTENT_TYPE" => 'application/json',
-      'HTTP_ACCEPT' => 'application/json',
+      "CONTENT_TYPE" => "application/json",
+      "HTTP_ACCEPT" => "application/json",
     }
   end
 end

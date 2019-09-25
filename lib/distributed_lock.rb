@@ -1,6 +1,6 @@
-require 'redis'
-require 'redis-lock'
-require 'redis_client'
+require "redis"
+require "redis-lock"
+require "redis_client"
 
 class DistributedLock
   LIFETIME = (10 * 60) # seconds
@@ -11,7 +11,7 @@ class DistributedLock
 
   def lock
     redis.lock("support-api:#{Rails.env}:#{@lock_name}", life: LIFETIME) do
-      Rails.logger.debug('Successfully got a lock. Running...')
+      Rails.logger.debug("Successfully got a lock. Running...")
       yield
     end
   rescue Redis::Lock::LockNotAcquired => e
@@ -19,6 +19,7 @@ class DistributedLock
   end
 
 private
+
   def redis
     RedisClient.instance.connection
   end

@@ -1,5 +1,5 @@
-require 'content_store_lookup'
-require 'looked_up_content_item'
+require "content_store_lookup"
+require "looked_up_content_item"
 
 class ContentItemLookup
   def initialize(content_store:)
@@ -13,6 +13,7 @@ class ContentItemLookup
   end
 
 private
+
   def guess_alternate_path(path)
     if path =~ %r{/y/} || path =~ %r{(/apply|/renew)$} # smart answer or local transaction
       take_segments_of(path, number: 1)

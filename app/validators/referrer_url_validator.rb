@@ -5,7 +5,7 @@ class ReferrerUrlValidator < UrlValidator
   # Simply check the URL can be parsed
   def url_valid?(url)
     !!URI.parse(url)
-  rescue
+  rescue StandardError
     false
   end
 end

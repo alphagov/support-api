@@ -1,5 +1,5 @@
-require 'rails_helper'
-require 'field_which_may_contain_personal_information'
+require "rails_helper"
+require "field_which_may_contain_personal_information"
 
 describe ContentImprovementFeedback, type: :model do
   def new_feedback(options = {})

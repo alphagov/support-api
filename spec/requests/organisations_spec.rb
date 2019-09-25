@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe "Organisations that have feedback left on 'their' content" do
   let(:hmrc_info) {
@@ -7,7 +7,7 @@ describe "Organisations that have feedback left on 'their' content" do
       "title" => "HM Revenue & Customs",
       "web_url" => "https://www.gov.uk/hmrc",
       "acronym" => "HMRC",
-      "govuk_status" => "live"
+      "govuk_status" => "live",
     }
   }
 
@@ -17,7 +17,7 @@ describe "Organisations that have feedback left on 'their' content" do
       "title" => "UK Visas & Immigration",
       "web_url" => "https://www.gov.uk/ukvi",
       "acronym" => "UKVI",
-      "govuk_status" => "live"
+      "govuk_status" => "live",
     }
   }
 
@@ -25,20 +25,18 @@ describe "Organisations that have feedback left on 'their' content" do
   let!(:hmrc) { create(:organisation, hmrc_info) }
 
   before do
-    create(:content_item, organisations: [ ukvi ], path: "/abc",
+    create(:content_item, organisations: [ukvi], path: "/abc",
       anonymous_contacts: [
         create(:anonymous_contact, created_at: 5.days.ago),
         create(:anonymous_contact, created_at: 15.days.ago),
-      ]
-    )
+      ])
 
-    create(:content_item, organisations: [ ukvi ], path: "/def",
+    create(:content_item, organisations: [ukvi], path: "/def",
       anonymous_contacts: [
         create(:anonymous_contact, created_at: 70.days.ago),
         create(:anonymous_contact, created_at: 75.days.ago),
         create(:anonymous_contact, created_at: 80.days.ago),
-      ]
-    )
+      ])
   end
 
   it "can be retrieved (so that it's possible to not deal with orgs that have no feedback)" do
@@ -56,7 +54,7 @@ describe "Organisations that have feedback left on 'their' content" do
       "anonymous_feedback_counts" => [
         { "path" => "/abc", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 2 },
         { "path" => "/def", "last_7_days" => 0, "last_30_days" => 0, "last_90_days" => 3 },
-      ]
+      ],
     )
   end
 
@@ -69,7 +67,7 @@ describe "Organisations that have feedback left on 'their' content" do
       "anonymous_feedback_counts" => [
         { "path" => "/def", "last_7_days" => 0, "last_30_days" => 0, "last_90_days" => 3 },
         { "path" => "/abc", "last_7_days" => 1, "last_30_days" => 2, "last_90_days" => 2 },
-      ]
+      ],
     )
   end
 

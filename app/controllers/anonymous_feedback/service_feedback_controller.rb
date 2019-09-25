@@ -11,7 +11,8 @@ module AnonymousFeedback
       end
     end
 
-    private
+  private
+
     def service_feedback_params
       params.require(:service_feedback).permit(
         :slug, :path, :referrer, :javascript_enabled, :user_agent, :details, :service_satisfaction_rating

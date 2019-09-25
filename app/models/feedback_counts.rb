@@ -5,7 +5,6 @@ class FeedbackCounts
   end
 
   def to_a
-    counts = feedback_counts
     absolute_count = feedback_counts.values.inject(:+)
     feedback_counts.map do |page_owner, count|
       {
@@ -14,12 +13,13 @@ class FeedbackCounts
         "period" => "month",
         "organisation_acronym" => page_owner,
         "comment_count" => count,
-        "total_gov_uk_dept_and_policy_comment_count" => absolute_count
+        "total_gov_uk_dept_and_policy_comment_count" => absolute_count,
       }
     end
   end
 
-  private
+private
+
   def feedback_counts
     ProblemReport.
       only_actionable.
@@ -31,6 +31,6 @@ class FeedbackCounts
   end
 
   def feedback_count_id_for(page_owner)
-    "#{@first_day_of_period.strftime("%Y%m")}_#{page_owner}"
+    "#{@first_day_of_period.strftime('%Y%m')}_#{page_owner}"
   end
 end

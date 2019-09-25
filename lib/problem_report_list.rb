@@ -1,17 +1,17 @@
-require 'date_parser'
+require "date_parser"
 
 class ProblemReportList
   def initialize(problem_report_index_params)
     @params = problem_report_index_params
   end
 
-  def to_json
+  def to_json(*_args)
     list = {
       results: results,
       total_count: total_count,
       current_page: current_page,
       pages: pages,
-      page_size: AnonymousContact::PAGE_SIZE
+      page_size: AnonymousContact::PAGE_SIZE,
     }
 
     list[:from_date] = dates[0] if dates[0]
@@ -21,7 +21,7 @@ class ProblemReportList
     list.to_json
   end
 
-  private
+private
 
   def dates
     from_date = DateParser.parse(@params[:from_date]) || Date.new(1970)
@@ -47,7 +47,7 @@ class ProblemReportList
   end
 
   def pages
-    total_count == 0 ? 0 : (total_count / AnonymousContact::PAGE_SIZE.to_f).ceil
+    total_count.zero? ? 0 : (total_count / AnonymousContact::PAGE_SIZE.to_f).ceil
   end
 
   def total_count
@@ -55,7 +55,7 @@ class ProblemReportList
   end
 
   def current_page
-    pages == 0 || @params[:page].to_i < 1 ? 1 : @params[:page].to_i
+    pages.zero? || @params[:page].to_i < 1 ? 1 : @params[:page].to_i
   end
 
   def results

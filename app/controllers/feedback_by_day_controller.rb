@@ -1,4 +1,4 @@
-require 'date_parser'
+require "date_parser"
 
 class FeedbackByDayController < ApplicationController
   before_action :validate_params!, only: :index
@@ -16,6 +16,7 @@ private
   def valid_params?
     return false if params[:page] && !params[:page].match(/^\d+$/)
     return false if params[:per_page] && !params[:per_page].match(/^\d+$/)
+
     date
   end
 

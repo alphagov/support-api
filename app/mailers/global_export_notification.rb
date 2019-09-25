@@ -4,7 +4,7 @@ class GlobalExportNotification < ApplicationMailer
 
     mail(
       to: notification_email,
-      subject: "[GOV.UK Feedback Explorer] Your global export is attached"
+      subject: "[GOV.UK Feedback Explorer] Your global export is attached",
     )
   end
 end

@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-describe AnonymousContact, :type => :model do
+describe AnonymousContact, type: :model do
   def new_contact(options = {})
     build(:anonymous_contact, options)
   end
@@ -83,8 +83,8 @@ describe AnonymousContact, :type => :model do
 
   context "scopes" do
     describe "for_document_type" do
-      let!(:sa_content_items) { create_list(:content_item, 2, document_type: 'smart_answer') }
-      let!(:cs_content_items) { create_list(:content_item, 3, document_type: 'case_study') }
+      let!(:sa_content_items) { create_list(:content_item, 2, document_type: "smart_answer") }
+      let!(:cs_content_items) { create_list(:content_item, 3, document_type: "case_study") }
       let!(:sa_contact1) { contact(path: "/tax-disc", content_item: sa_content_items[0]) }
       let!(:sa_contact2) { contact(path: "/tax-disc2", content_item: sa_content_items[1]) }
       let!(:sa_contact3) { contact(path: "/tax-disc3") }
@@ -142,9 +142,9 @@ describe AnonymousContact, :type => :model do
     end
 
     describe "created_between_days" do
-      let(:first_date) { Time.new(2014, 01, 01) }
+      let(:first_date) { Time.new(2014, 0o1, 0o1) }
       let(:second_date) { Time.new(2014, 10, 31) }
-      let(:third_date){ Time.new(2014, 11, 25) }
+      let(:third_date) { Time.new(2014, 11, 25) }
       let(:last_date) { Time.new(2014, 12, 12) }
 
       before do
@@ -160,7 +160,7 @@ describe AnonymousContact, :type => :model do
     end
 
     describe "for_query_parameters" do
-      let!(:smart_answer) { create(:content_item, document_type: 'smart_answer') }
+      let!(:smart_answer) { create(:content_item, document_type: "smart_answer") }
       let!(:contact_1) { contact(path: "/gov", created_at: Time.new(2015, 4, 10), content_item: smart_answer) }
       let!(:contact_2) { contact(path: "/courts", created_at: Time.new(2015, 5, 10), content_item: smart_answer) }
       let!(:contact_3) { contact(path: "/courts", created_at: Time.new(2015, 5, 10)) }

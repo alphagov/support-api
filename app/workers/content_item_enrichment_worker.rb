@@ -9,9 +9,10 @@ class ContentItemEnrichmentWorker
   end
 
 private
+
   def fetch_content_item(path)
     looked_up_item = SupportApi.content_item_lookup.lookup(path)
-    if content_item = ContentItem.find_by(path: path)
+    if (content_item = ContentItem.find_by(path: path))
       content_item.tap { |item| item.organisations = build_orgs(looked_up_item.organisations) } # refresh the orgs
     else
       ContentItem.new(path: looked_up_item.path, organisations: build_orgs(looked_up_item.organisations))

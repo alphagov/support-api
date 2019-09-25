@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
   describe "#create" do
@@ -14,8 +14,8 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
             path_prefixes: ["/"],
             notification_email: "foo@example.com",
             organisation: "",
-            document_type: ""
-          }
+            document_type: "",
+          },
         }
       end
 
@@ -44,8 +44,8 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
             to: "2015-06-01",
             path_prefixes: ["/"],
             organisation: "",
-            document_type: ""
-          }
+            document_type: "",
+          },
         }
       end
 
@@ -65,8 +65,8 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
               path_prefix: "/",
               notification_email: "foo@example.com",
               organisation: "",
-              document_type: ""
-            }
+              document_type: "",
+            },
         }
       end
 
@@ -114,7 +114,6 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
       it "returns a status of not ready" do
         expect(JSON.parse(response.body)["ready"]).to be false
       end
-
     end
 
     context "requesting a processed export request" do

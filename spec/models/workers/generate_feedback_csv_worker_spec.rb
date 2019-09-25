@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-describe GenerateFeedbackCsvWorker, :type => :worker do
+describe GenerateFeedbackCsvWorker, type: :worker do
   describe "#perform" do
     let(:feedback_export_request) { create(:feedback_export_request) }
 
@@ -8,19 +8,19 @@ describe GenerateFeedbackCsvWorker, :type => :worker do
       create(:anonymous_contact, created_at: Time.new(2015, 5, 10))
 
       Fog.mock!
-      ENV['AWS_REGION'] = 'eu-west-1'
-      ENV['AWS_ACCESS_KEY_ID'] = 'test'
-      ENV['AWS_SECRET_ACCESS_KEY'] = 'test'
-      ENV['AWS_S3_BUCKET_NAME'] = 'test-bucket'
+      ENV["AWS_REGION"] = "eu-west-1"
+      ENV["AWS_ACCESS_KEY_ID"] = "test"
+      ENV["AWS_SECRET_ACCESS_KEY"] = "test"
+      ENV["AWS_S3_BUCKET_NAME"] = "test-bucket"
 
       # Create an S3 bucket so the code being tested can find it
       connection = Fog::Storage.new(
-        provider: 'AWS',
-        region: ENV['AWS_REGION'],
-        aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-        aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+        provider: "AWS",
+        region: ENV["AWS_REGION"],
+        aws_access_key_id: ENV["AWS_ACCESS_KEY_ID"],
+        aws_secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"],
       )
-      @directory = connection.directories.get(ENV['AWS_S3_BUCKET_NAME']) || connection.directories.create(key: ENV['AWS_S3_BUCKET_NAME'])
+      @directory = connection.directories.get(ENV["AWS_S3_BUCKET_NAME"]) || connection.directories.create(key: ENV["AWS_S3_BUCKET_NAME"])
     end
 
     it "populates the file with the CSV for the request" do

@@ -2,7 +2,7 @@ require "rails_helper"
 require "service_feedback_aggregator"
 
 describe ServiceFeedbackAggregator do
-  let(:date) { Time.new(2013,2,10,10) }
+  let(:date) { Time.new(2013, 2, 10, 10) }
   subject(:aggregator) { ServiceFeedbackAggregator.new(date) }
 
   context "when run with today's date" do
@@ -30,8 +30,7 @@ describe ServiceFeedbackAggregator do
           create(:service_feedback,
                  service_satisfaction_rating: 1,
                  slug: "register-to-vote",
-                 created_at: date,
-                )
+                 created_at: date)
         end
       end
 
@@ -42,15 +41,15 @@ describe ServiceFeedbackAggregator do
 
       it "creates an aggregated service feedback with a count of 2" do
         aggregator.run
-        expect(AggregatedServiceFeedback.pluck(:details)).to eq ["2"]
+        expect(AggregatedServiceFeedback.pluck(:details)).to eq %w[2]
       end
 
       it "archives the original service feedbacks" do
-        expect{ aggregator.run }.to change{ ArchivedServiceFeedback.count }.from(0).to(2)
+        expect { aggregator.run }.to change { ArchivedServiceFeedback.count }.from(0).to(2)
       end
 
       it "deletes service feedbacks from the anonymous contacts table" do
-        expect{ aggregator.run }.to change{ ServiceFeedback.count }.from(2).to(0)
+        expect { aggregator.run }.to change { ServiceFeedback.count }.from(2).to(0)
       end
 
       context "and a feedback entry that has details" do
@@ -59,8 +58,7 @@ describe ServiceFeedbackAggregator do
                  service_satisfaction_rating: 1,
                  slug: "register-to-vote",
                  details: "A fantastic service",
-                 created_at: date,
-                )
+                 created_at: date)
         end
 
         it "doesn't delete that entry" do
@@ -75,8 +73,7 @@ describe ServiceFeedbackAggregator do
           create(:duplicate_service_feedback,
                  service_satisfaction_rating: 1,
                  slug: "register-to-vote",
-                 created_at: date,
-                )
+                 created_at: date)
         end
 
         it "doesn't include it in the sum of feedback for that rating" do
@@ -90,10 +87,9 @@ describe ServiceFeedbackAggregator do
       before do
         2.times do |i|
           create(:service_feedback,
-                 service_satisfaction_rating: i+1,
+                 service_satisfaction_rating: i + 1,
                  slug: "register-to-vote",
-                 created_at: date,
-                )
+                 created_at: date)
         end
       end
 
@@ -108,9 +104,8 @@ describe ServiceFeedbackAggregator do
         2.times do |i|
           create(:service_feedback,
                  service_satisfaction_rating: 1,
-                 slug: 'register-to-vote',
-                 created_at: date - i.days,
-                )
+                 slug: "register-to-vote",
+                 created_at: date - i.days)
         end
       end
 

@@ -1,6 +1,6 @@
-require 'uri'
-require 'zendesk/ticket'
-require 'plek'
+require "uri"
+require "zendesk/ticket"
+require "plek"
 
 module Zendesk
   class ProblemReportTicket < Ticket
@@ -9,13 +9,14 @@ module Zendesk
     end
 
     def tags
-      ["anonymous_feedback", "public_form", "report_a_problem"] +
+      %w[anonymous_feedback public_form report_a_problem] +
         source_tag_if_needed + govuk_referrer_tag_if_needed + page_owner_tag_if_needed
     end
 
   protected
+
     def template_name
-      'problem_report'
+      "problem_report"
     end
 
     def requester
@@ -23,7 +24,7 @@ module Zendesk
     end
 
     def source_tag_if_needed
-      @contact.source.nil? ? [] : [ @contact.source ]
+      @contact.source.nil? ? [] : [@contact.source]
     end
 
     def page_owner_tag_if_needed
@@ -31,11 +32,11 @@ module Zendesk
     end
 
     def govuk_referrer_tag_if_needed
-      referrer_url_on_gov_uk? ? ["govuk_referrer"] : []
+      referrer_url_on_gov_uk? ? %w[govuk_referrer] : []
     end
 
     def referrer_url_on_gov_uk?
-      @contact.referrer and URI.parse(@contact.referrer).host == govuk_host
+      @contact.referrer && (URI.parse(@contact.referrer).host == govuk_host)
     end
 
     def govuk_host

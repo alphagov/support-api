@@ -1,8 +1,8 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["RAILS_ENV"] ||= 'test'
-require 'spec_helper'
-require File.expand_path("../../config/environment", __FILE__)
-require 'rspec/rails'
+ENV["RAILS_ENV"] ||= "test"
+require "spec_helper"
+require File.expand_path("../config/environment", __dir__)
+require "rspec/rails"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -45,9 +45,7 @@ RSpec.configure do |config|
     Rails.application.load_seed
   end
 
-  RSpec.configure do |config|
-    config.include(Shoulda::Matchers::ActiveModel, type: :model)
-    config.include(Shoulda::Matchers::ActiveRecord, type: :model)
-    config.include(AuthenticationHelper::ControllerMixin, type: :controller)
-  end
+  config.include(Shoulda::Matchers::ActiveModel, type: :model)
+  config.include(Shoulda::Matchers::ActiveRecord, type: :model)
+  config.include(AuthenticationHelper::ControllerMixin, type: :controller)
 end

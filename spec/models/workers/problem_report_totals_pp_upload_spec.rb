@@ -13,15 +13,15 @@ describe "problem report totals PP upload" do
         "_timestamp" => "2014-09-29T00:00:00+00:00",
         "period" => "day",
         "pagePath" => "/vat-rates",
-        "total" => 2
+        "total" => 2,
       },
       {
         "_id" => "2014-09-29_tax-disc",
         "_timestamp" => "2014-09-29T00:00:00+00:00",
         "period" => "day",
         "pagePath" => "/tax-disc",
-        "total" => 1
-      }
+        "total" => 1,
+      },
     ])
 
     class MockEntry
@@ -34,11 +34,11 @@ describe "problem report totals PP upload" do
     end
 
     allow(ProblemReport).to receive(:totals_for).and_return([
-      MockEntry.new('/vat-rates', 2),
-      MockEntry.new('/tax-disc', 1),
+      MockEntry.new("/vat-rates", 2),
+      MockEntry.new("/tax-disc", 1),
     ])
 
-    Timecop.travel Time.utc(2014,9,30)
+    Timecop.travel Time.utc(2014, 9, 30)
 
     ProblemReportDailyTotalsPPUploaderWorker.run
 

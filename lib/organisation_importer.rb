@@ -1,4 +1,4 @@
-require 'gds_api/organisations'
+require "gds_api/organisations"
 
 class OrganisationImporter
   def run
@@ -13,19 +13,19 @@ class OrganisationImporter
     logger.info "Import complete"
   end
 
-  private
+private
 
   def create_or_update_organisation(organisation_from_api)
     organisation_attrs = {
-      title: organisation_from_api['title'],
-      slug: organisation_from_api['details']['slug'],
-      acronym: organisation_from_api['details']['abbreviation'],
-      govuk_status: organisation_from_api['details']['govuk_status'],
-      web_url: organisation_from_api['web_url'],
-      content_id: organisation_from_api['details']['content_id'],
+      title: organisation_from_api["title"],
+      slug: organisation_from_api["details"]["slug"],
+      acronym: organisation_from_api["details"]["abbreviation"],
+      govuk_status: organisation_from_api["details"]["govuk_status"],
+      web_url: organisation_from_api["web_url"],
+      content_id: organisation_from_api["details"]["content_id"],
     }
 
-    content_id = organisation_from_api['details']['content_id']
+    content_id = organisation_from_api["details"]["content_id"]
     existing_organisation = Organisation.find_by(content_id: content_id)
 
     if existing_organisation.present?
@@ -48,22 +48,22 @@ class OrganisationImporter
              when "production" then Rails.root.join("log", "organisation_import.json.log")
              end
 
-    Logger.new(output).tap {|logger|
+    Logger.new(output).tap { |logger|
       logger.formatter = json_log_formatter if Rails.env.production?
     }
   end
 
   def json_log_formatter
-    proc {|severity, datetime, progname, message|
+    proc { |_severity, datetime, _progname, message|
       {
         "@message" => message,
-        "@tags" => ["cron", "rake"],
-        "@timestamp" => datetime.iso8601
+        "@tags" => %w[cron rake],
+        "@timestamp" => datetime.iso8601,
       }.to_json + "\n"
     }
   end
 
   def organisations_api
-    @api_client ||= GdsApi::Organisations.new(Plek.current.find('whitehall-admin'))
+    @organisations_api ||= GdsApi::Organisations.new(Plek.current.find("whitehall-admin"))
   end
 end

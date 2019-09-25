@@ -1,5 +1,5 @@
-require 'csv'
-require 'plek'
+require "csv"
+require "plek"
 
 class FeedbackExportRequest < ApplicationRecord
   validates :notification_email, :filters, presence: true
@@ -24,7 +24,7 @@ class FeedbackExportRequest < ApplicationRecord
     end
     parts << filters[:organisation_slug] if filters[:organisation_slug].present?
     parts << filters[:document_type] if filters[:document_type].present?
-    self.filename = "#{parts.join("_")}.csv"
+    self.filename = "#{parts.join('_')}.csv"
   end
 
   def path_filters
@@ -39,9 +39,9 @@ class FeedbackExportRequest < ApplicationRecord
 
   def and_x_number_of_other_paths
     count = path_filters.count - 1
-    base_path = path_filters.first == '/' ? ['base_path'] : []
+    base_path = path_filters.first == "/" ? %w[base_path] : []
     if count >= 2
-      base_path + ['and', count, 'other', 'paths']
+      base_path + ["and", count, "other", "paths"]
     elsif count == 1
       base_path + %w[and another path]
     else
@@ -63,6 +63,6 @@ class FeedbackExportRequest < ApplicationRecord
   end
 
   def url
-    Plek.find('support', external: true) + "/anonymous_feedback/export_requests/#{id}"
+    Plek.find("support", external: true) + "/anonymous_feedback/export_requests/#{id}"
   end
 end

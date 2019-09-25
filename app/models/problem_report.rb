@@ -1,8 +1,8 @@
-require 'csv'
+require "csv"
 
 class ProblemReport < AnonymousContact
-  validates :what_doing, length: { maximum: 2 ** 16 }
-  validates :what_wrong, length: { maximum: 2 ** 16 }
+  validates :what_doing, length: { maximum: 2**16 }
+  validates :what_wrong, length: { maximum: 2**16 }
 
   scope :totals_for, ->(date) {
     where(created_at: date.beginning_of_day..date.end_of_day).
@@ -19,9 +19,9 @@ class ProblemReport < AnonymousContact
   end
 
   def as_json(options = {})
-    attributes_to_serialise = [
-      :type, :path, :id, :created_at, :what_wrong, :what_doing,
-      :referrer, :user_agent, :marked_as_spam, :reviewed
+    attributes_to_serialise = %i[
+      type path id created_at what_wrong what_doing
+      referrer user_agent marked_as_spam reviewed
     ]
     super({
       only: attributes_to_serialise,

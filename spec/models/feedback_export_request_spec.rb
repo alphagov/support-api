@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe FeedbackExportRequest, type: :model do
   before { Timecop.travel(Time.new(2015, 6, 1)) }
@@ -37,8 +37,8 @@ RSpec.describe FeedbackExportRequest, type: :model do
           from: from,
           to: to,
           organisation_slug: organisation_slug,
-          document_type: document_type
-        }
+          document_type: document_type,
+        },
      )
     end
 
@@ -237,8 +237,8 @@ RSpec.describe FeedbackExportRequest, type: :model do
           to: Date.new(2015, 5),
           path_prefixes: ["/"],
           organisation_slug: "hm-revenue-customs",
-          document_type: "smart_answer"
-        }
+          document_type: "smart_answer",
+        },
       ).results
     end
 
@@ -249,7 +249,7 @@ RSpec.describe FeedbackExportRequest, type: :model do
         to: Date.new(2015, 5),
         path_prefixes: ["/"],
         organisation_slug: "hm-revenue-customs",
-        document_type: "smart_answer"
+        document_type: "smart_answer",
       ).and_return(double("scope", most_recent_last: [contact]))
 
       expect(subject).to eq [contact]
@@ -262,12 +262,12 @@ RSpec.describe FeedbackExportRequest, type: :model do
         :anonymous_contact,
         path: "/",
         created_at: Time.utc(2015, 6, 1, 10),
-        referrer: "http://www.example.com/"
+        referrer: "http://www.example.com/",
       )
       create(
         :anonymous_contact,
         path: "/gov",
-        created_at: Time.utc(2015, 6, 1, 20)
+        created_at: Time.utc(2015, 6, 1, 20),
       )
     end
 
@@ -283,7 +283,7 @@ RSpec.describe FeedbackExportRequest, type: :model do
 
     it "uses the FeedbackCsvRowPresenter to format the row" do
       header = "creation date,path or service name,feedback,service satisfaction rating,browser name,browser version,browser platform,user agent,referrer,type,primary organisation,all organisations"
-      allow_any_instance_of(FeedbackCsvRowPresenter).to receive(:to_a).and_return(["a", "b", "c"])
+      allow_any_instance_of(FeedbackCsvRowPresenter).to receive(:to_a).and_return(%w[a b c])
       expect(subject).to eq "#{header}\na,b,c\na,b,c\n"
     end
   end

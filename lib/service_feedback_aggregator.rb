@@ -1,5 +1,4 @@
 class ServiceFeedbackAggregator
-
   attr_reader :reason_for_not_running
 
   def initialize(date)
@@ -26,10 +25,10 @@ private
   end
 
   def aggregations_already_present?
-    AggregatedServiceFeedback.where(created_at: @date.midnight..(@date + 1.day)).count > 0
+    AggregatedServiceFeedback.where(created_at: @date.midnight..(@date + 1.day)).count.positive?
   end
 
-  def parsed_date(date)
+  def parsed_date(_date)
     Date.parse(@date.to_s).midnight
   end
 

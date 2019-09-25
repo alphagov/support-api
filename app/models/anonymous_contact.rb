@@ -1,5 +1,5 @@
-require 'field_which_may_contain_personal_information'
-require 'duplicate_detector'
+require "field_which_may_contain_personal_information"
+require "duplicate_detector"
 
 class AnonymousContact < ApplicationRecord
   before_save :detect_personal_information
@@ -10,10 +10,10 @@ class AnonymousContact < ApplicationRecord
   validates :referrer, referrer_url: true, length: { maximum: 2048 }, allow_nil: true
   validates :path,     url: true, length: { maximum: 2048 }, presence: true
   validates :user_agent, length: { maximum: 2048 }
-  validates :details, length: { maximum: 2 ** 16 }
-  validates_inclusion_of :javascript_enabled, in: [ true, false ]
-  validates_inclusion_of :personal_information_status, in: [ "suspected", "absent" ], allow_nil: true
-  validates_inclusion_of :is_actionable, in: [ true, false ]
+  validates :details, length: { maximum: 2**16 }
+  validates_inclusion_of :javascript_enabled, in: [true, false]
+  validates_inclusion_of :personal_information_status, in: %w[suspected absent], allow_nil: true
+  validates_inclusion_of :is_actionable, in: [true, false]
   validates_presence_of :reason_why_not_actionable, unless: -> { is_actionable }
 
   scope :free_of_personal_info, -> {
@@ -22,18 +22,18 @@ class AnonymousContact < ApplicationRecord
   scope :only_actionable, -> { where(is_actionable: true) }
   scope :most_recent_first, -> { order(created_at: :desc) }
   scope :most_recent_last, -> { order(created_at: :asc) }
-  scope :created_between_days, -> (first_date, last_date) { where(created_at: first_date..last_date.at_end_of_day) }
-  scope :for_organisation_slug, -> (slug) { joins(:organisations).where(organisations: {slug: slug}) }
+  scope :created_between_days, ->(first_date, last_date) { where(created_at: first_date..last_date.at_end_of_day) }
+  scope :for_organisation_slug, ->(slug) { joins(:organisations).where(organisations: { slug: slug }) }
   scope :for_document_type, ->(document_type) { joins(:content_item).where(content_items: { document_type: document_type }) }
 
   scope :matching_path_prefixes, ->(paths) do
     if paths.present?
       similar_to = paths.map { |p| "#{p}%" }
-      where(similar_to.map { "anonymous_contacts.path LIKE ?" }.join(' OR '), *similar_to)
+      where(similar_to.map { "anonymous_contacts.path LIKE ?" }.join(" OR "), *similar_to)
     end
   end
 
-  scope :for_query_parameters, ->(options={}) do
+  scope :for_query_parameters, ->(options = {}) do
     path_prefixes = options[:path_prefixes]
     from = options[:from] || Date.new(1970)
     to = options[:to] || Date.today
@@ -56,7 +56,7 @@ class AnonymousContact < ApplicationRecord
 
   def self.deduplicate_contacts_created_between(interval)
     contacts = where(created_at: interval).order("created_at asc")
-    deduplication_attribute_names = attribute_names - ["id", "created_at", "updated_at"]
+    deduplication_attribute_names = attribute_names - %w[id created_at updated_at]
     duplicate_detector = DuplicateDetector.new(deduplication_attribute_names)
     contacts.each do |contact|
       if duplicate_detector.duplicate?(contact)
@@ -77,12 +77,13 @@ class AnonymousContact < ApplicationRecord
   end
 
 private
+
   def detect_personal_information
     self.personal_information_status ||= personal_info_present? ? "suspected" : "absent"
   end
 
   def personal_info_present?
-    free_text_fields = [ self.details, self.what_wrong, self.what_doing ]
+    free_text_fields = [self.details, self.what_wrong, self.what_doing]
     free_text_fields.any? { |text| FieldWhichMayContainPersonalInformation.new(text).include_personal_info? }
   end
 end

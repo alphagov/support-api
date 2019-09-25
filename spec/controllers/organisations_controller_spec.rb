@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe OrganisationsController, type: :controller do
   describe "#index" do
@@ -16,15 +16,15 @@ RSpec.describe OrganisationsController, type: :controller do
           "slug" => "department-of-fair-dos",
           "acronym" => "DOFD",
           "govuk_status" => "live",
-          "web_url" => "https://www.gov.uk/government/organisations/department-of-fair-dos"
+          "web_url" => "https://www.gov.uk/government/organisations/department-of-fair-dos",
         },
         {
           "title" => "Ministry of Magic",
           "slug" => "ministry-of-magic",
           "acronym" => "MOM",
           "govuk_status" => "live",
-          "web_url" => "https://www.gov.uk/government/organisations/ministry-of-magic"
-        }
+          "web_url" => "https://www.gov.uk/government/organisations/ministry-of-magic",
+        },
       ]
     end
   end
@@ -42,7 +42,7 @@ RSpec.describe OrganisationsController, type: :controller do
           "slug" => "ministry-of-magic",
           "acronym" => "MOM",
           "govuk_status" => "live",
-          "web_url" => "https://www.gov.uk/government/organisations/ministry-of-magic"
+          "web_url" => "https://www.gov.uk/government/organisations/ministry-of-magic",
         )
       end
     end

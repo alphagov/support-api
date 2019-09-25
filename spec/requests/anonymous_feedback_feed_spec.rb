@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe "Anonymous feedback feed" do
   # In order to improve information and services on GOV.UK
@@ -8,36 +8,33 @@ describe "Anonymous feedback feed" do
   context "by path" do
     let!(:problem_report) do
       create(:problem_report,
-        what_wrong: "A",
-        what_doing: "B",
-        path: "/help",
-        referrer: "https://www.gov.uk/browse",
-        user_agent: "Safari",
-        created_at: Time.utc(2015,02,03),
-      )
+             what_wrong: "A",
+             what_doing: "B",
+             path: "/help",
+             referrer: "https://www.gov.uk/browse",
+             user_agent: "Safari",
+             created_at: Time.utc(2015, 0o2, 0o3))
     end
 
     let!(:service_feedback) do
       create(:service_feedback,
-        slug: "waste_carrier_or_broker_registration",
-        service_satisfaction_rating: 3,
-        details: "meh",
-        created_at: Time.utc(2015,02,02),
-        path: "/done/waste_carrier_or_broker_registration",
-        referrer: "https://www.wastecarrier.service.gov.uk",
-        user_agent: "iPhone",
-      )
+             slug: "waste_carrier_or_broker_registration",
+             service_satisfaction_rating: 3,
+             details: "meh",
+             created_at: Time.utc(2015, 0o2, 0o2),
+             path: "/done/waste_carrier_or_broker_registration",
+             referrer: "https://www.wastecarrier.service.gov.uk",
+             user_agent: "iPhone")
     end
 
     let!(:long_form_contact) do
       create(:long_form_contact,
-        details: "The VAT rate is wrong",
-        created_at: Time.utc(2015,02,01),
-        path: "/contact/govuk",
-        referrer: "https://www.gov.uk/contact",
-        user_specified_url: "https://www.gov.uk/vat-rates",
-        user_agent: "iPhone",
-      )
+             details: "The VAT rate is wrong",
+             created_at: Time.utc(2015, 0o2, 0o1),
+             path: "/contact/govuk",
+             referrer: "https://www.gov.uk/contact",
+             user_specified_url: "https://www.gov.uk/vat-rates",
+             user_agent: "iPhone")
     end
 
     it "returns feedback with the appropriate fields in reverse chronological order" do
@@ -56,7 +53,7 @@ describe "Anonymous feedback feed" do
           "user_agent" => "Safari",
           "created_at" => "2015-02-03T00:00:00.000Z",
           "marked_as_spam" => false,
-          "reviewed" => false
+          "reviewed" => false,
         },
         {
           "id" => service_feedback.id,
@@ -80,7 +77,7 @@ describe "Anonymous feedback feed" do
           "referrer" => "https://www.gov.uk/contact",
           "user_agent" => "iPhone",
           "created_at" => "2015-02-01T00:00:00.000Z",
-        }
+        },
       ])
 
       expect(json_response).to include(

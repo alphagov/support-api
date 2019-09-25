@@ -1,11 +1,11 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe FeedbackCsvRowPresenter do
   subject(:instance) { described_class.new(row) }
-  let(:problem_report) { build(:problem_report, created_at: Time.utc(2015,4), what_doing: "Finding the thing", what_wrong: "Couldn't find the thing\nThanks") }
-  let(:service_feedback) { build(:service_feedback, created_at: Time.utc(2015,4), details: "It was good\nWell done", service_satisfaction_rating: 3) }
-  let(:aggregated_service_feedback) { build(:aggregated_service_feedback, created_at: Time.utc(2015,4), details: 1, service_satisfaction_rating: 3) }
-  let(:long_form_contact) { build(:long_form_contact, created_at: Time.utc(2015,4), details: "It was really good\nReally.\nGood job") }
+  let(:problem_report) { build(:problem_report, created_at: Time.utc(2015, 4), what_doing: "Finding the thing", what_wrong: "Couldn't find the thing\nThanks") }
+  let(:service_feedback) { build(:service_feedback, created_at: Time.utc(2015, 4), details: "It was good\nWell done", service_satisfaction_rating: 3) }
+  let(:aggregated_service_feedback) { build(:aggregated_service_feedback, created_at: Time.utc(2015, 4), details: 1, service_satisfaction_rating: 3) }
+  let(:long_form_contact) { build(:long_form_contact, created_at: Time.utc(2015, 4), details: "It was really good\nReally.\nGood job") }
 
   describe "#to_a" do
     subject { instance.to_a }
@@ -26,7 +26,7 @@ describe FeedbackCsvRowPresenter do
           "http://www.example.com/foo",
           "problem-report",
           "",
-          ""
+          "",
         ]
       end
     end
@@ -47,7 +47,7 @@ describe FeedbackCsvRowPresenter do
           "http://www.example.com/foo",
           "service-feedback",
           "",
-          ""
+          "",
         ]
       end
     end
@@ -67,7 +67,7 @@ describe FeedbackCsvRowPresenter do
           "http://www.example.com/foo",
           "aggregated-service-feedback",
           "",
-          ""
+          "",
         ]
       end
     end
@@ -88,7 +88,7 @@ describe FeedbackCsvRowPresenter do
           "http://www.example.com/foo",
           "long-form-contact",
           "",
-          ""
+          "",
         ]
       end
     end
@@ -129,7 +129,7 @@ describe FeedbackCsvRowPresenter do
         let(:organisations) {
           [
             build(:organisation, title: "Apiarian Embassy"),
-            build(:organisation, title: "Department for Ursine Affairs")
+            build(:organisation, title: "Department for Ursine Affairs"),
           ]
         }
 
@@ -175,7 +175,7 @@ describe FeedbackCsvRowPresenter do
         let(:organisations) {
           [
             build(:organisation, title: "Apiarian Embassy"),
-            build(:organisation, title: "Department for Ursine Affairs")
+            build(:organisation, title: "Department for Ursine Affairs"),
           ]
         }
 
@@ -211,7 +211,7 @@ describe FeedbackCsvRowPresenter do
     context "for aggregated service feedback" do
       let(:row) { aggregated_service_feedback }
 
-      it 'is a sentence explaining the rating and how many ratings there were' do
+      it "is a sentence explaining the rating and how many ratings there were" do
         expect(subject).to eq("Rating of 3: 1")
       end
     end

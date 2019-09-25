@@ -1,6 +1,6 @@
-require 'date'
-require 'gds_api/performance_platform/data_in'
-require 'performance_platform_service_feedback_metrics'
+require "date"
+require "gds_api/performance_platform/data_in"
+require "performance_platform_service_feedback_metrics"
 
 class ServiceFeedbackPPUploaderWorker
   include Sidekiq::Worker
@@ -10,7 +10,7 @@ class ServiceFeedbackPPUploaderWorker
 
     api = GdsApi::PerformancePlatform::DataIn.new(
       PP_DATA_IN_API[:url],
-      bearer_token: PP_DATA_IN_API[:bearer_token]
+      bearer_token: PP_DATA_IN_API[:bearer_token],
     )
 
     payload = PerformancePlatformServiceFeedbackMetrics.new(

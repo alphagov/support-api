@@ -1,11 +1,11 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe ContentItem do
   let(:orgs) { create_list(:organisation, 2) }
 
   context "#for_organisation" do
     it "should be filter only content items for that org" do
-      item1 = create(:content_item, organisations: [orgs[0]])
+      create(:content_item, organisations: [orgs[0]])
       item2 = create(:content_item, organisations: [orgs[1]])
       item3 = create(:content_item, organisations: [orgs[1]])
 
@@ -14,37 +14,35 @@ describe ContentItem do
   end
 
   it "calculates anonymous feedback counts for recent time intervals" do
-    item = create(:content_item, organisations: orgs, path: "/abc",
+    create(:content_item, organisations: orgs, path: "/abc",
       anonymous_contacts: [
         create(:anonymous_contact, created_at: 5.days.ago),
         create(:anonymous_contact, created_at: 15.days.ago),
         create(:anonymous_contact, created_at: 70.days.ago),
         create(:anonymous_contact, created_at: 100.days.ago),
-      ]
-    )
+      ])
 
-    another_item = create(:content_item, organisations: orgs, path: "/def",
+    create(:content_item, organisations: orgs, path: "/def",
       anonymous_contacts: [
         create(:anonymous_contact, created_at: 60.days.ago),
         create(:anonymous_contact, created_at: 70.days.ago),
         create(:anonymous_contact, created_at: 80.days.ago),
         create(:anonymous_contact, created_at: 90.days.ago),
-      ]
-    )
+      ])
 
     expect(ContentItem.summary).to eq([
       { path: "/abc", last_7_days: 1, last_30_days: 2, last_90_days: 3 },
-      { path: "/def", last_7_days: 0, last_30_days: 0, last_90_days: 4 }
+      { path: "/def", last_7_days: 0, last_30_days: 0, last_90_days: 4 },
     ])
 
     expect(ContentItem.summary("last_90_days")).to eq([
       { path: "/def", last_7_days: 0, last_30_days: 0, last_90_days: 4 },
-      { path: "/abc", last_7_days: 1, last_30_days: 2, last_90_days: 3 }
+      { path: "/abc", last_7_days: 1, last_30_days: 2, last_90_days: 3 },
     ])
 
     expect(ContentItem.summary("path")).to eq([
       { path: "/abc", last_7_days: 1, last_30_days: 2, last_90_days: 3 },
-      { path: "/def", last_7_days: 0, last_30_days: 0, last_90_days: 4 }
+      { path: "/def", last_7_days: 0, last_30_days: 0, last_90_days: 4 },
     ])
   end
 
@@ -53,14 +51,12 @@ describe ContentItem do
       anonymous_contacts: [
         create(:anonymous_contact, created_at: 15.days.ago),
         create(:anonymous_contact, created_at: 15.days.ago),
-      ]
-    )
+      ])
     create(:content_item, organisations: orgs, path: "/abc",
       anonymous_contacts: [
         create(:anonymous_contact, created_at: 15.days.ago),
         create(:anonymous_contact, created_at: 15.days.ago),
-      ]
-    )
+      ])
 
     expect(ContentItem.summary).to eq([
       { path: "/abc", last_7_days: 0, last_30_days: 4, last_90_days: 4 },

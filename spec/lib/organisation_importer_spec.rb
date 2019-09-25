@@ -1,5 +1,5 @@
-require 'rails_helper'
-require 'organisation_importer'
+require "rails_helper"
+require "organisation_importer"
 
 describe OrganisationImporter do
   before do
@@ -9,8 +9,7 @@ describe OrganisationImporter do
         "details" => { "slug" => o[:slug],
                        "govuk_status" => "live",
                        "abbreviation" => o[:abbreviation],
-                       "content_id" => o[:content_id]
-                     },
+                       "content_id" => o[:content_id] },
         "web_url" => "https://gov.uk/government/organisations/#{o[:slug]}",
       }
     end
@@ -24,19 +23,19 @@ describe OrganisationImporter do
       slug: "ministry-of-magic",
       name: "Ministry of Magic",
       abbreviation: "MOM",
-      content_id: "abcdef"
+      content_id: "abcdef",
      },
      {
       slug: "ministry-of-fun-and-games",
       name: "Ministry of Fun and Games",
       abbreviation: "MOFG",
-      content_id: "123456"
+      content_id: "123456",
      },
      {
       slug: "ministry-of-unicorns",
       name: "Ministry of Unicorns",
       abbreviation: "MOU",
-      content_id: "c0ffee"
+      content_id: "c0ffee",
      }]
   end
 

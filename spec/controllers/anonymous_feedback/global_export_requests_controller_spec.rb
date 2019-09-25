@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe AnonymousFeedback::GlobalExportRequestsController, type: :controller do
   describe "#create" do
@@ -13,8 +13,8 @@ describe AnonymousFeedback::GlobalExportRequestsController, type: :controller do
             from_date: "2015-05-01",
             to_date: "2015-06-01",
             notification_email: "foo@example.com",
-            exclude_spam: true
-          }
+            exclude_spam: true,
+          },
         }
 
         expect(response).to be_accepted
@@ -29,7 +29,7 @@ describe AnonymousFeedback::GlobalExportRequestsController, type: :controller do
           global_export_request: {
             from_date: "2015-05-01",
             to_date: "2015-06-01",
-          }
+          },
         }
 
         expect(response).to be_unprocessable

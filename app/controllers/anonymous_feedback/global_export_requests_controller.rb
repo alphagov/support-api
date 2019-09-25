@@ -1,4 +1,4 @@
-require 'date_parser'
+require "date_parser"
 
 class AnonymousFeedback::GlobalExportRequestsController < ApplicationController
   def create
@@ -12,12 +12,13 @@ class AnonymousFeedback::GlobalExportRequestsController < ApplicationController
   end
 
 private
+
   def global_export_request_params
-    permitted_params = [
-      :from_date,
-      :to_date,
-      :notification_email,
-      :exclude_spam
+    permitted_params = %i[
+      from_date
+      to_date
+      notification_email
+      exclude_spam
     ]
 
     clean_params = params.require(:global_export_request).permit(*permitted_params).to_h
@@ -25,7 +26,7 @@ private
       from_date: DateParser.parse(clean_params[:from_date]),
       to_date: DateParser.parse(clean_params[:to_date]),
       notification_email: clean_params[:notification_email],
-      exclude_spam: clean_params[:exclude_spam]
+      exclude_spam: clean_params[:exclude_spam],
     }
   end
 end

@@ -1,33 +1,30 @@
-require 'rails_helper'
-require 'time'
-require 'deduplication_worker'
+require "rails_helper"
+require "time"
+require "deduplication_worker"
 
 describe "de-duplication" do
   let(:record1) {
     build(:service_feedback,
-      service_satisfaction_rating: 5,
-      details: "this service is great",
-      slug: "some-tx",
-      created_at: Time.parse("2013-01-15 12:00:00"),
-    )
+          service_satisfaction_rating: 5,
+          details: "this service is great",
+          slug: "some-tx",
+          created_at: Time.parse("2013-01-15 12:00:00"))
   }
 
   let(:record2) {
     build(:service_feedback,
-      service_satisfaction_rating: 3,
-      details: "this service is meh",
-      slug: "some-tx",
-      created_at: Time.parse("2013-01-15 12:00:00"),
-    )
+          service_satisfaction_rating: 3,
+          details: "this service is meh",
+          slug: "some-tx",
+          created_at: Time.parse("2013-01-15 12:00:00"))
   }
 
   let(:record3) {
     build(:service_feedback,
-      service_satisfaction_rating: 3,
-      details: "this service is meh",
-      slug: "some-tx",
-      created_at: Time.parse("2013-01-15 12:00:01"),
-    )
+          service_satisfaction_rating: 3,
+          details: "this service is meh",
+          slug: "some-tx",
+          created_at: Time.parse("2013-01-15 12:00:01"))
   }
 
   context "nightly deduplication" do

@@ -17,12 +17,13 @@ class TopUrls
         "period" => "month",
         "organisation_acronym" => top_url.page_owner,
         "comment_count" => top_url.number_of_paths,
-        "url" => Plek.new.website_root + top_url.path
+        "url" => Plek.new.website_root + top_url.path,
       }
     end
   end
 
-  private
+private
+
   def top_urls_for(org_acronym)
     ProblemReport.
       only_actionable.
@@ -45,6 +46,6 @@ class TopUrls
   end
 
   def top_url_id_for(page_owner, rank)
-    "#{@first_day_of_period.strftime("%Y%m")}_#{page_owner}_#{rank}"
+    "#{@first_day_of_period.strftime('%Y%m')}_#{page_owner}_#{rank}"
   end
 end

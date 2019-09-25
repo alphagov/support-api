@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe FieldWhichMayContainPersonalInformation do
   def contains_personal_info?(text)

@@ -1,10 +1,10 @@
-require 'rails_helper'
-require 'gds_api/test_helpers/content_store'
+require "rails_helper"
+require "gds_api/test_helpers/content_store"
 
 describe ContentItemEnrichmentWorker do
   include GdsApi::TestHelpers::ContentStore
 
-  let(:raw_path) { 'my-magic-govuk-endpoint' }
+  let(:raw_path) { "my-magic-govuk-endpoint" }
   let(:path) { "/#{raw_path}" }
   let(:problem_report) { create(:problem_report, path: path) }
   subject(:worker) { described_class.new }
@@ -27,7 +27,7 @@ describe ContentItemEnrichmentWorker do
       it "uses the existing content item" do
         create(:content_item, path: path)
 
-        expect { worker.perform(problem_report.id) }.to_not change { ContentItem.count }
+        expect { worker.perform(problem_report.id) }.to_not(change { ContentItem.count })
       end
     end
   end
@@ -50,7 +50,7 @@ describe ContentItemEnrichmentWorker do
       it "uses the existing content item" do
         create(:content_item, path: path)
 
-        expect { worker.perform(problem_report.id) }.to_not change { ContentItem.count }
+        expect { worker.perform(problem_report.id) }.to_not(change { ContentItem.count })
       end
     end
   end

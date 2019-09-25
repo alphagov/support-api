@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe ProblemReport do
   it { should allow_value("abc").for(:what_doing) }
@@ -20,7 +20,7 @@ describe ProblemReport do
 
       expect(result).to eq([
         { path: "/student-finance-login", total: 2 },
-        { path: "/vat-rates", total: 1 }
+        { path: "/vat-rates", total: 1 },
       ])
     end
   end

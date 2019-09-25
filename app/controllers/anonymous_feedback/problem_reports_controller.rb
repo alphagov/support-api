@@ -1,4 +1,4 @@
-require 'problem_report_list'
+require "problem_report_list"
 
 module AnonymousFeedback
   class ProblemReportsController < ApplicationController
@@ -15,7 +15,7 @@ module AnonymousFeedback
         totals = ProblemReport.totals_for(date)
         result = {
           date: date.to_time.iso8601,
-          data: totals.map { |entry| { path: entry.path, total: entry.total } }
+          data: totals.map { |entry| { path: entry.path, total: entry.total } },
         }
 
         render json: result
@@ -46,6 +46,7 @@ module AnonymousFeedback
     end
 
   private
+
     def problem_report_index_params
       params.permit(:from_date, :to_date, :include_reviewed, :page).to_h
     end
@@ -85,9 +86,8 @@ module AnonymousFeedback
 
     def parse_interval
       @interval = case filters[:period]
-                  when /^\d{4}-\d{2}-\d{2}$/ then Time.strptime(filters[:period], '%Y-%m-%d').all_day
-                  when /^\d{4}-\d{2}$/ then DateTime.strptime(filters[:period], '%Y-%m').all_month
-                  else nil
+                  when /^\d{4}-\d{2}-\d{2}$/ then Time.strptime(filters[:period], "%Y-%m-%d").all_day
+                  when /^\d{4}-\d{2}$/ then DateTime.strptime(filters[:period], "%Y-%m").all_month
                   end
       head :unprocessable_entity unless @interval
     end
