@@ -27,7 +27,7 @@ describe ContentItemEnrichmentWorker do
       it "uses the existing content item" do
         create(:content_item, path: path)
 
-        expect { worker.perform(problem_report.id) }.to_not change { ContentItem.count }
+        expect { worker.perform(problem_report.id) }.to_not(change { ContentItem.count })
       end
     end
   end
@@ -50,7 +50,7 @@ describe ContentItemEnrichmentWorker do
       it "uses the existing content item" do
         create(:content_item, path: path)
 
-        expect { worker.perform(problem_report.id) }.to_not change { ContentItem.count }
+        expect { worker.perform(problem_report.id) }.to_not(change { ContentItem.count })
       end
     end
   end
