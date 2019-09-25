@@ -64,6 +64,6 @@ private
   end
 
   def organisations_api
-    @api_client ||= GdsApi::Organisations.new(Plek.current.find("whitehall-admin"))
+    @organisations_api ||= GdsApi::Organisations.new(Plek.current.find("whitehall-admin"))
   end
 end

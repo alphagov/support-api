@@ -68,7 +68,7 @@ private
   end
 
   def performance_platform_data_out
-    @data_out ||= GdsApi::PerformancePlatform::DataOut.new("https://www.performance.service.gov.uk")
+    @performance_platform_data_out ||= GdsApi::PerformancePlatform::DataOut.new("https://www.performance.service.gov.uk")
   end
 
   def slug_matches_aggregated_feedback?(transaction_slug)
@@ -81,6 +81,6 @@ private
   end
 
   def all_aggregated_feedback_paths
-    @paths ||= AggregatedServiceFeedback.select(:path).distinct.pluck(:path)
+    @all_aggregated_feedback_paths ||= AggregatedServiceFeedback.select(:path).distinct.pluck(:path)
   end
 end
