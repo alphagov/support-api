@@ -45,9 +45,7 @@ RSpec.configure do |config|
     Rails.application.load_seed
   end
 
-  RSpec.configure do |config|
-    config.include(Shoulda::Matchers::ActiveModel, type: :model)
-    config.include(Shoulda::Matchers::ActiveRecord, type: :model)
-    config.include(AuthenticationHelper::ControllerMixin, type: :controller)
-  end
+  config.include(Shoulda::Matchers::ActiveModel, type: :model)
+  config.include(Shoulda::Matchers::ActiveRecord, type: :model)
+  config.include(AuthenticationHelper::ControllerMixin, type: :controller)
 end
