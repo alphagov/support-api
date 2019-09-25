@@ -71,8 +71,6 @@ class ContentItem < ApplicationRecord
     sum_column(from: midnight_last_night - 90.days, to: midnight_last_night)
   end
 
-private
-
   def self.sum_column(options)
     "SUM((anonymous_contacts.created_at BETWEEN '#{options[:from].to_s(:db)}' AND '#{options[:to].to_s(:db)}')::INT)"
   end
