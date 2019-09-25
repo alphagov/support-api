@@ -31,17 +31,17 @@ class AnonymousFeedbackComparator
     @fields_to_compare = fields_to_compare
   end
 
-  def same?(r1, r2)
-    fields_same?(r1, r2) && created_within_a_short_interval?(r1, r2)
+  def same?(record1, record2)
+    fields_same?(record1, record2) && created_within_a_short_interval?(record1, record2)
   end
 
-  def created_within_a_short_interval?(r1, r2)
-    (r1["created_at"] - r2["created_at"]).abs < DUPLICATION_INTERVAL_IN_SECONDS
+  def created_within_a_short_interval?(record1, record2)
+    (record1["created_at"] - record2["created_at"]).abs < DUPLICATION_INTERVAL_IN_SECONDS
   end
 
 private
 
-  def fields_same?(r1, r2)
-    @fields_to_compare.all? { |field| r1[field] == r2[field] }
+  def fields_same?(record1, record2)
+    @fields_to_compare.all? { |field| record1[field] == record2[field] }
   end
 end

@@ -93,11 +93,11 @@ describe FeedbackByDay do
     end
   end
 
-  def create_entry(n)
-    { path: "/aaa/#{pad_number(n)}", count: 1 }
+  def create_entry(number)
+    { path: "/aaa/#{pad_number(number)}", count: 1 }
   end
 
-  def pad_number(n)
-    n.to_s.rjust(3, "0")
+  def pad_number(number)
+    number.to_s.rjust(3, "0")
   end
 end
