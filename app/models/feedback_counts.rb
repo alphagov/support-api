@@ -5,7 +5,6 @@ class FeedbackCounts
   end
 
   def to_a
-    counts = feedback_counts
     absolute_count = feedback_counts.values.inject(:+)
     feedback_counts.map do |page_owner, count|
       {

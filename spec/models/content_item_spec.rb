@@ -5,7 +5,7 @@ describe ContentItem do
 
   context "#for_organisation" do
     it "should be filter only content items for that org" do
-      item1 = create(:content_item, organisations: [orgs[0]])
+      create(:content_item, organisations: [orgs[0]])
       item2 = create(:content_item, organisations: [orgs[1]])
       item3 = create(:content_item, organisations: [orgs[1]])
 
@@ -14,7 +14,7 @@ describe ContentItem do
   end
 
   it "calculates anonymous feedback counts for recent time intervals" do
-    item = create(:content_item, organisations: orgs, path: "/abc",
+    create(:content_item, organisations: orgs, path: "/abc",
       anonymous_contacts: [
         create(:anonymous_contact, created_at: 5.days.ago),
         create(:anonymous_contact, created_at: 15.days.ago),
@@ -22,7 +22,7 @@ describe ContentItem do
         create(:anonymous_contact, created_at: 100.days.ago),
       ])
 
-    another_item = create(:content_item, organisations: orgs, path: "/def",
+    create(:content_item, organisations: orgs, path: "/def",
       anonymous_contacts: [
         create(:anonymous_contact, created_at: 60.days.ago),
         create(:anonymous_contact, created_at: 70.days.ago),
