@@ -23,7 +23,7 @@ class BackfillHistoricAggregatedServiceFeedback
           aggregated_service_feedbacks.each do |aggregated_feedback|
             feedback_rating_sum_from_performance_platform = service_feedback_hash["rating_#{aggregated_feedback.service_satisfaction_rating}"]
 
-            if feedback_rating_sum_from_performance_platform == 0
+            if feedback_rating_sum_from_performance_platform.zero?
               # Feedex does not contain aggregate records in the case where the
               # total is 0, therefore if the performance platform data
               # indicates 0, delete the aggregate record as it counts solely

@@ -47,7 +47,7 @@ private
   end
 
   def pages
-    total_count == 0 ? 0 : (total_count / AnonymousContact::PAGE_SIZE.to_f).ceil
+    total_count.zero? ? 0 : (total_count / AnonymousContact::PAGE_SIZE.to_f).ceil
   end
 
   def total_count
@@ -55,7 +55,7 @@ private
   end
 
   def current_page
-    pages == 0 || @params[:page].to_i < 1 ? 1 : @params[:page].to_i
+    pages.zero? || @params[:page].to_i < 1 ? 1 : @params[:page].to_i
   end
 
   def results
