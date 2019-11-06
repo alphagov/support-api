@@ -17,7 +17,7 @@ else
   gem "gds-api-adapters", "~> 60.1.0"
 end
 
-gem "gds-sso", "~> 14.1.1"
+gem "gds-sso", "~> 14.2.0"
 gem "gds_zendesk", "3.0.0"
 gem "kaminari", "1.1.1"
 gem "mlanett-redis-lock", "0.2.7"
