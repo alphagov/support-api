@@ -53,14 +53,6 @@ When a CSV export is requested by the support app, a CSV file is generated and s
   background jobs (like sending feedback to zendesk, or aggregating feedback and sending it to the
   performance platform) and sidekiq relies on redis
 
-### Running the application
-
-`./startup.sh`
-
-This will install any dependencies via [`bundler`](https://bundler.io) and then run the app.  It listens on
-port 3075 and if run via the [GOV.UK Dev VM](https://docs.publishing.service.gov.uk/manual/get-started.html)
-will be available at http://support-api.dev.gov.uk (although as an API it has no UI pages for you to visit).
-
 ### Running the test suite
 
 `bundle exec rake`
@@ -78,19 +70,6 @@ development environment do the following:
 
 You most likely will only need to do this if your whitehall data is more recent than your data for
 this app.
-
-### Getting Data
-
-When [replicating data](https://docs.publishing.service.gov.uk/manual/replicate-app-data-locally.html) into
-your dev VM the database for the support-api is one of the ones ignored by default because it's quite large.
-To get this data you will have to explicitly request to import it by running:
-
-`./sync-postgresql.sh -r -s -d backups/YYYY-MM-DD postgresql-primary-1.backend.integration`
-
-Replacing `YYYY-MM-DD` with the date of your latest backup.  Note that this may take some time as it will
-re-import all the postgres databases that come from that server.  You may wish to explore [other arguments
-to the replication scripts](https://github.com/alphagov/govuk-puppet/blob/master/development-vm/replication/common-args.sh)
-which will allow you to filter out other databases from that server.
 
 ## Licence
 
