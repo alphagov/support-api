@@ -14,7 +14,7 @@ gem "rails", "~> 6.0.1"
 if ENV["API_DEV"]
   gem "gds-api-adapters", path: "../gds-api-adapters"
 else
-  gem "gds-api-adapters", "~> 61.1.0"
+  gem "gds-api-adapters", "~> 62.0.0"
 end
 
 gem "gds-sso", "~> 14.2.0"
