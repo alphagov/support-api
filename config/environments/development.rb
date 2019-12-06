@@ -37,6 +37,8 @@ Rails.application.configure do
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 
+  # Allow requests for all domains e.g. <app>.dev.gov.uk
+  config.hosts.clear
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
