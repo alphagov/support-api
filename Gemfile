@@ -26,7 +26,7 @@ gem "user_agent_parser"
 gem "whenever", "1.0.0", require: false
 
 group :development do
-  gem "listen", "~> 3.2.0"
+  gem "listen", "~> 3.2.1"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
 end
