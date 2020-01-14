@@ -1,4 +1,4 @@
-require "gds_api/organisations"
+require "gds_api"
 
 class OrganisationImporter
   def run
@@ -64,6 +64,6 @@ private
   end
 
   def organisations_api
-    @organisations_api ||= GdsApi::Organisations.new(Plek.current.find("whitehall-admin"))
+    @organisations_api ||= GdsApi.organisations
   end
 end
