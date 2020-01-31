@@ -19,7 +19,7 @@ end
 
 gem "gds-sso", "~> 14.2.0"
 gem "gds_zendesk", "3.0.0"
-gem "kaminari", "1.1.1"
+gem "kaminari", "1.2.0"
 gem "mlanett-redis-lock", "0.2.7"
 gem "plek", "3.0.0"
 gem "user_agent_parser"
