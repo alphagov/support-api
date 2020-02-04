@@ -1,3 +1,5 @@
+require "s3_file_uploader"
+
 class GenerateGlobalExportCsvWorker
   include Sidekiq::Worker
 
@@ -8,6 +10,8 @@ class GenerateGlobalExportCsvWorker
       export_params["exclude_spam"],
     ).call
 
-    GlobalExportNotification.notification_email(export_params["notification_email"], filename, contents).deliver_now
+    s3_file = S3FileUploader.save_file_to_s3(filename, contents)
+
+    GlobalExportNotification.notification_email(export_params["notification_email"], s3_file.key).deliver_now
   end
 end
