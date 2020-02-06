@@ -14,7 +14,7 @@ class GenerateGlobalExportCsvWorker
 
     feedback_export_request.filename = filename
 
-    s3_file = S3FileUploader.save_file_to_s3(filename, contents)
+    S3FileUploader.save_file_to_s3(filename, contents)
 
     feedback_export_request.save!
 
