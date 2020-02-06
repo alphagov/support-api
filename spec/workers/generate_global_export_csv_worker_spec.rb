@@ -28,7 +28,7 @@ describe GenerateGlobalExportCsvWorker, type: :worker do
     from_date = "2019-01-01"
     to_date = "2019-12-31"
     notification_email = "inside-government@digital.cabinet-office.gov.uk"
-    file_url = "https://#{ENV['AWS_S3_BUCKET_NAME']}.s3-eu-west-1.amazonaws.com/feedex_#{from_date}T00%3A00%3A00Z_#{to_date}T23%3A59%3A59Z.csv"
+    file_url = %r{^http://support.dev.gov.uk/anonymous_feedback/export_requests/\d+$}
 
     expect(GlobalExportNotification).to receive(:notification_email).with(notification_email, file_url).and_return(stub)
 
@@ -43,6 +43,5 @@ describe GenerateGlobalExportCsvWorker, type: :worker do
     rows = file.body.split("\n")
     expect(rows.count).to eq 1
     expect(rows.first).to eq "date,report_count"
-    expect(file.public_url).to eq file_url
   end
 end
