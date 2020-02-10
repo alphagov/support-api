@@ -17,6 +17,7 @@ class GenerateGlobalExportCsvWorker
     S3FileUploader.save_file_to_s3(filename, contents)
 
     feedback_export_request.save!
+    feedback_export_request.touch(:generated_at)
 
     GlobalExportNotification.notification_email(export_params["notification_email"], feedback_export_request.url).deliver_now
   end
