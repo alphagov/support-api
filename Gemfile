@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem "fog-aws", "~> 3.5"
-gem "govuk_app_config", "~> 2.0.2"
+gem "govuk_app_config", "~> 2.0.3"
 gem "govuk_sidekiq", "~> 3.0"
 gem "pg", "~> 1.2.2"
 gem "rails", "~> 6.0.2"
