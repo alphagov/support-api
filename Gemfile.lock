@@ -69,7 +69,7 @@ GEM
       rspec (>= 2.14, < 4)
     climate_control (0.2.0)
     coderay (1.1.2)
-    concurrent-ruby (1.1.5)
+    concurrent-ruby (1.1.6)
     connection_pool (2.2.2)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
@@ -130,7 +130,7 @@ GEM
       rubocop-rails (~> 2)
       rubocop-rspec (~> 1.28)
       scss_lint
-    govuk_app_config (2.0.2)
+    govuk_app_config (2.0.3)
       logstasher (>= 1.2.2, < 1.4.0)
       sentry-raven (>= 2.7.1, < 2.14.0)
       statsd-ruby (~> 1.4.0)
@@ -361,7 +361,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.6)
     unicode-display_width (1.6.0)
-    unicorn (5.5.2)
+    unicorn (5.5.3)
       kgio (~> 2.6)
       raindrops (~> 0.7)
     user_agent_parser (2.5.3)
@@ -399,7 +399,7 @@ DEPENDENCIES
   gds-sso (~> 14.2.0)
   gds_zendesk (= 3.0.0)
   govuk-lint
-  govuk_app_config (~> 2.0.2)
+  govuk_app_config (~> 2.0.3)
   govuk_sidekiq (~> 3.0)
   kaminari (= 1.2.0)
   listen (~> 3.2.1)
