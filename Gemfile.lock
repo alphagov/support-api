@@ -199,6 +199,8 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.7)
       mini_portile2 (~> 2.4.0)
+    notifications-ruby-client (5.1.2)
+      jwt (>= 1.5, < 3)
     null_logger (0.0.1)
     oauth2 (1.4.2)
       faraday (>= 0.8, < 2.0)
@@ -404,6 +406,7 @@ DEPENDENCIES
   kaminari (= 1.2.0)
   listen (~> 3.2.1)
   mlanett-redis-lock (= 0.2.7)
+  notifications-ruby-client
   pg (~> 1.2.2)
   plek (= 3.0.0)
   pry-byebug
@@ -421,4 +424,4 @@ DEPENDENCIES
   whenever (= 1.0.0)
 
 BUNDLED WITH
-   1.16.2
+   1.17.2
