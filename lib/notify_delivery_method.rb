@@ -1,5 +1,5 @@
-require 'notifications/client'
-require 'mail'
+require "notifications/client"
+require "mail"
 
 class NotifyDeliveryMethod
   attr_reader :settings
@@ -12,7 +12,7 @@ class NotifyDeliveryMethod
     client.send_email(payload(mail))
   end
 
-  private
+private
 
   def client
     @client ||= Notifications::Client.new(settings[:notify_api_key])
@@ -20,7 +20,7 @@ class NotifyDeliveryMethod
 
   def payload(mail)
     if mail.to.length > 1
-      raise 'Sending emails with multiple recipients is not supported'
+      raise "Sending emails with multiple recipients is not supported"
     end
 
     {
@@ -28,8 +28,8 @@ class NotifyDeliveryMethod
       template_id: settings[:template_id],
       personalisation: {
         body: mail.body.raw_source,
-        subject: mail.subject
-      }
+        subject: mail.subject,
+      },
     }
   end
 end
