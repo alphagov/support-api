@@ -105,7 +105,7 @@ GEM
       fog-core
       nokogiri (>= 1.5.11, < 2.0.0)
     formatador (0.2.5)
-    gds-api-adapters (63.5.0)
+    gds-api-adapters (63.5.1)
       addressable
       link_header
       null_logger
@@ -395,7 +395,7 @@ DEPENDENCIES
   climate_control (~> 0.2.0)
   factory_bot_rails (~> 5.1.1)
   fog-aws (~> 3.5)
-  gds-api-adapters (~> 63.5.0)
+  gds-api-adapters (~> 63.5.1)
   gds-sso (~> 14.2.0)
   gds_zendesk (= 3.0.0)
   govuk-lint
