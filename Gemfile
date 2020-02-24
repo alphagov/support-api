@@ -39,7 +39,7 @@ group :development, :test do
   gem "rspec-collection_matchers", "1.2.0"
   gem "rspec-rails", "3.9.0"
   gem "shoulda-matchers", "4.3.0"
-  gem "simplecov", "0.18.2", require: false
+  gem "simplecov", "0.18.3", require: false
   gem "simplecov-rcov", "0.2.3", require: false
   gem "timecop", "0.9.1"
 end
