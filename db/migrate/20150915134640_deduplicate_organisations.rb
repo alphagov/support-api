@@ -15,8 +15,9 @@ class DeduplicateOrganisations < ActiveRecord::Migration
   end
 
 private
+
   def remove_duplicate_organisations
-    Organisation.all.group_by(&:content_id).each do |content_id, organisations|
+    Organisation.all.group_by(&:content_id).each do |_content_id, organisations|
       if organisations.count > 1
         first_organisation = organisations.min_by(&:id)
         dupe_organisations = organisations - [first_organisation]
@@ -27,7 +28,7 @@ private
         execute """
             UPDATE content_items_organisations
             SET organisation_id=#{first_organisation.id}
-            WHERE organisation_id IN (#{dupe_organisations.map(&:id).join(",")})
+            WHERE organisation_id IN (#{dupe_organisations.map(&:id).join(',')})
         """
 
         dupe_organisations.each(&:delete)
@@ -57,7 +58,7 @@ private
     rename_table :content_items_organisations_deduped, :content_items_organisations
 
     # Add a unique index so that duplicate join rows aren't created in future
-    add_index :content_items_organisations, [:content_item_id, :organisation_id], name: :index_content_items_organisations_unique, unique: true
+    add_index :content_items_organisations, %i[content_item_id organisation_id], name: :index_content_items_organisations_unique, unique: true
   end
 
   def execute(sql)

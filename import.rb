@@ -1,6 +1,6 @@
-require 'csv'
+require "csv"
 
-csvs = Dir.glob('tmp/data/*.csv')
+csvs = Dir.glob("tmp/data/*.csv")
 csvs.each do |file_path|
   table = CSV.table(file_path)
   table.each do |row|
