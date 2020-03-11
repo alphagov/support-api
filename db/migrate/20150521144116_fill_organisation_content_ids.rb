@@ -1,12 +1,12 @@
-require 'gds_api/content_register'
+require "gds_api/content_register"
 
 class FillOrganisationContentIds < ActiveRecord::Migration
   def up
     return if Organisation.count == 0
 
-    content_register = GdsApi::ContentRegister.new(Plek.new.find('content-register'))
+    content_register = GdsApi::ContentRegister.new(Plek.new.find("content-register"))
     organisation_map = Hash[content_register.entries("organisation").map do |org|
-      [org["base_path"].split('/')[-1], org["content_id"]]
+      [org["base_path"].split("/")[-1], org["content_id"]]
     end]
 
     Organisation.all.each do |org|

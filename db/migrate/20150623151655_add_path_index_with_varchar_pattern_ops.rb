@@ -8,12 +8,12 @@ class AddPathIndexWithVarcharPatternOps < ActiveRecord::Migration
         ON anonymous_contacts USING btree (path varchar_pattern_ops);
       SQL
     else
-      add_index :anonymous_contacts, [:path], length: {path: 128}
+      add_index :anonymous_contacts, [:path], length: { path: 128 }
     end
   end
 
   def down
     remove_index :anonymous_contacts, [:path]
-    add_index :anonymous_contacts, [:path], length: {path: 128}
+    add_index :anonymous_contacts, [:path], length: { path: 128 }
   end
 end

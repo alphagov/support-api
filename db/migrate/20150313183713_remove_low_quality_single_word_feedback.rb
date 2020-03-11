@@ -8,6 +8,5 @@ class RemoveLowQualitySingleWordFeedback < ActiveRecord::Migration
       update_all("is_actionable = '0', reason_why_not_actionable = 'low-quality single-word feedback'")
   end
 
-  def down
-  end
+  def down; end
 end
