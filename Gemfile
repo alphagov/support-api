@@ -37,7 +37,7 @@ group :development, :test do
   gem "ci_reporter_rspec", "1.0.0"
   gem "climate_control", "~> 0.2.0"
   gem "rspec-collection_matchers", "1.2.0"
-  gem "rspec-rails", "3.9.0"
+  gem "rspec-rails", "3.9.1"
   gem "rubocop-govuk", "~> 3.1"
   gem "shoulda-matchers", "4.3.0"
   gem "simplecov", "0.18.5", require: false
