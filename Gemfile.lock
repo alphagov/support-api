@@ -305,7 +305,7 @@ GEM
       rexml
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.7)
-    rubocop-govuk (3.1.0)
+    rubocop-govuk (3.3.0)
       rubocop (= 0.80.1)
       rubocop-rails (~> 2)
       rubocop-rspec (~> 1.28)
@@ -406,7 +406,7 @@ DEPENDENCIES
   rails (~> 6.0.2)
   rspec-collection_matchers (= 1.2.0)
   rspec-rails (= 3.9.1)
-  rubocop-govuk (~> 3.1)
+  rubocop-govuk (~> 3.3)
   shoulda-matchers (= 4.3.0)
   simplecov (= 0.18.5)
   simplecov-rcov (= 0.2.3)
