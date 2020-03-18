@@ -20,8 +20,8 @@ end
 gem "gds-sso", "~> 14.3.0"
 gem "gds_zendesk", "3.0.0"
 gem "kaminari", "1.2.0"
+gem "mail-notify"
 gem "mlanett-redis-lock", "0.2.7"
-gem "notifications-ruby-client"
 gem "plek", "3.0.0"
 gem "user_agent_parser"
 gem "whenever", "1.0.0", require: false
