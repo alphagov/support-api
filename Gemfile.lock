@@ -215,7 +215,7 @@ GEM
     parallel (1.19.1)
     parser (2.7.0.4)
       ast (~> 2.4.0)
-    pg (1.2.2)
+    pg (1.2.3)
     plek (3.0.0)
     pry (0.12.2)
       coderay (~> 1.1.0)
@@ -400,7 +400,7 @@ DEPENDENCIES
   listen (~> 3.2.1)
   mlanett-redis-lock (= 0.2.7)
   notifications-ruby-client
-  pg (~> 1.2.2)
+  pg (~> 1.2.3)
   plek (= 3.0.0)
   pry-byebug
   rails (~> 6.0.2)

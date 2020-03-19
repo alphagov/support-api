@@ -8,7 +8,7 @@ end
 gem "fog-aws", "~> 3.5"
 gem "govuk_app_config", "~> 2.1.1"
 gem "govuk_sidekiq", "~> 3.0"
-gem "pg", "~> 1.2.2"
+gem "pg", "~> 1.2.3"
 gem "rails", "~> 6.0.2"
 
 if ENV["API_DEV"]
