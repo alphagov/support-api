@@ -6,7 +6,13 @@ namespace :service_feedback_aggregation do
 
     DistributedLock.new("service_feedback_aggregation").lock do
       date_range = Date.yesterday..Date.yesterday
-      aggregate(date_range)
+      puts "Processing feedback from #{date_range.first} to #{date_range.last}"
+
+      date_range.each do |date|
+        ServiceFeedbackAggregator.new(date).run
+      end
+
+      puts "Service Feedback has been aggregated and extracted to a different table"
       Rails.logger.info "Daily service feedback aggregation has finished"
     end
   end
@@ -17,20 +23,12 @@ namespace :service_feedback_aggregation do
 
     start_date = Date.parse(args[:start_date])
     end_date = Date.parse(args[:end_date])
-    date_range = start_date..end_date
+    puts "Processing feedback from #{start_date} to #{end_date}"
 
-    aggregate(date_range)
-  end
-
-  def aggregate(date_range)
-    puts "Processing feedback from #{date_range.first} to #{date_range.last}"
-    date_range.each do |date|
-      start_time = Time.now
-      aggregator = ServiceFeedbackAggregator.new(date)
-      aggregator.run
-      end_time = Time.now
-      puts "Aggregation complete for #{date}. Duration: #{end_time - start_time}"
+    (start_date..end_date).each do |date|
+      ServiceFeedbackAggregator.new(date).run
     end
+
     puts "Service Feedback has been aggregated and extracted to a different table"
   end
 end
