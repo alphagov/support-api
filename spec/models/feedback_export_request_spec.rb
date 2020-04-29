@@ -145,7 +145,6 @@ RSpec.describe FeedbackExportRequest, type: :model do
           it { is_expected.to eq "feedex_0000-00-00_2015-05-01_gov_and_stuff_news-and-features.csv" }
         end
 
-
         context "with an organisation slug" do
           let(:organisation_slug) { "hm-revenue-customs" }
 
