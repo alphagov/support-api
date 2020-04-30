@@ -26,13 +26,13 @@ describe "Organisations that have feedback left on 'their' content" do
 
   before do
     create(:content_item, organisations: [ukvi], path: "/abc",
-      anonymous_contacts: [
+                          anonymous_contacts: [
         create(:anonymous_contact, created_at: 5.days.ago),
         create(:anonymous_contact, created_at: 15.days.ago),
       ])
 
     create(:content_item, organisations: [ukvi], path: "/def",
-      anonymous_contacts: [
+                          anonymous_contacts: [
         create(:anonymous_contact, created_at: 70.days.ago),
         create(:anonymous_contact, created_at: 75.days.ago),
         create(:anonymous_contact, created_at: 80.days.ago),

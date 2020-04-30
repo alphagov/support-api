@@ -26,20 +26,19 @@ private
 
   def metadata
     {
-      "_id"         => "#{day.strftime('%Y%m%d')}_#{slug}",
-      "_timestamp"  => day.to_datetime.iso8601,
-      "period"      => "day",
-      "slug"        => slug,
+      "_id" => "#{day.strftime('%Y%m%d')}_#{slug}",
+      "_timestamp" => day.to_datetime.iso8601,
+      "period" => "day",
+      "slug" => slug,
     }
   end
 
   def ratings
-    aggregated_feedback_items = AggregatedServiceFeedback.
-      where(path: path, created_at: time_interval)
+    aggregated_feedback_items = AggregatedServiceFeedback
+      .where(path: path, created_at: time_interval)
 
-    aggregated_feedback_items.inject({}) do |memo, item|
+    aggregated_feedback_items.each_with_object({}) do |item, memo|
       memo[item.service_satisfaction_rating] = item.details.to_i
-      memo
     end
   end
 

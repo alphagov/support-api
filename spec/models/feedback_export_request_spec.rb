@@ -39,7 +39,7 @@ RSpec.describe FeedbackExportRequest, type: :model do
           organisation_slug: organisation_slug,
           document_type: document_type,
         },
-     )
+      )
     end
 
     describe "the resulting filename" do

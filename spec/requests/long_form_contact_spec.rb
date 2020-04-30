@@ -10,7 +10,7 @@ describe "Long-form contacts" do
     zendesk_request = expect_zendesk_to_receive_ticket(
       "subject" => "Feedback about https://www.gov.uk/vat-rates",
       "requester" => hash_including("email" => ZENDESK_ANONYMOUS_TICKETS_REQUESTER_EMAIL),
-      "tags" => %w{anonymous_feedback public_form long_form_contact},
+      "tags" => %w[anonymous_feedback public_form long_form_contact],
       "comment" => { "body" =>
 "[Details]
 Make page less 'meh'
@@ -27,7 +27,7 @@ Safari
 [JavaScript Enabled]
 true
 " },
-)
+    )
 
     user_submits_a_long_form_anonymous_contact(
       user_specified_url: "https://www.gov.uk/vat-rates",

@@ -47,7 +47,7 @@ describe PerformancePlatformServiceFeedbackMetrics do
         "rating_3" => 4,
         "rating_4" => 0,
         "rating_5" => 0,
-        "total"    => 61,
+        "total" => 61,
         "comments" => 1,
       )
     end

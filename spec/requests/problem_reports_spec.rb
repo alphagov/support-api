@@ -51,7 +51,7 @@ describe "Problem reports" do
     zendesk_request = expect_zendesk_to_receive_ticket(
       "subject" => "/vat-rates",
       "requester" => hash_including("email" => ZENDESK_ANONYMOUS_TICKETS_REQUESTER_EMAIL),
-      "tags" => %w{anonymous_feedback public_form report_a_problem inside_government govuk_referrer page_owner/hmrc},
+      "tags" => %w[anonymous_feedback public_form report_a_problem inside_government govuk_referrer page_owner/hmrc],
       "comment" => { "body" =>
 "url: http://www.dev.gov.uk/vat-rates
 what_doing: Eating sandwich
@@ -60,7 +60,7 @@ user_agent: Safari
 referrer: http://www.dev.gov.uk/pay-vat
 javascript_enabled: true
 " },
-)
+    )
 
     user_submits_a_problem_report(
       what_doing: "Eating sandwich",

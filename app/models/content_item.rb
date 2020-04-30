@@ -5,8 +5,8 @@ class ContentItem < ApplicationRecord
   validates :path, presence: true
 
   scope :for_organisation, ->(organisation) {
-    joins(:organisations).
-    where(organisations: { id: organisation.id })
+    joins(:organisations)
+    .where(organisations: { id: organisation.id })
   }
 
   scope :for_document_type, ->(document_type) {
@@ -52,7 +52,7 @@ class ContentItem < ApplicationRecord
   end
 
   def self.all_document_types
-    self.distinct.pluck(:document_type).reject { |d| d == "" }.compact
+    distinct.pluck(:document_type).reject { |d| d == "" }.compact
   end
 
   def self.midnight_last_night

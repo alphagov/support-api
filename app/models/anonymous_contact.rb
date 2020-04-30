@@ -40,9 +40,9 @@ class AnonymousContact < ApplicationRecord
     organisation_slug = options[:organisation_slug]
     document_type = options[:document_type]
 
-    query = only_actionable.
-      free_of_personal_info.
-      created_between_days(from, to)
+    query = only_actionable
+      .free_of_personal_info
+      .created_between_days(from, to)
 
     query = query.matching_path_prefixes(path_prefixes) if path_prefixes.present?
     query = query.for_organisation_slug(organisation_slug) if organisation_slug
@@ -83,7 +83,7 @@ private
   end
 
   def personal_info_present?
-    free_text_fields = [self.details, self.what_wrong, self.what_doing]
+    free_text_fields = [details, what_wrong, what_doing]
     free_text_fields.any? { |text| FieldWhichMayContainPersonalInformation.new(text).include_personal_info? }
   end
 end

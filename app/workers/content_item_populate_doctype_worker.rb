@@ -6,14 +6,12 @@ class ContentItemPopulateDoctypeWorker
     document_type_errors = []
 
     ContentItem.all.each do |content_item|
-      begin
-        found_content_item = content_store.content_item(content_item.path)
+      found_content_item = content_store.content_item(content_item.path)
 
-        document_type = found_content_item["document_type"]
-        content_item.update_attribute(:document_type, document_type)
-      rescue StandardError => e
-        document_type_errors << "#{content_item.path} - Error: #{e.class} #{e.message}"
-      end
+      document_type = found_content_item["document_type"]
+      content_item.update_attribute(:document_type, document_type)
+    rescue StandardError => e
+      document_type_errors << "#{content_item.path} - Error: #{e.class} #{e.message}"
     end
 
     Rails.logger.warn "There were errors with the following paths: #{document_type_errors.join(', ')}"

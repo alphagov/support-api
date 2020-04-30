@@ -25,24 +25,24 @@ class TopUrls
 private
 
   def top_urls_for(org_acronym)
-    ProblemReport.
-      only_actionable.
-      where(created_at: @period_in_question).
-      where(page_owner: org_acronym).
-      select("page_owner, path, count(*) as number_of_paths").
-      group(:path, :page_owner).
-      order("number_of_paths desc, path asc").
-      limit(NUMBER_OF_PATHS_PER_ORG)
+    ProblemReport
+      .only_actionable
+      .where(created_at: @period_in_question)
+      .where(page_owner: org_acronym)
+      .select("page_owner, path, count(*) as number_of_paths")
+      .group(:path, :page_owner)
+      .order("number_of_paths desc, path asc")
+      .limit(NUMBER_OF_PATHS_PER_ORG)
   end
 
   def distinct_org_acronyms
-    ProblemReport.
-      only_actionable.
-      with_known_page_owner.
-      order("page_owner asc").
-      select(:page_owner).
-      distinct.
-      map(&:page_owner)
+    ProblemReport
+      .only_actionable
+      .with_known_page_owner
+      .order("page_owner asc")
+      .select(:page_owner)
+      .distinct
+      .map(&:page_owner)
   end
 
   def top_url_id_for(page_owner, rank)

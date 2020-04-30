@@ -32,9 +32,9 @@ describe GenerateFeedbackCsvWorker, type: :worker do
     it "sends a notification email" do
       mail = double
       expect(mail).to receive(:deliver_now)
-      expect(ExportNotification).to receive(:notification_email).
-        with("foo@example.com", "http://support.dev.gov.uk/anonymous_feedback/export_requests/#{feedback_export_request.id}").
-        and_return(mail)
+      expect(ExportNotification).to receive(:notification_email)
+        .with("foo@example.com", "http://support.dev.gov.uk/anonymous_feedback/export_requests/#{feedback_export_request.id}")
+        .and_return(mail)
       described_class.new.perform(feedback_export_request)
     end
 
