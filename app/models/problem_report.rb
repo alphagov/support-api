@@ -5,11 +5,11 @@ class ProblemReport < AnonymousContact
   validates :what_wrong, length: { maximum: 2**16 }
 
   scope :totals_for, ->(date) {
-    where(created_at: date.beginning_of_day..date.end_of_day).
-      only_actionable.
-      select("path, count(path) as total").
-      group(:path).
-      order("total desc")
+    where(created_at: date.beginning_of_day..date.end_of_day)
+      .only_actionable
+      .select("path, count(path) as total")
+      .group(:path)
+      .order("total desc")
   }
 
   scope :with_known_page_owner, -> { where.not(page_owner: nil) }

@@ -7,7 +7,11 @@ module AnonymousFeedback
     before_action :load_selected_organisation, only: [:index]
 
     def totals
-      date = DateTime.parse(params[:date]) rescue nil
+      date = begin
+               DateTime.parse(params[:date])
+             rescue StandardError
+               nil
+             end
 
       if date.nil?
         head :unprocessable_entity
@@ -59,21 +63,19 @@ module AnonymousFeedback
     end
 
     def mark_supplied_reports_as_reviewed_and_spam
-      begin
-        ProblemReport.find(reviewed_problem_reports_hash.keys).each do |problem_report|
-          marked_as_spam = reviewed_problem_reports_hash[problem_report.id.to_s]
+      ProblemReport.find(reviewed_problem_reports_hash.keys).each do |problem_report|
+        marked_as_spam = reviewed_problem_reports_hash[problem_report.id.to_s]
 
-          review_attrs = { reviewed: true, marked_as_spam: marked_as_spam }
+        review_attrs = { reviewed: true, marked_as_spam: marked_as_spam }
 
-          if problem_report.update(review_attrs)
-            true
-          else
-            false
-          end
+        if problem_report.update(review_attrs)
+          true
+        else
+          false
         end
-      rescue ActiveRecord::RecordNotFound
-        false
       end
+    rescue ActiveRecord::RecordNotFound
+      false
     end
 
     def reviewed_problem_reports_hash

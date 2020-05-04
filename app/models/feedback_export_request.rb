@@ -50,9 +50,9 @@ class FeedbackExportRequest < ApplicationRecord
   end
 
   def results
-    AnonymousContact.
-      for_query_parameters(filters).
-      most_recent_last
+    AnonymousContact
+      .for_query_parameters(filters)
+      .most_recent_last
   end
 
   def generate_csv

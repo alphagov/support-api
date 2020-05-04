@@ -51,20 +51,18 @@ private
   end
 
   def fetch_all_service_feedback_hash(transaction_slug)
-    begin
-      service_feedback_response = performance_platform_data_out.service_feedback(transaction_slug)
-      all_service_feedback_hash = service_feedback_response.parsed_content
+    service_feedback_response = performance_platform_data_out.service_feedback(transaction_slug)
+    all_service_feedback_hash = service_feedback_response.parsed_content
 
-      if all_service_feedback_hash["data"].empty?
-        @logger.warn("No data found for endpoint #{transaction_slug}")
-        nil
-      else
-        all_service_feedback_hash
-      end
-    rescue GdsApi::HTTPNotFound
-      @logger.warn("No endpoint found in performance platform for #{transaction_slug}")
+    if all_service_feedback_hash["data"].empty?
+      @logger.warn("No data found for endpoint #{transaction_slug}")
       nil
+    else
+      all_service_feedback_hash
     end
+  rescue GdsApi::HTTPNotFound
+    @logger.warn("No endpoint found in performance platform for #{transaction_slug}")
+    nil
   end
 
   def performance_platform_data_out

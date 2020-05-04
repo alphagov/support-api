@@ -5,7 +5,7 @@ module AnonymousFeedback
     end
 
     def show
-      ordering = if %w(path last_7_days last_30_days last_90_days).include? params[:ordering]
+      ordering = if %w[path last_7_days last_30_days last_90_days].include? params[:ordering]
                    params[:ordering]
                  else
                    "last_7_days"
@@ -16,9 +16,9 @@ module AnonymousFeedback
         return
       end
 
-      anonymous_feedback_counts = ContentItem.
-          where(document_type: params[:document_type]).
-          summary(ordering)
+      anonymous_feedback_counts = ContentItem
+          .where(document_type: params[:document_type])
+          .summary(ordering)
 
       render json: {
           document_type: params[:document_type],

@@ -14,11 +14,11 @@ private
   attr_reader :from_date, :to_date
 
   def results
-    results = ProblemReport.
-      created_between_days(from_date, to_date).
-      select("date(created_at) as created_at_date, COUNT(id) as report_count").
-      group("created_at_date").
-      order("created_at_date")
+    results = ProblemReport
+      .created_between_days(from_date, to_date)
+      .select("date(created_at) as created_at_date, COUNT(id) as report_count")
+      .group("created_at_date")
+      .order("created_at_date")
 
     results = results.where(marked_as_spam: false) if @exclude_spam
 

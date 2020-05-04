@@ -31,13 +31,13 @@ private
   end
 
   def scope
-    AnonymousContact.
-      for_query_parameters(path_prefixes: params[:path_prefixes],
-                           organisation_slug: params[:organisation_slug],
-                           document_type: params[:document_type],
-                           from: dates[0],
-                           to: dates[1]).
-      most_recent_first
+    AnonymousContact
+      .for_query_parameters(path_prefixes: params[:path_prefixes],
+                            organisation_slug: params[:organisation_slug],
+                            document_type: params[:document_type],
+                            from: dates[0],
+                            to: dates[1])
+      .most_recent_first
   end
 
   def clean_params

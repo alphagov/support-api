@@ -39,8 +39,8 @@ describe "de-duplication" do
       Timecop.travel Time.parse("2013-01-16 00:30:00")
       DeduplicationWorker.start_deduplication_for_yesterday
 
-      expect(AnonymousContact.
-        only_actionable.order(:created_at).to_a).to eq([record1, record2])
+      expect(AnonymousContact
+        .only_actionable.order(:created_at).to_a).to eq([record1, record2])
     end
   end
 
@@ -55,8 +55,8 @@ describe "de-duplication" do
       Timecop.travel Time.parse("2013-01-15 12:08:00")
       DeduplicationWorker.start_deduplication_for_recent_feedback
 
-      expect(AnonymousContact.
-        only_actionable.order(:created_at).to_a).to eq([record1, record2])
+      expect(AnonymousContact
+        .only_actionable.order(:created_at).to_a).to eq([record1, record2])
     end
   end
 end
