@@ -112,12 +112,12 @@ javascript_enabled: true
     context "when succesfully supplied with a list of problem feedback reviews" do
       before do
         json_payload = {
-            reviewed_problem_report_ids:
-            {
-              "#{problem_report_1.id}": true,
-              "#{problem_report_2.id}": true,
-              "#{problem_report_3.id}": false,
-            },
+          reviewed_problem_report_ids:
+          {
+            "#{problem_report_1.id}": true,
+            "#{problem_report_2.id}": true,
+            "#{problem_report_3.id}": false,
+          },
         }.to_json
 
         put "/anonymous-feedback/problem-reports/mark-reviewed-for-spam",
@@ -148,10 +148,10 @@ javascript_enabled: true
         problem_report_1.update(reviewed: true, marked_as_spam: true)
 
         json_payload = {
-            reviewed_problem_report_ids:
-            {
-              "#{problem_report_1.id}": false,
-            },
+          reviewed_problem_report_ids:
+          {
+            "#{problem_report_1.id}": false,
+          },
         }.to_json
 
         put "/anonymous-feedback/problem-reports/mark-reviewed-for-spam",
@@ -170,10 +170,10 @@ javascript_enabled: true
 
       before do
         json_payload = {
-            reviewed_problem_report_ids:
-            {
-              "#{id}": true,
-            },
+          reviewed_problem_report_ids:
+          {
+            "#{id}": true,
+          },
         }.to_json
 
         put "/anonymous-feedback/problem-reports/mark-reviewed-for-spam",

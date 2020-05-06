@@ -21,8 +21,8 @@ module AnonymousFeedback
           .summary(ordering)
 
       render json: {
-          document_type: params[:document_type],
-          anonymous_feedback_counts: anonymous_feedback_counts,
+        document_type: params[:document_type],
+        anonymous_feedback_counts: anonymous_feedback_counts,
       }
     end
   end

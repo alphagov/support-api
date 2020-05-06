@@ -24,18 +24,18 @@ describe OrganisationImporter do
       name: "Ministry of Magic",
       abbreviation: "MOM",
       content_id: "abcdef",
+    },
+     {
+       slug: "ministry-of-fun-and-games",
+       name: "Ministry of Fun and Games",
+       abbreviation: "MOFG",
+       content_id: "123456",
      },
      {
-      slug: "ministry-of-fun-and-games",
-      name: "Ministry of Fun and Games",
-      abbreviation: "MOFG",
-      content_id: "123456",
-     },
-     {
-      slug: "ministry-of-unicorns",
-      name: "Ministry of Unicorns",
-      abbreviation: "MOU",
-      content_id: "c0ffee",
+       slug: "ministry-of-unicorns",
+       name: "Ministry of Unicorns",
+       abbreviation: "MOU",
+       content_id: "c0ffee",
      }]
   end
 
