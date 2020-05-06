@@ -16,19 +16,19 @@ describe ContentItem do
   it "calculates anonymous feedback counts for recent time intervals" do
     create(:content_item, organisations: orgs, path: "/abc",
                           anonymous_contacts: [
-        create(:anonymous_contact, created_at: 5.days.ago),
-        create(:anonymous_contact, created_at: 15.days.ago),
-        create(:anonymous_contact, created_at: 70.days.ago),
-        create(:anonymous_contact, created_at: 100.days.ago),
-      ])
+                            create(:anonymous_contact, created_at: 5.days.ago),
+                            create(:anonymous_contact, created_at: 15.days.ago),
+                            create(:anonymous_contact, created_at: 70.days.ago),
+                            create(:anonymous_contact, created_at: 100.days.ago),
+                          ])
 
     create(:content_item, organisations: orgs, path: "/def",
                           anonymous_contacts: [
-        create(:anonymous_contact, created_at: 60.days.ago),
-        create(:anonymous_contact, created_at: 70.days.ago),
-        create(:anonymous_contact, created_at: 80.days.ago),
-        create(:anonymous_contact, created_at: 90.days.ago),
-      ])
+                            create(:anonymous_contact, created_at: 60.days.ago),
+                            create(:anonymous_contact, created_at: 70.days.ago),
+                            create(:anonymous_contact, created_at: 80.days.ago),
+                            create(:anonymous_contact, created_at: 90.days.ago),
+                          ])
 
     expect(ContentItem.summary).to eq([
       { path: "/abc", last_7_days: 1, last_30_days: 2, last_90_days: 3 },
@@ -49,14 +49,14 @@ describe ContentItem do
   it "aggregates content items with similar paths" do
     create(:content_item, organisations: orgs, path: "/abc",
                           anonymous_contacts: [
-        create(:anonymous_contact, created_at: 15.days.ago),
-        create(:anonymous_contact, created_at: 15.days.ago),
-      ])
+                            create(:anonymous_contact, created_at: 15.days.ago),
+                            create(:anonymous_contact, created_at: 15.days.ago),
+                          ])
     create(:content_item, organisations: orgs, path: "/abc",
                           anonymous_contacts: [
-        create(:anonymous_contact, created_at: 15.days.ago),
-        create(:anonymous_contact, created_at: 15.days.ago),
-      ])
+                            create(:anonymous_contact, created_at: 15.days.ago),
+                            create(:anonymous_contact, created_at: 15.days.ago),
+                          ])
 
     expect(ContentItem.summary).to eq([
       { path: "/abc", last_7_days: 0, last_30_days: 4, last_90_days: 4 },
