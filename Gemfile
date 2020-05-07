@@ -9,7 +9,7 @@ gem "fog-aws", "~> 3.6"
 gem "govuk_app_config", "~> 2.1.2"
 gem "govuk_sidekiq", "~> 3.0"
 gem "pg", "~> 1.2.3"
-gem "rails", "~> 6.0.2"
+gem "rails", "~> 6.0.3"
 
 if ENV["API_DEV"]
   gem "gds-api-adapters", path: "../gds-api-adapters"
