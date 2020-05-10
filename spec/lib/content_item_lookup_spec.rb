@@ -116,7 +116,7 @@ describe ContentItemLookup do
 
   context "when the path cannot be found in the Content Store" do
     it "guesses the 'parent' path by removing one path segment (the default case)" do
-      content_store_does_not_have_item("/contact-ukvi/overview")
+      stub_content_store_does_not_have_item("/contact-ukvi/overview")
       stub_content_store_has_item("/contact-ukvi", contact_ukvi_content_store_response)
 
       content_item = subject.lookup("/contact-ukvi/overview")
@@ -126,7 +126,7 @@ describe ContentItemLookup do
     end
 
     it "guesses the 'parent' path for smart-answer paths" do
-      content_store_does_not_have_item("/check-uk-visa/y/australia")
+      stub_content_store_does_not_have_item("/check-uk-visa/y/australia")
       stub_content_store_has_item("/check-uk-visa", check_uk_visa_content_store_response)
 
       content_item = subject.lookup("/check-uk-visa/y/australia")
@@ -154,7 +154,7 @@ describe ContentItemLookup do
     end
 
     it "returns a completely new content item with GDS as the org (so the problem report is assigned to at least one org)" do
-      content_store_does_not_have_item("/help")
+      stub_content_store_does_not_have_item("/help")
 
       content_item = subject.lookup("/help")
 

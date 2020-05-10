@@ -13,7 +13,7 @@ describe ContentStoreLookup, "#lookup" do
 
   context "when the response indicates the item is not present" do
     before do
-      content_store_does_not_have_item(path)
+      stub_content_store_does_not_have_item(path)
     end
 
     it "returns nil" do

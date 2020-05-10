@@ -11,7 +11,7 @@ describe ContentItemEnrichmentWorker do
     let!(:gds) { create(:gds) }
 
     before do
-      content_store_does_not_have_item("/unknown-org-page")
+      stub_content_store_does_not_have_item("/unknown-org-page")
       subject.perform(problem_report.id)
       problem_report.reload
     end
