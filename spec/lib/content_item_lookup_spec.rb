@@ -96,7 +96,7 @@ describe ContentItemLookup do
   let!(:hmrc) { create(:hmrc) }
 
   it "fetches content items from the Content Store" do
-    content_store_has_item("/government/case-studies/gender-identity", case_study_content_store_response)
+    stub_content_store_has_item("/government/case-studies/gender-identity", case_study_content_store_response)
 
     content_item = subject.lookup("/government/case-studies/gender-identity")
 
@@ -106,7 +106,7 @@ describe ContentItemLookup do
   end
 
   it "fetches an organisation page from the Content Store" do
-    content_store_has_item("/government/organisations/hm-revenue-customs", hmrc_org_content_store_response)
+    stub_content_store_has_item("/government/organisations/hm-revenue-customs", hmrc_org_content_store_response)
 
     content_item = subject.lookup("/government/organisations/hm-revenue-customs")
 
@@ -117,7 +117,7 @@ describe ContentItemLookup do
   context "when the path cannot be found in the Content Store" do
     it "guesses the 'parent' path by removing one path segment (the default case)" do
       content_store_does_not_have_item("/contact-ukvi/overview")
-      content_store_has_item("/contact-ukvi", contact_ukvi_content_store_response)
+      stub_content_store_has_item("/contact-ukvi", contact_ukvi_content_store_response)
 
       content_item = subject.lookup("/contact-ukvi/overview")
 
@@ -127,7 +127,7 @@ describe ContentItemLookup do
 
     it "guesses the 'parent' path for smart-answer paths" do
       content_store_does_not_have_item("/check-uk-visa/y/australia")
-      content_store_has_item("/check-uk-visa", check_uk_visa_content_store_response)
+      stub_content_store_has_item("/check-uk-visa", check_uk_visa_content_store_response)
 
       content_item = subject.lookup("/check-uk-visa/y/australia")
 
@@ -136,7 +136,7 @@ describe ContentItemLookup do
     end
 
     it "guesses the organisation for certain world organisation content" do
-      content_store_has_item("/government/world/organisations/dfid-bangladesh", dfid_content_store_response)
+      stub_content_store_has_item("/government/world/organisations/dfid-bangladesh", dfid_content_store_response)
 
       content_item = subject.lookup("/government/world/organisations/dfid-bangladesh")
 
@@ -145,7 +145,7 @@ describe ContentItemLookup do
     end
 
     it "guesses HMRC as the org for HMRC contact pages" do
-      content_store_has_item("/government/organisations/hm-revenue-customs/contact/vat-enquiries", hmrc_contact_page_content_store_response)
+      stub_content_store_has_item("/government/organisations/hm-revenue-customs/contact/vat-enquiries", hmrc_contact_page_content_store_response)
 
       content_item = subject.lookup("/government/organisations/hm-revenue-customs/contact/vat-enquiries")
 
