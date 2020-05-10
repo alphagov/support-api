@@ -46,7 +46,7 @@ describe "Problem reports" do
   end
 
   it "accepts and saves problem reports from the 'Is there anything wrong with this page?' form" do
-    content_store_has_item("/vat-rates", vat_rates_content_store_response)
+    stub_content_store_has_item("/vat-rates", vat_rates_content_store_response)
 
     zendesk_request = expect_zendesk_to_receive_ticket(
       "subject" => "/vat-rates",

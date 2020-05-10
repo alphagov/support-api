@@ -12,7 +12,7 @@ describe ContentItemEnrichmentWorker do
   context "with an entry in the content store" do
     before do
       create(:gds)
-      content_store_has_item(path)
+      stub_content_store_has_item(path)
     end
 
     context "without an existing content item" do
@@ -35,7 +35,7 @@ describe ContentItemEnrichmentWorker do
   context "with an entry in the content store" do
     before do
       create(:gds)
-      content_store_has_item(path)
+      stub_content_store_has_item(path)
     end
 
     context "without an existing content item" do

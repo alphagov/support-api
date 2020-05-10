@@ -11,7 +11,7 @@ describe ContentItemEnrichmentWorker do
     let!(:gds) { create(:gds) }
 
     before do
-      content_store_does_not_have_item("/unknown-org-page")
+      stub_content_store_does_not_have_item("/unknown-org-page")
       subject.perform(problem_report.id)
       problem_report.reload
     end
@@ -44,7 +44,7 @@ describe ContentItemEnrichmentWorker do
     let(:problem_report) { create(:problem_report, path: "/vat-rates") }
 
     before do
-      content_store_has_item("/vat-rates", vat_rates_content_store_response)
+      stub_content_store_has_item("/vat-rates", vat_rates_content_store_response)
       subject.perform(problem_report.id)
       problem_report.reload
     end
@@ -94,14 +94,14 @@ describe ContentItemEnrichmentWorker do
     let(:problem_report) { create(:problem_report, path: "/vat-rates") }
 
     before do
-      content_store_has_item("/vat-rates", vat_rates_content_store_response)
+      stub_content_store_has_item("/vat-rates", vat_rates_content_store_response)
       subject.perform(problem_report.id)
       problem_report.reload
     end
 
     it "assigns the problem report to the new organisation" do
       expect(problem_report.content_item.organisations).to eq([hmrc])
-      content_store_has_item("/vat-rates", vat_rates_content_store_response_new)
+      stub_content_store_has_item("/vat-rates", vat_rates_content_store_response_new)
       subject.perform(problem_report.id)
       problem_report.reload
       expect(problem_report.content_item.organisations).to eq([aaib])
