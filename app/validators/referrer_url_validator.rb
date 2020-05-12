@@ -4,7 +4,7 @@ class ReferrerUrlValidator < UrlValidator
   # android-app://com.google.android.googlequicksearchbox
   # Simply check the URL can be parsed
   def url_valid?(url)
-    !!URI.parse(url)
+    URI.parse(url).present?
   rescue StandardError
     false
   end
