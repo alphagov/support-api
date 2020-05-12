@@ -48,9 +48,9 @@ private
              when "production" then Rails.root.join("log", "organisation_import.json.log")
              end
 
-    Logger.new(output).tap { |logger|
+    Logger.new(output).tap do |logger|
       logger.formatter = json_log_formatter if Rails.env.production?
-    }
+    end
   end
 
   def json_log_formatter

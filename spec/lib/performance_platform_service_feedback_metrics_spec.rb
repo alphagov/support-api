@@ -2,9 +2,9 @@ require "rails_helper"
 require "performance_platform_service_feedback_metrics"
 
 describe PerformancePlatformServiceFeedbackMetrics do
-  subject(:metric_generator) {
+  subject(:metric_generator) do
     described_class.new(day: Date.new(2013, 2, 10), slug: "apply-carers-allowance")
-  }
+  end
 
   context "with valid aggregated feedback" do
     before do

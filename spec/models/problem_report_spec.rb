@@ -10,9 +10,9 @@ describe ProblemReport do
   it { should validate_length_of(:what_wrong).is_at_most(2**16) }
 
   context "#totals" do
-    let(:result) {
+    let(:result) do
       ProblemReport.totals_for(Date.today).map { |r| { path: r.path, total: r.total } }
-    }
+    end
 
     it "returns totals for a given day" do
       create(:problem_report, path: "/vat-rates")

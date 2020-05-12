@@ -9,7 +9,7 @@ describe ProblemReportList, "#to_json" do
   let(:user_agent) { "Safari" }
   let(:created_at) { Date.new(2015, 0o2, 0o2) }
 
-  let!(:problem_report) {
+  let!(:problem_report) do
     create(:problem_report,
            what_wrong: what_wrong,
            what_doing: what_doing,
@@ -18,13 +18,13 @@ describe ProblemReportList, "#to_json" do
            user_agent: user_agent,
            created_at: created_at,
            reviewed: false)
-  }
+  end
 
   context "returns JSON structure" do
     let(:from_date) { created_at - 1.week }
     let(:to_date) { created_at + 1.week }
 
-    let(:expected_report_json) {
+    let(:expected_report_json) do
       {
         "id" => problem_report.id,
         "type" => "problem-report",
@@ -36,9 +36,9 @@ describe ProblemReportList, "#to_json" do
         "path" => path,
         "marked_as_spam" => false,
       }
-    }
+    end
 
-    let(:expected_metadata) {
+    let(:expected_metadata) do
       {
         "total_count" => 1,
         "current_page" => 1,
@@ -47,7 +47,7 @@ describe ProblemReportList, "#to_json" do
         "from_date" => from_date.to_s,
         "to_date" => to_date.to_s,
       }
-    }
+    end
 
     let(:json) { JSON.parse(described_class.new(from_date: from_date.to_s, to_date: to_date.to_s).to_json) }
 

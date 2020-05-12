@@ -204,14 +204,14 @@ describe AnonymousFeedbackController, type: :controller do
 
     describe "filter by document type" do
       let(:hmrc) { create(:organisation, slug: "hm-revenue-customs") }
-      let(:smart_answer) {
+      let(:smart_answer) do
         create(
           :content_item,
           document_type: "smart_answer",
           path: "/calculate-your-holiday-entitlement",
           organisations: [hmrc],
         )
-      }
+      end
       let(:case_study) { create(:content_item, document_type: "case_study", path: "/government/case-studies/out-of-syria-back-into-school") }
       let!(:sa_problem_report) { create(:problem_report, path: "/xyz", content_item: smart_answer) }
       let!(:cs_problem_reports) { create_list(:problem_report, 2, content_item: case_study) }

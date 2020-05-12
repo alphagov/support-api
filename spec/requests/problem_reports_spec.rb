@@ -12,7 +12,7 @@ describe "Problem reports" do
   # I want to record and view bugs, gripes submitted by GOV.UK users
 
   let(:hmrc) { Organisation.where(slug: "hm-revenue-customs").first }
-  let(:vat_rates_content_store_response) {
+  let(:vat_rates_content_store_response) do
     {
       base_path: "/vat-rates",
       title: "VAT Rates",
@@ -27,7 +27,7 @@ describe "Problem reports" do
         ],
       },
     }
-  }
+  end
 
   it "calculates the problem report totals by day" do
     Timecop.travel Time.utc(2013, 2, 11)
@@ -219,9 +219,9 @@ private
 end
 
 describe "Retrieving Problem Reports" do
-  let!(:gds) {
+  let!(:gds) do
     create(:gds)
-  }
+  end
 
   let(:what_wrong) { "Help" }
   let(:what_doing) { "Skiing" }
@@ -230,7 +230,7 @@ describe "Retrieving Problem Reports" do
   let(:user_agent) { "Safari" }
   let(:created_at) { Date.new(2015, 0o2, 0o2) }
 
-  let!(:problem_report) {
+  let!(:problem_report) do
     create(:problem_report,
            what_wrong: what_wrong,
            what_doing: what_doing,
@@ -240,7 +240,7 @@ describe "Retrieving Problem Reports" do
            created_at: created_at,
            content_item: create(:content_item, path: "/help", organisations: [gds]),
            reviewed: false)
-  }
+  end
 
   context "with a full set of filter parameters supplied" do
     let!(:earliest_problem_report_unreviewed) { create :problem_report, created_at: created_at - 2.weeks }

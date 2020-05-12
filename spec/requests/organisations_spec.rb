@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "Organisations that have feedback left on 'their' content" do
-  let(:hmrc_info) {
+  let(:hmrc_info) do
     {
       "slug" => "hm-revenue-customs",
       "title" => "HM Revenue & Customs",
@@ -9,9 +9,9 @@ describe "Organisations that have feedback left on 'their' content" do
       "acronym" => "HMRC",
       "govuk_status" => "live",
     }
-  }
+  end
 
-  let(:ukvi_info) {
+  let(:ukvi_info) do
     {
       "slug" => "uk-visas-and-immigration",
       "title" => "UK Visas & Immigration",
@@ -19,7 +19,7 @@ describe "Organisations that have feedback left on 'their' content" do
       "acronym" => "UKVI",
       "govuk_status" => "live",
     }
-  }
+  end
 
   let!(:ukvi) { create(:organisation, ukvi_info) }
   let!(:hmrc) { create(:organisation, hmrc_info) }
