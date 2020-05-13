@@ -49,38 +49,38 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
   describe "#show" do
     before { login_as_stub_user }
 
-    let!(:no_doctype_content_items) {
+    let!(:no_doctype_content_items) do
       create(
         :content_item,
         document_type: "",
         created_at: 2.days.ago,
         anonymous_contacts: create_list(:anonymous_contact, 2, created_at: 2.days.ago),
       )
-    }
-    let!(:nil_doctype_content_items) {
+    end
+    let!(:nil_doctype_content_items) do
       create(
         :content_item,
         document_type: nil,
         created_at: 2.days.ago,
         anonymous_contacts: create_list(:anonymous_contact, 3, created_at: 2.days.ago),
       )
-    }
-    let!(:sa_content_items) {
+    end
+    let!(:sa_content_items) do
       create(
         :content_item,
         document_type: "smart_answer",
         created_at: 70.days.ago,
         anonymous_contacts: create_list(:anonymous_contact, 1, created_at: 70.days.ago),
       )
-    }
-    let!(:cs_content_items) {
+    end
+    let!(:cs_content_items) do
       create(
         :content_item,
         document_type: "case_study",
         created_at: 32.days.ago,
         anonymous_contacts: create_list(:anonymous_contact, 4, created_at: 32.days.ago),
       )
-    }
+    end
 
     context "with no ordering" do
       subject { response }

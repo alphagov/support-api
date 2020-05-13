@@ -4,12 +4,12 @@ class ContentItem < ApplicationRecord
   has_many :anonymous_contacts
   validates :path, presence: true
 
-  scope :for_organisation, ->(organisation) {
+  scope :for_organisation, lambda { |organisation|
     joins(:organisations)
     .where(organisations: { id: organisation.id })
   }
 
-  scope :for_document_type, ->(document_type) {
+  scope :for_document_type, lambda { |document_type|
     where(document_type: document_type)
   }
 

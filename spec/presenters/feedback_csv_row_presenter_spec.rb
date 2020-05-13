@@ -126,12 +126,12 @@ describe FeedbackCsvRowPresenter do
       end
 
       context "for feedback with a content item has more than one organisations" do
-        let(:organisations) {
+        let(:organisations) do
           [
             build(:organisation, title: "Apiarian Embassy"),
             build(:organisation, title: "Department for Ursine Affairs"),
           ]
-        }
+        end
 
         it "is the first organisation's title" do
           expect(subject).to eq "Apiarian Embassy"
@@ -172,12 +172,12 @@ describe FeedbackCsvRowPresenter do
       end
 
       context "for feedback with a content item has more than one organisations" do
-        let(:organisations) {
+        let(:organisations) do
           [
             build(:organisation, title: "Apiarian Embassy"),
             build(:organisation, title: "Department for Ursine Affairs"),
           ]
-        }
+        end
 
         it "is the all the organisation's titles separated by `|`" do
           expect(subject).to eq "Apiarian Embassy|Department for Ursine Affairs"

@@ -166,12 +166,12 @@ describe AnonymousContact, type: :model do
       let!(:contact_3) { contact(path: "/courts", created_at: Time.new(2015, 5, 10)) }
       let!(:personal_info) { contact(path: "/gov", details: "foo@example.com") }
       let!(:not_actionable) { contact(path: "/gov", is_actionable: false, reason_why_not_actionable: "spam") }
-      subject {
+      subject do
         described_class.for_query_parameters(path_prefixes: path_prefixes,
                                              from: from,
                                              to: to,
                                              document_type: document_type).sort
-      }
+      end
 
       let(:path_prefixes) { nil }
       let(:from) { nil }

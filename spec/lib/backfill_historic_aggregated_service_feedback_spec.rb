@@ -13,7 +13,7 @@ describe BackfillHistoricAggregatedServiceFeedback, "#import_from_performance_pl
   let(:subject) { described_class.new(start_date, end_date, test_logger) }
   let(:other_transaction_slug) { "register-to-vote-other" }
 
-  let(:service_feedback_json) {
+  let(:service_feedback_json) do
     {
       "data": [
         {
@@ -94,7 +94,7 @@ describe BackfillHistoricAggregatedServiceFeedback, "#import_from_performance_pl
         },
       ],
     }
-  }
+  end
 
   let!(:earlier_aggregated_service_feedback) { create :aggregated_service_feedback, service_satisfaction_rating: 1, path: path_for_transaction, details: "2", created_at: start_date - 1.day }
 

@@ -10,60 +10,60 @@ describe ContentItemLookup do
 
   let(:subject) { ContentItemLookup.new(content_store: content_store) }
 
-  let(:hmrc_org_content_store_response) {
+  let(:hmrc_org_content_store_response) do
     {
       content_id: "6667cce2-e809-4e21-ae09-cb0bdc1ddda3",
       base_path: "/government/organisations/hm-revenue-customs",
       document_type: "placeholder_organisation",
       title: "HM Revenue & Customs",
     }
-  }
+  end
 
-  let(:contact_ukvi_content_store_response) {
+  let(:contact_ukvi_content_store_response) do
     {
       content_id: "04148522-b0c1-4137-b687-5f3c3bdd561a",
       base_path: "/uk-visas-and-immigration",
       title: "UK Visas and Immigration",
       document_type: "organisation",
     }
-  }
+  end
 
-  let(:check_uk_visa_content_store_response) {
+  let(:check_uk_visa_content_store_response) do
     contact_ukvi_content_store_response.merge(
       base_path: "/check-uk-visa",
     )
-  }
+  end
 
-  let(:contact_ukvi_content_store_response) {
+  let(:contact_ukvi_content_store_response) do
     {
       base_path: "/contact-ukvi",
       document_type: "placeholder",
     }
-  }
+  end
 
-  let(:dfid_content_store_response) {
+  let(:dfid_content_store_response) do
     {
       base_path: "/government/world/organisations/dfid-bangladesh",
       document_type: "placeholder",
     }
-  }
+  end
 
-  let(:hmrc_contact_page_content_store_response) {
+  let(:hmrc_contact_page_content_store_response) do
     {
       base_path: "/government/organisations/hm-revenue-customs/contact/vat-enquiries",
       document_type: "placeholder",
     }
-  }
+  end
 
-  let(:civil_service_fast_stream_org_response) {
+  let(:civil_service_fast_stream_org_response) do
     {
       content_id: "e1dfcc51-9bda-444c-94f2-d5e4c4b3cd0b",
       title: "Civil Service Fast Stream",
       base_path: "/organisations/civil-service-fast-stream",
     }
-  }
+  end
 
-  let(:case_study_content_store_response) {
+  let(:case_study_content_store_response) do
     {
       base_path: "/government/case-studies/gender-identity",
       document_type: "case_study",
@@ -71,25 +71,25 @@ describe ContentItemLookup do
         lead_organisations: [civil_service_fast_stream_org_response],
       },
     }
-  }
+  end
 
-  let(:hmrc) {
+  let(:hmrc) do
     Organisation.create_with(
       content_id: "6667cce2-e809-4e21-ae09-cb0bdc1ddda3",
       slug: "hm-revenue-customs",
       web_url: "http://www.dev.gov.uk/government/organisations/hm-revenue-customs",
       title: "HM Revenue & Customs",
     ).find_or_create_by(slug: "hm-revenue-customs")
-  }
+  end
 
-  let(:ukvi) {
+  let(:ukvi) do
     Organisation.create_with(
       content_id: "04148522-b0c1-4137-b687-5f3c3bdd561a",
       slug: "uk-visas-and-immigration",
       web_url: "https://www.gov.uk/government/organisations/uk-visas-and-immigration",
       title: "UK Visas and Immigration",
     ).find_or_create_by(slug: "uk-visas-and-immigration")
-  }
+  end
 
   let!(:gds) { create(:gds) }
   let!(:dfid) { create(:dfid) }

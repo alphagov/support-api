@@ -24,7 +24,7 @@ describe ContentItemEnrichmentWorker do
 
   context "for a problem report about a piece of content we know the organisation of" do
     let(:hmrc) { Organisation.where(slug: "hm-revenue-customs").first }
-    let(:vat_rates_content_store_response) {
+    let(:vat_rates_content_store_response) do
       {
         base_path: "/vat-rates",
         title: "VAT Rates",
@@ -39,7 +39,7 @@ describe ContentItemEnrichmentWorker do
           ],
         },
       }
-    }
+    end
 
     let(:problem_report) { create(:problem_report, path: "/vat-rates") }
 
@@ -58,7 +58,7 @@ describe ContentItemEnrichmentWorker do
   context "for a problem report about a piece of content whose organisation has changed" do
     let(:hmrc) { Organisation.find_by(slug: "hm-revenue-customs") }
     let(:aaib) { Organisation.find_by(slug: "air-accidents-investigation-branch") }
-    let(:vat_rates_content_store_response) {
+    let(:vat_rates_content_store_response) do
       {
         base_path: "/vat-rates",
         title: "VAT Rates",
@@ -73,8 +73,8 @@ describe ContentItemEnrichmentWorker do
           ],
         },
       }
-    }
-    let(:vat_rates_content_store_response_new) {
+    end
+    let(:vat_rates_content_store_response_new) do
       {
         base_path: "/vat-rates",
         title: "VAT Rates",
@@ -89,7 +89,7 @@ describe ContentItemEnrichmentWorker do
           ],
         },
       }
-    }
+    end
 
     let(:problem_report) { create(:problem_report, path: "/vat-rates") }
 

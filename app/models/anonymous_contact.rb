@@ -16,7 +16,7 @@ class AnonymousContact < ApplicationRecord
   validates_inclusion_of :is_actionable, in: [true, false]
   validates_presence_of :reason_why_not_actionable, unless: -> { is_actionable }
 
-  scope :free_of_personal_info, -> {
+  scope :free_of_personal_info, lambda {
     where(personal_information_status: "absent")
   }
   scope :only_actionable, -> { where(is_actionable: true) }
@@ -26,14 +26,14 @@ class AnonymousContact < ApplicationRecord
   scope :for_organisation_slug, ->(slug) { joins(:organisations).where(organisations: { slug: slug }) }
   scope :for_document_type, ->(document_type) { joins(:content_item).where(content_items: { document_type: document_type }) }
 
-  scope :matching_path_prefixes, ->(paths) do
+  scope :matching_path_prefixes, lambda { |paths|
     if paths.present?
       similar_to = paths.map { |p| "#{p}%" }
       where(similar_to.map { "anonymous_contacts.path LIKE ?" }.join(" OR "), *similar_to)
     end
-  end
+  }
 
-  scope :for_query_parameters, ->(options = {}) do
+  scope :for_query_parameters, lambda { |options = {}|
     path_prefixes = options[:path_prefixes]
     from = options[:from] || Date.new(1970)
     to = options[:to] || Date.today
@@ -49,7 +49,7 @@ class AnonymousContact < ApplicationRecord
     query = query.for_document_type(document_type) if document_type
 
     query
-  end
+  }
 
   MAX_PAGES = 200
   PAGE_SIZE = 50
