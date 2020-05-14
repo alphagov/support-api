@@ -10,14 +10,16 @@ describe ProblemReportList, "#to_json" do
   let(:created_at) { Date.new(2015, 0o2, 0o2) }
 
   let!(:problem_report) do
-    create(:problem_report,
-           what_wrong: what_wrong,
-           what_doing: what_doing,
-           path: path,
-           referrer: referrer,
-           user_agent: user_agent,
-           created_at: created_at,
-           reviewed: false)
+    create(
+      :problem_report,
+      what_wrong: what_wrong,
+      what_doing: what_doing,
+      path: path,
+      referrer: referrer,
+      user_agent: user_agent,
+      created_at: created_at,
+      reviewed: false,
+    )
   end
 
   context "returns JSON structure" do

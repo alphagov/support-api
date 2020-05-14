@@ -7,16 +7,17 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
     context "posted with valid parameters" do
       before do
         expect(GenerateFeedbackCsvWorker).to receive(:perform_async).once.with(instance_of(Integer))
-        post :create, params: {
-          export_request: {
-            from: "2015-05-01",
-            to: "2015-06-01",
-            path_prefixes: ["/"],
-            notification_email: "foo@example.com",
-            organisation: "",
-            document_type: "",
-          },
-        }
+        post :create,
+             params: {
+               export_request: {
+                 from: "2015-05-01",
+                 to: "2015-06-01",
+                 path_prefixes: ["/"],
+                 notification_email: "foo@example.com",
+                 organisation: "",
+                 document_type: "",
+               },
+             }
       end
 
       subject { response }
@@ -27,26 +28,29 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
         expect(FeedbackExportRequest.count).to eq(1)
         feedback_export_request = FeedbackExportRequest.last
 
-        expect(feedback_export_request.filters).to eq(from: Date.new(2015, 0o5, 0o1),
-                                                      to: Date.new(2015, 0o6, 0o1),
-                                                      organisation_slug: "",
-                                                      path_prefixes: ["/"],
-                                                      document_type: "")
+        expect(feedback_export_request.filters).to eq(
+          from: Date.new(2015, 0o5, 0o1),
+          to: Date.new(2015, 0o6, 0o1),
+          organisation_slug: "",
+          path_prefixes: ["/"],
+          document_type: "",
+        )
       end
     end
 
     context "posted with invalid parameters" do
       before do
         expect(GenerateFeedbackCsvWorker).to receive(:perform_async).never
-        post :create, params: {
-          export_request: {
-            from: "2015-05-01",
-            to: "2015-06-01",
-            path_prefixes: ["/"],
-            organisation: "",
-            document_type: "",
-          },
-        }
+        post :create,
+             params: {
+               export_request: {
+                 from: "2015-05-01",
+                 to: "2015-06-01",
+                 path_prefixes: ["/"],
+                 organisation: "",
+                 document_type: "",
+               },
+             }
       end
 
       subject { response }
@@ -57,17 +61,18 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
     context "with backwards compatible `path_prefix` param" do
       before do
         expect(GenerateFeedbackCsvWorker).to receive(:perform_async).once.with(instance_of(Integer))
-        post :create, params: {
-          export_request:
-            {
-              from: "2015-05-01",
-              to: "2015-06-01",
-              path_prefix: "/",
-              notification_email: "foo@example.com",
-              organisation: "",
-              document_type: "",
-            },
-        }
+        post :create,
+             params: {
+               export_request:
+                 {
+                   from: "2015-05-01",
+                   to: "2015-06-01",
+                   path_prefix: "/",
+                   notification_email: "foo@example.com",
+                   organisation: "",
+                   document_type: "",
+                 },
+             }
       end
 
       subject { response }
@@ -78,11 +83,13 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
         expect(FeedbackExportRequest.count).to eq(1)
         feedback_export_request = FeedbackExportRequest.last
 
-        expect(feedback_export_request.filters).to eq(from: Date.new(2015, 0o5, 0o1),
-                                                      to: Date.new(2015, 0o6, 0o1),
-                                                      path_prefixes: ["/"],
-                                                      organisation_slug: "",
-                                                      document_type: "")
+        expect(feedback_export_request.filters).to eq(
+          from: Date.new(2015, 0o5, 0o1),
+          to: Date.new(2015, 0o6, 0o1),
+          path_prefixes: ["/"],
+          organisation_slug: "",
+          document_type: "",
+        )
       end
     end
   end

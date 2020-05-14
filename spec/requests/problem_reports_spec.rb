@@ -231,15 +231,17 @@ describe "Retrieving Problem Reports" do
   let(:created_at) { Date.new(2015, 0o2, 0o2) }
 
   let!(:problem_report) do
-    create(:problem_report,
-           what_wrong: what_wrong,
-           what_doing: what_doing,
-           path: path,
-           referrer: referrer,
-           user_agent: user_agent,
-           created_at: created_at,
-           content_item: create(:content_item, path: "/help", organisations: [gds]),
-           reviewed: false)
+    create(
+      :problem_report,
+      what_wrong: what_wrong,
+      what_doing: what_doing,
+      path: path,
+      referrer: referrer,
+      user_agent: user_agent,
+      created_at: created_at,
+      content_item: create(:content_item, path: "/help", organisations: [gds]),
+      reviewed: false,
+    )
   end
 
   context "with a full set of filter parameters supplied" do
