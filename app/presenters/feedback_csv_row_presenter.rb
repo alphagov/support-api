@@ -4,9 +4,18 @@ class FeedbackCsvRowPresenter
   attr_reader :row
 
   HEADER_ROW = [
-    "creation date", "path or service name", "feedback", "service satisfaction rating",
-    "browser name", "browser version", "browser platform", "user agent", "referrer", "type",
-    "primary organisation", "all organisations"
+    "creation date",
+    "path or service name",
+    "feedback",
+    "service satisfaction rating",
+    "browser name",
+    "browser version",
+    "browser platform",
+    "user agent",
+    "referrer",
+    "type",
+    "primary organisation",
+    "all organisations",
   ].freeze
 
   def self.parser

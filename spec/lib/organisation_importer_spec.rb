@@ -40,14 +40,20 @@ describe OrganisationImporter do
   end
 
   before do
-    FactoryBot.create(:organisation, title: "Ministry of Magic",
-                                     slug: "ministry-of-magic",
-                                     acronym: "MOM",
-                                     content_id: "abcdef")
-    FactoryBot.create(:organisation, title: "Ministry of Fun",
-                                     slug: "ministry-of-fun",
-                                     acronym: "MOF",
-                                     content_id: "123456")
+    FactoryBot.create(
+      :organisation,
+      title: "Ministry of Magic",
+      slug: "ministry-of-magic",
+      acronym: "MOM",
+      content_id: "abcdef",
+    )
+    FactoryBot.create(
+      :organisation,
+      title: "Ministry of Fun",
+      slug: "ministry-of-fun",
+      acronym: "MOF",
+      content_id: "123456",
+    )
     described_class.new.run
   end
 

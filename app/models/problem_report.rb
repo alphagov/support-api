@@ -4,13 +4,14 @@ class ProblemReport < AnonymousContact
   validates :what_doing, length: { maximum: 2**16 }
   validates :what_wrong, length: { maximum: 2**16 }
 
-  scope :totals_for, lambda { |date|
-    where(created_at: date.beginning_of_day..date.end_of_day)
-      .only_actionable
-      .select("path, count(path) as total")
-      .group(:path)
-      .order("total desc")
-  }
+  scope :totals_for,
+        lambda { |date|
+          where(created_at: date.beginning_of_day..date.end_of_day)
+            .only_actionable
+            .select("path, count(path) as total")
+            .group(:path)
+            .order("total desc")
+        }
 
   scope :with_known_page_owner, -> { where.not(page_owner: nil) }
 
@@ -20,8 +21,16 @@ class ProblemReport < AnonymousContact
 
   def as_json(options = {})
     attributes_to_serialise = %i[
-      type path id created_at what_wrong what_doing
-      referrer user_agent marked_as_spam reviewed
+      type
+      path
+      id
+      created_at
+      what_wrong
+      what_doing
+      referrer
+      user_agent
+      marked_as_spam
+      reviewed
     ]
     super({
       only: attributes_to_serialise,

@@ -27,10 +27,12 @@ describe ServiceFeedbackAggregator do
     context "with the same rating" do
       before do
         2.times do
-          create(:service_feedback,
-                 service_satisfaction_rating: 1,
-                 slug: "register-to-vote",
-                 created_at: date)
+          create(
+            :service_feedback,
+            service_satisfaction_rating: 1,
+            slug: "register-to-vote",
+            created_at: date,
+          )
         end
       end
 
@@ -54,11 +56,13 @@ describe ServiceFeedbackAggregator do
 
       context "and a feedback entry that has details" do
         before do
-          create(:service_feedback,
-                 service_satisfaction_rating: 1,
-                 slug: "register-to-vote",
-                 details: "A fantastic service",
-                 created_at: date)
+          create(
+            :service_feedback,
+            service_satisfaction_rating: 1,
+            slug: "register-to-vote",
+            details: "A fantastic service",
+            created_at: date,
+          )
         end
 
         it "doesn't delete that entry" do
@@ -70,10 +74,12 @@ describe ServiceFeedbackAggregator do
 
       context "and a duplicate piece of feedback" do
         before do
-          create(:duplicate_service_feedback,
-                 service_satisfaction_rating: 1,
-                 slug: "register-to-vote",
-                 created_at: date)
+          create(
+            :duplicate_service_feedback,
+            service_satisfaction_rating: 1,
+            slug: "register-to-vote",
+            created_at: date,
+          )
         end
 
         it "doesn't include it in the sum of feedback for that rating" do
@@ -86,10 +92,12 @@ describe ServiceFeedbackAggregator do
     context "with different ratings" do
       before do
         2.times do |i|
-          create(:service_feedback,
-                 service_satisfaction_rating: i + 1,
-                 slug: "register-to-vote",
-                 created_at: date)
+          create(
+            :service_feedback,
+            service_satisfaction_rating: i + 1,
+            slug: "register-to-vote",
+            created_at: date,
+          )
         end
       end
 
@@ -102,10 +110,12 @@ describe ServiceFeedbackAggregator do
     context "with different dates" do
       before do
         2.times do |i|
-          create(:service_feedback,
-                 service_satisfaction_rating: 1,
-                 slug: "register-to-vote",
-                 created_at: date - i.days)
+          create(
+            :service_feedback,
+            service_satisfaction_rating: 1,
+            slug: "register-to-vote",
+            created_at: date - i.days,
+          )
         end
       end
 

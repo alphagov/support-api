@@ -57,8 +57,14 @@ module AnonymousFeedback
 
     def problem_report_params
       params.require(:problem_report).permit(
-        :path, :referrer, :javascript_enabled, :user_agent, :what_doing,
-        :what_wrong, :source, :page_owner
+        :path,
+        :referrer,
+        :javascript_enabled,
+        :user_agent,
+        :what_doing,
+        :what_wrong,
+        :source,
+        :page_owner,
       ).to_h
     end
 

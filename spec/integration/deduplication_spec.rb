@@ -4,27 +4,33 @@ require "deduplication_worker"
 
 describe "de-duplication" do
   let(:record1) do
-    build(:service_feedback,
-          service_satisfaction_rating: 5,
-          details: "this service is great",
-          slug: "some-tx",
-          created_at: Time.parse("2013-01-15 12:00:00"))
+    build(
+      :service_feedback,
+      service_satisfaction_rating: 5,
+      details: "this service is great",
+      slug: "some-tx",
+      created_at: Time.parse("2013-01-15 12:00:00"),
+    )
   end
 
   let(:record2) do
-    build(:service_feedback,
-          service_satisfaction_rating: 3,
-          details: "this service is meh",
-          slug: "some-tx",
-          created_at: Time.parse("2013-01-15 12:00:00"))
+    build(
+      :service_feedback,
+      service_satisfaction_rating: 3,
+      details: "this service is meh",
+      slug: "some-tx",
+      created_at: Time.parse("2013-01-15 12:00:00"),
+    )
   end
 
   let(:record3) do
-    build(:service_feedback,
-          service_satisfaction_rating: 3,
-          details: "this service is meh",
-          slug: "some-tx",
-          created_at: Time.parse("2013-01-15 12:00:01"))
+    build(
+      :service_feedback,
+      service_satisfaction_rating: 3,
+      details: "this service is meh",
+      slug: "some-tx",
+      created_at: Time.parse("2013-01-15 12:00:01"),
+    )
   end
 
   context "nightly deduplication" do
