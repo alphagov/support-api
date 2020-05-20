@@ -6,23 +6,17 @@ git_source(:github) do |repo_name|
 end
 
 gem "fog-aws", "~> 3.6"
-gem "govuk_app_config", "~> 2.2.0"
-gem "govuk_sidekiq", "~> 3.0"
-gem "pg", "~> 1.2.3"
-gem "rails", "~> 6.0.3"
-
-if ENV["API_DEV"]
-  gem "gds-api-adapters", path: "../gds-api-adapters"
-else
-  gem "gds-api-adapters", "~> 63.6.0"
-end
-
+gem "gds-api-adapters", "~> 63.6.0"
 gem "gds-sso", "~> 14.3.0"
 gem "gds_zendesk", "3.0.0"
+gem "govuk_app_config", "~> 2.2.0"
+gem "govuk_sidekiq", "~> 3.0"
 gem "kaminari", "1.2.0"
 gem "mail-notify"
 gem "mlanett-redis-lock", "0.2.7"
+gem "pg", "~> 1.2.3"
 gem "plek", "3.0.0"
+gem "rails", "~> 6.0.3"
 gem "user_agent_parser"
 gem "whenever", "1.0.0", require: false
 
