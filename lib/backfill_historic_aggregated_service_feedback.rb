@@ -14,24 +14,24 @@ class BackfillHistoricAggregatedServiceFeedback
       all_service_feedback_hash["data"].each do |service_feedback_hash|
         day_of_feedback_summary = Date.parse(service_feedback_hash["_day_start_at"])
 
-        if within_specified_dates(day_of_feedback_summary) && transaction_slug == service_feedback_hash["slug"]
-          aggregated_service_feedbacks = AggregatedServiceFeedback.where(
-            created_at: day_of_feedback_summary.beginning_of_day..day_of_feedback_summary.end_of_day,
-            path: path_for_transaction_slug(transaction_slug),
-          )
+        next unless within_specified_dates(day_of_feedback_summary) && transaction_slug == service_feedback_hash["slug"]
 
-          aggregated_service_feedbacks.each do |aggregated_feedback|
-            feedback_rating_sum_from_performance_platform = service_feedback_hash["rating_#{aggregated_feedback.service_satisfaction_rating}"]
+        aggregated_service_feedbacks = AggregatedServiceFeedback.where(
+          created_at: day_of_feedback_summary.beginning_of_day..day_of_feedback_summary.end_of_day,
+          path: path_for_transaction_slug(transaction_slug),
+        )
 
-            if feedback_rating_sum_from_performance_platform.zero?
-              # Feedex does not contain aggregate records in the case where the
-              # total is 0, therefore if the performance platform data
-              # indicates 0, delete the aggregate record as it counts solely
-              # duplicate records
-              aggregated_feedback.delete
-            else
-              aggregated_feedback.update!(details: feedback_rating_sum_from_performance_platform, javascript_enabled: false)
-            end
+        aggregated_service_feedbacks.each do |aggregated_feedback|
+          feedback_rating_sum_from_performance_platform = service_feedback_hash["rating_#{aggregated_feedback.service_satisfaction_rating}"]
+
+          if feedback_rating_sum_from_performance_platform.zero?
+            # Feedex does not contain aggregate records in the case where the
+            # total is 0, therefore if the performance platform data
+            # indicates 0, delete the aggregate record as it counts solely
+            # duplicate records
+            aggregated_feedback.delete
+          else
+            aggregated_feedback.update!(details: feedback_rating_sum_from_performance_platform, javascript_enabled: false)
           end
         end
       end
