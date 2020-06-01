@@ -7,7 +7,7 @@ class FeedbackExportRequest < ApplicationRecord
   serialize :filters, Hash
 
   before_validation on: :create do
-    filters[:to] ||= Date.today
+    filters[:to] ||= Time.zone.today
     filters[:path_prefixes] = path_filters
     generate_filename! if filename.nil?
   end
@@ -16,7 +16,7 @@ class FeedbackExportRequest < ApplicationRecord
     parts = [
       "feedex",
       filters[:from].nil? ? "0000-00-00" : filters[:from].to_date.iso8601,
-      filters[:to].nil? ? Date.today.iso8601 : filters[:to].to_date.iso8601,
+      filters[:to].nil? ? Time.zone.today.iso8601 : filters[:to].to_date.iso8601,
     ]
 
     if path_filters

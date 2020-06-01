@@ -17,7 +17,7 @@ RSpec.describe FeedbackExportRequest, type: :model do
     end
 
     it "defaults the to date to today" do
-      expect(instance.filters[:to]).to eq Date.today
+      expect(instance.filters[:to]).to eq Time.zone.today
     end
   end
 

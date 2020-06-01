@@ -11,7 +11,7 @@ describe ProblemReport do
 
   context "#totals" do
     let(:result) do
-      ProblemReport.totals_for(Date.today).map { |r| { path: r.path, total: r.total } }
+      ProblemReport.totals_for(Time.zone.today).map { |r| { path: r.path, total: r.total } }
     end
 
     it "returns totals for a given day" do

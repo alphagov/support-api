@@ -39,7 +39,7 @@ class AnonymousContact < ApplicationRecord
         lambda { |options = {}|
           path_prefixes = options[:path_prefixes]
           from = options[:from] || Date.new(1970)
-          to = options[:to] || Date.today
+          to = options[:to] || Time.zone.today
           organisation_slug = options[:organisation_slug]
           document_type = options[:document_type]
 

@@ -25,7 +25,7 @@ private
 
   def dates
     from_date = DateParser.parse(@params[:from_date]) || Date.new(1970)
-    to_date = DateParser.parse(@params[:to_date]) || Date.today
+    to_date = DateParser.parse(@params[:to_date]) || Time.zone.today
 
     [from_date, to_date].tap do |dates|
       dates.sort! if @params[:from_date] && @params[:to_date]

@@ -6,7 +6,7 @@ describe ServiceFeedbackAggregator do
   subject(:aggregator) { ServiceFeedbackAggregator.new(date) }
 
   context "when run with today's date" do
-    let(:date) { Date.today }
+    let(:date) { Time.zone.today }
 
     it "refuses to run" do
       expect { aggregator.run }.to raise_error("Cannot aggregate today's feedback until tomorrow")

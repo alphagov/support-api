@@ -58,7 +58,7 @@ class ContentItem < ApplicationRecord
   end
 
   def self.midnight_last_night
-    Date.today.to_time(:utc)
+    Time.zone.today.to_time(:utc)
   end
 
   def self.last_7_days
