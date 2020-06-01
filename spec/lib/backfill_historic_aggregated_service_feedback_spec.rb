@@ -144,7 +144,7 @@ describe BackfillHistoricAggregatedServiceFeedback, "#import_from_performance_pl
     end
 
     it "deletes aggregates in the case where the performance platform returns a count of zero" do
-      expect(AggregatedServiceFeedback.find_by_id(end_date_aggregated_service_feedback_rating_5.id)).to be_falsy
+      expect(AggregatedServiceFeedback.find_by(id: end_date_aggregated_service_feedback_rating_5.id)).to be_falsy
     end
 
     it "does not change the aggregated feedback outside of the specified dates" do

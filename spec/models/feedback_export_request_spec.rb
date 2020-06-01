@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe FeedbackExportRequest, type: :model do
-  before { Timecop.travel(Time.new(2015, 6, 1)) }
+  before { Timecop.travel(Time.zone.local(2015, 6, 1)) }
 
   describe "setting defaults" do
     subject(:instance) { described_class.new(notification_email: "user@example.com") }

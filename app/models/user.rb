@@ -1,3 +1,3 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   include GDS::SSO::User
 end

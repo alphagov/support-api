@@ -7,7 +7,7 @@ module AnonymousFeedback
         ServiceFeedbackWorker.perform_async(service_feedback_params)
         head :accepted
       else
-        render json: { "errors" => request.errors.to_a }, status: 422
+        render json: { "errors" => request.errors.to_a }, status: :unprocessable_entity
       end
     end
 

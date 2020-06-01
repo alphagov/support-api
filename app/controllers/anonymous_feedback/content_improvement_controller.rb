@@ -6,7 +6,7 @@ module AnonymousFeedback
         ContentImprovementFeedbackWorker.perform_async(feedback_params)
         head :accepted
       else
-        render json: { "errors" => feedback.errors.to_a }, status: 422
+        render json: { "errors" => feedback.errors.to_a }, status: :unprocessable_entity
       end
     end
 

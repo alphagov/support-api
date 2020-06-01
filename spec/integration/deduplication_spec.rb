@@ -9,7 +9,7 @@ describe "de-duplication" do
       service_satisfaction_rating: 5,
       details: "this service is great",
       slug: "some-tx",
-      created_at: Time.parse("2013-01-15 12:00:00"),
+      created_at: Time.zone.parse("2013-01-15 12:00:00"),
     )
   end
 
@@ -19,7 +19,7 @@ describe "de-duplication" do
       service_satisfaction_rating: 3,
       details: "this service is meh",
       slug: "some-tx",
-      created_at: Time.parse("2013-01-15 12:00:00"),
+      created_at: Time.zone.parse("2013-01-15 12:00:00"),
     )
   end
 
@@ -29,7 +29,7 @@ describe "de-duplication" do
       service_satisfaction_rating: 3,
       details: "this service is meh",
       slug: "some-tx",
-      created_at: Time.parse("2013-01-15 12:00:01"),
+      created_at: Time.zone.parse("2013-01-15 12:00:01"),
     )
   end
 
@@ -42,7 +42,7 @@ describe "de-duplication" do
       expect(AnonymousContact.only_actionable.count).to eq(3)
 
       # deduplicate
-      Timecop.travel Time.parse("2013-01-16 00:30:00")
+      Timecop.travel Time.zone.parse("2013-01-16 00:30:00")
       DeduplicationWorker.start_deduplication_for_yesterday
 
       expect(AnonymousContact
@@ -58,7 +58,7 @@ describe "de-duplication" do
 
       expect(AnonymousContact.only_actionable.count).to eq(3)
 
-      Timecop.travel Time.parse("2013-01-15 12:08:00")
+      Timecop.travel Time.zone.parse("2013-01-15 12:08:00")
       DeduplicationWorker.start_deduplication_for_recent_feedback
 
       expect(AnonymousContact

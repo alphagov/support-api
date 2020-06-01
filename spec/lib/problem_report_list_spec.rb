@@ -111,7 +111,7 @@ describe ProblemReportList, "#to_json" do
 
   context "results scoped to dates" do
     let!(:earlier_problem_report) { create :problem_report, created_at: created_at - 1.day }
-    let!(:later_problem_report) { create :problem_report, created_at: created_at + 1.week + 2.day }
+    let!(:later_problem_report) { create :problem_report, created_at: created_at + 1.week + 2.days }
 
     context "when supplied with start and end date parameters" do
       let(:from_date) { created_at - 1.week }

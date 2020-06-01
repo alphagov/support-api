@@ -8,12 +8,12 @@ class AnonymousFeedback::ExportRequestsController < ApplicationController
       GenerateFeedbackCsvWorker.perform_async(export_request.id)
       head :accepted
     else
-      render json: { "errors" => export_request.errors.to_a }, status: 422
+      render json: { "errors" => export_request.errors.to_a }, status: :unprocessable_entity
     end
   end
 
   def show
-    export_request = FeedbackExportRequest.find_by_id(params[:id])
+    export_request = FeedbackExportRequest.find_by(id: params[:id])
 
     if export_request
       render json: {

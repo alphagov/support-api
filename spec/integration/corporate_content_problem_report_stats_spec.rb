@@ -28,7 +28,7 @@ describe "corporate content problem report stats" do
       },
     ])
 
-    Timecop.travel Time.parse("2013-01-15 12:00:00")
+    Timecop.travel Time.zone.parse("2013-01-15 12:00:00")
 
     create(
       :problem_report,
@@ -37,7 +37,7 @@ describe "corporate content problem report stats" do
       page_owner: "dft",
     )
 
-    Timecop.travel Time.parse("2013-02-01 12:00:00")
+    Timecop.travel Time.zone.parse("2013-02-01 12:00:00")
 
     ProblemReportStatsPPUploaderWorker.run
 

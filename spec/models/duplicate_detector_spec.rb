@@ -2,7 +2,7 @@ require "spec_helper"
 require "duplicate_detector"
 
 describe DuplicateDetector do
-  let(:current_time) { Time.now }
+  let(:current_time) { Time.zone.now }
 
   let(:r1) { { "a" => "b", "created_at" => current_time } }
   let(:r2) { { "a" => "c", "created_at" => current_time } }
