@@ -124,7 +124,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
     end
 
     context "requesting a processed export request" do
-      let(:export_request) { create(:feedback_export_request, generated_at: Time.now) }
+      let(:export_request) { create(:feedback_export_request, generated_at: Time.zone.now) }
       let(:id) { export_request.id }
 
       it { is_expected.to be_successful }

@@ -17,7 +17,7 @@ class ServiceFeedbackAggregator
 private
 
   def raise_if_should_not_run
-    if @date.to_date == Date.today
+    if @date.to_date == Time.zone.today
       raise "Cannot aggregate today's feedback until tomorrow"
     elsif aggregations_already_present?
       raise "Already aggregated for #{@date}"

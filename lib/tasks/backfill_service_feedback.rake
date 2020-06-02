@@ -1,7 +1,7 @@
 namespace :backfill_service_feedback do
   desc "Overwrites aggregated service feedback with data from performance platform"
   task :import_from_performance_platform, %i[start_date_string end_date_string slug] => :environment do |_t, args|
-    require File.join(Rails.root, "lib", "backfill_historic_aggregated_service_feedback")
+    require Rails.root.join("lib/backfill_historic_aggregated_service_feedback")
 
     raise "Start and end date required" unless args[:start_date_string] && args[:end_date_string]
 
@@ -11,11 +11,11 @@ namespace :backfill_service_feedback do
     if args[:slug]
       slugs = [args[:slug]]
     else
-      file_path = File.join(Rails.root, "config", "performance_platform_slugs.yml")
+      file_path = Rails.root.join("config/performance_platform_slugs.yml")
       slugs = YAML.load_file(File.open(file_path))["slugs"]
     end
 
-    logger = Logger.new("#{Rails.root}/log/backfill_service_feedback.log")
+    logger = Logger.new(Rails.root.join("log/backfill_service_feedback.log"))
     backfill_historic_service_feedback = BackfillHistoricAggregatedServiceFeedback.new(start_date, end_date, logger)
 
     slugs.each do |slug|

@@ -12,6 +12,6 @@ class RedisClient
 private
 
   def config
-    YAML.load_file(Rails.root.join("config", "redis.yml"))
+    YAML.load_file(Rails.root.join("config/redis.yml"))
   end
 end

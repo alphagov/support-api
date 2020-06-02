@@ -5,7 +5,7 @@ describe GenerateFeedbackCsvWorker, type: :worker do
     let(:feedback_export_request) { create(:feedback_export_request) }
 
     before do
-      create(:anonymous_contact, created_at: Time.new(2015, 5, 10))
+      create(:anonymous_contact, created_at: Time.zone.local(2015, 5, 10))
 
       Fog.mock!
       ENV["AWS_REGION"] = "eu-west-1"
@@ -39,11 +39,11 @@ describe GenerateFeedbackCsvWorker, type: :worker do
     end
 
     it "marks the request as generated" do
-      Timecop.freeze(Time.new(2015, 6, 1, 10)) do
+      Timecop.freeze(Time.zone.local(2015, 6, 1, 10)) do
         described_class.new.perform(feedback_export_request)
       end
 
-      expect(feedback_export_request.generated_at).to eq Time.new(2015, 6, 1, 10)
+      expect(feedback_export_request.generated_at).to eq Time.zone.local(2015, 6, 1, 10)
     end
   end
 end

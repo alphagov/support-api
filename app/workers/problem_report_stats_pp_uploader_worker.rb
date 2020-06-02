@@ -17,7 +17,7 @@ class ProblemReportStatsPPUploaderWorker
   end
 
   def self.run
-    first_day_of_last_month = Date.today.prev_month.at_beginning_of_month
+    first_day_of_last_month = Time.zone.today.prev_month.at_beginning_of_month
     perform_async(first_day_of_last_month.year, first_day_of_last_month.month)
     Sidekiq::Logging.logger.info("Queued problem reports stats upload for month #{first_day_of_last_month.year}-#{first_day_of_last_month.month}")
   end

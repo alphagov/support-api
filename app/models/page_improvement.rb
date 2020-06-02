@@ -1,7 +1,7 @@
 class PageImprovement
   include ActiveModel::Validations
 
-  validates_presence_of :description, :url
+  validates :description, :url, presence: true
 
   def initialize(attributes)
     @url = attributes.fetch(:url, nil)

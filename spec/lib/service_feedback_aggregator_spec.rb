@@ -2,11 +2,11 @@ require "rails_helper"
 require "service_feedback_aggregator"
 
 describe ServiceFeedbackAggregator do
-  let(:date) { Time.new(2013, 2, 10, 10) }
+  let(:date) { Time.zone.local(2013, 2, 10, 10) }
   subject(:aggregator) { ServiceFeedbackAggregator.new(date) }
 
   context "when run with today's date" do
-    let(:date) { Date.today }
+    let(:date) { Time.zone.today }
 
     it "refuses to run" do
       expect { aggregator.run }.to raise_error("Cannot aggregate today's feedback until tomorrow")

@@ -37,15 +37,15 @@ module AnonymousFeedback
         ProblemReportWorker.perform_async(problem_report_params)
         head :accepted
       else
-        render json: { "errors" => request.errors.to_a }, status: 422
+        render json: { "errors" => request.errors.to_a }, status: :unprocessable_entity
       end
     end
 
     def mark_reviewed_for_spam
       if mark_supplied_reports_as_reviewed_and_spam
-        render json: { "success" => true }, status: 200
+        render json: { "success" => true }, status: :ok
       else
-        render json: { "success" => false }, status: 404
+        render json: { "success" => false }, status: :not_found
       end
     end
 

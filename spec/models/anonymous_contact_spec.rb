@@ -63,7 +63,7 @@ describe AnonymousContact, type: :model do
   end
 
   context "when duplicates are present" do
-    let(:current_time) { Time.now }
+    let(:current_time) { Time.zone.now }
     let(:dedupe_interval) { (current_time - 1.second)..(current_time + 5.seconds) }
 
     let!(:first) { create(:service_feedback, created_at: current_time) }
@@ -120,9 +120,9 @@ describe AnonymousContact, type: :model do
     end
 
     it "can return the results in reverse chronological order" do
-      a = contact(created_at: Time.now - 1.hour)
-      b = contact(created_at: Time.now - 2.hour)
-      c = contact(created_at: Time.now)
+      a = contact(created_at: Time.zone.now - 1.hour)
+      b = contact(created_at: Time.zone.now - 2.hours)
+      c = contact(created_at: Time.zone.now)
 
       expect(AnonymousContact.most_recent_first).to eq([c, a, b])
     end
@@ -142,10 +142,10 @@ describe AnonymousContact, type: :model do
     end
 
     describe "created_between_days" do
-      let(:first_date) { Time.new(2014, 0o1, 0o1) }
-      let(:second_date) { Time.new(2014, 10, 31) }
-      let(:third_date) { Time.new(2014, 11, 25) }
-      let(:last_date) { Time.new(2014, 12, 12) }
+      let(:first_date) { Time.zone.local(2014, 0o1, 0o1) }
+      let(:second_date) { Time.zone.local(2014, 10, 31) }
+      let(:third_date) { Time.zone.local(2014, 11, 25) }
+      let(:last_date) { Time.zone.local(2014, 12, 12) }
 
       before do
         @first_contact = contact(created_at: first_date)
@@ -161,9 +161,9 @@ describe AnonymousContact, type: :model do
 
     describe "for_query_parameters" do
       let!(:smart_answer) { create(:content_item, document_type: "smart_answer") }
-      let!(:contact_1) { contact(path: "/gov", created_at: Time.new(2015, 4, 10), content_item: smart_answer) }
-      let!(:contact_2) { contact(path: "/courts", created_at: Time.new(2015, 5, 10), content_item: smart_answer) }
-      let!(:contact_3) { contact(path: "/courts", created_at: Time.new(2015, 5, 10)) }
+      let!(:contact_1) { contact(path: "/gov", created_at: Time.zone.local(2015, 4, 10), content_item: smart_answer) }
+      let!(:contact_2) { contact(path: "/courts", created_at: Time.zone.local(2015, 5, 10), content_item: smart_answer) }
+      let!(:contact_3) { contact(path: "/courts", created_at: Time.zone.local(2015, 5, 10)) }
       let!(:personal_info) { contact(path: "/gov", details: "foo@example.com") }
       let!(:not_actionable) { contact(path: "/gov", is_actionable: false, reason_why_not_actionable: "spam") }
       subject do
