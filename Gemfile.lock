@@ -105,7 +105,7 @@ GEM
       fog-core
       nokogiri (>= 1.5.11, < 2.0.0)
     formatador (0.2.5)
-    gds-api-adapters (63.6.0)
+    gds-api-adapters (67.0.0)
       addressable
       link_header
       null_logger
@@ -182,7 +182,7 @@ GEM
     method_source (1.0.0)
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2020.0425)
+    mime-types-data (3.2020.0512)
     mimemagic (0.3.5)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
@@ -225,7 +225,7 @@ GEM
     pry-byebug (3.9.0)
       byebug (~> 11.0)
       pry (~> 0.13.0)
-    public_suffix (4.0.4)
+    public_suffix (4.0.5)
     rack (2.2.2)
     rack-cache (1.11.1)
       rack (>= 0.4)
@@ -401,7 +401,7 @@ DEPENDENCIES
   climate_control (~> 0.2.0)
   factory_bot_rails (~> 5.2.0)
   fog-aws (~> 3.6)
-  gds-api-adapters (~> 63.6.0)
+  gds-api-adapters (~> 67.0.0)
   gds-sso (~> 14.3.0)
   gds_zendesk (= 3.0.0)
   govuk_app_config (~> 2.2.0)
