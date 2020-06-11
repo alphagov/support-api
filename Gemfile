@@ -32,7 +32,7 @@ group :development, :test do
   gem "climate_control", "~> 0.2.0"
   gem "rspec-collection_matchers", "1.2.0"
   gem "rspec-rails", "4.0.1"
-  gem "rubocop-govuk", "~> 3.15"
+  gem "rubocop-govuk", "~> 3.16"
   gem "shoulda-matchers", "4.3.0"
   gem "simplecov", "0.18.5", require: false
   gem "simplecov-rcov", "0.2.3", require: false
