@@ -15,7 +15,7 @@ gem "kaminari", "1.2.1"
 gem "mail-notify"
 gem "mlanett-redis-lock", "0.2.7"
 gem "pg", "~> 1.2.3"
-gem "plek", "3.0.0"
+gem "plek", "4.0.0"
 gem "rails", "~> 6.0.3"
 gem "user_agent_parser"
 gem "whenever", "1.0.0", require: false
