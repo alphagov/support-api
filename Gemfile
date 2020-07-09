@@ -40,7 +40,7 @@ group :development, :test do
 end
 
 group :test do
-  gem "factory_bot_rails", "~> 6.0.0"
+  gem "factory_bot_rails", "~> 6.1.0"
   gem "pry-byebug"
   gem "webmock", "~> 3.8.3"
 end
