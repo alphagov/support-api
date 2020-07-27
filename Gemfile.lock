@@ -393,36 +393,36 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ci_reporter (= 2.0.0)
-  ci_reporter_rspec (= 1.0.0)
-  climate_control (~> 0.2.0)
-  factory_bot_rails (~> 6.1.0)
-  fog-aws (~> 3.6)
-  gds-api-adapters (~> 67.0.1)
-  gds-sso (~> 15.0.1)
-  gds_zendesk (= 3.0.0)
-  govuk_app_config (~> 2.2.1)
-  govuk_sidekiq (~> 4.0)
-  kaminari (= 1.2.1)
-  listen (~> 3.2.1)
+  ci_reporter
+  ci_reporter_rspec
+  climate_control
+  factory_bot_rails
+  fog-aws
+  gds-api-adapters
+  gds-sso
+  gds_zendesk
+  govuk_app_config
+  govuk_sidekiq
+  kaminari
+  listen
   mail-notify
-  mlanett-redis-lock (= 0.2.7)
-  pg (~> 1.2.3)
-  plek (= 4.0.0)
+  mlanett-redis-lock
+  pg
+  plek
   pry-byebug
-  rails (~> 6.0.3)
-  rspec-collection_matchers (= 1.2.0)
-  rspec-rails (= 4.0.1)
-  rubocop-govuk (~> 3.16)
-  shoulda-matchers (= 4.3.0)
-  simplecov (= 0.18.5)
-  simplecov-rcov (= 0.2.3)
+  rails (= 6.0.3.2)
+  rspec-collection_matchers
+  rspec-rails
+  rubocop-govuk
+  shoulda-matchers
+  simplecov
+  simplecov-rcov
   spring
-  spring-watcher-listen (~> 2.0.0)
-  timecop (= 0.9.1)
+  spring-watcher-listen
+  timecop
   user_agent_parser
-  webmock (~> 3.8.3)
-  whenever (= 1.0.0)
+  webmock
+  whenever
 
 BUNDLED WITH
-   1.17.2
+   1.17.3
