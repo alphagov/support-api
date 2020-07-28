@@ -10,14 +10,14 @@ describe "problem report totals PP upload" do
     stub_upload_request = stub_problem_report_daily_totals_submission([
       {
         "_id" => "2014-09-29_vat-rates",
-        "_timestamp" => "2014-09-29T00:00:00+00:00",
+        "_timestamp" => "2014-09-29T00:00:00Z",
         "period" => "day",
         "pagePath" => "/vat-rates",
         "total" => 2,
       },
       {
         "_id" => "2014-09-29_tax-disc",
-        "_timestamp" => "2014-09-29T00:00:00+00:00",
+        "_timestamp" => "2014-09-29T00:00:00Z",
         "period" => "day",
         "pagePath" => "/tax-disc",
         "total" => 1,

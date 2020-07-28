@@ -27,7 +27,7 @@ private
   def metadata
     {
       "_id" => "#{day.strftime('%Y%m%d')}_#{slug}",
-      "_timestamp" => day.to_datetime.iso8601,
+      "_timestamp" => day.to_time.iso8601,
       "period" => "day",
       "slug" => slug,
     }

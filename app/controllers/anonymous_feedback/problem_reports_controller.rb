@@ -8,7 +8,7 @@ module AnonymousFeedback
 
     def totals
       date = begin
-               DateTime.parse(params[:date])
+               Time.zone.parse(params[:date])
              rescue StandardError
                nil
              end
@@ -95,7 +95,7 @@ module AnonymousFeedback
     def parse_interval
       @interval = case filters[:period]
                   when /^\d{4}-\d{2}-\d{2}$/ then Time.strptime(filters[:period], "%Y-%m-%d").all_day
-                  when /^\d{4}-\d{2}$/ then DateTime.strptime(filters[:period], "%Y-%m").all_month
+                  when /^\d{4}-\d{2}$/ then Time.strptime(filters[:period], "%Y-%m").all_month
                   end
       head :unprocessable_entity unless @interval
     end
