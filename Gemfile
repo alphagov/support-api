@@ -7,7 +7,7 @@ end
 
 gem "fog-aws", "~> 3.6"
 gem "gds-api-adapters", "~> 67.0.1"
-gem "gds-sso", "~> 15.0.0"
+gem "gds-sso", "~> 15.0.1"
 gem "gds_zendesk", "3.0.0"
 gem "govuk_app_config", "~> 2.2.1"
 gem "govuk_sidekiq", "~> 3.0"
