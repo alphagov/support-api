@@ -1,4 +1,4 @@
-class AddPathIndexWithVarcharPatternOps < ActiveRecord::Migration
+class AddPathIndexWithVarcharPatternOps < ActiveRecord::Migration[5.0]
   def up
     remove_index :anonymous_contacts, :path
 

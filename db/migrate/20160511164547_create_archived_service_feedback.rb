@@ -1,4 +1,4 @@
-class CreateArchivedServiceFeedback < ActiveRecord::Migration
+class CreateArchivedServiceFeedback < ActiveRecord::Migration[5.0]
   def change
     create_table :archived_service_feedbacks do |t|
       t.string :type

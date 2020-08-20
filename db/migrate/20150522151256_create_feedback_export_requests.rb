@@ -1,4 +1,4 @@
-class CreateFeedbackExportRequests < ActiveRecord::Migration
+class CreateFeedbackExportRequests < ActiveRecord::Migration[5.0]
   def change
     create_table :feedback_export_requests do |t|
       t.string :notification_email, null: false
