@@ -145,7 +145,7 @@ javascript_enabled: true
 
     context "when the supplied feedback reviews have already been reviewed" do
       before do
-        problem_report_1.update(reviewed: true, marked_as_spam: true)
+        problem_report_1.update!(reviewed: true, marked_as_spam: true)
 
         json_payload = {
           reviewed_problem_report_ids:

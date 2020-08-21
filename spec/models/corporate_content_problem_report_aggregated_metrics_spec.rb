@@ -7,7 +7,7 @@ describe CorporateContentProblemReportAggregatedMetrics do
       is_actionable: true,
     }
     f = ProblemReport.create!(defaults.merge(options))
-    f.update(created_at: options[:created_at])
+    f.update!(created_at: options[:created_at])
   end
 
   before do

@@ -29,7 +29,7 @@ private
     existing_organisation = Organisation.find_by(content_id: content_id)
 
     if existing_organisation.present?
-      existing_organisation.update(organisation_attrs)
+      existing_organisation.update!(organisation_attrs)
       logger.info "Updated #{existing_organisation.title}"
     else
       Organisation.create!(organisation_attrs)

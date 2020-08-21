@@ -1,4 +1,4 @@
-class CleanUpOrgWithoutContentId < ActiveRecord::Migration
+class CleanUpOrgWithoutContentId < ActiveRecord::Migration[5.0]
   def change
     orgs_without_a_content_id = Organisation.where(content_id: nil).count
     raise "Unexpected number (#{orgs_without_a_content_id}) of organisations without a content_id" if orgs_without_a_content_id > 1

@@ -31,7 +31,7 @@ private
     report.map do |entry|
       {
         "_id" => "#{date.strftime('%Y-%m-%d')}_#{entry.path.gsub('/', '')}",
-        "_timestamp" => date.to_datetime.iso8601,
+        "_timestamp" => date.to_time.iso8601,
         "period" => "day",
         "pagePath" => entry.path,
         "total" => entry.total,

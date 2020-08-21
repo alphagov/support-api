@@ -1,4 +1,4 @@
-class AddContentItemsAndOrganisations < ActiveRecord::Migration
+class AddContentItemsAndOrganisations < ActiveRecord::Migration[5.0]
   def change
     create_table :content_items do |t|
       t.string "path", limit: 2048, null: false
