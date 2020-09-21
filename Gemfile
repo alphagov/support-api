@@ -35,13 +35,12 @@ group :development, :test do
   gem "rspec-rails"
   gem "rubocop-govuk"
   gem "shoulda-matchers"
-  gem "simplecov", require: false
-  gem "simplecov-rcov", require: false
   gem "timecop"
 end
 
 group :test do
   gem "factory_bot_rails"
   gem "pry-byebug"
+  gem "simplecov"
   gem "webmock"
 end
