@@ -2,7 +2,7 @@
 
 library("govuk")
 
-node("postgresql-9.3") {
+node {
   govuk.buildProject(
     overrideTestTask: {
       stage("Run custom tests") {
@@ -10,6 +10,5 @@ node("postgresql-9.3") {
       }
     },
     brakeman: true,
-    rubyLintDiff: false,
   )
 }
