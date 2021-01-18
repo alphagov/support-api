@@ -3,13 +3,13 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "57f01479b7b44a00c607fc8beefdb37f7a7582fc31865e1d76caf9623d037e23",
+      "fingerprint": "6067c3169bffef56f180c4a4d85a2973f1e33d237a9293d4a130f83e8be3f854",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "lib/distributed_lock.rb",
-      "line": 13,
+      "line": 12,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "redis.lock(\"support-api:#{Rails.env}:#{lock_name}\", :life => (LIFETIME))",
+      "code": "Redis.current.lock(\"support-api:#{Rails.env}:#{lock_name}\", :life => (LIFETIME))",
       "render_path": null,
       "location": {
         "type": "method",
@@ -27,7 +27,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/content_item.rb",
-      "line": 26,
+      "line": 28,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "joins(:anonymous_contacts).select(\"content_items.path AS path\").select(\"#{last_7_days} AS last_7_days\").select(\"#{last_30_days} AS last_30_days\").select(\"#{last_90_days} AS last_90_days\").where(\"anonymous_contacts.created_at > ?\", (midnight_last_night - 90.days)).group(\"content_items.path\").having(\"#{last_7_days} > 0 OR #{last_30_days} > 0 OR #{last_90_days} > 0\")",
       "render_path": null,
@@ -47,7 +47,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/content_item.rb",
-      "line": 43,
+      "line": 45,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "joins(:anonymous_contacts).select(\"content_items.document_type as document_type\").select(\"#{last_7_days} AS last_7_days\").select(\"#{last_30_days} AS last_30_days\").select(\"#{last_90_days} AS last_90_days\").where(:document_type => document_type).where(\"anonymous_contacts.created_at > ?\", (midnight_last_night - 90.days)).group(\"content_items.document_type\").having(\"#{last_7_days} > 0 OR #{last_30_days} > 0 OR #{last_90_days} > 0\")",
       "render_path": null,
@@ -61,6 +61,6 @@
       "note": "No user data."
     }
   ],
-  "updated": "2018-09-07 11:02:42 +0100",
-  "brakeman_version": "4.3.1"
+  "updated": "2021-01-18 09:27:09 +0000",
+  "brakeman_version": "4.10.1"
 }
