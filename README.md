@@ -40,20 +40,6 @@ You can use the [GOV.UK Docker environment](https://github.com/alphagov/govuk-do
 
 `bundle exec rake`
 
-This will run the [rspec test suite](spec) and generate a coverage report for these specs in `./coverage`.
-
-### Organisations
-
-This app keeps a local copy of Organisations from Whitehall in the `organisations` table. In order
-to keep this up-to-date it runs a sync job overnight via cron.  To run the same script on your local
-development environment do the following:
-
-1. Ensure whitehall is running: `bowl whitehall`
-2. Run the rake task `rake api_sync:import_organisations`
-
-You most likely will only need to do this if your whitehall data is more recent than your data for
-this app.
-
 ## Licence
 
 [MIT License](LICENCE)
