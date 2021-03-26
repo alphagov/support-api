@@ -1,8 +1,17 @@
 # Support API
 
-This app provides an API for storing and fetching anonymous feedback about pages on GOV.UK.  Data
+This app provides an API for storing and fetching anonymous feedback about pages on GOV.UK. Data
 comes in from the [feedback app][feedback] on the public-facing frontend and is read by [the
-support app][support] on the admin-facing backend.
+support app][support] on the admin-facing backend. Alternatively, some types of feedback are sent
+to Zendesk so it can be acted on by the support teams directly.
+
+Support API can receive feedback about any page on GOV.UK, but all it is sent is the path.  We use the
+content-store to look up extra information (content_id, associated organisations, etc) about these pages
+to allow for better search and filtering of the feedback.
+
+Support API also stores ratings for services. It aggregates those ratings every day in order to keep
+the size of the database manageable - see `config/schedule.rb` for more details. Previously the aggregate
+ratings were uploaded to the performance platform, which no longer exists.
 
 ## Nomenclature
 
@@ -21,47 +30,15 @@ support app][support] on the admin-facing backend.
 
 ## Technical documentation
 
-This is a Ruby on Rails application that provides an API for storing and retrieving feedback about GOV.UK.
-It has 3 main functions:
+This is a Ruby on Rails app, and should follow [our Rails app conventions](https://docs.publishing.service.gov.uk/manual/conventions-for-rails-applications.html).
 
-1. a write API used by the [feedback app][feedback] to store feedback
-2. a read API used by the [support app][support] to read that feedback and request exports to CSV
+You can use the [GOV.UK Docker environment](https://github.com/alphagov/govuk-docker) to run the application and its tests with all the necessary dependencies. Follow [the usage instructions](https://github.com/alphagov/govuk-docker#usage) to get started.
 
-### CSV exports
-When a CSV export is requested by the support app, a CSV file is generated and saved in Amazon S3.
-
-### Dependencies
-
-- [content-store](https://github.com/alphagov/content-store) - Support API can receive feedback about any
-  page on GOV.UK, but all it is sent is the path.  We use the content-store to look up extra information
-  (content_id, associated organisations, etc) about these pages to allow for better search and filtering
-  of the feedback.
-- [whitehall](https://github.com/alphagov/whitehall) - Support API has a table of Organisations and as
-  Whitehall is the canonical source of that information we use its Organisations API to keep our data up
-  to date.
-- [zendesk][zendesk] - Support API sends some types of feedback to Zendesk so it can be
-  acted on by the support teams directly rather than storing it in its own database.
-- [postgres](https://www.postgresql.org) - Support API uses postgres as its own database
-- [redis](https://redis.io/) - Support API uses [sidekiq](https://github.com/mperham/sidekiq) to process
-  background jobs (like sending feedback to zendesk) and sidekiq relies on redis
+**Use GOV.UK Docker to run any commands that follow.**
 
 ### Running the test suite
 
 `bundle exec rake`
-
-This will run the [rspec test suite](spec) and generate a coverage report for these specs in `./coverage`.
-
-### Organisations
-
-This app keeps a local copy of Organisations from Whitehall in the `organisations` table. In order
-to keep this up-to-date it runs a sync job overnight via cron.  To run the same script on your local
-development environment do the following:
-
-1. Ensure whitehall is running: `bowl whitehall`
-2. Run the rake task `rake api_sync:import_organisations`
-
-You most likely will only need to do this if your whitehall data is more recent than your data for
-this app.
 
 ## Licence
 
