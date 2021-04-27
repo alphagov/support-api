@@ -67,8 +67,6 @@ Rails.application.routes.draw do
 
   get "/feedback-by-day/:date", to: "feedback_by_day#index", format: false
 
-  get "/healthcheck", to: proc { [200, {}, %w[OK]] }
-
   get "/healthcheck/live", to: proc { [200, {}, %w[OK]] }
   get "/healthcheck/ready", to: GovukHealthcheck.rack_response(
     GovukHealthcheck::ActiveRecord,
