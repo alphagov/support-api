@@ -5,14 +5,14 @@ describe PageImprovement, "validations" do
     page_improvement = described_class.new({})
     page_improvement.valid?
 
-    expect(page_improvement.errors.messages).to include(url: include("can't be blank"))
+    expect(page_improvement.errors.messages.to_h).to include(url: include("can't be blank"))
   end
 
   it "validates presence of description" do
     page_improvement = described_class.new({})
     page_improvement.valid?
 
-    expect(page_improvement.errors.messages).to include(description: include("can't be blank"))
+    expect(page_improvement.errors.messages.to_h).to include(description: include("can't be blank"))
   end
 end
 
