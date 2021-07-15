@@ -47,17 +47,17 @@ describe AnonymousContact, type: :model do
 
   context "path" do
     it { should allow_value("/something").for(:path) }
-    it { should allow_value("/" + ("a" * 2040)).for(:path) }
+    it { should allow_value("/#{'a' * 2040}").for(:path) }
     it { should_not allow_value("").for(:path) }
-    it { should_not allow_value("/" + ("a" * 2050)).for(:path) }
+    it { should_not allow_value("/#{'a' * 2050}").for(:path) }
     it { should_not allow_value("/méh/fào?bar").for(:path) }
   end
 
   context "referrer" do
     it { should allow_value("https://www.gov.uk/y").for(:referrer) }
     it { should allow_value(nil).for(:referrer) }
-    it { should allow_value("http://" + ("a" * 2040)).for(:referrer) }
-    it { should_not allow_value("http://" + ("a" * 2050)).for(:referrer) }
+    it { should allow_value("http://#{'a' * 2040}").for(:referrer) }
+    it { should_not allow_value("http://#{'a' * 2050}").for(:referrer) }
     it { should_not allow_value("http://bla.example.org:9292/méh/fào?bar").for(:referrer) }
     it { should allow_value("android-app://com.google.android.googlequicksearchbox").for(:referrer) }
   end

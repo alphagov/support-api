@@ -43,7 +43,7 @@ private
 
   def build_logger
     output = case Rails.env
-             when "development" then STDOUT
+             when "development" then $stdout
              when "test" then "/dev/null"
              when "production" then Rails.root.join("log/organisation_import.json.log")
              end

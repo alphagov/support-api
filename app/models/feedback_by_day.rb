@@ -1,5 +1,6 @@
 class FeedbackByDay
   attr_reader :date, :current_page, :per_page
+
   def self.retrieve(date, page, per_page)
     new(date, page, per_page).retrieve
   end

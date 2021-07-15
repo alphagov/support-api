@@ -28,7 +28,7 @@ class AnonymousFeedback::ExportRequestsController < ApplicationController
 private
 
   def export_request_params
-    permitted_params = [:from, :to, :organisation, :notification_email, :document_type, :path_prefix, path_prefixes: []]
+    permitted_params = [:from, :to, :organisation, :notification_email, :document_type, :path_prefix, { path_prefixes: [] }]
     clean_params = params.require(:export_request).permit(*permitted_params).to_h
     if clean_params[:path_prefix].present?
       clean_params[:path_prefixes] = [clean_params[:path_prefix]]

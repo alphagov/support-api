@@ -4,7 +4,7 @@ module Zendesk
   class LongFormContactTicket < Ticket
     def subject
       suffix = @contact.user_specified_url.nil? ? "" : " about #{@contact.user_specified_url}"
-      "Feedback" + suffix
+      "Feedback#{suffix}"
     end
 
     def tags
