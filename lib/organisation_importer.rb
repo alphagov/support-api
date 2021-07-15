@@ -54,13 +54,15 @@ private
   end
 
   def json_log_formatter
-    proc { |_severity, datetime, _progname, message|
-      {
+    proc do |_severity, datetime, _progname, message|
+      json = {
         "@message" => message,
         "@tags" => %w[cron rake],
         "@timestamp" => datetime.iso8601,
-      }.to_json + "\n"
-    }
+      }.to_json
+
+      "#{json}\n"
+    end
   end
 
   def organisations_api
