@@ -8,10 +8,10 @@ module AnonymousFeedback
 
     def totals
       date = begin
-               Time.zone.parse(params[:date])
-             rescue StandardError
-               nil
-             end
+        Time.zone.parse(params[:date])
+      rescue StandardError
+        nil
+      end
 
       if date.nil?
         head :unprocessable_entity

@@ -21,7 +21,6 @@ describe GenerateGlobalExportCsvWorker, type: :worker do
   end
 
   it "has the expected filename" do
-    GlobalExportNotification = double(GlobalExportNotification)
     stub = double
     allow(stub).to receive(:deliver_now)
 
