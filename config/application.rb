@@ -39,8 +39,6 @@ module SupportApi
 
     config.action_dispatch.rack_cache = nil
 
-    config.active_record.schema_format = :sql
-
     config.after_initialize do
       config.action_mailer.notify_settings = { api_key: Rails.application.secrets.notify_api_key }
     end
