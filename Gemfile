@@ -24,7 +24,6 @@ gem "whenever", require: false
 group :development do
   gem "listen"
   gem "spring"
-  gem "spring-watcher-listen"
 end
 
 group :development, :test do

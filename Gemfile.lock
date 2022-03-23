@@ -410,10 +410,7 @@ GEM
       docile (~> 1.1)
       simplecov-html (~> 0.11)
     simplecov-html (0.12.2)
-    spring (2.1.0)
-    spring-watcher-listen (2.0.1)
-      listen (>= 2.7, < 4.0)
-      spring (>= 1.2, < 3.0)
+    spring (4.0.0)
     statsd-ruby (1.5.0)
     strscan (3.0.1)
     thor (1.2.1)
@@ -479,7 +476,6 @@ DEPENDENCIES
   shoulda-matchers
   simplecov
   spring
-  spring-watcher-listen
   timecop
   user_agent_parser
   webmock
