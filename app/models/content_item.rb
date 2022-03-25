@@ -74,6 +74,6 @@ class ContentItem < ApplicationRecord
   end
 
   def self.sum_column(options)
-    "SUM((anonymous_contacts.created_at BETWEEN '#{options[:from].to_s(:db)}' AND '#{options[:to].to_s(:db)}')::INT)"
+    "SUM((anonymous_contacts.created_at BETWEEN '#{options[:from].to_fs(:db)}' AND '#{options[:to].to_fs(:db)}')::INT)"
   end
 end

@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem "rails", "6.1.4.3"
+gem "rails", "7.0.2"
 
 gem "fog-aws"
 gem "gds-api-adapters"
@@ -24,7 +24,6 @@ gem "whenever", require: false
 group :development do
   gem "listen"
   gem "spring"
-  gem "spring-watcher-listen"
 end
 
 group :development, :test do
