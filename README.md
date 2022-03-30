@@ -40,9 +40,9 @@ You can use the [GOV.UK Docker environment](https://github.com/alphagov/govuk-do
 
 `bundle exec rake`
 
-## Licence
+## License
 
-[MIT License](LICENCE)
+[MIT License](LICENSE)
 
 [feedback]: https://github.com/alphagov/feedback
 [support]: https://github.com/alphagov/support
