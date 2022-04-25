@@ -1,3 +1,5 @@
+require "healthcheck/s3"
+
 Rails.application.routes.draw do
   get "/anonymous-feedback", to: "anonymous_feedback#index"
   post "/anonymous-feedback", to: "anonymous_feedback#index"
@@ -71,5 +73,6 @@ Rails.application.routes.draw do
   get "/healthcheck/ready", to: GovukHealthcheck.rack_response(
     GovukHealthcheck::ActiveRecord,
     GovukHealthcheck::SidekiqRedis,
+    Healthcheck::S3,
   )
 end
