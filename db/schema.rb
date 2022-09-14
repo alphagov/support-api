@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[6.1].define(version: 2019_01_30_105818) do
-
+ActiveRecord::Schema[7.0].define(version: 2019_01_30_105818) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,8 +24,8 @@ ActiveRecord::Schema[6.1].define(version: 2019_01_30_105818) do
     t.text "user_agent"
     t.string "referrer", limit: 2048
     t.boolean "javascript_enabled"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "personal_information_status", limit: 255
     t.string "slug", limit: 255
     t.integer "service_satisfaction_rating"
@@ -47,8 +46,8 @@ ActiveRecord::Schema[6.1].define(version: 2019_01_30_105818) do
     t.string "type"
     t.string "slug"
     t.integer "service_satisfaction_rating"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "content_improvement_feedbacks", force: :cascade do |t|
@@ -60,8 +59,8 @@ ActiveRecord::Schema[6.1].define(version: 2019_01_30_105818) do
 
   create_table "content_items", id: :serial, force: :cascade do |t|
     t.string "path", limit: 2048, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "document_type"
     t.index ["document_type"], name: "index_content_items_on_document_type"
   end
@@ -76,9 +75,9 @@ ActiveRecord::Schema[6.1].define(version: 2019_01_30_105818) do
   create_table "feedback_export_requests", id: :serial, force: :cascade do |t|
     t.string "notification_email", limit: 255
     t.string "filename", limit: 255
-    t.datetime "generated_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "generated_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.text "filters"
   end
 
@@ -86,8 +85,8 @@ ActiveRecord::Schema[6.1].define(version: 2019_01_30_105818) do
     t.string "slug", limit: 255, null: false
     t.string "web_url", limit: 255, null: false
     t.string "title", limit: 255, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "acronym", limit: 255
     t.string "govuk_status", limit: 255
     t.string "content_id", limit: 255, null: false
@@ -103,8 +102,8 @@ ActiveRecord::Schema[6.1].define(version: 2019_01_30_105818) do
     t.string "permissions", default: [], array: true
     t.boolean "remotely_signed_out", default: false
     t.boolean "disabled", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
 end
