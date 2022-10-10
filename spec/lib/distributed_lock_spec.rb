@@ -12,7 +12,7 @@ describe DistributedLock do
 
     context "when it fails to acquire a lock within the timeout" do
       before do
-        allow(Redis.current).to receive(:lock) do
+        allow(Redis.new).to receive(:lock) do
           raise Redis::Lock::LockNotAcquired
         end
       end

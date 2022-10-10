@@ -9,7 +9,7 @@ class DistributedLock
   end
 
   def lock
-    Redis.current.lock("support-api:#{Rails.env}:#{@lock_name}", life: LIFETIME) do
+    Redis.new.lock("support-api:#{Rails.env}:#{@lock_name}", life: LIFETIME) do
       Rails.logger.debug("Successfully got a lock. Running...")
       yield
     end

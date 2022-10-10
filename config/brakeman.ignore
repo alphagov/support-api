@@ -3,13 +3,13 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "6067c3169bffef56f180c4a4d85a2973f1e33d237a9293d4a130f83e8be3f854",
+      "fingerprint": "4850ceb993b6f05ea62bc58350d338c34e20990f4d3ee5934bca2e614cdecc57",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "lib/distributed_lock.rb",
       "line": 12,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "Redis.current.lock(\"support-api:#{Rails.env}:#{lock_name}\", :life => (LIFETIME))",
+      "code": "Redis.new.lock(\"support-api:#{Rails.env}:#{lock_name}\", :life => (LIFETIME))",
       "render_path": null,
       "location": {
         "type": "method",
@@ -61,6 +61,6 @@
       "note": "No user data."
     }
   ],
-  "updated": "2021-01-18 09:27:09 +0000",
-  "brakeman_version": "4.10.1"
+  "updated": "2022-10-06 11:38:00 +0100",
+  "brakeman_version": "5.2.3"
 }
