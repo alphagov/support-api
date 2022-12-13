@@ -14,6 +14,7 @@ gem "gds_zendesk"
 gem "govuk_app_config"
 gem "govuk_sidekiq"
 gem "kaminari"
+gem "mail", "~> 2.7.1"  # TODO: remove once https://github.com/mikel/mail/issues/1489 is fixed.
 gem "mail-notify"
 gem "mlanett-redis-lock"
 gem "pg"

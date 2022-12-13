@@ -455,6 +455,7 @@ DEPENDENCIES
   govuk_sidekiq
   kaminari
   listen
+  mail (~> 2.7.1)
   mail-notify
   mlanett-redis-lock
   pg
