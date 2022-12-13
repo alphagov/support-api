@@ -40,7 +40,7 @@ module Zendesk
     end
 
     def govuk_host
-      Plek.new.website_uri.host # www.gov.uk or www.preview.alphagov.co.uk
+      URI(Plek.new.website_root).host # www.gov.uk or www.preview.alphagov.co.uk
     end
   end
 end
