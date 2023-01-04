@@ -39,6 +39,7 @@ group :development, :test do
 end
 
 group :test do
+  gem "brakeman"
   gem "factory_bot_rails"
   gem "pry-byebug"
   gem "simplecov"
