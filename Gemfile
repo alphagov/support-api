@@ -7,6 +7,7 @@ end
 
 gem "rails", "7.0.4"
 
+gem "bootsnap", require: false
 gem "fog-aws"
 gem "gds-api-adapters"
 gem "gds-sso"
