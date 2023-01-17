@@ -460,7 +460,6 @@ DEPENDENCIES
   govuk_sidekiq
   kaminari
   listen
-  mail
   mail-notify
   mlanett-redis-lock
   pg
