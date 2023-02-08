@@ -32,12 +32,12 @@ RSpec.describe FeedbackExportRequest, type: :model do
     let(:instance) do
       described_class.new(
         filters: {
-          path_prefix: path_prefix,
-          path_prefixes: path_prefixes,
-          from: from,
-          to: to,
-          organisation_slug: organisation_slug,
-          document_type: document_type,
+          path_prefix:,
+          path_prefixes:,
+          from:,
+          to:,
+          organisation_slug:,
+          document_type:,
         },
       )
     end

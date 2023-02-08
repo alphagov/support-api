@@ -10,10 +10,10 @@ class AnonymousFeedbackController < ApplicationController
     end
 
     json = {
-      results: results,
-      total_count: total_count,
-      current_page: current_page,
-      pages: pages,
+      results:,
+      total_count:,
+      current_page:,
+      pages:,
       page_size: AnonymousContact::PAGE_SIZE,
     }
 
@@ -21,7 +21,7 @@ class AnonymousFeedbackController < ApplicationController
     json[:to_date] = dates[1] if dates[1]
     json[:results_limited] = results_limited if results_limited
 
-    render json: json
+    render json:
   end
 
 private

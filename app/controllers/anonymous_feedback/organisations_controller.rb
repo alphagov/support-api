@@ -20,7 +20,7 @@ module AnonymousFeedback
       render json: {
         slug: organisation.slug,
         title: organisation.title,
-        anonymous_feedback_counts: anonymous_feedback_counts,
+        anonymous_feedback_counts:,
       }
     end
   end

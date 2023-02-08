@@ -8,10 +8,10 @@ module Zendesk
 
     def attributes
       {
-        subject: subject,
+        subject:,
         requester: { "locale_id" => 1, "email" => requester[:email], "name" => requester[:name] },
         collaborators: collaborator_emails,
-        tags: tags,
+        tags:,
         comment: { "body" => rendered_body },
       }
     end

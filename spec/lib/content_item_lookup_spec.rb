@@ -8,7 +8,7 @@ describe ContentItemLookup do
 
   let(:content_store) { GdsApi::ContentStore.new(Plek.find("content-store")) }
 
-  let(:subject) { ContentItemLookup.new(content_store: content_store) }
+  let(:subject) { ContentItemLookup.new(content_store:) }
 
   let(:hmrc_org_content_store_response) do
     {

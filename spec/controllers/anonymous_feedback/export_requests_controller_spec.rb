@@ -97,7 +97,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
   describe "#show" do
     before do
       login_as_stub_user
-      get :show, params: { id: id }
+      get :show, params: { id: }
     end
 
     subject { response }

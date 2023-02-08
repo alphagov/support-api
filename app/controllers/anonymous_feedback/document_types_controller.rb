@@ -22,7 +22,7 @@ module AnonymousFeedback
 
       render json: {
         document_type: params[:document_type],
-        anonymous_feedback_counts: anonymous_feedback_counts,
+        anonymous_feedback_counts:,
       }
     end
   end
