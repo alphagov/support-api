@@ -243,13 +243,13 @@ RSpec.describe FeedbackExportRequest, type: :model do
 
     it "uses the scope from the model with the correct parameters" do
       contact = double("AnonymousContact")
-      expect(AnonymousContact).to receive(:for_query_parameters).with(
+      expect(AnonymousContact).to receive(:for_query_parameters).with({
         from: Date.new(2015, 4),
         to: Date.new(2015, 5),
         path_prefixes: ["/"],
         organisation_slug: "hm-revenue-customs",
         document_type: "smart_answer",
-      ).and_return(double("scope", most_recent_last: [contact]))
+      }).and_return(double("scope", most_recent_last: [contact]))
 
       expect(subject).to eq [contact]
     end
