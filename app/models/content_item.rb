@@ -12,7 +12,7 @@ class ContentItem < ApplicationRecord
 
   scope :for_document_type,
         lambda { |document_type|
-          where(document_type: document_type)
+          where(document_type:)
         }
 
   def self.summary(ordering = "last_7_days")
@@ -39,7 +39,7 @@ class ContentItem < ApplicationRecord
         .select("#{last_7_days} AS last_7_days")
         .select("#{last_30_days} AS last_30_days")
         .select("#{last_90_days} AS last_90_days")
-        .where(document_type: document_type)
+        .where(document_type:)
         .where("anonymous_contacts.created_at > ?", midnight_last_night - 90.days)
         .group("content_items.document_type")
         .having("#{last_7_days} > 0 OR #{last_30_days} > 0 OR #{last_90_days} > 0")

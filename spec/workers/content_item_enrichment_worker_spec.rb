@@ -6,7 +6,7 @@ describe ContentItemEnrichmentWorker do
 
   let(:raw_path) { "my-magic-govuk-endpoint" }
   let(:path) { "/#{raw_path}" }
-  let(:problem_report) { create(:problem_report, path: path) }
+  let(:problem_report) { create(:problem_report, path:) }
   subject(:worker) { described_class.new }
 
   context "with an entry in the content store" do
@@ -25,7 +25,7 @@ describe ContentItemEnrichmentWorker do
 
     context "with an existing content item" do
       it "uses the existing content item" do
-        create(:content_item, path: path)
+        create(:content_item, path:)
 
         expect { worker.perform(problem_report.id) }.to_not(change { ContentItem.count })
       end

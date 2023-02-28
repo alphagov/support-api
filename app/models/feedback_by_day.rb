@@ -16,7 +16,7 @@ class FeedbackByDay
       { path: k, count: v }
     end
     {
-      results: results,
+      results:,
       total_count: summary_query.total_count,
       current_page: summary_query.current_page,
       pages: summary_query.total_pages,

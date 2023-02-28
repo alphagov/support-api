@@ -72,7 +72,7 @@ module AnonymousFeedback
       ProblemReport.find(reviewed_problem_reports_hash.keys).each do |problem_report|
         marked_as_spam = reviewed_problem_reports_hash[problem_report.id.to_s]
 
-        review_attrs = { reviewed: true, marked_as_spam: marked_as_spam }
+        review_attrs = { reviewed: true, marked_as_spam: }
 
         if problem_report.update(review_attrs)
           true

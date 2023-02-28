@@ -8,9 +8,9 @@ csvs.each do |file_path|
     what_doing, what_wrong = row[:feedback].scan(/action: (.*?)\nproblem: (.*)/m)[0]
 
     ProblemReport.create!(
-      path: path,
-      what_doing: what_doing,
-      what_wrong: what_wrong,
+      path:,
+      what_doing:,
+      what_wrong:,
       referrer: row[:user_came_from],
       created_at: Date.parse(row[:creation_date]),
       javascript_enabled: true,

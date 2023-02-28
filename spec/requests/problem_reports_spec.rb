@@ -233,12 +233,12 @@ describe "Retrieving Problem Reports" do
   let!(:problem_report) do
     create(
       :problem_report,
-      what_wrong: what_wrong,
-      what_doing: what_doing,
-      path: path,
-      referrer: referrer,
-      user_agent: user_agent,
-      created_at: created_at,
+      what_wrong:,
+      what_doing:,
+      path:,
+      referrer:,
+      user_agent:,
+      created_at:,
       content_item: create(:content_item, path: "/help", organisations: [gds]),
       reviewed: false,
     )

@@ -26,7 +26,7 @@ private
     }
 
     content_id = organisation_from_api["details"]["content_id"]
-    existing_organisation = Organisation.find_by(content_id: content_id)
+    existing_organisation = Organisation.find_by(content_id:)
 
     if existing_organisation.present?
       existing_organisation.update!(organisation_attrs)
