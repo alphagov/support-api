@@ -96,7 +96,7 @@ describe FeedbackCsvRowPresenter do
 
   describe "#primary_organisation" do
     subject { instance.primary_organisation }
-    let(:row) { create(:anonymous_contact, content_item: content_item) }
+    let(:row) { create(:anonymous_contact, content_item:) }
 
     context "for feedback with no content item" do
       let(:content_item) { nil }
@@ -107,7 +107,7 @@ describe FeedbackCsvRowPresenter do
     end
 
     context "for feedback with a content item" do
-      let(:content_item) { build(:content_item, organisations: organisations) }
+      let(:content_item) { build(:content_item, organisations:) }
 
       context "that has no organisations" do
         let(:organisations) { [] }
@@ -142,7 +142,7 @@ describe FeedbackCsvRowPresenter do
 
   describe "#all_organisations" do
     subject { instance.all_organisations }
-    let(:row) { create(:anonymous_contact, content_item: content_item) }
+    let(:row) { create(:anonymous_contact, content_item:) }
 
     context "for feedback with no content item" do
       let(:content_item) { nil }
@@ -153,7 +153,7 @@ describe FeedbackCsvRowPresenter do
     end
 
     context "for feedback with a content item" do
-      let(:content_item) { build(:content_item, organisations: organisations) }
+      let(:content_item) { build(:content_item, organisations:) }
 
       context "that has no organisations" do
         let(:organisations) { [] }

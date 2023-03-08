@@ -68,7 +68,7 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "8bb3980c595356ae94bed406824f9f17e0ac3728c0ce7998d68321c3df73b868",
+      "fingerprint": "86eb92fd9bab170889c51082a0b349d50ee28d78b14ad6cfb7134efa138f4696",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/content_item.rb",
@@ -89,6 +89,6 @@
       "note": "No user data."
     }
   ],
-  "updated": "2023-02-20 10:34:56 +0000",
+  "updated": "2023-03-07 20:55:52 +0000",
   "brakeman_version": "5.4.0"
 }

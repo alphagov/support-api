@@ -7,10 +7,10 @@ class ProblemReportList
 
   def to_json(*_args)
     list = {
-      results: results,
-      total_count: total_count,
-      current_page: current_page,
-      pages: pages,
+      results:,
+      total_count:,
+      current_page:,
+      pages:,
       page_size: AnonymousContact::PAGE_SIZE,
     }
 

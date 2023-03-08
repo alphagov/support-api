@@ -9,7 +9,7 @@ class ContentItemLookup
   def lookup(path)
     @content_store_lookup.lookup(path) ||
       @content_store_lookup.lookup(guess_alternate_path(path)) ||
-      LookedUpContentItem.new(path: path)
+      LookedUpContentItem.new(path:)
   end
 
 private

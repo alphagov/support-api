@@ -168,10 +168,10 @@ describe AnonymousContact, type: :model do
       let!(:not_actionable) { contact(path: "/gov", is_actionable: false, reason_why_not_actionable: "spam") }
       subject do
         described_class.for_query_parameters(
-          path_prefixes: path_prefixes,
-          from: from,
-          to: to,
-          document_type: document_type,
+          path_prefixes:,
+          from:,
+          to:,
+          document_type:,
         ).sort
       end
 
