@@ -2,15 +2,15 @@ require "gds_api"
 
 class OrganisationImporter
   def run
-    logger.info "Fetching all organisations from the Organisation API..."
+    Rails.logger.info "Fetching all organisations from the Organisation API..."
     organisations = organisations_api.organisations.with_subsequent_pages.to_a
-    logger.info "Loaded #{organisations.size} organisations"
+    Rails.logger.info "Loaded #{organisations.size} organisations"
 
     organisations.each do |organisation|
       create_or_update_organisation(organisation)
     end
 
-    logger.info "Import complete"
+    Rails.logger.info "Import complete"
   end
 
 private
@@ -30,38 +30,10 @@ private
 
     if existing_organisation.present?
       existing_organisation.update!(organisation_attrs)
-      logger.info "Updated #{existing_organisation.title}"
+      Rails.logger.info "Updated #{existing_organisation.title}"
     else
       Organisation.create!(organisation_attrs)
-      logger.info "Created #{organisation_attrs[:title]}"
-    end
-  end
-
-  def logger
-    @logger ||= build_logger
-  end
-
-  def build_logger
-    output = case Rails.env
-             when "development" then $stdout
-             when "test" then "/dev/null"
-             when "production" then Rails.root.join("log/organisation_import.json.log")
-             end
-
-    Logger.new(output).tap do |logger|
-      logger.formatter = json_log_formatter if Rails.env.production?
-    end
-  end
-
-  def json_log_formatter
-    proc do |_severity, datetime, _progname, message|
-      json = {
-        "@message" => message,
-        "@tags" => %w[cron rake],
-        "@timestamp" => datetime.iso8601,
-      }.to_json
-
-      "#{json}\n"
+      Rails.logger.info "Created #{organisation_attrs[:title]}"
     end
   end
 
