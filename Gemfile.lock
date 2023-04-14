@@ -418,7 +418,7 @@ GEM
       unf_ext
     unf_ext (0.0.8.2)
     unicode-display_width (2.4.2)
-    user_agent_parser (2.14.0)
+    user_agent_parser (2.15.0)
     version_gem (1.1.1)
     warden (1.2.9)
       rack (>= 2.0.9)
