@@ -19,6 +19,7 @@ gem "mail-notify"
 gem "mlanett-redis-lock"
 gem "pg"
 gem "plek"
+gem "sentry-sidekiq"
 gem "user_agent_parser"
 gem "whenever", require: false
 
