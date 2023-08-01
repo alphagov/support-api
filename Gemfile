@@ -34,7 +34,7 @@ group :development, :test do
   gem "climate_control"
   gem "rspec-collection_matchers"
   gem "rspec-rails"
-  gem "rubocop-govuk"
+  gem "rubocop-govuk", ">= 4.12.0"
   gem "shoulda-matchers"
   gem "timecop"
 end

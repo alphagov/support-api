@@ -674,7 +674,7 @@ DEPENDENCIES
   rails (= 7.0.6)
   rspec-collection_matchers
   rspec-rails
-  rubocop-govuk
+  rubocop-govuk (>= 4.12.0)
   sentry-sidekiq
   shoulda-matchers
   simplecov
