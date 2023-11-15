@@ -8,7 +8,7 @@ class Organisation < ApplicationRecord
   validates :title, presence: true
   validates :content_id, presence: true
 
-  def as_json(_options)
-    super(only: %i[slug web_url title acronym govuk_status])
+  def as_json(options = {})
+    super(options.merge(only: %i[slug web_url title acronym govuk_status]))
   end
 end
