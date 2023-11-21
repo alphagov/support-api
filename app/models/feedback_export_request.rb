@@ -4,7 +4,7 @@ require "plek"
 class FeedbackExportRequest < ApplicationRecord
   validates :notification_email, :filters, presence: true
 
-  serialize :filters, Hash
+  serialize :filters, type: Hash, coder: YAML
 
   before_validation on: :create do
     filters[:to] ||= Time.zone.today
