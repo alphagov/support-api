@@ -5,7 +5,7 @@ class ContentItemPopulateDoctypeWorker
     content_store = GdsApi::ContentStore.new(Plek.find("content-store"))
     document_type_errors = []
 
-    ContentItem.all.each do |content_item|
+    ContentItem.find_each do |content_item|
       found_content_item = content_store.content_item(content_item.path)
 
       document_type = found_content_item["document_type"]
