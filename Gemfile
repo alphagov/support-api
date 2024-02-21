@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem "rails", "7.1.3"
+gem "rails", "7.1.3.2"
 
 gem "bootsnap", require: false
 gem "fog-aws"
