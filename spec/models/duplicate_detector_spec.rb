@@ -22,7 +22,7 @@ describe DuplicateDetector do
     let(:r1) { { "a" => "b", "created_at" => current_time } }
     let(:r2) { r1.clone }
     let(:r3) { { "a" => "b", "created_at" => current_time + 4 } }
-    let(:r4) { { "a" => "b", "created_at" => current_time + 8 } }
+    let(:r4) { { "a" => "b", "created_at" => current_time + 300 } }
 
     it "detects if two identical pieces of feedback are created within a short time of each other" do
       expect(comparator.same?(r1, r2)).to be_truthy

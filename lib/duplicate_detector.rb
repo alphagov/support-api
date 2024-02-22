@@ -25,7 +25,7 @@ private
 end
 
 class AnonymousFeedbackComparator
-  DUPLICATION_INTERVAL_IN_SECONDS = 5
+  DUPLICATION_INTERVAL_IN_SECONDS = 300
 
   def initialize(fields_to_compare)
     @fields_to_compare = fields_to_compare
