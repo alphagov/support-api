@@ -3,6 +3,10 @@ require "s3_file_uploader"
 class GenerateGlobalExportCsvWorker
   include Sidekiq::Worker
 
+  def initialize(uploader: S3FileUploader.new)
+    @uploader = uploader
+  end
+
   def perform(export_params)
     feedback_export_request = FeedbackExportRequest.new(notification_email: export_params["notification_email"])
 
@@ -14,7 +18,7 @@ class GenerateGlobalExportCsvWorker
 
     feedback_export_request.filename = filename
 
-    S3FileUploader.save_file_to_s3(filename, contents)
+    @uploader.save_file_to_s3(filename, contents)
 
     feedback_export_request.save!
     feedback_export_request.touch(:generated_at)
