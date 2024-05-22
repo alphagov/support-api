@@ -65,6 +65,11 @@ Rails.application.routes.draw do
             format: false,
             param: :slug
 
+  resources "support-tickets",
+            only: :create,
+            controller: "support_tickets",
+            as: "support_ticket"
+
   get "/feedback-by-day/:date", to: "feedback_by_day#index", format: false
 
   get "/healthcheck/live", to: proc { [200, {}, %w[OK]] }
