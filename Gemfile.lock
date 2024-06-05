@@ -150,7 +150,7 @@ GEM
       rails (>= 7)
       warden (~> 1.2)
       warden-oauth2 (~> 0.0.1)
-    gds_zendesk (3.6.0)
+    gds_zendesk (3.7.0)
       null_logger (~> 0)
       zendesk_api (>= 1.37, < 4.0)
     globalid (1.2.1)
@@ -239,7 +239,7 @@ GEM
     msgpack (1.7.2)
     multi_xml (0.7.0)
       bigdecimal (~> 3.1)
-    multipart-post (2.4.0)
+    multipart-post (2.4.1)
     mutex_m (0.2.0)
     net-http (0.4.1)
       uri
