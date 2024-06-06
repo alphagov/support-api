@@ -25,6 +25,8 @@ gem "whenever", require: false
 
 group :development do
   gem "listen"
+  gem "pact", require: false
+  gem "pact_broker-client"
   gem "spring"
 end
 
