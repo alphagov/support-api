@@ -64,3 +64,9 @@ jobs:
           RAILS_ENV: test
           TEST_DATABASE_URL: ${{ steps.setup-postgres.outputs.db-url }}
         run: bundle exec rake spec
+
+  pact-tests:
+    name: Run Pact tests
+    uses: ./.github/workflows/pact-verify.yml
+    with:
+      ref: ${{ github.ref }}

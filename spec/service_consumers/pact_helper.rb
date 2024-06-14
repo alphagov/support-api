@@ -33,13 +33,7 @@ end
 Pact.provider_states_for "GDS API Adapters" do
   provider_state "the parameters are valid" do
     set_up do
-      params = {
-        subject: "Feedback for app",
-        tags: %w[app_name],
-        user_agent: "Safari",
-        description: "There is something wrong with this page.",
-      }
-      SupportTicket.new(params)
+      stub_request(:post, "https://govuk.zendesk.com/api/v2/tickets").to_return(status: 210, body: { "status" => "success" }.to_json, headers: { "Content-Type" => "application/json" })
     end
   end
 
