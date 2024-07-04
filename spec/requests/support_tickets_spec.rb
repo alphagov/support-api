@@ -20,13 +20,9 @@ describe "Support Tickets" do
     zendesk_request = expect_zendesk_to_receive_ticket(
       "subject" => "Feedback for app",
       "tags" => %w[app_name],
-      "body" => <<-TICKET_BODY.strip_heredoc,
-                 [User agent]
-                 Safari
-
-                 [Details]
-                 Ticket details go here.
-      TICKET_BODY
+      "comment" => {
+        "body" => "Ticket details go here.",
+      },
     )
 
     post "/support-tickets",

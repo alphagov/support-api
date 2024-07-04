@@ -14,7 +14,9 @@ class SupportTicket
     {
       "subject" => subject,
       "tags" => tags,
-      "body" => ticket_body,
+      "comment" => {
+        "body" => description,
+      },
     }
   end
 
