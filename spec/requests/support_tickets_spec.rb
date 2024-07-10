@@ -8,7 +8,6 @@ describe "Support Tickets" do
          params: {
            subject: "Feedback for app",
            tags: %w[app_name],
-           user_agent: "Safari",
            description: "Ticket details go here.",
          }
 
@@ -29,7 +28,6 @@ describe "Support Tickets" do
          params: {
            subject: "Feedback for app",
            tags: %w[app_name],
-           user_agent: "Safari",
            description: "Ticket details go here.",
          }
 
