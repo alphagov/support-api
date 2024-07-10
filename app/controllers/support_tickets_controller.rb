@@ -14,6 +14,6 @@ class SupportTicketsController < ApplicationController
 private
 
   def attributes
-    params.slice(:subject, :tags, :user_agent, :description)
+    params.slice(:subject, :description, :tags, :user_agent, :priority, :requester, :collaborators, :tags, :custom_fields, :ticket_form_id)
   end
 end
