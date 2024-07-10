@@ -21,7 +21,6 @@ describe SupportTicket, "#attributes" do
     support_ticket = described_class.new(
       subject: "Feedback for app",
       tags: %w[app_name],
-      user_agent: "Safari",
       description: "Ticket details go here.",
     )
 
