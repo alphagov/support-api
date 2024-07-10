@@ -49,16 +49,14 @@ describe SupportTicket, "#zendesk_ticket_attributes" do
     )
   end
 
-  it "generates a hash of attributes where the body omits the optional attributes" do
+  it "generates a hash of attributes and omits the optional attributes" do
     support_ticket = described_class.new(
       subject: "Feedback for app",
-      tags: %w[app_name],
       description: "Ticket details go here.",
     )
 
     expect(support_ticket.zendesk_ticket_attributes).to eq(
       "subject" => "Feedback for app",
-      "tags" => %w[app_name],
       "comment" => {
         "body" => "Ticket details go here.",
       },

@@ -15,18 +15,21 @@ class SupportTicket
   end
 
   def zendesk_ticket_attributes
-    {
+    attr = {
       "subject" => subject,
+      "comment" => { "body" => description },
+    }
+
+    optional_attributes = {
       "priority" => priority,
       "requester" => requester,
       "collaborators" => collaborators,
       "tags" => tags,
       "custom_fields" => custom_fields,
       "ticket_form_id" => ticket_form_id,
-      "comment" => {
-        "body" => description,
-      },
     }
+
+    attr.merge!(optional_attributes.compact)
   end
 
 private
