@@ -1,6 +1,6 @@
 class SupportTicketsController < ApplicationController
   def create
-    support_ticket = SupportTicket.new(attributes)
+    support_ticket = SupportTicket.new(support_ticket_attributes)
 
     if support_ticket.valid?
       GDS_ZENDESK_CLIENT.ticket.create!(support_ticket.zendesk_ticket_attributes)
@@ -13,7 +13,7 @@ class SupportTicketsController < ApplicationController
 
 private
 
-  def attributes
-    params.slice(:subject, :description, :tags, :user_agent, :priority, :requester, :collaborators, :tags, :custom_fields, :ticket_form_id)
+  def support_ticket_attributes
+    params.slice(:subject, :description, :tags, :user_agent, :priority, :requester, :collaborators, :custom_fields, :ticket_form_id)
   end
 end
