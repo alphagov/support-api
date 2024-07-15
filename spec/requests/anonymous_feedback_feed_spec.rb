@@ -57,7 +57,7 @@ describe "Anonymous feedback feed" do
           "url" => "http://www.dev.gov.uk/help",
           "referrer" => "https://www.gov.uk/browse",
           "user_agent" => "Safari",
-          "created_at" => "2015-02-03T00:00:00.000Z",
+          "created_at" => "2015-02-03T00:00:00.000+00:00",
           "marked_as_spam" => false,
           "reviewed" => false,
         },
@@ -71,7 +71,7 @@ describe "Anonymous feedback feed" do
           "user_agent" => "iPhone",
           "service_satisfaction_rating" => 3,
           "slug" => "waste_carrier_or_broker_registration",
-          "created_at" => "2015-02-02T00:00:00.000Z",
+          "created_at" => "2015-02-02T00:00:00.000+00:00",
         },
         {
           "id" => long_form_contact.id,
@@ -82,7 +82,7 @@ describe "Anonymous feedback feed" do
           "url" => "http://www.dev.gov.uk/contact/govuk",
           "referrer" => "https://www.gov.uk/contact",
           "user_agent" => "iPhone",
-          "created_at" => "2015-02-01T00:00:00.000Z",
+          "created_at" => "2015-02-01T00:00:00.000+00:00",
         },
       ])
 

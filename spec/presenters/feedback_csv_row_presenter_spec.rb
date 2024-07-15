@@ -2,10 +2,10 @@ require "rails_helper"
 
 describe FeedbackCsvRowPresenter do
   subject(:instance) { described_class.new(row) }
-  let(:problem_report) { build(:problem_report, created_at: Time.utc(2015, 4), what_doing: "Finding the thing", what_wrong: "Couldn't find the thing\nThanks") }
-  let(:service_feedback) { build(:service_feedback, created_at: Time.utc(2015, 4), details: "It was good\nWell done", service_satisfaction_rating: 3) }
-  let(:aggregated_service_feedback) { build(:aggregated_service_feedback, created_at: Time.utc(2015, 4), details: 1, service_satisfaction_rating: 3) }
-  let(:long_form_contact) { build(:long_form_contact, created_at: Time.utc(2015, 4), details: "It was really good\nReally.\nGood job") }
+  let(:problem_report) { build(:problem_report, created_at: Time.zone.parse("2015-04-01").iso8601, what_doing: "Finding the thing", what_wrong: "Couldn't find the thing\nThanks") }
+  let(:service_feedback) { build(:service_feedback, created_at: Time.zone.parse("2015-04-01").iso8601, details: "It was good\nWell done", service_satisfaction_rating: 3) }
+  let(:aggregated_service_feedback) { build(:aggregated_service_feedback, created_at: Time.zone.parse("2015-04-01").iso8601, details: 1, service_satisfaction_rating: 3) }
+  let(:long_form_contact) { build(:long_form_contact, created_at: Time.zone.parse("2015-04-01").iso8601, details: "It was really good\nReally.\nGood job") }
 
   describe "#to_a" do
     subject { instance.to_a }

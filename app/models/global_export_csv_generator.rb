@@ -15,8 +15,8 @@ private
 
   def results
     results = ProblemReport
-      .created_between_days(from_date, to_date)
-      .select("date(created_at) as created_at_date, COUNT(id) as report_count")
+      .created_between_days(from_date_in_utc, to_date_in_utc)
+      .select("date(created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Europe/London') as created_at_date, COUNT(id) as report_count")
       .group("created_at_date")
       .order("created_at_date")
 
@@ -34,5 +34,13 @@ private
 
   def filename
     "feedex_#{from_date.iso8601}_#{to_date.iso8601}#{@exclude_spam ? '_spam_excluded' : ''}.csv"
+  end
+
+  def from_date_in_utc
+    @from_date.beginning_of_day.utc
+  end
+
+  def to_date_in_utc
+    @to_date.end_of_day.utc
   end
 end
