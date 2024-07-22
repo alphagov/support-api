@@ -21,20 +21,15 @@ describe SupportTicket, "#attributes" do
     support_ticket = described_class.new(
       subject: "Feedback for app",
       tags: %w[app_name],
-      user_agent: "Safari",
       description: "Ticket details go here.",
     )
 
     expect(support_ticket.attributes).to eq(
       "subject" => "Feedback for app",
       "tags" => %w[app_name],
-      "body" => <<-TICKET_BODY.strip_heredoc,
-                  [User agent]
-                  Safari
-
-                  [Details]
-                  Ticket details go here.
-      TICKET_BODY
+      "comment" => {
+        "body" => "Ticket details go here.",
+      },
     )
   end
 
@@ -48,13 +43,9 @@ describe SupportTicket, "#attributes" do
     expect(support_ticket.attributes).to eq(
       "subject" => "Feedback for app",
       "tags" => %w[app_name],
-      "body" => <<-TICKET_BODY.strip_heredoc,
-                  [User agent]
-
-
-                  [Details]
-                  Ticket details go here.
-      TICKET_BODY
+      "comment" => {
+        "body" => "Ticket details go here.",
+      },
     )
   end
 end
