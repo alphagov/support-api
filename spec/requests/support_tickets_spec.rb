@@ -9,6 +9,14 @@ describe "Support Tickets" do
            subject: "Feedback for app",
            tags: %w[app_name],
            description: "Ticket details go here.",
+           priority: "normal",
+           requester: { locale_id: 1, email: "someone@exampe.com", name: "Some user" },
+           collaborators: %w[a@b.com c@d.com],
+           custom_fields: [
+             { id: 7_948_652_819_356, value: "cr_inaccuracy" },
+             { id: 7_949_106_580_380, value: "cr_benefits" },
+           ],
+           ticket_form_id: 123,
          }
 
     expect(response.code).to eq("201")
@@ -28,13 +36,14 @@ describe "Support Tickets" do
          params: {
            subject: "Feedback for app",
            tags: %w[app_name],
+           requester: { locale_id: 1, email: "someone@exampe.com", name: "Some user" },
            description: "Ticket details go here.",
          }
 
     expect(zendesk_request).to have_been_made
   end
 
-  it "responds unsuccessfully if the feedback isn't valid" do
+  it "responds unsuccessfully if the support ticket isn't valid" do
     post "/support-tickets",
          params: { subject: "Feedback for app" }
 

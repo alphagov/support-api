@@ -14,6 +14,14 @@ class SupportTicketsController < ApplicationController
 private
 
   def support_ticket_attributes
-    params.slice(:subject, :tags, :user_agent, :description)
+    params.slice(
+      :subject, :description, :priority, :requester, :collaborators, :tags, :custom_fields, :ticket_form_id
+    ).permit(
+      :subject, :description, :priority, :ticket_form_id,
+      requester: %i[locale_id email name],
+      collaborators: [],
+      tags: [],
+      custom_fields: %i[id value]
+    )
   end
 end
