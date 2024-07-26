@@ -12,11 +12,9 @@ class SupportTicket
   def zendesk_ticket_attributes
     {
       "subject" => subject,
+      "comment" => { "body" => description },
       "tags" => tags,
-      "comment" => {
-        "body" => description,
-      },
-    }
+    }.compact
   end
 
 private
