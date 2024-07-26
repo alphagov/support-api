@@ -9,7 +9,7 @@ class SupportTicket
     @description = attributes.fetch(:description, nil)
   end
 
-  def attributes
+  def zendesk_ticket_attributes
     {
       "subject" => subject,
       "tags" => tags,

@@ -16,7 +16,7 @@ describe SupportTicket, "validations" do
   end
 end
 
-describe SupportTicket, "#attributes" do
+describe SupportTicket, "#zendesk_ticket_attributes" do
   it "generates a hash of attributes to create a Zendesk ticket" do
     support_ticket = described_class.new(
       subject: "Feedback for app",
@@ -24,7 +24,7 @@ describe SupportTicket, "#attributes" do
       description: "Ticket details go here.",
     )
 
-    expect(support_ticket.attributes).to eq(
+    expect(support_ticket.zendesk_ticket_attributes).to eq(
       "subject" => "Feedback for app",
       "tags" => %w[app_name],
       "comment" => {
@@ -40,7 +40,7 @@ describe SupportTicket, "#attributes" do
       description: "Ticket details go here.",
     )
 
-    expect(support_ticket.attributes).to eq(
+    expect(support_ticket.zendesk_ticket_attributes).to eq(
       "subject" => "Feedback for app",
       "tags" => %w[app_name],
       "comment" => {
