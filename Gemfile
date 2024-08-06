@@ -11,7 +11,6 @@ gem "aws-sdk-s3"
 gem "bootsnap", require: false
 gem "gds-api-adapters"
 gem "gds-sso"
-gem "gds_zendesk"
 gem "govuk_app_config"
 gem "govuk_sidekiq"
 gem "kaminari"
