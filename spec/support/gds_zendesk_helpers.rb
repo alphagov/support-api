@@ -1,4 +1,4 @@
-require "gds_zendesk/test_helpers"
+require "helpers/zendesk_test_helpers"
 
 module ZendeskRequestMockingExtensions
   def expect_zendesk_to_receive_ticket(opts)
@@ -7,6 +7,6 @@ module ZendeskRequestMockingExtensions
 end
 
 RSpec.configure do |c|
-  c.include GDSZendesk::TestHelpers
+  c.include Zendesk::TestHelpers
   c.include ZendeskRequestMockingExtensions
 end
