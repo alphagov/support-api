@@ -16,6 +16,10 @@ module Zendesk
                    headers: { "Content-Type" => "application/json" })
     end
 
+    def expect_zendesk_to_receive_ticket(opts)
+      stub_zendesk_ticket_creation_with_body("ticket" => hash_including(opts))
+    end
+
     def zendesk_endpoint
       "https://govuk.zendesk.com/api/v2"
     end
