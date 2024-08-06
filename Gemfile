@@ -22,6 +22,7 @@ gem "plek"
 gem "sentry-sidekiq"
 gem "user_agent_parser"
 gem "whenever", require: false
+gem "zendesk_api"
 
 group :development do
   gem "listen"

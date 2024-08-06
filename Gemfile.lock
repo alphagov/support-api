@@ -762,6 +762,7 @@ DEPENDENCIES
   user_agent_parser
   webmock
   whenever
+  zendesk_api
 
 BUNDLED WITH
    2.5.9
