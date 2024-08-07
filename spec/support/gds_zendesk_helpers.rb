@@ -1,12 +1,5 @@
-require "gds_zendesk/test_helpers"
-
-module ZendeskRequestMockingExtensions
-  def expect_zendesk_to_receive_ticket(opts)
-    stub_zendesk_ticket_creation_with_body("ticket" => hash_including(opts))
-  end
-end
+require "helpers/zendesk_test_helpers"
 
 RSpec.configure do |c|
-  c.include GDSZendesk::TestHelpers
-  c.include ZendeskRequestMockingExtensions
+  c.include Zendesk::TestHelpers
 end

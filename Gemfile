@@ -11,7 +11,6 @@ gem "aws-sdk-s3"
 gem "bootsnap", require: false
 gem "gds-api-adapters"
 gem "gds-sso"
-gem "gds_zendesk"
 gem "govuk_app_config"
 gem "govuk_sidekiq"
 gem "kaminari"
@@ -22,6 +21,7 @@ gem "plek"
 gem "sentry-sidekiq"
 gem "user_agent_parser"
 gem "whenever", require: false
+gem "zendesk_api"
 
 group :development do
   gem "listen"
