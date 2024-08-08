@@ -3,6 +3,7 @@ require "rails_helper"
 describe "Support Tickets" do
   it "responds succesfully" do
     stub_zendesk_ticket_creation
+    zendesk_has_valid_user_with_email("someone@example.com")
 
     post "/support-tickets",
          params: {
@@ -10,7 +11,7 @@ describe "Support Tickets" do
            tags: %w[app_name],
            description: "Ticket details go here.",
            priority: "normal",
-           requester: { locale_id: 1, email: "someone@exampe.com", name: "Some user" },
+           requester: { locale_id: 1, email: "someone@example.com", name: "Some user" },
            collaborators: %w[a@b.com c@d.com],
            custom_fields: [
              { id: 7_948_652_819_356, value: "cr_inaccuracy" },
@@ -24,6 +25,7 @@ describe "Support Tickets" do
   end
 
   it "sends the feedback to Zendesk" do
+    zendesk_has_valid_user_with_email("someone@example.com")
     zendesk_request = expect_zendesk_to_receive_ticket(
       "subject" => "Feedback for app",
       "tags" => %w[app_name],
@@ -36,7 +38,7 @@ describe "Support Tickets" do
          params: {
            subject: "Feedback for app",
            tags: %w[app_name],
-           requester: { locale_id: 1, email: "someone@exampe.com", name: "Some user" },
+           requester: { locale_id: 1, email: "someone@example.com", name: "Some user" },
            description: "Ticket details go here.",
          }
 
