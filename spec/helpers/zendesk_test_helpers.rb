@@ -20,6 +20,24 @@ module Zendesk
       stub_zendesk_ticket_creation_with_body("ticket" => hash_including(opts))
     end
 
+    def zendesk_has_no_user_with_email(email)
+      stub_request(:get, "#{zendesk_endpoint}/users/search?query=#{email}")
+        .to_return(body: { users: [], previous_page: nil, next_page: nil, count: 0 }.to_json,
+                   headers: { "Content-Type" => "application/json" })
+    end
+
+    def zendesk_has_suspended_user_with_email(email)
+      stub_request(:get, "#{zendesk_endpoint}/users/search?query=#{email}")
+        .to_return(body: { users: [{ email:, suspended: true }] }.to_json,
+                   headers: { "Content-Type" => "application/json" })
+    end
+
+    def zendesk_has_valid_user_with_email(email)
+      stub_request(:get, "#{zendesk_endpoint}/users/search?query=#{email}")
+        .to_return(body: { users: [{ email:, suspended: false }] }.to_json,
+                   headers: { "Content-Type" => "application/json" })
+    end
+
     def zendesk_endpoint
       "https://govuk.zendesk.com/api/v2"
     end

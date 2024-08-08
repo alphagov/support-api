@@ -3,6 +3,8 @@ class SupportTicket
 
   validates :subject, :description, presence: true
 
+  validate :requester_not_suspended, if: :requester_email?
+
   def initialize(attributes)
     @subject = attributes.fetch(:subject, nil)
     @description = attributes.fetch(:description, nil)
@@ -28,6 +30,20 @@ class SupportTicket
   end
 
 private
+
+  def requester_not_suspended
+    errors.add(:requester, "is suspended in Zendesk") if suspended_in_zendesk?
+  end
+
+  def suspended_in_zendesk?
+    user_search_result = GDS_ZENDESK_CLIENT.users.search(query: requester[:email])
+
+    user_search_result.empty? ? false : user_search_result.first["suspended"]
+  end
+
+  def requester_email?
+    requester && requester[:email]
+  end
 
   attr_reader :subject, :description, :priority, :requester, :collaborators, :tags, :custom_fields, :ticket_form_id
 end
