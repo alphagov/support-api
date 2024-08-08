@@ -67,6 +67,32 @@ describe "Support Tickets" do
     expect(response_hash).to include("errors" => include("description" => include("can't be blank")))
   end
 
+  it "sends validation error response if ZendeskAPI::Error::RecordInvalid occurs" do
+    stub_zendesk_returns_record_invalid
+    post "/support-tickets",
+         params: {
+           subject: "Feedback for app",
+           description: "Ticket body",
+           requester: { email: "a@b.com" },
+         }
+
+    expect(response.code).to eq("422")
+    expect(response_hash).to include("status" => "error")
+  end
+
+  it "casts the error responses if ZendeskAPI::Error::NetworkError occurs" do
+    stub_zendesk_is_unavailable
+
+    post "/support-tickets",
+         params: {
+           subject: "Feedback for app",
+           description: "Ticket body",
+         }
+
+    expect(response.code).to eq("503")
+    expect(response_hash).to include("status" => "error")
+  end
+
   def response_hash
     JSON.parse(response.body)
   end

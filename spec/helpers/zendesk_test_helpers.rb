@@ -38,6 +38,14 @@ module Zendesk
                    headers: { "Content-Type" => "application/json" })
     end
 
+    def stub_zendesk_returns_record_invalid
+      stub_request(:any, /#{zendesk_endpoint}\/.*/).to_return(status: 422)
+    end
+
+    def stub_zendesk_is_unavailable
+      stub_request(:any, /#{zendesk_endpoint}\/.*/).to_return(status: 503)
+    end
+
     def zendesk_endpoint
       "https://govuk.zendesk.com/api/v2"
     end
