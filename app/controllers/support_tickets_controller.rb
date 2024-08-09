@@ -1,4 +1,8 @@
 class SupportTicketsController < ApplicationController
+  rescue_from ZendeskAPI::Error::RecordInvalid, with: :handle_as_validation_error
+
+  rescue_from ZendeskAPI::Error::NetworkError, with: :cast_zendesk_api_error
+
   def create
     support_ticket = SupportTicket.new(support_ticket_attributes)
 
@@ -12,6 +16,14 @@ class SupportTicketsController < ApplicationController
   end
 
 private
+
+  def handle_as_validation_error(error)
+    render json: { status: "error", errors: error.message }, status: :unprocessable_entity
+  end
+
+  def cast_zendesk_api_error(error)
+    render json: { status: "error", errors: error.message }, status: error.response[:status]
+  end
 
   def support_ticket_attributes
     params.slice(
