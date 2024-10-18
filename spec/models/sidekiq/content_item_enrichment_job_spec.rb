@@ -1,10 +1,10 @@
 require "rails_helper"
 require "gds_api/test_helpers/content_store"
 
-describe ContentItemEnrichmentWorker do
+describe ContentItemEnrichmentJob do
   include GdsApi::TestHelpers::ContentStore
 
-  subject { ContentItemEnrichmentWorker.new }
+  subject { ContentItemEnrichmentJob.new }
 
   context "for a problem report about a piece of content we can't determine the organisation for" do
     let(:problem_report) { create(:problem_report, path: "/unknown-org-page") }

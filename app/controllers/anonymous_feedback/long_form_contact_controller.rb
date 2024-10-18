@@ -4,7 +4,7 @@ module AnonymousFeedback
       request = LongFormContact.new(long_form_contact_params)
 
       if request.valid?
-        LongFormContactWorker.perform_async(long_form_contact_params)
+        LongFormContactJob.perform_async(long_form_contact_params)
         head :accepted
       else
         render json: { "errors" => request.errors.to_a }, status: :unprocessable_entity

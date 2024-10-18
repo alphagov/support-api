@@ -1,5 +1,5 @@
-class ContentItemEnrichmentWorker
-  include Sidekiq::Worker
+class ContentItemEnrichmentJob
+  include Sidekiq::Job
 
   def perform(problem_report_id)
     problem_report = ProblemReport.find(problem_report_id)
@@ -25,3 +25,5 @@ private
     end
   end
 end
+
+ContentItemEnrichmentWorker = ContentItemEnrichmentJob ## TODO: Remove once queued jobs at the time of the upgrade are complete

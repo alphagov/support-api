@@ -34,7 +34,7 @@ module AnonymousFeedback
       request = ProblemReport.new(problem_report_params)
 
       if request.valid?
-        ProblemReportWorker.perform_async(problem_report_params)
+        ProblemReportJob.perform_async(problem_report_params)
         head :accepted
       else
         render json: { "errors" => request.errors.to_a }, status: :unprocessable_entity
