@@ -4,7 +4,7 @@ module AnonymousFeedback
       request = ServiceFeedback.new(service_feedback_params)
 
       if request.valid?
-        ServiceFeedbackJob.perform_async(service_feedback_params)
+        ServiceFeedbackJob.perform_async(service_feedback_params.to_h)
         head :accepted
       else
         render json: { "errors" => request.errors.to_a }, status: :unprocessable_entity
