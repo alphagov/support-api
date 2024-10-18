@@ -1,6 +1,6 @@
 class PopulateDocumentTypeForContentItems < ActiveRecord::Migration[5.0]
   def up
-    ContentItemPopulateDoctypeWorker.perform_async
+    ContentItemPopulateDoctypeJob.perform_async
   end
 
   def down
