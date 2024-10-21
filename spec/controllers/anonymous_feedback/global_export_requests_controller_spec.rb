@@ -6,7 +6,7 @@ describe AnonymousFeedback::GlobalExportRequestsController, type: :controller do
 
     context "with valid parameters" do
       it "succeeds" do
-        expect(GenerateGlobalExportCsvWorker).to receive(:perform_async).once
+        expect(GenerateGlobalExportCsvJob).to receive(:perform_async).once
 
         response = post :create,
                         params: {
@@ -24,7 +24,7 @@ describe AnonymousFeedback::GlobalExportRequestsController, type: :controller do
 
     context "with invalid parameters" do
       it "fails" do
-        expect(GenerateGlobalExportCsvWorker).not_to receive(:perform_async)
+        expect(GenerateGlobalExportCsvJob).not_to receive(:perform_async)
 
         response = post :create,
                         params: {

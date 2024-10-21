@@ -1,7 +1,7 @@
 require "rails_helper"
 require "date"
 
-describe GenerateGlobalExportCsvWorker, type: :worker do
+describe GenerateGlobalExportCsvJob, type: :worker do
   let(:uploader) { instance_double(S3FileUploader) }
   subject(:worker) { described_class.new(uploader:) }
 

@@ -3,7 +3,7 @@ module AnonymousFeedback
     def create
       feedback = ContentImprovementFeedback.new(feedback_params)
       if feedback.valid?
-        ContentImprovementFeedbackWorker.perform_async(feedback_params)
+        ContentImprovementFeedbackJob.perform_async(feedback_params)
         head :accepted
       else
         render json: { "errors" => feedback.errors.to_a }, status: :unprocessable_entity

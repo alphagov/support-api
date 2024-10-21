@@ -6,7 +6,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
 
     context "posted with valid parameters" do
       before do
-        expect(GenerateFeedbackCsvWorker).to receive(:perform_async).once.with(instance_of(Integer))
+        expect(GenerateFeedbackCsvJob).to receive(:perform_async).once.with(instance_of(Integer))
         post :create,
              params: {
                export_request: {
@@ -40,7 +40,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
 
     context "posted with invalid parameters" do
       before do
-        expect(GenerateFeedbackCsvWorker).to receive(:perform_async).never
+        expect(GenerateFeedbackCsvJob).to receive(:perform_async).never
         post :create,
              params: {
                export_request: {
@@ -60,7 +60,7 @@ RSpec.describe AnonymousFeedback::ExportRequestsController, type: :controller do
 
     context "with backwards compatible `path_prefix` param" do
       before do
-        expect(GenerateFeedbackCsvWorker).to receive(:perform_async).once.with(instance_of(Integer))
+        expect(GenerateFeedbackCsvJob).to receive(:perform_async).once.with(instance_of(Integer))
         post :create,
              params: {
                export_request:

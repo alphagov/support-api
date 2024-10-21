@@ -1,5 +1,5 @@
-class ContentItemPopulateDoctypeWorker
-  include Sidekiq::Worker
+class ContentItemPopulateDoctypeJob
+  include Sidekiq::Job
 
   def perform
     content_store = GdsApi::ContentStore.new(Plek.find("content-store"))
@@ -17,3 +17,5 @@ class ContentItemPopulateDoctypeWorker
     Rails.logger.warn "There were errors with the following paths: #{document_type_errors.join(', ')}"
   end
 end
+
+ContentItemPopulateDoctypeWorker = ContentItemPopulateDoctypeJob ## TODO: Remove once queued jobs at the time of the upgrade are complete

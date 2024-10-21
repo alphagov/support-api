@@ -1,7 +1,7 @@
 require "rails_helper"
 require "gds_api/test_helpers/content_store"
 
-describe ContentItemPopulateDoctypeWorker do
+describe ContentItemPopulateDoctypeJob do
   include GdsApi::TestHelpers::ContentStore
 
   it "updates every content item's `document_type`" do

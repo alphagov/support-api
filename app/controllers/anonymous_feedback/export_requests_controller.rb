@@ -5,7 +5,7 @@ class AnonymousFeedback::ExportRequestsController < ApplicationController
     export_request = FeedbackExportRequest.new(export_request_params)
 
     if export_request.save
-      GenerateFeedbackCsvWorker.perform_async(export_request.id)
+      GenerateFeedbackCsvJob.perform_async(export_request.id)
       head :accepted
     else
       render json: { "errors" => export_request.errors.to_a }, status: :unprocessable_entity
