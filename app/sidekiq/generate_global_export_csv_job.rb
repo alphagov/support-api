@@ -1,7 +1,7 @@
 require "s3_file_uploader"
 
-class GenerateGlobalExportCsvWorker
-  include Sidekiq::Worker
+class GenerateGlobalExportCsvJob
+  include Sidekiq::Job
 
   def initialize(uploader: S3FileUploader.new)
     @uploader = uploader
@@ -26,3 +26,5 @@ class GenerateGlobalExportCsvWorker
     GlobalExportNotification.notification_email(export_params["notification_email"], feedback_export_request.url).deliver_now
   end
 end
+
+GenerateGlobalExportCsvWorker = GenerateGlobalExportCsvJob ## TODO: Remove once queued jobs at the time of the upgrade are complete

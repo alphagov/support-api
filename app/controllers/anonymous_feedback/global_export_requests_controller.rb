@@ -4,7 +4,7 @@ class AnonymousFeedback::GlobalExportRequestsController < ApplicationController
   def create
     export_request = GlobalExportRequest.new(global_export_request_params)
     if export_request.valid?
-      GenerateGlobalExportCsvWorker.perform_async(global_export_request_params)
+      GenerateGlobalExportCsvJob.perform_async(global_export_request_params)
       head :accepted
     else
       render json: { "errors" => export_request.errors.to_a }, status: :unprocessable_entity

@@ -1,7 +1,7 @@
 require "rails_helper"
 require "gds_api/test_helpers/content_store"
 
-describe ContentItemEnrichmentWorker do
+describe ContentItemEnrichmentJob do
   include GdsApi::TestHelpers::ContentStore
 
   let(:raw_path) { "my-magic-govuk-endpoint" }

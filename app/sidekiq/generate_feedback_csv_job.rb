@@ -1,7 +1,7 @@
 require "s3_file_uploader"
 
-class GenerateFeedbackCsvWorker
-  include Sidekiq::Worker
+class GenerateFeedbackCsvJob
+  include Sidekiq::Job
 
   def initialize(uploader: S3FileUploader.new)
     @uploader = uploader
@@ -23,3 +23,5 @@ class GenerateFeedbackCsvWorker
     ExportNotification.notification_email(feedback_export_request.notification_email, feedback_export_request.url).deliver_now
   end
 end
+
+GenerateFeedbackCsvWorker = GenerateFeedbackCsvJob ## TODO: Remove once queued jobs at the time of the upgrade are complete
