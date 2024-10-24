@@ -65,7 +65,7 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :notify
   config.action_mailer.notify_settings = {
-    api_key: Rails.application.secrets.notify_api_key,
+    api_key: ENV["GOVUK_NOTIFY_API_KEY"],
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

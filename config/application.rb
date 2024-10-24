@@ -46,7 +46,7 @@ module SupportApi
     config.action_dispatch.rack_cache = nil
 
     config.after_initialize do
-      config.action_mailer.notify_settings = { api_key: Rails.application.secrets.notify_api_key }
+      config.action_mailer.notify_settings = { api_key: ENV["GOVUK_NOTIFY_API_KEY"] }
     end
   end
 end
