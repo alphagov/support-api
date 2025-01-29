@@ -74,13 +74,9 @@ module AnonymousFeedback
 
         review_attrs = { reviewed: true, marked_as_spam: }
 
-        if problem_report.update(review_attrs)
-          true
-        else
-          false
-        end
+        problem_report.update!(review_attrs)
       end
-    rescue ActiveRecord::RecordNotFound
+    rescue ActiveRecord::RecordNotFound, ActiveRecord::RecordInvalid
       false
     end
 
