@@ -719,7 +719,7 @@ GEM
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
-    uri (0.13.1)
+    uri (0.13.2)
     user_agent_parser (2.18.0)
     useragent (0.16.11)
     version_gem (1.1.4)
