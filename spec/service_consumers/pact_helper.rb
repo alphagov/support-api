@@ -12,9 +12,7 @@ end
 
 WebMock.allow_net_connect!
 
-def url_encode(str)
-  ERB::Util.url_encode(str)
-end
+delegate :url_encode, to: :'ERB::Util'
 
 Pact.service_provider "Support API" do
   honours_pact_with "GDS API Adapters" do
