@@ -20,7 +20,11 @@ class GenerateFeedbackCsvJob
 
     feedback_export_request.touch(:generated_at)
 
-    ExportNotification.notification_email(feedback_export_request.notification_email, feedback_export_request.url).deliver_now
+    begin
+      ExportNotification.notification_email(feedback_export_request.notification_email, feedback_export_request.url).deliver_now
+    rescue Notifications::Client::BadRequestError => e
+      raise if ENV["SENTRY_CURRENT_ENV"] !~ /integration|staging/ || e.message !~ /team-only API key/
+    end
   end
 end
 
