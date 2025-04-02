@@ -1,4 +1,5 @@
 require "rails_helper"
+require "ostruct"
 
 describe GenerateFeedbackCsvJob, type: :worker do
   describe "#perform" do
@@ -26,6 +27,32 @@ describe GenerateFeedbackCsvJob, type: :worker do
       end
 
       expect(feedback_export_request.generated_at).to eq Time.zone.local(2015, 6, 1, 10)
+    end
+
+    context "when Notifications::Client::BadRequestError is raised" do
+      before do
+        allow(ExportNotification).to receive(:notification_email).with(any_args) do
+          raise Notifications::Client::BadRequestError, OpenStruct.new(code: 400, body: "Can't send to this recipient using a team-only API key")
+        end
+      end
+
+      it "does not raise exception in integration" do
+        ClimateControl.modify(SENTRY_CURRENT_ENV: "integration") do
+          expect { subject.perform(feedback_export_request) }.not_to raise_error
+        end
+      end
+
+      it "does not raise exception in staging" do
+        ClimateControl.modify(SENTRY_CURRENT_ENV: "staging") do
+          expect { subject.perform(feedback_export_request) }.not_to raise_error
+        end
+      end
+
+      it "raises exception in production" do
+        ClimateControl.modify(SENTRY_CURRENT_ENV: "production") do
+          expect { subject.perform(feedback_export_request) }.to raise_error(Notifications::Client::BadRequestError)
+        end
+      end
     end
   end
 end

@@ -23,7 +23,11 @@ class GenerateGlobalExportCsvJob
     feedback_export_request.save!
     feedback_export_request.touch(:generated_at)
 
-    GlobalExportNotification.notification_email(export_params["notification_email"], feedback_export_request.url).deliver_now
+    begin
+      GlobalExportNotification.notification_email(export_params["notification_email"], feedback_export_request.url).deliver_now
+    rescue Notifications::Client::BadRequestError => e
+      raise if ENV["SENTRY_CURRENT_ENV"] !~ /integration|staging/ || e.message !~ /team-only API key/
+    end
   end
 end
 
