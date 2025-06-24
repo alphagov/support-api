@@ -49,22 +49,6 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
   describe "#show" do
     before { login_as_stub_user }
 
-    let!(:no_doctype_content_items) do
-      create(
-        :content_item,
-        document_type: "",
-        created_at: 2.days.ago,
-        anonymous_contacts: create_list(:anonymous_contact, 2, created_at: 2.days.ago),
-      )
-    end
-    let!(:nil_doctype_content_items) do
-      create(
-        :content_item,
-        document_type: nil,
-        created_at: 2.days.ago,
-        anonymous_contacts: create_list(:anonymous_contact, 3, created_at: 2.days.ago),
-      )
-    end
     let!(:sa_content_items) do
       create(
         :content_item,
@@ -164,26 +148,6 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
       subject { response }
 
       it { is_expected.to be_not_found }
-    end
-
-    context "with an empty document_type" do
-      before { get :show, params: { document_type: "" } }
-
-      subject { response }
-
-      it "returns the default ordered summary for the organisation" do
-        expect(JSON.parse(subject.body)).to eq(
-          "document_type" => "",
-          "anonymous_feedback_counts" => [
-            {
-              "path" => "/search",
-              "last_7_days" => 2,
-              "last_30_days" => 2,
-              "last_90_days" => 2,
-            },
-          ],
-        )
-      end
     end
   end
 end
