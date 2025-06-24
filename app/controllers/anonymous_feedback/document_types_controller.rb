@@ -16,9 +16,10 @@ module AnonymousFeedback
         return
       end
 
-      anonymous_feedback_counts = ContentItem
-          .where(document_type: params[:document_type])
-          .summary(ordering)
+      anonymous_feedback_counts = AnonymousContact.summary(
+        ordering,
+        relation: AnonymousContact.for_document_type(params[:document_type]),
+      )
 
       render json: {
         document_type: params[:document_type],

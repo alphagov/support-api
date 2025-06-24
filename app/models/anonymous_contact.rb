@@ -69,6 +69,38 @@ class AnonymousContact < ApplicationRecord
     end
   end
 
+  def self.summary(order_by, relation: nil)
+    last_7_counts = count_in_last_n_days(7, relation:)
+    last_30_counts = count_in_last_n_days(30, relation:)
+    last_90_counts = count_in_last_n_days(90, relation:)
+
+    last_90_counts.keys.map { |path|
+      next if last_90_counts[path].zero?
+
+      {
+        path:,
+        last_7_days: last_7_counts.fetch(path, 0),
+        last_30_days: last_30_counts.fetch(path, 0),
+        last_90_days: last_90_counts.fetch(path, 0),
+      }
+    }
+      .compact
+      .sort_by { _1[order_by.to_sym] }
+      .tap { |result| result.reverse! unless order_by == "path" }
+  end
+
+  def self.count_in_last_n_days(last_n_days, relation:)
+    (relation || all)
+      .joins(:content_item)
+      .created_between_days(
+        Time.zone.today - last_n_days.days,
+        Time.zone.yesterday,
+      )
+      .group("content_item.path")
+      .count
+  end
+  private_class_method :count_in_last_n_days
+
   def url
     Plek.new.website_root + (path || "")
   end

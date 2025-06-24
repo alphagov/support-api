@@ -229,4 +229,205 @@ describe AnonymousContact, type: :model do
       end
     end
   end
+
+  describe ".summary" do
+    let(:organisations) { create_list(:organisation, 2) }
+
+    before do
+      create(
+        :content_item,
+        organisations:,
+        path: "/aaa",
+        anonymous_contacts: create_list(
+          :anonymous_contact,
+          2,
+          created_at: 80.days.ago,
+        ),
+      )
+
+      create(
+        :content_item,
+        organisations:,
+        path: "/really-bad-now",
+        anonymous_contacts: create_list(
+          :anonymous_contact,
+          5,
+          created_at: 5.days.ago,
+        ),
+      )
+
+      create(
+        :content_item,
+        organisations:,
+        path: "/really-bad-last-week",
+        anonymous_contacts: create_list(
+          :anonymous_contact,
+          10,
+          created_at: 9.days.ago,
+        ),
+      )
+
+      create(
+        :content_item,
+        organisations:,
+        path: "/really-bad-last-month",
+        anonymous_contacts: create_list(
+          :anonymous_contact,
+          15,
+          created_at: 31.days.ago,
+        ),
+      )
+    end
+
+    it "counts anonymous feedback by path and interval, sorted by the amount of feedback in the last 7 days" do
+      expect(AnonymousContact.summary("last_7_days")).to eq([
+        {
+          path: "/really-bad-now",
+          last_7_days: 5,
+          last_30_days: 5,
+          last_90_days: 5,
+        },
+        {
+          path: "/really-bad-last-week",
+          last_7_days: 0,
+          last_30_days: 10,
+          last_90_days: 10,
+        },
+        {
+          path: "/really-bad-last-month",
+          last_7_days: 0,
+          last_30_days: 0,
+          last_90_days: 15,
+        },
+        { path: "/aaa", last_7_days: 0, last_30_days: 0, last_90_days: 2 },
+      ])
+    end
+
+    it "counts anonymous feedback by path and interval, sorted by the amount of feedback in the last 30 days" do
+      expect(AnonymousContact.summary("last_30_days")).to eq([
+        {
+          path: "/really-bad-last-week",
+          last_7_days: 0,
+          last_30_days: 10,
+          last_90_days: 10,
+        },
+        {
+          path: "/really-bad-now",
+          last_7_days: 5,
+          last_30_days: 5,
+          last_90_days: 5,
+        },
+        {
+          path: "/really-bad-last-month",
+          last_7_days: 0,
+          last_30_days: 0,
+          last_90_days: 15,
+        },
+        { path: "/aaa", last_7_days: 0, last_30_days: 0, last_90_days: 2 },
+      ])
+    end
+
+    it "counts anonymous feedback by path and interval, sorted by the amount of feedback in the last 90 days" do
+      expect(AnonymousContact.summary("last_90_days")).to eq([
+        {
+          path: "/really-bad-last-month",
+          last_7_days: 0,
+          last_30_days: 0,
+          last_90_days: 15,
+        },
+        {
+          path: "/really-bad-last-week",
+          last_7_days: 0,
+          last_30_days: 10,
+          last_90_days: 10,
+        },
+        {
+          path: "/really-bad-now",
+          last_7_days: 5,
+          last_30_days: 5,
+          last_90_days: 5,
+        },
+        { path: "/aaa", last_7_days: 0, last_30_days: 0, last_90_days: 2 },
+      ])
+    end
+
+    it "counts anonymous feedback by path and interval, sorted by path" do
+      expect(AnonymousContact.summary("path")).to eq([
+        { path: "/aaa", last_7_days: 0, last_30_days: 0, last_90_days: 2 },
+        {
+          path: "/really-bad-last-month",
+          last_7_days: 0,
+          last_30_days: 0,
+          last_90_days: 15,
+        },
+        {
+          path: "/really-bad-last-week",
+          last_7_days: 0,
+          last_30_days: 10,
+          last_90_days: 10,
+        },
+        {
+          path: "/really-bad-now",
+          last_7_days: 5,
+          last_30_days: 5,
+          last_90_days: 5,
+        },
+      ])
+    end
+
+    it "aggregates content items with similar paths" do
+      create(
+        :content_item,
+        organisations:,
+        path: "/abc",
+        anonymous_contacts: [
+          create(:anonymous_contact, created_at: 15.days.ago),
+          create(:anonymous_contact, created_at: 15.days.ago),
+        ],
+      )
+
+      create(
+        :content_item,
+        organisations:,
+        path: "/abc",
+        anonymous_contacts: [
+          create(:anonymous_contact, created_at: 15.days.ago),
+          create(:anonymous_contact, created_at: 15.days.ago),
+        ],
+      )
+
+      expect(AnonymousContact.summary("last_7_days")).to include(
+        { path: "/abc", last_7_days: 0, last_30_days: 4, last_90_days: 4 },
+      )
+    end
+
+    it "restricts matches to a passed in relation" do
+      chosen_org = create(:organisation, slug: "my-org")
+
+      create(
+        :content_item,
+        organisations: [chosen_org],
+        path: "/abc",
+        anonymous_contacts: [
+          create(:anonymous_contact, created_at: 2.days.ago),
+        ],
+      )
+
+      create(
+        :content_item,
+        organisations: [chosen_org],
+        path: "/def",
+        anonymous_contacts: [
+          create(:anonymous_contact, created_at: 15.days.ago),
+        ],
+      )
+
+      relation = AnonymousContact.for_organisation_slug("my-org")
+
+      expect(AnonymousContact.summary("last_7_days", relation:)).to eq([
+        { path: "/abc", last_7_days: 1, last_30_days: 1, last_90_days: 1 },
+        { path: "/def", last_7_days: 0, last_30_days: 1, last_90_days: 1 },
+      ])
+    end
+  end
 end
