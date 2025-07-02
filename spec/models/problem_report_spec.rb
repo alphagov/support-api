@@ -9,6 +9,9 @@ describe ProblemReport do
   it { should validate_length_of(:what_doing).is_at_most(2**16) }
   it { should validate_length_of(:what_wrong).is_at_most(2**16) }
 
+  it { should_not allow_value("\u0000").for(:what_doing) }
+  it { should_not allow_value("\u0000").for(:what_wrong) }
+
   context "#totals" do
     let(:result) do
       ProblemReport.totals_for(Time.zone.today).map { |r| { path: r.path, total: r.total } }

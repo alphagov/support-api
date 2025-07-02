@@ -1,8 +1,8 @@
 require "csv"
 
 class ProblemReport < AnonymousContact
-  validates :what_doing, length: { maximum: 2**16 }
-  validates :what_wrong, length: { maximum: 2**16 }
+  validates :what_doing, :what_wrong, length: { maximum: 2**16 }
+  validates :what_doing, :what_wrong, format: { without: /\x00/, message: "cannot contain null bytes" }
 
   scope :totals_for,
         lambda { |date|
