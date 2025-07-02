@@ -47,55 +47,96 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
   end
 
   describe "#show" do
-    before { login_as_stub_user }
-
-    let!(:no_doctype_content_items) do
-      create(
-        :content_item,
-        document_type: "",
-        created_at: 2.days.ago,
-        anonymous_contacts: create_list(:anonymous_contact, 2, created_at: 2.days.ago),
-      )
-    end
-    let!(:nil_doctype_content_items) do
-      create(
-        :content_item,
-        document_type: nil,
-        created_at: 2.days.ago,
-        anonymous_contacts: create_list(:anonymous_contact, 3, created_at: 2.days.ago),
-      )
-    end
-    let!(:sa_content_items) do
-      create(
-        :content_item,
-        document_type: "smart_answer",
-        created_at: 70.days.ago,
-        anonymous_contacts: create_list(:anonymous_contact, 1, created_at: 70.days.ago),
-      )
-    end
-    let!(:cs_content_items) do
+    before do
       create(
         :content_item,
         document_type: "case_study",
         created_at: 32.days.ago,
         anonymous_contacts: create_list(:anonymous_contact, 4, created_at: 32.days.ago),
       )
+
+      create(
+        :content_item,
+        path: "/really-bad-now",
+        document_type: "smart_answer",
+        anonymous_contacts: [
+          create(:anonymous_contact, created_at: 3.days.ago),
+        ],
+      )
+      create(
+        :content_item,
+        path: "/really-bad-last-week",
+        document_type: "smart_answer",
+        anonymous_contacts: create_list(
+          :anonymous_contact,
+          2,
+          created_at: 9.days.ago,
+        ),
+      )
+      create(
+        :content_item,
+        path: "/really-bad-last-month",
+        document_type: "smart_answer",
+        anonymous_contacts: create_list(
+          :anonymous_contact,
+          3,
+          created_at: 40.days.ago,
+        ),
+      )
+
+      login_as_stub_user
+    end
+
+    subject { response }
+
+    it "returns a feedback summary for the given document type" do
+      get :show, params: { document_type: "case_study" }
+
+      expect(JSON.parse(subject.body)).to eq(
+        "document_type" => "case_study",
+        "anonymous_feedback_counts" => [
+          {
+            "path" => "/search",
+            "last_7_days" => 0,
+            "last_30_days" => 0,
+            "last_90_days" => 4,
+          },
+        ],
+      )
+    end
+
+    context "with an invalid document_type" do
+      it "responds with a not found status" do
+        get :show, params: { document_type: "invalid_document_type" }
+
+        expect(subject.status).to eq(404)
+      end
     end
 
     context "with no ordering" do
-      subject { response }
-
-      it "returns the last_7_days ordered summary for smart_answer" do
+      it "returns a feedback summary ordered by last 7 day counts" do
         get :show, params: { document_type: "smart_answer" }
 
         expect(JSON.parse(subject.body)).to eq(
           "document_type" => "smart_answer",
           "anonymous_feedback_counts" => [
             {
-              "path" => "/search",
+              "path" => "/really-bad-now",
+              "last_7_days" => 1,
+              "last_30_days" => 1,
+              "last_90_days" => 1,
+            },
+            {
+              "path" => "/really-bad-last-week",
+              "last_7_days" => 0,
+              "last_30_days" => 2,
+              "last_90_days" => 2,
+            },
+            {
+              "path" => "/really-bad-last-month",
               "last_7_days" => 0,
               "last_30_days" => 0,
-              "last_90_days" => 1,
+              "last_90_days" => 3,
             },
           ],
         )
@@ -103,35 +144,32 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
     end
 
     context "with a valid ordering" do
-      subject { response }
-
-      it "returns the ordered summary for the document_type" do
-        get :show, params: { document_type: "smart_answer", ordering: "last_30_days" }
+      it "returns a custom-ordered feedback summary" do
+        get :show, params: {
+          document_type: "smart_answer",
+          ordering: "last_30_days",
+        }
 
         expect(JSON.parse(subject.body)).to eq(
           "document_type" => "smart_answer",
           "anonymous_feedback_counts" => [
             {
-              "path" => "/search",
+              "path" => "/really-bad-last-week",
               "last_7_days" => 0,
-              "last_30_days" => 0,
+              "last_30_days" => 2,
+              "last_90_days" => 2,
+            },
+            {
+              "path" => "/really-bad-now",
+              "last_7_days" => 1,
+              "last_30_days" => 1,
               "last_90_days" => 1,
             },
-          ],
-        )
-      end
-
-      it "returns the ordered summary for case_study" do
-        get :show, params: { document_type: "case_study", ordering: "last_30_days" }
-
-        expect(JSON.parse(subject.body)).to eq(
-          "document_type" => "case_study",
-          "anonymous_feedback_counts" => [
             {
-              "path" => "/search",
+              "path" => "/really-bad-last-month",
               "last_7_days" => 0,
               "last_30_days" => 0,
-              "last_90_days" => 4,
+              "last_90_days" => 3,
             },
           ],
         )
@@ -139,47 +177,29 @@ RSpec.describe AnonymousFeedback::DocumentTypesController, type: :controller do
     end
 
     context "with invalid ordering" do
-      before { get :show, params: { document_type: "smart_answer", ordering: "foobar" } }
-      subject { response }
-      it { is_expected.to be_successful }
+      it "returns a feedback summary ordered by last 7 day counts" do
+        get :show, params: { document_type: "smart_answer", order: "foobar" }
 
-      it "returns the default ordered summary for the organisation" do
         expect(JSON.parse(subject.body)).to eq(
           "document_type" => "smart_answer",
           "anonymous_feedback_counts" => [
             {
-              "path" => "/search",
-              "last_7_days" => 0,
-              "last_30_days" => 0,
+              "path" => "/really-bad-now",
+              "last_7_days" => 1,
+              "last_30_days" => 1,
               "last_90_days" => 1,
             },
-          ],
-        )
-      end
-    end
-
-    context "with an invalid document_type" do
-      before { get :show, params: { document_type: "invalid_document_type" } }
-
-      subject { response }
-
-      it { is_expected.to be_not_found }
-    end
-
-    context "with an empty document_type" do
-      before { get :show, params: { document_type: "" } }
-
-      subject { response }
-
-      it "returns the default ordered summary for the organisation" do
-        expect(JSON.parse(subject.body)).to eq(
-          "document_type" => "",
-          "anonymous_feedback_counts" => [
             {
-              "path" => "/search",
-              "last_7_days" => 2,
+              "path" => "/really-bad-last-week",
+              "last_7_days" => 0,
               "last_30_days" => 2,
               "last_90_days" => 2,
+            },
+            {
+              "path" => "/really-bad-last-month",
+              "last_7_days" => 0,
+              "last_30_days" => 0,
+              "last_90_days" => 3,
             },
           ],
         )

@@ -25,7 +25,7 @@ class AnonymousContact < ApplicationRecord
   scope :most_recent_last, -> { order(created_at: :asc) }
   scope :created_between_days, ->(first_date, last_date) { where(created_at: first_date..last_date.at_end_of_day) }
   scope :for_organisation_slug, ->(slug) { joins(:organisations).where(organisations: { slug: }) }
-  scope :for_document_type, ->(document_type) { joins(:content_item).where(content_items: { document_type: }) }
+  scope :for_document_type, ->(document_type) { joins(:content_item).where(content_item: { document_type: }) }
 
   scope :matching_path_prefixes,
         lambda { |paths|
@@ -68,6 +68,38 @@ class AnonymousContact < ApplicationRecord
       end
     end
   end
+
+  def self.summary(order_by, relation: nil)
+    last_7_counts = count_in_last_n_days(7, relation:)
+    last_30_counts = count_in_last_n_days(30, relation:)
+    last_90_counts = count_in_last_n_days(90, relation:)
+
+    last_90_counts.keys.map { |path|
+      next if last_90_counts[path].zero?
+
+      {
+        path:,
+        last_7_days: last_7_counts.fetch(path, 0),
+        last_30_days: last_30_counts.fetch(path, 0),
+        last_90_days: last_90_counts.fetch(path, 0),
+      }
+    }
+      .compact
+      .sort_by { _1[order_by.to_sym] }
+      .tap { |result| result.reverse! unless order_by == "path" }
+  end
+
+  def self.count_in_last_n_days(last_n_days, relation:)
+    (relation || all)
+      .joins(:content_item)
+      .created_between_days(
+        Time.zone.today - last_n_days.days,
+        Time.zone.yesterday,
+      )
+      .group("content_item.path")
+      .count
+  end
+  private_class_method :count_in_last_n_days
 
   def url
     Plek.new.website_root + (path || "")

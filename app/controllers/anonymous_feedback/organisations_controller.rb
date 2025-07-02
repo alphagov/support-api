@@ -13,9 +13,10 @@ module AnonymousFeedback
         return
       end
 
-      anonymous_feedback_counts = ContentItem
-        .for_organisation(organisation)
-        .summary(ordering)
+      anonymous_feedback_counts = AnonymousContact.summary(
+        ordering,
+        relation: AnonymousContact.for_organisation_slug(organisation.slug),
+      )
 
       render json: {
         slug: organisation.slug,
