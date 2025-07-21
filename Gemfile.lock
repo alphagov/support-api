@@ -782,6 +782,7 @@ DEPENDENCIES
   ci_reporter
   ci_reporter_rspec
   climate_control
+  csv
   factory_bot_rails
   gds-api-adapters
   gds-sso

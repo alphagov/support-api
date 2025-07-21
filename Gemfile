@@ -4,6 +4,7 @@ gem "rails", "8.0.2"
 
 gem "aws-sdk-s3"
 gem "bootsnap", require: false
+gem "csv"
 gem "gds-api-adapters"
 gem "gds-sso"
 gem "govuk_app_config"
