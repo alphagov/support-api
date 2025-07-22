@@ -745,7 +745,7 @@ GEM
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
     uri (1.0.3)
-    user_agent_parser (2.18.0)
+    user_agent_parser (2.20.0)
     useragent (0.16.11)
     version_gem (1.1.8)
     warden (1.2.9)
