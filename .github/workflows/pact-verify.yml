@@ -49,7 +49,7 @@ jobs:
       RAILS_ENV: test
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: alphagov/support-api
           ref: ${{ inputs.ref }}
