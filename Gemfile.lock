@@ -513,7 +513,7 @@ GEM
       ast (~> 2.4.1)
       racc
     parslet (2.0.0)
-    pg (1.6.2)
+    pg (1.6.3)
     plek (5.2.2)
     pp (0.6.3)
       prettyprint
