@@ -10,8 +10,8 @@ GDS_ZENDESK_CLIENT = if Rails.env.development?
                      else
                        ZendeskAPI::Client.new do |config|
                          config.url = GDS_ZENDESK_URL
-                         config.username = ENV["ZENDESK_CLIENT_USERNAME"] || "abc"
-                         config.password = ENV["ZENDESK_CLIENT_PASSWORD"] || "def"
+                         config.username = ENV["ZENDESK_API_USER_EMAIL"]
+                         config.token = ENV["ZENDESK_API_TOKEN"]
                          config.logger = Rails.logger
                        end
                      end
