@@ -768,7 +768,7 @@ DEPENDENCIES
   listen
   mail-notify
   mlanett-redis-lock
-  pact
+  pact (~> 1.67)
   pact_broker-client
   pg
   plek
