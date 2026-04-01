@@ -21,7 +21,7 @@ gem "zendesk_api"
 
 group :development do
   gem "listen"
-  gem "pact", "~> 1.67", require: false
+  gem "pact", "~> 2.0", require: false
   gem "pact_broker-client"
   gem "spring"
 end
