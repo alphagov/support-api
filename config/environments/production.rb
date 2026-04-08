@@ -34,11 +34,11 @@ Rails.application.configure do
   config.log_tags = [:request_id]
   config.logger   = ActiveSupport::TaggedLogging.logger($stdout)
 
-  # Change to "debug" to log everything (including potentially personally-identifiable information!)
+  # Change to "debug" to log everything (including potentially personally-identifiable information!).
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
 
   # Prevent health checks from clogging up the logs.
-  # config.silence_healthcheck_path = "/up"
+  config.silence_healthcheck_path = "^\/healthcheck"
 
   # Don't log any deprecations.
   config.active_support.report_deprecations = false
@@ -57,6 +57,17 @@ Rails.application.configure do
   config.action_mailer.notify_settings = {
     api_key: ENV["GOVUK_NOTIFY_API_KEY"],
   }
+  # Set host to be used by links generated in mailer templates.
+  config.action_mailer.default_url_options = { host: Plek.find("support-api", external: true) }
+
+  # Specify outgoing SMTP server. Remember to add smtp/* credentials via bin/rails credentials:edit.
+  # config.action_mailer.smtp_settings = {
+  #   user_name: Rails.application.credentials.dig(:smtp, :user_name),
+  #   password: Rails.application.credentials.dig(:smtp, :password),
+  #   address: "smtp.example.com",
+  #   port: 587,
+  #   authentication: :plain
+  # }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -64,6 +75,9 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Only use :id for inspections in production.
+  config.active_record.attributes_for_inspect = [:id]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
