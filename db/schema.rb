@@ -10,32 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2019_01_30_105818) do
+ActiveRecord::Schema[8.1].define(version: 2019_01_30_105818) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "anonymous_contacts", id: :serial, force: :cascade do |t|
+    t.integer "content_item_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.text "details"
+    t.boolean "is_actionable", default: true, null: false
+    t.boolean "javascript_enabled"
+    t.boolean "marked_as_spam", default: false, null: false
+    t.string "page_owner", limit: 255
+    t.string "path", limit: 2048, null: false
+    t.string "personal_information_status", limit: 255
+    t.string "reason_why_not_actionable", limit: 255
+    t.string "referrer", limit: 2048
+    t.boolean "reviewed", default: false, null: false
+    t.integer "service_satisfaction_rating"
+    t.string "slug", limit: 255
+    t.string "source", limit: 255
     t.string "type", limit: 255
+    t.datetime "updated_at", precision: nil, null: false
+    t.text "user_agent"
+    t.text "user_specified_url"
     t.text "what_doing"
     t.text "what_wrong"
-    t.text "details"
-    t.string "source", limit: 255
-    t.string "page_owner", limit: 255
-    t.text "user_agent"
-    t.string "referrer", limit: 2048
-    t.boolean "javascript_enabled"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.string "personal_information_status", limit: 255
-    t.string "slug", limit: 255
-    t.integer "service_satisfaction_rating"
-    t.text "user_specified_url"
-    t.boolean "is_actionable", default: true, null: false
-    t.string "reason_why_not_actionable", limit: 255
-    t.string "path", limit: 2048, null: false
-    t.integer "content_item_id"
-    t.boolean "marked_as_spam", default: false, null: false
-    t.boolean "reviewed", default: false, null: false
     t.index ["content_item_id", "created_at"], name: "index_anonymous_contacts_on_content_item_id_and_created_at"
     t.index ["created_at", "path"], name: "index_anonymous_contacts_on_created_at_and_path", order: { created_at: :desc }, opclass: { path: :varchar_pattern_ops }
     t.index ["created_at"], name: "index_anonymous_contacts_on_created_at"
@@ -43,25 +43,25 @@ ActiveRecord::Schema[8.0].define(version: 2019_01_30_105818) do
   end
 
   create_table "archived_service_feedbacks", id: :serial, force: :cascade do |t|
-    t.string "type"
-    t.string "slug"
-    t.integer "service_satisfaction_rating"
     t.datetime "created_at", precision: nil
+    t.integer "service_satisfaction_rating"
+    t.string "slug"
+    t.string "type"
     t.datetime "updated_at", precision: nil
   end
 
   create_table "content_improvement_feedbacks", force: :cascade do |t|
     t.string "description", null: false
-    t.boolean "reviewed", default: false, null: false
     t.boolean "marked_as_spam", default: false, null: false
     t.string "personal_information_status"
+    t.boolean "reviewed", default: false, null: false
   end
 
   create_table "content_items", id: :serial, force: :cascade do |t|
-    t.string "path", limit: 2048, null: false
     t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
     t.string "document_type"
+    t.string "path", limit: 2048, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["document_type"], name: "index_content_items_on_document_type"
   end
 
@@ -73,36 +73,36 @@ ActiveRecord::Schema[8.0].define(version: 2019_01_30_105818) do
   end
 
   create_table "feedback_export_requests", id: :serial, force: :cascade do |t|
-    t.string "notification_email", limit: 255
-    t.string "filename", limit: 255
-    t.datetime "generated_at", precision: nil
     t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.string "filename", limit: 255
     t.text "filters"
+    t.datetime "generated_at", precision: nil
+    t.string "notification_email", limit: 255
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "organisations", id: :serial, force: :cascade do |t|
-    t.string "slug", limit: 255, null: false
-    t.string "web_url", limit: 255, null: false
-    t.string "title", limit: 255, null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
     t.string "acronym", limit: 255
-    t.string "govuk_status", limit: 255
     t.string "content_id", limit: 255, null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.string "govuk_status", limit: 255
+    t.string "slug", limit: 255, null: false
+    t.string "title", limit: 255, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "web_url", limit: 255, null: false
     t.index ["content_id"], name: "index_organisations_on_content_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
+    t.datetime "created_at", precision: nil, null: false
+    t.boolean "disabled", default: false
     t.string "email"
-    t.string "uid"
-    t.string "organisation_slug"
+    t.string "name"
     t.string "organisation_content_id"
+    t.string "organisation_slug"
     t.string "permissions", default: [], array: true
     t.boolean "remotely_signed_out", default: false
-    t.boolean "disabled", default: false
-    t.datetime "created_at", precision: nil, null: false
+    t.string "uid"
     t.datetime "updated_at", precision: nil, null: false
   end
 end
