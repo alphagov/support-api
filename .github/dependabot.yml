@@ -6,6 +6,18 @@ updates:
       interval: daily
     cooldown:
       default-days: 3
+    groups:
+      test:
+        patterns:
+        - "ci_reporter*"
+        - "climate_control"
+        - "factory_bot*"
+        - "rspec-*"
+        - "shoulda*"
+        - "timecop"
+        - "simplecov"
+        - "webmock"
+
   - package-ecosystem: github-actions
     directory: /
     schedule:
