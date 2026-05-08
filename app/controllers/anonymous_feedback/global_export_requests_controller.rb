@@ -23,10 +23,10 @@ private
 
     clean_params = params.require(:global_export_request).permit(*permitted_params).to_h
     {
-      from_date: DateParser.parse(clean_params[:from_date]),
-      to_date: DateParser.parse(clean_params[:to_date]),
-      notification_email: clean_params[:notification_email],
-      exclude_spam: clean_params[:exclude_spam],
+      "from_date" => DateParser.parse(clean_params[:from_date]).to_s,
+      "to_date" => DateParser.parse(clean_params[:to_date]).to_s,
+      "notification_email" => clean_params[:notification_email],
+      "exclude_spam" => clean_params[:exclude_spam],
     }
   end
 end
