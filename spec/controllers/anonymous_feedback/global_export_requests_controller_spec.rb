@@ -6,20 +6,34 @@ describe AnonymousFeedback::GlobalExportRequestsController, type: :controller do
 
     context "with valid parameters" do
       it "succeeds" do
-        expect(GenerateGlobalExportCsvJob).to receive(:perform_async).once
+        Sidekiq::Testing.fake! do
+          response = post :create,
+                          params: {
+                            global_export_request: {
+                              from_date: "2015-05-01",
+                              to_date: "2015-06-01",
+                              notification_email: "foo@example.com",
+                              exclude_spam: true,
+                            },
+                          }
 
-        response = post :create,
-                        params: {
-                          global_export_request: {
-                            from_date: "2015-05-01",
-                            to_date: "2015-06-01",
-                            notification_email: "foo@example.com",
-                            exclude_spam: true,
-                          },
-                        }
-
-        expect(response).to be_accepted
+          expect(response).to be_accepted
+        end
       end
+    end
+
+    it "queues GenerateGlobalExportCsvJob once" do
+      expect(GenerateGlobalExportCsvJob).to receive(:perform_async).once
+
+      post :create,
+           params: {
+             global_export_request: {
+               from_date: "2015-05-01",
+               to_date: "2015-06-01",
+               notification_email: "foo@example.com",
+               exclude_spam: true,
+             },
+           }
     end
 
     context "with invalid parameters" do
