@@ -70,36 +70,24 @@ class AnonymousContact < ApplicationRecord
   end
 
   def self.summary(order_by, relation: nil)
-    last_7_counts = count_in_last_n_days(7, relation:)
-    last_30_counts = count_in_last_n_days(30, relation:)
-    last_90_counts = count_in_last_n_days(90, relation:)
-
-    last_90_counts.keys.map { |path|
-      next if last_90_counts[path].zero?
-
-      {
-        path:,
-        last_7_days: last_7_counts.fetch(path, 0),
-        last_30_days: last_30_counts.fetch(path, 0),
-        last_90_days: last_90_counts.fetch(path, 0),
-      }
+    sql = %{
+      content_item.path AS path,
+      COUNT(*) FILTER (WHERE anonymous_contacts.created_at >= CURRENT_DATE - INTERVAL '7 days') AS last_7_days,
+      COUNT(*) FILTER (WHERE anonymous_contacts.created_at >= CURRENT_DATE - INTERVAL '30 days') AS last_30_days,
+      COUNT(*) AS last_90_days
     }
-      .compact
-      .sort_by { _1[order_by.to_sym] }
-      .tap { |result| result.reverse! unless order_by == "path" }
-  end
-
-  def self.count_in_last_n_days(last_n_days, relation:)
     (relation || all)
-      .joins(:content_item)
+      .joins("INNER JOIN content_items AS content_item ON content_item.id = anonymous_contacts.content_item_id")
       .created_between_days(
-        Time.zone.today - last_n_days.days,
+        Time.zone.today - 90.days,
         Time.zone.yesterday,
       )
       .group("content_item.path")
-      .count
+      .order(order_by) # sanitised by .show method of DocumentTypesController and OrganisationsController
+      .pluck(Arel.sql(sql))
+      .map { |result| Hash[%i[path last_7_days last_30_days last_90_days].zip(result)] }
+      .tap { |result| result.reverse! unless order_by == "path" }
   end
-  private_class_method :count_in_last_n_days
 
   def url
     Plek.new.website_root + (path || "")
