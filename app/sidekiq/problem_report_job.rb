@@ -7,5 +7,3 @@ class ProblemReportJob
     ContentItemEnrichmentJob.perform_async(problem_report.id)
   end
 end
-
-ProblemReportWorker = ProblemReportJob ## TODO: Remove once queued jobs at the time of the upgrade are complete

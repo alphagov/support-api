@@ -27,5 +27,3 @@ class GenerateFeedbackCsvJob
     end
   end
 end
-
-GenerateFeedbackCsvWorker = GenerateFeedbackCsvJob ## TODO: Remove once queued jobs at the time of the upgrade are complete

@@ -5,5 +5,3 @@ class ContentImprovementFeedbackJob
     ContentImprovementFeedback.create!(feedback_params)
   end
 end
-
-ContentImprovementFeedbackWorker = ContentImprovementFeedbackJob ## TODO: Remove once queued jobs at the time of the upgrade are complete
