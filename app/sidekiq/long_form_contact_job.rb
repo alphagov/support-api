@@ -6,5 +6,3 @@ class LongFormContactJob
     ZendeskTicketJob.perform_async(contact.id)
   end
 end
-
-LongFormContactWorker = LongFormContactJob ## TODO: Remove once queued jobs at the time of the upgrade are complete

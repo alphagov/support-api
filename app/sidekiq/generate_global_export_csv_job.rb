@@ -30,5 +30,3 @@ class GenerateGlobalExportCsvJob
     end
   end
 end
-
-GenerateGlobalExportCsvWorker = GenerateGlobalExportCsvJob ## TODO: Remove once queued jobs at the time of the upgrade are complete

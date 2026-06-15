@@ -25,5 +25,3 @@ private
     end
   end
 end
-
-ContentItemEnrichmentWorker = ContentItemEnrichmentJob ## TODO: Remove once queued jobs at the time of the upgrade are complete
