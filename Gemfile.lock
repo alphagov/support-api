@@ -128,7 +128,7 @@ GEM
     date (3.5.1)
     diff-lcs (1.6.2)
     dig_rb (1.0.1)
-    domain_name (0.6.20240107)
+    domain_name (0.6.20260829)
     drb (2.2.3)
     erb (6.0.6)
     erubi (1.13.1)
@@ -149,7 +149,7 @@ GEM
       net-http (~> 0.5)
     ffi (1.17.4)
     find_a_port (1.0.1)
-    gds-api-adapters (103.4.0)
+    gds-api-adapters (103.4.4)
       addressable
       link_header
       null_logger
@@ -547,7 +547,7 @@ GEM
     puma (8.0.2)
       nio4r (~> 2.0)
     racc (1.8.1)
-    rack (3.2.6)
+    rack (3.2.7)
     rack-protection (4.2.1)
       base64 (>= 0.1.0)
       logger (>= 1.6.0)
