@@ -21,8 +21,6 @@ gem "zendesk_api"
 
 group :development do
   gem "listen"
-  gem "pact", "~> 1.67", require: false
-  gem "pact_broker-client"
   gem "spring"
 end
 
@@ -30,6 +28,9 @@ group :development, :test do
   gem "ci_reporter"
   gem "ci_reporter_rspec"
   gem "climate_control"
+  gem "pact", "~> 1.67", require: false
+  gem "pact_broker-client", require: false
+  gem "pact-ffi", "~> 0.4.28", require: false
   gem "rspec-collection_matchers"
   gem "rspec-rails"
   gem "rubocop-govuk", ">= 4.12.0"

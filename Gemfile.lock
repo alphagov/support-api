@@ -148,6 +148,9 @@ GEM
     faraday-net_http (3.4.4)
       net-http (~> 0.5)
     ffi (1.17.4)
+    ffi (1.17.4-aarch64-linux-gnu)
+    ffi (1.17.4-arm64-darwin)
+    ffi (1.17.4-x86_64-linux-gnu)
     find_a_port (1.0.1)
     gds-api-adapters (103.4.4)
       addressable
@@ -168,6 +171,15 @@ GEM
     globalid (1.4.0)
       activesupport (>= 6.1)
     google-protobuf (4.35.1)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.35.1-aarch64-linux-gnu)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.35.1-arm64-darwin)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.35.1-x86_64-linux-gnu)
       bigdecimal
       rake (~> 13.3)
     googleapis-common-protos-types (1.23.0)
@@ -288,6 +300,12 @@ GEM
     nio4r (2.7.5)
     nokogiri (1.19.4)
       mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
+    nokogiri (1.19.4-aarch64-linux-gnu)
+      racc (~> 1.4)
+    nokogiri (1.19.4-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.19.4-x86_64-linux-gnu)
       racc (~> 1.4)
     notifications-ruby-client (6.3.0)
       jwt (>= 1.5, < 4)
@@ -496,6 +514,12 @@ GEM
       thor (>= 0.20, < 2.0)
       webrick (~> 1.8)
       zeitwerk (~> 2.3)
+    pact-ffi (0.4.28.0-aarch64-linux)
+      ffi (~> 1.15)
+    pact-ffi (0.4.28.0-arm64-darwin)
+      ffi (~> 1.15)
+    pact-ffi (0.4.28.0-x86_64-linux)
+      ffi (~> 1.15)
     pact-mock_service (3.12.4)
       find_a_port (~> 1.0.1)
       json
@@ -529,6 +553,9 @@ GEM
       racc
     parslet (2.0.0)
     pg (1.6.3)
+    pg (1.6.3-aarch64-linux)
+    pg (1.6.3-arm64-darwin)
+    pg (1.6.3-x86_64-linux)
     plek (5.3.2)
     pp (0.6.4)
       prettyprint
@@ -757,7 +784,9 @@ GEM
       multipart-post (~> 2.0)
 
 PLATFORMS
-  ruby
+  aarch64-linux
+  arm64-darwin
+  x86_64-linux
 
 DEPENDENCIES
   aws-sdk-s3
@@ -777,6 +806,7 @@ DEPENDENCIES
   mail-notify
   mlanett-redis-lock
   pact (~> 1.67)
+  pact-ffi (~> 0.4.28)
   pact_broker-client
   pg
   plek
