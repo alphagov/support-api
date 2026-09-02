@@ -18,5 +18,15 @@ rescue LoadError
   # Pact isn't available in all environments
 end
 
+begin
+  require "rspec/core/rake_task"
+  RSpec::Core::RakeTask.new("pact:verify_v2") do |task|
+    task.pattern = "spec/pact/consumers/**/*_spec.rb"
+    task.rspec_opts = "--tag pact_v2"
+  end
+rescue LoadError
+  # RSpec and Pact aren't available in all environments
+end
+
 Rake::Task[:default].clear if Rake::Task.task_defined?(:default)
 task default: %i[rubocop spec pact:verify]
