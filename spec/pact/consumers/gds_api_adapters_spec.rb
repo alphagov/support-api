@@ -1,8 +1,7 @@
 require "rails_helper"
-require "pact/v2"
-require "pact/v2/rspec"
+require "pact/rspec"
 
-RSpec.describe "Verify consumers of Support API", :pact_v2 do
+RSpec.describe "Verify consumers of Support API", :pact do
   http_pact_provider "Support API", opts: {
     http_port: 9292,
     pact_uri: ENV["PACT_URI"],
