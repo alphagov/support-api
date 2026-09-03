@@ -1,8 +1,7 @@
 require "rails_helper"
-require "pact/v2"
-require "pact/v2/rspec"
+require "pact/rspec"
 
-RSpec.describe "Verify consumers of Support API", :pact_v2 do
+RSpec.describe "Verify consumers of Support API", :pact do
   consumer_version_tag = ENV.fetch("PACT_CONSUMER_VERSION", "branch-main")
 
   base_url = "https://govuk-pact-broker-6991351eca05.herokuapp.com"
