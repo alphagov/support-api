@@ -144,7 +144,6 @@ GEM
       multipart-post (~> 2.0)
     faraday-net_http (3.4.4)
       net-http (~> 0.5)
-    ffi (1.17.4)
     ffi (1.17.4-aarch64-linux-gnu)
     ffi (1.17.4-arm64-darwin)
     ffi (1.17.4-x86_64-linux-gnu)
@@ -166,9 +165,6 @@ GEM
       warden-oauth2 (~> 0.0.1)
     globalid (1.4.0)
       activesupport (>= 6.1)
-    google-protobuf (4.35.1)
-      bigdecimal
-      rake (~> 13.3)
     google-protobuf (4.35.1-aarch64-linux-gnu)
       bigdecimal
       rake (~> 13.3)
@@ -517,7 +513,6 @@ GEM
     parser (3.3.11.1)
       ast (~> 2.4.1)
       racc
-    pg (1.6.3)
     pg (1.6.3-aarch64-linux)
     pg (1.6.3-arm64-darwin)
     pg (1.6.3-x86_64-linux)
@@ -769,7 +764,6 @@ DEPENDENCIES
   mail-notify
   mlanett-redis-lock
   pact (~> 2.0)
-  pact-ffi (~> 0.4.28)
   pact_broker-client
   pg
   plek

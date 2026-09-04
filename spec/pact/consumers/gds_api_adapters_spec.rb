@@ -2,15 +2,16 @@ require "rails_helper"
 require "pact/rspec"
 
 RSpec.describe "Verify consumers of Support API", :pact do
-  consumer_version_tag = ENV.fetch("PACT_CONSUMER_VERSION", "branch-main")
-
-  base_url = "https://govuk-pact-broker-6991351eca05.herokuapp.com"
-  path = "pacts/provider/#{ERB::Util.url_encode('Support API')}/consumer/#{ERB::Util.url_encode('GDS API Adapters')}"
-
   http_pact_provider "Support API", opts: {
     http_port: 9292,
-    pact_uri: "#{base_url}/#{path}/versions/#{ERB::Util.url_encode(consumer_version_tag)}",
+    pact_uri: ENV["PACT_URI"],
+    broker_url: ENV.fetch("PACT_BROKER_BASE_URL", "https://govuk-pact-broker-6991351eca05.herokuapp.com"),
+    consumer_name: "GDS API Adapters",
+    consumer_version_selectors: [
+      { branch: ENV.fetch("PACT_CONSUMER_VERSION", "branch-main").delete_prefix("branch-") },
+    ],
     log_level: :info,
+    fail_if_no_pacts_found: true,
   }
 
   provider_state "the parameters are valid" do

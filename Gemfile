@@ -30,7 +30,6 @@ group :development, :test do
   gem "climate_control"
   gem "pact", "~> 2.0", require: false
   gem "pact_broker-client", require: false
-  gem "pact-ffi", "~> 0.4.28", require: false
   gem "rspec"
   gem "rspec-collection_matchers"
   gem "rspec-rails"
