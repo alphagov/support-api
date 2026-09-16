@@ -12,10 +12,14 @@ rescue LoadError
   # Rubocop isn't available in all environments
 end
 
-require "rspec/core/rake_task"
-RSpec::Core::RakeTask.new("pact:verify") do |task|
-  task.pattern = "spec/pact/consumers/**/*_spec.rb"
-  task.rspec_opts = "--tag pact"
+begin
+  require "rspec/core/rake_task"
+  RSpec::Core::RakeTask.new("pact:verify") do |task|
+    task.pattern = "spec/pact/consumers/**/*_spec.rb"
+    task.rspec_opts = "--tag pact"
+  end
+rescue LoadError
+  # RSpec and Pact aren't available in all environments
 end
 
 Rake::Task[:default].clear if Rake::Task.task_defined?(:default)
