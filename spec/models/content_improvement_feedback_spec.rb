@@ -2,6 +2,8 @@ require "rails_helper"
 require "field_which_may_contain_personal_information"
 
 describe ContentImprovementFeedback, type: :model do
+  it { should_not allow_value("\u0000").for(:description) }
+
   def new_feedback(options = {})
     build :content_improvement_feedback, options
   end

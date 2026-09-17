@@ -3,6 +3,7 @@ require "field_which_may_contain_personal_information"
 class ContentImprovementFeedback < ApplicationRecord
   before_save :detect_personal_information
   validates :description, length: { within: 1..65_536 }
+  validates :description, null_bytes: { allowed: false }
   validates :personal_information_status, inclusion: { in: %w[suspected absent], allow_nil: true }
 
 private
