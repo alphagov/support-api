@@ -1,6 +1,7 @@
 class LongFormContact < AnonymousContact
   validates :details, presence: true
   validates :user_specified_url, length: { maximum: 2048 }
+  validates :user_specified_url, null_bytes: { allowed: false }
   validates :details, length: { maximum: 2**16 }
 
   def type

@@ -1,6 +1,9 @@
 require "rails_helper"
 
 describe AnonymousContact, type: :model do
+
+  it { should_not allow_value("\u0000").for(:details) }
+  it { should_not allow_value("\u0000").for(:reason_why_not_actionable) }
   def new_contact(options = {})
     build(:anonymous_contact, options)
   end

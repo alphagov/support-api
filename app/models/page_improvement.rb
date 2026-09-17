@@ -2,8 +2,9 @@ class PageImprovement
   include ActiveModel::Validations
 
   validates :description, :url, presence: true
+  validates :description, :email, :name, null_bytes: { allowed: false }
 
-  def initialize(attributes)
+  def initialize(attributes = {})
     @url = attributes.fetch(:url, nil)
     @description = attributes.fetch(:description, nil)
     @name = attributes.fetch(:name, nil)

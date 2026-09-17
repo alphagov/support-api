@@ -2,6 +2,7 @@ class SupportTicket
   include ActiveModel::Validations
 
   validates :subject, :description, presence: true
+  validates :subject, :description, null_bytes: { allowed: false }
 
   validate :requester_not_suspended, if: :requester_email?
 

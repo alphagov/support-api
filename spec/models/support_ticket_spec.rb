@@ -22,6 +22,20 @@ describe SupportTicket, "validations" do
     expect(support_ticket.errors.messages.to_h).to include(description: include("can't be blank"))
   end
 
+  it "validates absence of null characters in description" do
+    support_ticket = described_class.new({ description: "\u0000" })
+    support_ticket.valid?
+
+    expect(support_ticket.errors.messages.to_h).to include(description: include("must not contain null bytes"))
+  end
+
+  it "validates absence of null characters in subject" do
+    support_ticket = described_class.new({ subject: "\u0000" })
+    support_ticket.valid?
+
+    expect(support_ticket.errors.messages.to_h).to include(subject: include("must not contain null bytes"))
+  end
+
   describe "#requester_not_suspended validation" do
     it "is invalid if requester is suspended in Zendesk" do
       zendesk_has_suspended_user_with_email("suspended-user@example.com")
