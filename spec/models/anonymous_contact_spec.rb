@@ -1,6 +1,14 @@
 require "rails_helper"
 
 describe AnonymousContact, type: :model do
+  it { should validate_length_of(:referrer).is_at_most(2048) }
+  it { should validate_length_of(:path).is_at_most(2048) }
+  it { should validate_length_of(:user_agent).is_at_most(2048) }
+  it { should validate_length_of(:details).is_at_most(2**16) }
+
+  it { should_not allow_value("\u0000").for(:details) }
+  it { should_not allow_value("\u0000").for(:reason_why_not_actionable) }
+
   def new_contact(options = {})
     build(:anonymous_contact, options)
   end

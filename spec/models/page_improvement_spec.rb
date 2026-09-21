@@ -14,6 +14,27 @@ describe PageImprovement, "validations" do
 
     expect(page_improvement.errors.messages.to_h).to include(description: include("can't be blank"))
   end
+
+  it "validates absence of null characters in description" do
+    page_improvement = described_class.new({ description: "\u0000" })
+    page_improvement.valid?
+
+    expect(page_improvement.errors.messages.to_h).to include(description: include("must not contain null bytes"))
+  end
+
+  it "validates absence of null characters in email" do
+    page_improvement = described_class.new({ email: "\u0000" })
+    page_improvement.valid?
+
+    expect(page_improvement.errors.messages.to_h).to include(email: include("must not contain null bytes"))
+  end
+
+  it "validates absence of null characters in name" do
+    page_improvement = described_class.new({ name: "\u0000" })
+    page_improvement.valid?
+
+    expect(page_improvement.errors.messages.to_h).to include(name: include("must not contain null bytes"))
+  end
 end
 
 describe PageImprovement, "#zendesk_ticket_attributes" do

@@ -15,6 +15,7 @@ class AnonymousContact < ApplicationRecord
   validates :personal_information_status, inclusion: { in: %w[suspected absent], allow_nil: true }
   validates :is_actionable, inclusion: { in: [true, false] }
   validates :reason_why_not_actionable, presence: { unless: -> { is_actionable } }
+  validates :details, :reason_why_not_actionable, null_bytes: { allowed: false }
 
   scope :free_of_personal_info,
         lambda {
