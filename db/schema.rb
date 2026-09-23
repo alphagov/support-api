@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_15_132016) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_22_090753) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -71,6 +71,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_15_132016) do
     t.index ["content_item_id", "organisation_id"], name: "index_content_items_organisations_unique", unique: true
     t.index ["organisation_id", "content_item_id"], name: "index_organisations_content_items", unique: true
     t.index ["organisation_id"], name: "index_content_items_organisations_on_organisation_id"
+  end
+
+  create_table "draft_support_requests", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.jsonb "data"
+    t.string "support_app_reference"
+    t.datetime "updated_at", null: false
+    t.index ["support_app_reference"], name: "index_draft_support_requests_unique", unique: true
   end
 
   create_table "feedback_export_requests", id: :serial, force: :cascade do |t|
