@@ -72,6 +72,9 @@ Rails.application.routes.draw do
 
   get "/feedback-by-day/:date", to: "feedback_by_day#index", format: false
 
+  get "/draft-support-requests/:support_app_reference", to: "draft_support_requests#show", format: false
+  put "/draft-support-requests/:support_app_reference", to: "draft_support_requests#update"
+
   get "/healthcheck/live", to: proc { [200, {}, %w[OK]] }
   get "/healthcheck/ready", to: GovukHealthcheck.rack_response(
     GovukHealthcheck::ActiveRecord,
