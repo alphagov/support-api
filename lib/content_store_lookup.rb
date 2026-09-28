@@ -7,7 +7,8 @@ class ContentStoreLookup
     return nil if path.empty?
 
     begin
-      response = @content_store.content_item(path)
+      compliant_path = path.gsub("_", "-")
+      response = @content_store.content_item(compliant_path)
     rescue GdsApi::HTTPNotFound, GdsApi::HTTPGone
       response = nil
     end
