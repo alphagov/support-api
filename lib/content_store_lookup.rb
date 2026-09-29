@@ -9,7 +9,17 @@ class ContentStoreLookup
     begin
       compliant_path = path.gsub("_", "-")
       response = @content_store.content_item(compliant_path)
-    rescue GdsApi::HTTPNotFound, GdsApi::HTTPGone
+    rescue GdsApi::HTTPNotFound, GdsApi::HTTPGone, GdsApi::HTTPBadRequest => e
+      GovukError.notify(
+        "Unable to fetch from content store",
+        extra: {
+          compliant_path:,
+          error_type: e.class.name,
+          path:,
+        },
+        level: "error",
+        tags: {},
+      )
       response = nil
     end
 
