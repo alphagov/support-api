@@ -5,7 +5,9 @@ require "zendesk/dummy_client"
 GDS_ZENDESK_URL = "https://govuk.zendesk.com/api/v2/".freeze
 ZENDESK_ANONYMOUS_TICKETS_REQUESTER_EMAIL = ENV["ZENDESK_ANONYMOUS_TICKET_EMAIL"] || "api-user@example.com"
 
-GDS_ZENDESK_CLIENT = if Rails.env.development?
+# DISABLE_ZENDESK is for govuk-preview-app, whose previews must never raise
+# real tickets.
+GDS_ZENDESK_CLIENT = if Rails.env.development? || ENV["DISABLE_ZENDESK"]
                        Zendesk::DummyClient.new(logger: Rails.logger)
                      else
                        ZendeskAPI::Client.new do |config|
