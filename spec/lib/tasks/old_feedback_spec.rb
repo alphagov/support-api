@@ -23,6 +23,12 @@ shared_examples "an old feedback deletion task" do |task_name, expected_types|
 
     expect(deleter).to have_received(:delete)
   end
+
+  it "points at the task that reclaims the disk space" do
+    task.invoke
+
+    expect($stdout).to have_received(:puts).with(/old_feedback:vacuum/)
+  end
 end
 
 describe "old_feedback:delete" do
