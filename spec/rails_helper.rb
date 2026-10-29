@@ -46,6 +46,7 @@ RSpec.configure do |config|
 
   config.before :suite do
     Rails.application.load_seed
+    Rails.application.load_tasks
   end
 
   config.include(Shoulda::Matchers::ActiveModel, type: :model)
