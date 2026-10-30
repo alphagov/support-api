@@ -9,14 +9,18 @@ issues. Use this to measure the impact of changes to queries, for instance.
 bundle exec rake "anonymous_feedback:benchmark[my_label]"
 ```
 
+When running on a deployed environment, pass `--stdin --tty` to `kubectl exec`
+so progress appears as it happens rather than all at the end.
+
 Times both of the queries `AnonymousFeedbackController#index` runs against four
 known slow query strings. The queries are:
 
 - a count of matching feedback
 - the actual page of feedback, optionally offset (by the page query param)
 
-Writes a CSV to the working directory with the provided label suffixed, e.g.
-`anonymous_feedback_benchmark_before.csv`.
+Writes a CSV with the provided label suffixed, e.g.
+`anonymous_feedback_benchmark_before.csv`, to `./tmp` in development and `/tmp`
+in deployed environments.
 
 **Important:** run before making any destructive changes, then again afterwards.
 Without a baseline benchmark, it's difficult to draw conclusions about the
@@ -24,8 +28,8 @@ impact of changes.
 
 ## Comparing measurements
 
-With the CSVs from the benchmark Rake task available in the local working
-directory as `anonymous_feedback_benchmark_before.csv` and
+With the CSVs from the benchmark Rake task available in `./tmp` as
+`anonymous_feedback_benchmark_before.csv` and
 `anonymous_feedback_benchmark_after.csv` (see
 [working with CSVs](https://docs.publishing.service.gov.uk/manual/running-rake-tasks.html#working-with-csvs-on-kubernetes)
 for how to copy files over from deployed environments):
@@ -58,5 +62,9 @@ Note: by default, the benchmark runs each query three times, but the comparison
 only looks at the first run. This is to avoid measuring in-memory performance,
 which is unrepresentative of most real anonymous feedback queries. It's still
 useful having the three runs recorded, for instance if you want to measure
-whether the queries can be cached. Use an environment variable like `RUN=3` to
-compare a specific run.
+whether the queries can be cached. Use `RUN` to compare a specific run.
+
+### Environment variables
+
+- `DIRECTORY` - where to read the CSVs from, defaulting to `tmp`
+- `RUN` - which run of each query to compare, defaulting to `1`

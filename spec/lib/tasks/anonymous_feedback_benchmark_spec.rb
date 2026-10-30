@@ -5,7 +5,7 @@ describe "anonymous_feedback:benchmark" do
   subject(:task) { Rake::Task["anonymous_feedback:benchmark"] }
 
   let(:benchmark) { instance_double(AnonymousFeedbackBenchmark) }
-  let(:path) { "anonymous_feedback_benchmark_my_label.csv" }
+  let(:path) { Rails.root.join("tmp/anonymous_feedback_benchmark_my_label.csv").to_s }
   let(:rows) { CSV.read(path, headers: true) }
   let(:stats) { { live_tuples: 3, dead_tuples: 0, heap_bytes: 2_097_152 } }
   let(:measurement) do
@@ -38,6 +38,15 @@ describe "anonymous_feedback:benchmark" do
     expect { task.invoke }
       .to raise_error(SystemExit)
       .and output(/usage: bundle exec rake "anonymous_feedback:benchmark\[my_label\]"/).to_stderr
+  end
+
+  it "stops before measuring if it can't write the CSV" do
+    allow(File).to receive(:writable?).and_return(false)
+
+    expect { task.invoke("my_label") }
+      .to raise_error(SystemExit)
+      .and output(/Can't write to/).to_stderr
+    expect(benchmark).not_to have_received(:run)
   end
 
   it "refreshes the table statistics before measuring" do

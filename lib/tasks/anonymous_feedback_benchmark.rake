@@ -28,6 +28,11 @@ namespace :anonymous_feedback do
     label = args[:label] ||
       abort('usage: bundle exec rake "anonymous_feedback:benchmark[my_label]"')
 
+    directory = Rails.env.production? ? "/tmp" : Rails.root.join("tmp")
+    abort "Can't write to #{directory}" unless File.writable?(directory)
+
+    path = File.join(directory, "anonymous_feedback_benchmark_#{label}.csv")
+
     benchmark = AnonymousFeedbackBenchmark.new(BENCHMARK_QUERY_STRINGS)
     ActiveRecord::Base.connection.execute("SET statement_timeout = '60s'")
 
@@ -39,7 +44,6 @@ namespace :anonymous_feedback do
       puts "#{row[:params]} | #{row[:query]} | run #{row[:run]} | #{row[:execution]}ms"
     end
 
-    path = "anonymous_feedback_benchmark_#{label}.csv"
     CSV.open(path, "w") do |csv|
       csv << BENCHMARK_COLUMNS.keys
       rows.each { |row| csv << BENCHMARK_COLUMNS.values.map { |column| row[column] } }

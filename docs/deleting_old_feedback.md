@@ -34,11 +34,17 @@ service satisfaction beyond two years. To delete it as well:
 bundle exec rake old_feedback:delete_including_aggregates
 ```
 
+When running on a deployed environment, pass `--stdin --tty` to `kubectl exec`
+so progress appears as it happens rather than all at the end.
+
 ## Recovering disk space
 
 ```sh
 bundle exec rake old_feedback:vacuum
 ```
+
+When running on a deployed environment, pass `--stdin --tty` to `kubectl exec`
+so progress appears as it happens rather than all at the end.
 
 Rewrites the `anonymous_contacts` table so the space the deletion freed is
 returned to the disk. This blocks every read and write to the table while it
