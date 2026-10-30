@@ -1,0 +1,29 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "03320108c3fbb11c3088ddc1807737f9759a1c9e2235c9ca72b9cc459ba56ef6",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "lib/anonymous_feedback_benchmark.rb",
+      "line": 71,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "connection.select_value(\"EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) #{sql}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "AnonymousFeedbackBenchmark",
+        "method": "measure"
+      },
+      "user_input": "sql",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": "The interpolated SQL comes from ActiveRecord's to_sql which quotes the values it embeds"
+    }
+  ],
+  "updated": "2026-10-26 11:51:33 +0000",
+  "brakeman_version": "8.0.6"
+}
