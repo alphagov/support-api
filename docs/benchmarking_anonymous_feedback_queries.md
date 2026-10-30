@@ -9,6 +9,9 @@ issues. Use this to measure the impact of changes to queries, for instance.
 bundle exec rake "anonymous_feedback:benchmark[my_label]"
 ```
 
+When running on a deployed environment, pass `--stdin --tty` to `kubectl exec`
+so progress appears as it happens rather than all at the end.
+
 Times both of the queries `AnonymousFeedbackController#index` runs against four
 known slow query strings. The queries are:
 
