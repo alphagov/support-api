@@ -4,10 +4,14 @@
 #
 #   script/compare_anonymous_feedback_benchmarks.rb before_label after_label
 #
+# Reads the CSVs from ./tmp. Set DIRECTORY to look elsewhere.
+#
 # Defaults to run 1 of each query. Set RUN to a different number to override,
 # e.g. RUN=3.
 
 require "csv"
+
+DIRECTORY = ENV.fetch("DIRECTORY", "tmp")
 
 COMPARISONS = [
   ["Blocks read from disk", ->(row) { row["shared read"] }],
@@ -17,7 +21,7 @@ COMPARISONS = [
 ].freeze
 
 def measurements(label, run)
-  path = "anonymous_feedback_benchmark_#{label}.csv"
+  path = File.join(DIRECTORY, "anonymous_feedback_benchmark_#{label}.csv")
   abort "#{path} does not exist" unless File.file?(path)
 
   # rubocop:disable Rails/IndexBy
