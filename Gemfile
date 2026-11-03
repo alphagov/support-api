@@ -7,7 +7,7 @@ gem "bootsnap", require: false
 gem "csv"
 gem "gds-api-adapters"
 gem "gds-sso"
-gem "govuk_app_config"
+gem "govuk_app_config", ">= 9.27.0"
 gem "govuk_sidekiq"
 gem "kaminari"
 gem "mail-notify"
