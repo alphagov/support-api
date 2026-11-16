@@ -6,7 +6,9 @@ class ZendeskTicketJob
 
   def perform(anonymous_contact_id)
     anonymous_contact = AnonymousContact.find(anonymous_contact_id)
-    ticket_attributes = ticket_for(anonymous_contact).attributes
+    ticket = ticket_for(anonymous_contact)
+    ticket_attributes = ticket.attributes
+    GovukStatsd.increment("govuk_zendesk.profane_ticket") if ticket.mask_applied?
     GDS_ZENDESK_CLIENT.ticket.create!(HashWithIndifferentAccess.new(ticket_attributes))
   end
 
