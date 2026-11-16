@@ -14,6 +14,15 @@ RUN bootsnap precompile --gemfile .
 
 FROM --platform=$TARGETPLATFORM $base_image
 
+# python3 for the vendored better-profanity (pure Python, zero dependencies)
+# used by ZendeskTicketJob to mask free text — see lib/profanity_filter.rb
+USER root
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends python3 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+USER app
+
 ENV GOVUK_APP_NAME=support-api
 
 WORKDIR $APP_HOME
