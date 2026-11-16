@@ -1,0 +1,14 @@
+# DO NOT edit the wordlist by hand
+# Regenerate/replace only via .github/workflows/profanity-wordlist-sync.yml
+---
+source_repo: alphagov/govuk-feedback-processing
+source_path: src/utils/profane_words.txt
+source_commit: 2c603214ce213766c06addfcbf6cfdee13e4e6db
+fetched_on: "2026-11-13"
+better_profanity_pin: 0.7.0
+transforms_py_sha256: 75a7be0fbee4f1f147484015d17cdfefa90c8fd35d1cfa8d80db870f4a90df1b
+processors_py_sha256: c608c57d5a9e60d2a01fa382178d07501b2c9b136706802aa49b9e92f2004eb7
+license_note: >-
+  Wordlist copied from the source repository for parity with the GOV.UK
+  feedback-processing pipeline. The reference matcher is better-profanity
+  (MIT, https://github.com/snguyenthanh/better_profanity).
