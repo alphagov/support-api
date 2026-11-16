@@ -4,6 +4,12 @@ require "plek"
 
 module Zendesk
   class ProblemReportTicket < Ticket
+    class << self
+      def user_text_fields
+        %i[what_doing what_wrong]
+      end
+    end
+
     def subject
       @contact.path
     end
