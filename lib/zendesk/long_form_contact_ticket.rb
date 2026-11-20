@@ -2,6 +2,12 @@ require "zendesk/ticket"
 
 module Zendesk
   class LongFormContactTicket < Ticket
+    class << self
+      def user_text_fields
+        %i[details]
+      end
+    end
+
     def subject
       suffix = @contact.user_specified_url.nil? ? "" : " about #{@contact.user_specified_url}"
       "Feedback#{suffix}"
