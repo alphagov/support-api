@@ -105,9 +105,9 @@ javascript_enabled: true
   end
 
   context "reviewing for spam" do
-    let(:problem_report_1)  { create(:problem_report) }
-    let(:problem_report_2)  { create(:problem_report) }
-    let(:problem_report_3)  { create(:problem_report) }
+    let(:problem_report_1) { create(:problem_report) }
+    let(:problem_report_2) { create(:problem_report) }
+    let(:problem_report_3) { create(:problem_report) }
 
     context "when succesfully supplied with a list of problem feedback reviews" do
       before do
