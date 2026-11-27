@@ -1,0 +1,153 @@
+name: Profanity wordlist sync
+
+# Watches the four files in alphagov/govuk-feedback-processing that define the
+# pipeline's profanity filter (wordlist, better-profanity pin, the two wrapper
+# files) and opens a PR when any of them change.
+
+on:
+  schedule:
+    - cron: "23 6 * * 1"
+  workflow_dispatch:
+    inputs:
+      override_shrinkage_guard:
+        description: "Allow a wordlist shrinkage of more than 5%"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: profanity-wordlist-sync
+  cancel-in-progress: false
+
+env:
+  SOURCE_REPO: alphagov/govuk-feedback-processing
+  WORDLIST_PATH: src/utils/profane_words.txt
+  REQUIREMENTS_PATH: requirements.txt
+  TRANSFORMS_PATH: src/transforms/transforms.py
+  PROCESSORS_PATH: src/processors.py
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Resolve source repository HEAD to a commit SHA
+        run: |
+          set -euo pipefail
+          DEFAULT_BRANCH=$(gh api "repos/${SOURCE_REPO}" --jq .default_branch)
+          SOURCE_SHA=$(gh api "repos/${SOURCE_REPO}/branches/${DEFAULT_BRANCH}" --jq .commit.sha)
+          echo "SOURCE_SHA=${SOURCE_SHA}" >> "$GITHUB_ENV"
+          echo "SOURCE_DATE=$(gh api "repos/${SOURCE_REPO}/commits/${SOURCE_SHA}" --jq .commit.committer.date)" >> "$GITHUB_ENV"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Fetch watched files at the pinned SHA
+        run: |
+          set -euo pipefail
+          base="https://raw.githubusercontent.com/${SOURCE_REPO}/${SOURCE_SHA}"
+          for path in "${WORDLIST_PATH}" "${REQUIREMENTS_PATH}" "${TRANSFORMS_PATH}" "${PROCESSORS_PATH}"; do
+            out="fetched_$(basename "$path")"
+            content_type=$(curl -fsS -o "$out" -w '%{content_type}' "${base}/${path}")
+            case "$content_type" in
+              text/plain*) ;;
+              *) echo "::error::${path} returned content-type ${content_type}, expected text/plain — refusing to trust it"; exit 1 ;;
+            esac
+            [ -s "$out" ] || { echo "::error::${path} fetched empty"; exit 1; }
+          done
+
+          # Guard against wiping the wordlist via a restructured upstream file.
+          current_count=$(grep -c . config/profanity_filter/wordlist.txt || true)
+          fetched_count=$(grep -c . fetched_profane_words.txt || true)
+          if [ "${fetched_count}" -lt $((current_count * 19 / 20)) ]; then
+            if [ "${{ inputs.override_shrinkage_guard }}" = "true" ]; then
+              echo "::warning::shrinkage guard overridden: going from ${current_count} to ${fetched_count} words"
+            else
+              echo "::error::fetched list has ${fetched_count} words vs ${current_count} currently (>5% shrinkage). Verify upstream and rerun with override_shrinkage _guard if intentional."
+              exit 1
+            fi
+          fi
+
+      - name: Check for drift against the vendored files
+        id: drift
+        run: |
+          set -euo pipefail
+          upstream_pin=$(grep -E '^better-profanity==' fetched_requirements.txt | cut -d= -f3)
+          vendored_pin=$(grep -E '^better_profanity_pin:' config/profanity_filter/wordlist.txt.origin.yml | awk '{print $2}')
+          transforms_sha=$(sha256sum fetched_transforms.py | cut -d' ' -f1)
+          processors_sha=$(sha256sum fetched_processors.py | cut -d' ' -f1)
+          vendored_transforms=$(grep -E '^transforms_py_sha256:' config/profanity_filter/wordlist.txt.origin.yml | awk '{print $2}')
+          vendored_processors=$(grep -E '^processors_py_sha256:' config/profanity_filter/wordlist.txt.origin.yml | awk '{print $2}')
+
+          changes=""
+          cmp -s fetched_profane_words.txt config/profanity_filter/wordlist.txt || changes="${changes} wordlist"
+          [ "${upstream_pin}" = "${vendored_pin}" ] || changes="${changes} better-profanity-pin(${upstream_pin})"
+          [ "${transforms_sha}" = "${vendored_transforms}" ] || changes="${changes} transforms.py"
+          [ "${processors_sha}" = "${vendored_processors}" ] || changes="${changes} processors.py"
+
+          if [ -n "${changes}" ]; then
+            {
+              echo "drifted=true"
+              echo "changes=${changes# }"
+            } >> "$GITHUB_OUTPUT"
+            {
+              echo "UPSTREAM_PIN=${upstream_pin}"
+              echo "TRANSFORMS_SHA=${transforms_sha}"
+              echo "PROCESSORS_SHA=${processors_sha}"
+            } >> "$GITHUB_ENV"
+          else
+            echo "No drift in ${SOURCE_REPO} watched files (wordlist, pin, wrappers)."
+          fi
+
+      - name: Update vendored wordlist and provenance
+        if: steps.drift.outputs.drifted == 'true'
+        run: |
+          set -euo pipefail
+          cp fetched_profane_words.txt config/profanity_filter/wordlist.txt
+
+          sidecar=config/profanity_filter/wordlist.txt.origin.yml
+          today=$(date -u +%F)
+          sed -i "s/^source_commit: .*/source_commit: ${SOURCE_SHA}/" "$sidecar"
+          sed -i "s/^fetched_on: .*/fetched_on: \"${today}\"/" "$sidecar"
+          sed -i "s/^better_profanity_pin: .*/better_profanity_pin: ${UPSTREAM_PIN}/" "$sidecar"
+          sed -i "s/^transforms_py_sha256: .*/transforms_py_sha256: ${TRANSFORMS_SHA}/" "$sidecar"
+          sed -i "s/^processors_py_sha256: .*/processors_py_sha256: ${PROCESSORS_SHA}/" "$sidecar"
+
+      - name: Open pull request
+        if: steps.drift.outputs.drifted == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CHANGES: ${{ steps.drift.outputs.changes }}
+        run: |
+          set -euo pipefail
+          branch="profanity-wordlist-sync/${SOURCE_SHA:0:12}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add config/profanity_filter
+          git commit \
+            -m "Sync profanity wordlist from ${SOURCE_REPO}@${SOURCE_SHA:0:12}" \
+            -m "Drift detected in: ${CHANGES}." \
+            -m "profane_words.txt is copied verbatim and the provenance sidecar
+          (source_commit, fetched_on, pin, wrapper hashes) is updated. See
+          the pull request body for the review checklist."
+          body_file=$(mktemp)
+          cat >"$body_file" <<EOF
+          Synced \`${WORDLIST_PATH}\` from \`${SOURCE_REPO}\` at \`${SOURCE_SHA}\` (${SOURCE_DATE}).
+
+          Drift detected in: **${CHANGES}**
+
+          Never auto-merge: adopting upstream changes needs somebody to make the decision. Before merging:
+
+          - [ ] Review the \`config/profanity_filter/wordlist.txt\` diff
+          - [ ] If the better-profanity pin changed (now \`${UPSTREAM_PIN}\`): run \`script/sync_vendored_better_profanity.sh ${UPSTREAM_PIN}\`,
+                review the \`vendor/better_profanity\` diff, and update the pin in \`config/profanity_filter/wordlist.txt.origin.yml\`
+          - [ ] Run \`bundle exec rspec spec/lib/profanity_filter_spec.rb spec/lib/zendesk/ticket_spec.rb spec/sidekiq/zendesk_ticket_job_spec.rb\`
+          EOF
+          gh pr create --head "$branch" \
+            --title "Sync profanity wordlist from govuk-feedback-processing (${SOURCE_SHA:0:12})" \
+            --body-file "$body_file"

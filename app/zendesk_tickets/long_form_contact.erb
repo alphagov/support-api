@@ -1,5 +1,5 @@
 [Details]
-<%= @contact.details %>
+<%= mask_profanity(@contact.details) %>
 
 [URL]
 <%= @contact.user_specified_url || "-" %>

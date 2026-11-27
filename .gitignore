@@ -23,3 +23,5 @@
 /coverage
 /spec/reports
 spec/reports/pacts
+
+vendor/better_profanity/__pycache__/
